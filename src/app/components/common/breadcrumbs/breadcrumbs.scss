@@ -1,0 +1,48 @@
+.breadcrumbs {
+	height: 36px;
+	width: 100%;
+	padding-top: 5px;
+	background-color: $grey-top;
+	
+	.go-back {
+		&.hidden { display: none; }
+		
+		.icon {
+			fill: $white;
+			height: 15px;
+		}
+	}
+	
+	.breadcrumbs-items {
+		padding: 0;
+		list-style-type: none;
+		margin: 0;
+		margin-left: 40px;
+		padding-top: 6px;
+		font-size: 11px;
+		color: $white;
+		
+		@include mobile() {
+			white-space: nowrap;
+			overflow: hidden;
+			width: 80%;
+		}
+	}
+	
+	.item {
+		cursor: pointer;
+		display: inline-block;
+		margin-right: 5px;
+		text-transform: capitalize;
+		
+		&:after {
+			content: '>';
+			float: right;
+			margin-left: 5px;
+		}
+		
+		&:last-child:after {
+			display: none;
+		}
+	}
+}

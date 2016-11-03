@@ -1,0 +1,110 @@
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: 4;
+    
+        
+    .loader__circle {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        width: 200px;
+        height: 200px;
+		@include border-radius(50%);
+        box-shadow: inset 0 0 0 12px $main;
+        z-index: 1;
+    }
+
+    .loader__line-mask {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 100px;
+        height: 200px;
+        margin-left: -100px;
+        margin-top: -100px;
+        overflow: hidden;
+        z-index: 2;
+        @include transform-origin('100px 100px');
+        -webkit-mask-image: -webkit-linear-gradient(top, rgba(0,0,0,1), rgba(0,0,0,0));
+        @include animation('rotate 1.2s infinite linear');
+        @include transition('all .3s');
+        
+        .loader__line {
+            height: 200px;
+            width: 200px;
+			@include border-radius(50%);
+            box-shadow: inset 0 0 0 12px lighten($main, 20%);
+        }
+    }
+
+    @include keyframes(rotate) {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    
+    .loader__logo {
+        position: absolute;
+        top: -10px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+		opacity: .8;
+        margin: auto;
+		fill: $white;
+		width: 300px;
+		height: 300px;
+		@include transform(scale(0.45));
+    }
+}
+
+.loader-small,
+.loader-small:after {
+	border-radius: 50%;
+	width: 20px;
+	height: 20px;
+}
+
+.loader-small {
+	display: none;
+	position: absolute;
+	top: 40px;
+	border-top: 1px solid rgba(0, 0, 0, 0.1);
+	border-right: 1px solid rgba(0, 0, 0, 0.1);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	border-left: 1px solid $blue;
+	-webkit-transform: translateZ(0);
+	-ms-transform: translateZ(0);
+	transform: translateZ(0);
+	-webkit-animation: load8 1.1s infinite linear;
+	animation: load8 1.1s infinite linear;
+}
+
+@-webkit-keyframes load8 {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+@keyframes load8 {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}

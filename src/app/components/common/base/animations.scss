@@ -1,0 +1,48 @@
+.flyout {
+	@include transform(translateX(-100%));
+		
+	&.opened { @include animation('slide-in-left 0.3s forwards'); }
+	&.closed { @include animation('slide-out-left 0.3s forwards'); }
+
+	@include keyframes(slide-in-left) {
+		0% { @include transform(translateX(-100%)) }
+		100% { @include transform(translateX(0%)) }
+	}
+
+	@include keyframes(slide-out-left) {
+		0% { @include transform(translateX(0%)) }
+		100% { @include transform(translateX(-100%)) }
+	}
+}
+
+.push-menu, .flyout-right {
+	@include transform(translateX(100%));
+		
+	&.opened { @include animation('slide-in-right 0.3s forwards'); }
+	&.closed { @include animation('slide-out-right 0.3s forwards'); }
+
+	@include keyframes(slide-in-right) {
+		0% { @include transform(translateX(100%)) }
+		100% { @include transform(translateX(0%)) }
+	}
+
+	@include keyframes(slide-out-right) {
+		0% { @include transform(translateX(0%)) }
+		100% { @include transform(translateX(100%)) }
+	}
+}
+
+.pushed-container {
+	&.opened { @include animation('resize-in 0.3s forwards'); }
+	&.closed { @include animation('resize-out 0.3s forwards'); }
+
+	@include keyframes(resize-in) {
+		0% { max-width: 100%; }
+		100% { max-width: 75%; }
+	}
+
+	@include keyframes(resize-out) {
+		0% { max-width: 75%; }
+		100% { max-width: 100%; }
+	}
+}

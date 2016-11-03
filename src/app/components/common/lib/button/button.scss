@@ -1,0 +1,55 @@
+.btn {
+    color: $white;
+    border-width: 1px;
+    border-style: solid;
+    margin: 5px;
+    @include border-radius(25px);	
+    
+    /*&:hover, &:active, &:focus {
+        background-color: initial;   
+    }*/
+	
+    &:focus {
+        outline: none !important;
+    }	
+	
+    &.btn-xs { 
+        padding: 2px 20px;
+    }	
+    
+	&.btn-primary {
+		background-color: $green;
+    	border: none;
+		
+		&:active:focus {
+			background-color: $green-dark;
+		}		
+	}
+	
+    &.btn-danger {
+        border: none;
+    }	
+	
+    &.btn-action {
+        background-color: $dark-grey;
+
+        &:hover {
+            background-color: $darker-grey;
+        }
+    }
+	
+	&.btn-clear {
+		background-color: none;
+		border: 1px solid $white;
+		font-size: 12px;
+	}
+	
+	&.btn-outline {
+		color: $grey;
+		border-color: $grey;
+	}
+}
+
+.btn-link, .btn-link:hover {
+    color: $white;
+} 

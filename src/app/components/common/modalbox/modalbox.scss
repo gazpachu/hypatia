@@ -1,0 +1,23 @@
+.modal-box {
+	display: none;
+	background-color: $white;
+	padding: 50px;
+	text-align: center;	
+	position: fixed;
+	top: 35vh;
+    left: 25vw;
+    width: 50vw;
+	z-index: 2;
+	
+	@include mobile () {
+		padding: 30px 25px;
+    	width: 90vw;
+		top: 30vh;		
+    	left: 5vw;	
+	}
+
+	.modal-box-title {
+		color: $dark-grey;
+		margin-bottom: 40px;
+	}
+}

@@ -1,0 +1,131 @@
+.navigation {
+	
+	.nav-items, .mobile-nav-items, .mobile-exit-items {
+		padding: 0;
+		list-style-type: none;
+		margin-bottom: 0;
+	}
+	
+	.mobile-nav-items {
+		display: none;
+		
+		@include mobile() {
+			display: table;
+			width: 100%;
+    		table-layout: fixed;
+			margin-top: 15px;
+			padding-bottom: 10px;
+			border-bottom: 1px solid $lighter-grey;
+			
+			td {
+				padding-bottom: 15px;
+				text-align: center;
+			}
+			
+			.mobile-nav-item {
+				.icon {
+					width: 15px;
+					height: 15px;
+					fill: $grey;
+				}
+			}
+		}
+	}
+	
+	.mobile-go-back, .mobile-close {
+		display: none;
+		
+		.close {
+			right: 20px;
+		}
+		
+		@include mobile() {
+			display: block;
+		}
+	}
+	
+	.mobile-exit-items {
+		max-height: 0;
+		overflow: hidden;
+		@include transition(.3s);
+		
+		@include desktop() {
+			display: none;
+		}
+		
+		&.active {
+			max-height: 120px;
+		}
+	}
+	
+	.mobile-go-back {
+		fill: $grey;
+	    margin: 10px 0 0 5px;
+		
+		.icon {
+			width: 15px;
+			height: 15px;
+		}
+	}
+	
+	.exit-item {
+		padding: 15px 10px;
+		border-bottom: 1px solid $lighter-grey;
+		cursor: pointer;
+		
+		a {
+			font-size: 14px;
+			color: $grey;
+		}
+		
+		.icon {
+			width: 15px;
+			height: 15px;
+			fill: $grey;
+			margin: 0 10px 0 5px;
+		}
+	}
+	
+	.nav-item {
+		padding: 15px 10px;
+		border-bottom: 1px solid $lighter-grey;
+		cursor: pointer;
+		font-size: 14px;
+		color: $grey;
+		
+		&.active {
+			background-color: $lighter-grey;
+		}
+		
+		&.disabled {
+			color: #DDD;
+			cursor: initial;
+		}
+		
+		&:hover {
+			background-color: $grey-bg;
+		}
+		
+		.icon {
+			display: none;
+		}
+		
+		&.has-children .icon {
+			display: inline;
+			position: absolute;
+			right: 10px;
+			width: 15px;
+			height: 15px;
+			margin-top: 3px;
+			fill: $grey;
+			
+			@include mobile() {
+				right: 20px;
+			}
+		}
+		
+		&.hidden {
+			display: none;
+		}
+	}
+}
