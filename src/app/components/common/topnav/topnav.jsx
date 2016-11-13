@@ -7,6 +7,7 @@ import Navigation from '../navigation/navigation';
 import { setAlphaSorting } from '../../../actions/actions';
 
 import Icon from '../lib/icon/icon';
+import Logo from '../../../../../static/logo.svg';
 import Avatar from '../../../../../static/avatar.svg';
 import Star from '../../../../../static/star.svg';
 import Mail from '../../../../../static/mail.svg';
@@ -143,6 +144,8 @@ class TopNav extends Component {
 					<Link to="/favourites" className="top-nav-item" onClick={() => {this.closeNav(); this.closeSearch() }}><Icon glyph={Star} className="icon star" /></Link>
 					<Link to="/inbox" className="top-nav-item" onClick={() => {this.closeNav(); this.closeSearch() }}><Icon glyph={Mail} className="icon mail" /></Link>
 					<button className="top-nav-item" onClick={() => {this.toggleSearch() }}>{this.state.searching ? <Icon glyph={Close} className="icon close-search" /> : <Icon glyph={Search} className="icon search" />}</button>
+					
+					<Icon glyph={Logo} className="icon logo" />
 					
 				</div>
 				<Navigation location={this.props.location} toggleNav={this.toggleNav} openNav={this.openNav} closeNav={this.closeNav} toggleSearch={this.toggleSearch} openSearch={this.openSearch} closeSearch={this.closeSearch} searching={this.state.searching} navigating={this.state.navigating} toggleLogout={this.toggleLogout} />
