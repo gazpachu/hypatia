@@ -52,10 +52,10 @@ class TopNav extends Component {
 	}
 	
 	componentDidUpdate() {
-		if (this.props.isDesktop) {
+		if (this.props.isDesktop === true) {
 			$('#mode').prop('checked', false);
 			$('.js-page').removeClass('list-view');
-		} else {
+		} else if (this.props.isDesktop === false) {
 			$('#mode').prop('checked', true);
 			$('.js-page').addClass('list-view');
 		}
@@ -72,6 +72,7 @@ class TopNav extends Component {
 			$('.js-overlay').show().animateCss('fadeIn');
 			$('.js-sidenav').addClass('opened').removeClass('closed');
 			$('.js-nav-icon').addClass('opened');
+			$('.js-dropdown-panel').removeClass('open');
 			this.setState({searching: false, navigating: true});
 		}
 	}
@@ -100,6 +101,7 @@ class TopNav extends Component {
 			$('.js-nav-icon').removeClass('opened');
 			$('.js-overlay').show().animateCss('fadeIn');
 			$('.search-input').focus();
+			$('.js-dropdown-panel').removeClass('open');
 			this.setState({searching: true, navigating: false});
 		}
 	}
@@ -139,7 +141,7 @@ class TopNav extends Component {
 		return (
             <section className="top-nav js-top-nav">
 				<div className="top-nav-bar">
-					<div className="top-nav-item nav-icon js-nav-icon" onClick={() => {this.toggleNav(event) }}>
+					<div className="top-nav-item nav-icon js-nav-icon" onClick={() => {this.toggleNav() }}>
 						<span></span>
 						<span></span>
 						<span></span>
@@ -149,11 +151,24 @@ class TopNav extends Component {
 					<Link to="/inbox" className="top-nav-item" onClick={() => {this.closeNav(); this.closeSearch() }}><Icon glyph={Mail} className="icon mail" /></Link>
 					<button className="top-nav-item" onClick={() => {this.toggleSearch() }}>{this.state.searching ? <Icon glyph={Close} className="icon close-search" /> : <Icon glyph={Search} className="icon search" />}</button>
 					
-					<h1 className="logo">Hypatia</h1>
+					<Link to="/"><Icon glyph={Logo} className="icon logo" /></Link>
+					<div className="waves">
+						<div className="wave wave-1"></div>
+						<div className="wave wave-2"></div>
+					</div>
 					
 					<div className="user-info">
 						<Icon glyph={Chat} className="icon chat" />
-						<Icon glyph={Avatar} className="icon avatar" />
+						{this.props.header.data[0] && this.props.header.data[0].attributes['avatar_url'] ? <img className="avatar" src={this.props.header.data[0].attributes['avatar_url']} /> : <Icon glyph={Avatar} className="icon avatar" />}
+						<button className="username" onClick={this.toggleLogout}>{this.props.header.data[0] && this.props.header.data[0].attributes.name ? this.props.header.data[0].attributes.name : 'Test User'}<Icon glyph={SortActiveDown} /></button>
+						<ul className="exit-nav js-exit-items">
+							<li className="exit-item">
+								<a href={this.props.header.data[0] ? this.props.header.data[0].attributes['container_url'] : '#'}><Icon glyph={Logout} />Back to Fingertips</a>
+							</li>
+							<li className="exit-item">
+								<a href={this.props.header.data[0] ? this.props.header.data[0].attributes['logout_url'] : '#'}><Icon glyph={Logout} />Log out</a>
+							</li>
+						</ul>
 					</div>
 					
 					<div className="card-controls js-card-controls">
@@ -172,14 +187,14 @@ class TopNav extends Component {
 						</span>
 					</div>
 				</div>
-				<Navigation {...this.props} toggleNav={this.toggleNav} openNav={this.openNav} closeNav={this.closeNav} toggleSearch={this.toggleSearch} openSearch={this.openSearch} closeSearch={this.closeSearch} searching={this.state.searching} navigating={this.state.navigating} toggleLogout={this.toggleLogout} />
+				<Navigation location={this.props.location} toggleNav={this.toggleNav} openNav={this.openNav} closeNav={this.closeNav} toggleSearch={this.toggleSearch} openSearch={this.openSearch} closeSearch={this.closeSearch} searching={this.state.searching} navigating={this.state.navigating} toggleLogout={this.toggleLogout} />
 				<div className="overlay js-overlay" onClick={() => {this.closeNav(); this.closeSearch() }}></div>
             </section>
 		)
 	}
 }
 
-const mapStateToProps = ({ mainReducer: { alphaSorting } }) => ({ alphaSorting });
+const mapStateToProps = ({ api: { filters = { data: [] }, header = { data: [] } }, mainReducer: { alphaSorting } }) => ({ filters, header, alphaSorting });
 
 const mapDispatchToProps = {
 	setAlphaSorting

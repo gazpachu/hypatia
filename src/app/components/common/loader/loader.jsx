@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
 import $ from 'jquery';
 import Helpers from '../helpers';
 import Icon from '../lib/icon/icon';
@@ -11,24 +12,11 @@ class Loader extends Component {
 		super(props);
 	}
 	
-	show() {
-		$('.js-loader').animateCss('fadeIn');
-		$('.js-main').addClass('loading');
-	}
-	
-	hide() {
-		$('.js-loader').animateCss('fadeOut', function() {
-            $('.js-loader').hide();
-			$('.js-main').removeClass('loading');
-        });
-	}
-	
 	render() {
-		if (this.props.isLoading) this.show();
-		else this.hide();
+		let isLoading = (this.props.isLoading) ? 'fade-in' : 'fade-out';
 		
 		return (
-			<section className="loader js-loader">
+			<section className={`loader js-loader ${isLoading}`}>
 				<div className="loader__circle"></div>
 				<div className="loader__line-mask">
 					<div className="loader__line"></div>
@@ -39,4 +27,6 @@ class Loader extends Component {
 	}
 }
 
-export default Loader;
+const mapStateToProps = ({ mainReducer: { isLoading } }) => ({ isLoading });
+
+export default connect(mapStateToProps)(Loader);

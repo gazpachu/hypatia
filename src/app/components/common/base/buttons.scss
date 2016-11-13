@@ -3,7 +3,7 @@
     border-width: 1px;
     border-style: solid;
     margin: 5px;
-    @include border-radius(25px);	
+    border-radius: 25px;	
     
     /*&:hover, &:active, &:focus {
         background-color: initial;   
@@ -21,7 +21,7 @@
 		background-color: $green;
     	border: none;
 		
-		&:active:focus {
+		&:active:focus:hover, &.disabled:hover {
 			background-color: $green-dark;
 		}		
 	}

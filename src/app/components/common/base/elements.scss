@@ -26,11 +26,11 @@ label.checkbox:before {
 }
 
 label.radio:before {
-    @include border-radius(20px);
+    border-radius: 20px;
 }	
 
 label.checkbox:before {
-	@include border-radius(0);
+	border-radius: 0;
 }
 
 input[type=radio]:checked + label:before,

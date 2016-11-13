@@ -6,105 +6,14 @@
     @media (max-width: 768px) { @content ; }
 }
 
-@mixin border-radius($radius) {
-    -webkit-border-radius: $radius;
-       -moz-border-radius: $radius;
-        -ms-border-radius: $radius;
-            border-radius: $radius;
-}
-
-@mixin border-top-left-radius($radius) {
-    -webkit-border-top-left-radius: $radius;
-       -moz-border-top-left-radius: $radius;
-        -ms-border-top-left-radius: $radius;
-            border-top-left-radius: $radius;
-}
-
-@mixin border-top-right-radius($radius) {
-    -webkit-border-top-right-radius: $radius;
-       -moz-border-top-right-radius: $radius;
-        -ms-border-top-right-radius: $radius;
-            border-top-right-radius: $radius;
-}
-
-@mixin border-bottom-right-radius($radius) {
-    -webkit-border-bottom-right-radius: $radius;
-       -moz-border-bottom-right-radius: $radius;
-        -ms-border-bottom-right-radius: $radius;
-            border-bottom-right-radius: $radius;
-}
-
-@mixin border-bottom-left-radius($radius) {
-    -webkit-border-bottom-left-radius: $radius;
-       -moz-border-bottom-left-radius: $radius;
-        -ms-border-bottom-left-radius: $radius;
-            border-bottom-left-radius: $radius;
-}
-
-@mixin keyframes($animation-name) {
-    @-webkit-keyframes #{$animation-name} {
-        @content;
-    }
-    @-moz-keyframes #{$animation-name} {
-        @content;
-    }  
-    @-ms-keyframes #{$animation-name} {
-        @content;
-    }
-    @-o-keyframes #{$animation-name} {
-        @content;
-    }  
-    @keyframes #{$animation-name} {
-        @content;
-    }
-}
-
-@mixin animation($str) {
-  -webkit-animation: #{$str};
-  -moz-animation: #{$str};
-  -ms-animation: #{$str};
-  -o-animation: #{$str};
-  animation: #{$str};      
-}
-
-@mixin transform($str) {
-  -webkit-transform: #{$str};
-  -moz-transform: #{$str};
-  -ms-transform: #{$str};
-  -o-transform: #{$str};
-  transform: #{$str};      
-}
-
-@mixin transform-origin($str) {
-  -webkit-transform-origin: #{$str};
-  -moz-transform-origin: #{$str};
-  -ms-transform-origin: #{$str};
-  -o-transform-origin: #{$str};
-  transform-origin: #{$str};      
-}
-
-@mixin transition($str) {
-  -webkit-transition: #{$str};
-  -moz-transition: #{$str};
-  -ms-transition: #{$str};
-  -o-transition: #{$str};
-  transition: #{$str};      
-}
-
-@mixin filter($args...) {
-    -webkit-filter: $args;
-            filter: $args;
-}
-
-
 // Adds an scaling animation. Good for CTAs
 @mixin scale-anim($value: 1.1) {
-    @include transition(all 200ms ease-in);
-    @include transform(scale(1));
+    transition: all 200ms ease-in;
+    transform: scale(1);
 
     &:hover {
-        @include transition(all 200ms ease-in);
-        @include transform(scale(#{$value}));
+        transition: all 200ms ease-in;
+        transform: scale(#{$value});
     }
 }
 
@@ -115,7 +24,7 @@
 	background: $white;
 	font-size: 12px;
 	display: inline-block;
-	@include border-radius(25px);
+	border-radius: 25px;
 	vertical-align: middle;
 	position: relative;
 	cursor: pointer;
@@ -155,7 +64,7 @@
 		height: $size;
 		background: $blue;
 		display: block;
-		@include border-radius(50%);
+		border-radius: 50%;
 		position: absolute;		
 	}
 	input[type=checkbox]:not(:checked) + label:after {

@@ -2,8 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import $ from 'jquery';
 import { history } from '../../../store';
 import { Link } from 'react-router';
+import Helpers from '../../common/helpers';
 import { connect } from 'react-redux';
-import { setBreadcrumbs } from '../../../actions/actions';
+import { setBreadcrumbs } from '../../../actions/actions'; 
+import { readEndpoint, setEndpointHost, setEndpointPath } from 'redux-json-api';
 
 import Icon from '../lib/icon/icon';
 import Back from '../../../../../static/back.svg';
@@ -19,42 +21,29 @@ class Breadcrumbs extends Component {
 	}
 	
 	componentDidMount() {
-		
 		history.listen( location => {
-			let id = location.pathname.substring(1);
+			let id = location.query.question_id || location.pathname.substring(1);
 			this.updateTrail(id);
 		});
 	}
 	
 	componentDidUpdate() {	
-		if(this.props.topics && this.props.topics.data.length > 0 && !this.state.initialised) {
+		if(this.props.topics.data.length > 0 && !this.state.initialised) {
 			this.setState({initialised: true}, function() {
-				this.updateTrail(this.props.params.questionId);
+				this.updateTrail(this.props.location.query.question_id);
 			});
 		}
 	}
 	
-	searchIdIndex(id) {
-		
-		// Look for the index of the given ID in the topics dataset
-		let index = null;
-		this.props.topics.data.map(function(item, i) {
-			if (item.id === id) index = i;
-		});
-		return index;
-	}
-	
 	updateTrail(id) {
-		
 		if (id !== undefined) {
 			let newTrail = [];
 
 			if (id !== '') {
-				let index = this.searchIdIndex(id);
+				let index = Helpers.findTopicIndexOfQuestion(this.props.topics, id);
 
 				// Build the breadcrumbs trail if ID found in topics dataset
 				if (index) {
-
 					let level = this.props.topics.data[index].attributes.level,
 						name = this.props.topics.data[index].attributes.name,
 						parents = [];
@@ -65,8 +54,8 @@ class Breadcrumbs extends Component {
 							parentId = this.props.topics.data[index].relationships.parent.data.id || null;
 
 						if (parentId) {
-							parentIndex = this.searchIdIndex(parentId);
-							parents.push({id: parentId, level: i, name: this.props.topics.data[parentIndex].attributes.name});
+							parentIndex = Helpers.findIndex(this.props.topics, parentId);
+							parents.push(this.props.topics.data[parentIndex].attributes.name);
 						}
 						index = parentIndex;
 					}
@@ -74,18 +63,27 @@ class Breadcrumbs extends Component {
 					parents.reverse();
 
 					for (let i=0; i<parents.length; i++) {
-						newTrail[i] = {name: parents[i].name, id: parents[i].id, level: parents[i].level};
+						newTrail.push(parents[i]);
 					}
+					
+					// Add the current topic name
+					newTrail.push(name);
 
-					// Add the current item at the end of the trail
-					newTrail.push({id: id, level: level, name: name});
+					// Add the current question at the end of the trail
+					let questionIndex = Helpers.findIndex(this.props.questions, id);
+					newTrail.push(this.props.questions.data[questionIndex].attributes.short_title);
 				}
-				else { // Case for static pages (i.e. favourites, inbox)
-					newTrail.push({id: id, level: 0, name: id});
+				else { // Case for static pages (i.e. favourites, inbox) or favourite links
+					if (!isNaN(id)) {
+						if (this.props.questions.data[0])
+							newTrail.push(this.props.questions.data[0].attributes.short_title);
+					}
+					else
+						newTrail.push(id);
 				}
 			}
-			else {
-				newTrail.push({name: 'Home'});
+			else { // Case for the home page
+				newTrail.push('Home');
 			}
 
 			this.props.setBreadcrumbs(newTrail);
@@ -95,13 +93,18 @@ class Breadcrumbs extends Component {
 	render() {
 		return (
 			<div className="breadcrumbs">
-				<Link to="/" className={`go-back`}><Icon glyph={Back} /></Link>
 				<ul className="breadcrumbs-items">
-					{this.props.breadcrumbs ? this.props.breadcrumbs.map((item, i) => <li className="item" key={i} data-id={item.id} data-level={item.level} onClick={() => {this.updateTrail(item.id); this.props.setItem(item.id)}}>{item.name}</li>) : ''}
+					{this.props.breadcrumbs ? this.props.breadcrumbs.map((item, i) => <li className="item" key={i}>{item}</li>) : ''}
 				</ul>
 			</div>
 		)
 	}
 }
 
-export default Breadcrumbs;
+const mapDispatchToProps = {
+	setBreadcrumbs
+}
+
+const mapStateToProps = ({ api: { topics = { data: [] }, questions = { data: [] } }, mainReducer: { breadcrumbs } }) => ({ topics, questions, breadcrumbs });
+
+export default connect(mapStateToProps, mapDispatchToProps)(Breadcrumbs);

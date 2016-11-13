@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { history } from '../../../store';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Breadcrumbs from '../breadcrumbs/breadcrumbs';
 import Search from '../search/search';
+import Helpers from '../../common/helpers';
 import $ from 'jquery';
 import Icon from '../lib/icon/icon';
 import Star from '../../../../../static/star.svg';
@@ -19,11 +21,13 @@ class Navigation extends Component {
 	constructor(props) {
 		super(props);
 		
-		this.updateNav = this.updateNav.bind(this);
+		this.loadQuestion = this.loadQuestion.bind(this);
 		this.resetNav = this.resetNav.bind(this);
-		this.renderItem = this.renderItem.bind(this);
+		this.renderTopic = this.renderTopic.bind(this);
+		this.renderQuestion = this.renderQuestion.bind(this);
 		this.clickItem = this.clickItem.bind(this);
 		this.setItem = this.setItem.bind(this);
+		this.goBack = this.goBack.bind(this);
 		
 		this.state = {
 			currentItem: null,
@@ -33,97 +37,108 @@ class Navigation extends Component {
 	
 	componentDidMount() {
 		history.listen( location => {
-			let id = location.pathname.substring(1);
+			let id = location.query.question_id || location.pathname.substring(1);
 			this.checkLocation(id);
 		});
 	}
 	
 	componentDidUpdate() {	
-		if(this.props.topics && this.props.topics.data.length > 0 && !this.state.initialised) {
+		if(this.props.topics.data.length > 0 && !this.state.initialised) {
 			this.setState({initialised: true}, function() {
-				this.checkLocation(this.props.params.questionId);
+				this.checkLocation(this.props.location.query.question_id);
 			});
 		}
 	}
 	
 	checkLocation(id) {
-		if (!this.searchIdIndex(id)) this.resetNav(id);
-		else this.setItem(id);
+		if (isNaN(parseInt(id))) this.resetNav(id); // If the question ID is not a number then reset to home
+		else {
+			let index = Helpers.findTopicIndexOfQuestion(this.props.topics, id);
+			if (index) {
+				if (this.props.topics.data[index].relationships.parent.data) {
+					this.setItem(this.props.topics.data[index].relationships.parent.data.id, this.props.topics.data[index].id);
+				}
+			}
+		}
 	}
 	
 	resetNav(id) {
 		if (id !== undefined) {
-			(id === '') ? this.setState({currentItem: {id: 'home', level: 0, name: 'Home'}}) : this.setState({currentItem: {id: null, level: 0, name: ''}});
+			(id === '') ? this.setState({currentItem: {id: 'home', level: 0, name: 'Home', submenu: null}}) : this.setState({currentItem: {id: null, level: 0, name: '', submenu: null}});
 		}
+		else this.setState({currentItem: {id: null, level: 0, name: '', submenu: null}});
 	}
 	
-	setItem(id) {
-		let index = this.searchIdIndex(id);
+	setItem(id, submenu = null) {
+		let index = Helpers.findIndex(this.props.topics, id);
 		
-		if (index) {
-			this.setState({currentItem: {id: id, level: this.props.topics.data[index].attributes.level, name: this.props.topics.data[index].attributes.name}});
+		if (index >= 0) {
+			this.setState({currentItem: {id: id, level: this.props.topics.data[index].attributes.level + 1, name: this.props.topics.data[index].attributes.name, submenu: submenu}});
 		}
 	}
 	
-	searchIdIndex(id) {
-		// Look for the index of the given ID in the topics dataset
-		let index = null;
-		if (this.props.topics) {
-			this.props.topics.data.map(function(item, i) {
-				if (item.id === id) index = i;
-			});
-			return index;
-		}
+	goBack() {
+		this.setState({currentItem: {id: null, level: this.state.currentItem.level - 1, name: '', submenu: null}});
 	}
 	
-	updateNav(id, updateHistory) {	
-		if (updateHistory) {
-			(id === 'home') ? history.push('/') : history.push(id);
-			if (this.props.navigating) this.props.toggleNav();
-		}
-		else {
-			this.setItem(id);
-		}
+	loadQuestion(id) {
+		//history.push('/insights?question_id=' + id);
+		if (this.props.navigating) this.props.toggleNav();
 	}
 	
 	clickItem(event) {
-		let $el = $(event.currentTarget),
+		let $el = $(event.currentTarget).closest('.nav-topic'),
 			id = $el.data('id');
 		
-		if (!$el.hasClass('disabled')) {
-			if ($el.hasClass('has-children')) {
-				this.setState({currentItem: {id: this.state.currentItem.id, level: this.state.currentItem.level+1, name: this.state.currentItem.name}});
-			}
-			else this.updateNav(id, true);
+		if (!$el.hasClass('disabled')) { // Don't do anything if the item is disabled
+			if ($el.hasClass('has-topics')) this.setItem(id); // Navigating to another topic
+			else if ($el.hasClass('has-questions')) $el.toggleClass('opened'); // Toggling topic's questions submenu
 		}
 	}
 	
-	renderItem(item, i) {
+	renderTopic(item, i) {
+
+		let hidden = '';
+		let opened = '';
 		
-		let hidden = (this.state.currentItem && this.state.currentItem.level === item.attributes.level) ? '' : 'hidden';
-		let active = (this.state.currentItem && this.state.currentItem.id === item.id) ? 'active' : '';
+		if (this.state.currentItem) {
+			let matchLevel = (this.state.currentItem.level == item.attributes.level) ? true : false;
+			let matchParent = true;
+			
+			if (this.state.currentItem.level > 0)
+				matchParent = (item.relationships.parent.data && this.state.currentItem.id == item.relationships.parent.data.id) ? true : false;
+			
+			hidden = (matchLevel && matchParent) ? '' : 'hidden';
+			opened = (this.state.currentItem.submenu == item.id) ? 'opened' : '';
+			//console.log(item.id, opened);
+		}
+		
 		let disabled = (item.attributes.status !== 'active') ? 'disabled' : '';
-		let hasChildren = '';
+		let hasTopics = (item.relationships.topics.data.length > 0) ? 'has-topics' : '';
+		let hasQuestions = (item.relationships.questions.data.length > 0) ? 'has-questions' : '';
 		
-		if (this.props.topics.data.length > 0) {
-			for (var j=0; j<this.props.topics.data.length; j++) {
-				let topic = this.props.topics.data[j];
-				if (topic.relationships.parent.data && topic.relationships.parent.data.id === item.id) {
-					hasChildren = 'has-children';
-					break;
-				}
-			}
-		}
-		
-		return <li className={`nav-item ${active} ${disabled} ${hidden} ${hasChildren}`} key={i} onClick={this.clickItem} data-parent={item.relationships.parent.data ? item.relationships.parent.data.id : ''} data-id={item.id} data-level={item.attributes.level}>{item.attributes.name}<Icon glyph={Forward} /></li>
+		return <li className={`nav-topic ${opened} ${disabled} ${hidden} ${hasTopics} ${hasQuestions}`} key={i} data-parent={item.relationships.parent.data ? item.relationships.parent.data.id : ''} data-id={item.id} data-level={item.attributes.level}>
+			<span className="title" onClick={this.clickItem}>{item.attributes.name}</span><Icon glyph={Forward} />
+			<span className={`status ${item.attributes.status}`}>{item.attributes.status.replace(/_/g, ' ')}</span>
+			{(item.relationships.questions.data && this.props.questions.data) ? <ul className="nav-questions">
+				{item.relationships.questions.data.map((question, j) => this.renderQuestion(question, j))}
+			</ul>: ''}
+		</li>
 	}
-	
+														   
+	renderQuestion(item, i) {
+		let questionActive = (this.props.location.query.question_id === item.id) ? 'active' : '';
+		let index = Helpers.findIndex(this.props.questions, item.id);
+		
+		return (this.props.questions.data[item.id]) ? <li key={i} className={`nav-question ${questionActive}`} onClick={(id) => {this.loadQuestion(id) }} data-id={item.id}><Link to={`/insights?question_id=${item.id}`}>{this.props.questions.data[index].attributes.short_title}</Link></li> : '';
+	}
+														   
 	render() {
+		let goBackHidden = (this.state.currentItem && this.state.currentItem.level > 0) ? '' : 'hidden';
 		return (
 			<nav className="navigation">
-				<Breadcrumbs {...this.props} setItem={this.setItem} resetNav={this.resetNav} />
+				<Breadcrumbs location={this.props.location} setItem={this.setItem} resetNav={this.resetNav} />
 				<div className="sidenav js-sidenav flyout">
-					<Link className="mobile-go-back" to="/" onClick={() => {this.props.toggleNav() }}><Icon glyph={Back} /></Link>
 					<button className="mobile-close" onClick={() => {this.props.toggleNav() }}><Icon glyph={Close} className="icon close" /></button>
 					<table className="mobile-nav-items">
 						<tbody>
@@ -136,9 +151,16 @@ class Navigation extends Component {
 							</tr>
 						</tbody>
 					</table>
-					<ul className="nav-items">
-						{this.props.topics ? this.props.topics.data.map((item, i) => this.renderItem(item, i)) : ''}
+					<ul className="mobile-exit-items js-exit-items">
+						<li className="exit-item"><Link to={this.props.header.data[0] ? this.props.header.data[0].attributes['container-url'] : '#'}><Icon glyph={Logout} />Back to Fingertips</Link></li>
+						<li className="exit-item"><Link to={this.props.header.data[0] ? this.props.header.data[0].attributes['logout-url'] : '#'}><Icon glyph={Logout} />Log out</Link></li>
 					</ul>
+					<div className="nav-scroll">
+						<ul className="nav-topics">
+							<li className={`nav-back ${goBackHidden}`} onClick={this.goBack}><span className="title"><Icon glyph={Back} /> Go back</span></li>
+							{this.props.topics.data ? this.props.topics.data.map((item, i) => this.renderTopic(item, i)) : ''}
+						</ul>
+					</div>
 				</div>
 				<Search closeSearch={this.props.closeSearch} />
 			</nav>
@@ -146,4 +168,6 @@ class Navigation extends Component {
 	}
 }
 
-export default Navigation;
+const mapStateToProps = ({ api: { header = { data: [] },topics = { data: [] }, questions = { data: [] } } }) => ({ header, topics, questions });
+
+export default connect(mapStateToProps)(Navigation);

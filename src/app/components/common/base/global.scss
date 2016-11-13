@@ -48,7 +48,7 @@ a, a:hover, a:active, a:visited, a:focus {
 }
 
 .notification {
-	@include border-radius(20px);
+	border-radius: 20px;
 	background-color: $red;
 	color: $white;
 	width: 17px;
@@ -127,4 +127,16 @@ a, a:hover, a:active, a:visited, a:focus {
 	@include desktop() {
 		top: 95px;
 	}
+}
+
+.status {
+	color: $white;
+	padding: 0 4px;
+	font-size: 10px;
+	border-radius: 3px;
+	margin-right: 5px;
+
+	&.active { background-color: $green-dark; }
+	&.inactive { background-color: $orange; }
+	&.coming_soon { background-color: $red; }
 }

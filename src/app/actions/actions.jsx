@@ -20,10 +20,3 @@ export function changeViewport(state) {
 		payload: state
 	}
 }
-
-export function setAlphaSorting(state) {
-	return {
-		type: 'SET_ALPHA_SORTING',
-		payload: state
-	}
-}

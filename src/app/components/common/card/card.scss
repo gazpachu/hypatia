@@ -4,14 +4,14 @@ $titleLineHeight: 1.2;
 .card {
 	margin-bottom: 30px;
 	border: none;
-	@include border-radius(0);
+	border-radius: 0;
 		
 	@include mobile() {
 		margin-bottom: 15px;
 		width: 100%
 	}		
 
-	.inner {
+	.card-front {
 		background-color: $white;
 	}
 	
@@ -54,6 +54,63 @@ $titleLineHeight: 1.2;
 		width: 15px;
 		height: 15px;
 	}
+	
+	.sent-by {
+		color: $light-grey;
+		font-size: 12px;
+		text-align: right;
+		font-style: italic;
+		
+		.sender-name {
+			font-weight: 500;
+			color: $dark-grey;
+			margin-left: 6px;
+		}
+		
+		.speech-bubble {
+			width: 15px;
+			height: 15px;
+			cursor: pointer;
+			margin-left: 5px;
+		}
+	}
+	
+	.card-back {
+		background-color: $dark-grey;
+		color: $white;
+		padding: 15px;
+		position: absolute;
+		top: 0;
+		left: 15px;	
+		width: 95.5%;		
+		height: 100%;
+		z-index: 1;
+		overflow: scroll;
+		
+		.close {
+			fill: $white;
+			width: 12px;
+			height: 12px;			
+		}
+		
+		.report-title {
+			font-size: 14px;
+			font-weight: bold;
+			padding-right: 15px;
+		}
+		
+		.report-comment {
+			font-size: 12px;
+			margin-top: 5px;
+		}
+		
+		.report-sender {
+			font-size: 12px;
+			text-align: right;
+			font-style: italic;
+			margin-top: 5px;
+		}
+	}
 
 	/*.filters {
 		font-size: 12px;
@@ -85,7 +142,6 @@ $titleLineHeight: 1.2;
 	}*/
 
 	.chart {
-
 	}
 	
 	.remove .icon {
@@ -129,10 +185,18 @@ $titleLineHeight: 1.2;
 		height: $titleSize * $titleLineHeight;
 		padding: 0 25px;
 	}
+	
+	.sent-by {
+		float: left;
+		position: absolute;
+		bottom: 18px;
+		left: 35px;		
+	}
 
 	.footer {
 		padding: 16px 20px;
 		border: none;
+		text-align: right;
 	}
 
 	.remove {
@@ -142,8 +206,6 @@ $titleLineHeight: 1.2;
 	}
 
 	.date {
-		position: absolute;
-		top: 46px;
-		right: 35px;
+		float: none;
 	}
 }

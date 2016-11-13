@@ -1,9 +1,31 @@
+.report-page .navigation .nav-scroll {
+	height: calc(100vh - 130px);
+}
+
 .navigation {
 	
-	.nav-items, .mobile-nav-items, .mobile-exit-items {
+	.sidenav {
+		height: 100%;
+	}
+	
+	.nav-scroll {
+		position: relative;
+	    height: calc(100vh - 95px);
+	}
+	
+	.nav-topics, .mobile-nav-items, .mobile-exit-items {
 		padding: 0;
 		list-style-type: none;
 		margin-bottom: 0;
+	}
+	
+	.nav-topics {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		overflow-y: scroll;
 	}
 	
 	.mobile-nav-items {
@@ -13,7 +35,7 @@
 			display: table;
 			width: 100%;
     		table-layout: fixed;
-			margin-top: 15px;
+			margin-top: 45px;
 			padding-bottom: 10px;
 			border-bottom: 1px solid $lighter-grey;
 			
@@ -32,7 +54,7 @@
 		}
 	}
 	
-	.mobile-go-back, .mobile-close {
+	.mobile-close {
 		display: none;
 		
 		.close {
@@ -47,7 +69,7 @@
 	.mobile-exit-items {
 		max-height: 0;
 		overflow: hidden;
-		@include transition(.3s);
+		transition: .3s;
 		
 		@include desktop() {
 			display: none;
@@ -55,16 +77,6 @@
 		
 		&.active {
 			max-height: 120px;
-		}
-	}
-	
-	.mobile-go-back {
-		fill: $grey;
-	    margin: 10px 0 0 5px;
-		
-		.icon {
-			width: 15px;
-			height: 15px;
 		}
 	}
 	
@@ -86,20 +98,40 @@
 		}
 	}
 	
-	.nav-item {
-		padding: 15px 10px;
+	.nav-topic, .nav-back {
 		border-bottom: 1px solid $lighter-grey;
 		cursor: pointer;
 		font-size: 14px;
 		color: $grey;
+		position: relative;
 		
-		&.active {
-			background-color: $lighter-grey;
+		.title {
+			display: block;
+			padding: 15px 10px;
+			@include scale-anim(1.03);
+		}
+		
+		.status {
+			display: none;
 		}
 		
 		&.disabled {
-			color: #DDD;
-			cursor: initial;
+			color: #BBB;
+			cursor: not-allowed;
+			
+			.title {
+				padding: 10px 0 0 10px;
+			}
+			
+			.status {
+				display: inline-block;
+				margin: 0 0 10px 10px;
+			}
+			
+			&.has-topics .icon,
+			&.has-questions .icon {
+				top: 10px;
+			}
 		}
 		
 		&:hover {
@@ -108,12 +140,15 @@
 		
 		.icon {
 			display: none;
+			transition: all 0.2s ease;
 		}
 		
-		&.has-children .icon {
+		&.has-topics .icon,
+		&.has-questions .icon {
 			display: inline;
 			position: absolute;
-			right: 10px;
+			right: 15px;
+			top: 15px;
 			width: 15px;
 			height: 15px;
 			margin-top: 3px;
@@ -124,8 +159,75 @@
 			}
 		}
 		
+		&.has-questions .icon {
+			transform: rotate(90deg);
+		}
+		
 		&.hidden {
 			display: none;
+		}
+		
+		&.opened {
+			&:hover {
+				background-color: initial;
+			}
+			
+			.nav-questions {
+				max-height: 1000px;
+			}
+			
+			&.has-questions .icon {
+				transform: rotate(-90deg);
+			}
+		}
+	}
+	
+	.nav-back {
+		
+		&:hover .icon {
+			transform: translateX(-3px);
+		}
+		
+		.icon {
+			display: inline;
+			width: 15px;
+			height: 15px;
+			margin-right: 5px;
+			fill: $grey;
+		}
+	}
+	
+	.nav-questions {
+		max-height: 0;
+		list-style-type: none;
+		padding: 0;
+		overflow: hidden;
+		transition: all 0.3s ease;
+	}
+	
+	.nav-question {
+		border-top: 1px solid $lighter-grey;
+		cursor: pointer;
+		font-size: 12px;
+		border-left: 5px solid $grey;
+		background-color: $quite-light-gray;
+		transition: all 0.2s ease;
+		
+		a {
+			color: $grey;
+			padding: 10px 10px 10px 15px;
+			display: block;
+		}
+		
+		&:hover {
+			background-color: $lighter-grey;
+			border-left: 8px solid $grey;
+			padding-left: 10px;
+		}
+		
+		&.active {
+			border-left: 10px solid $blue;
+			background-color: $lighter-grey;
 		}
 	}
 }
