@@ -6,7 +6,13 @@ Project's website: [https://gazpachu.github.io/hypatia/](https://gazpachu.github
 
 ## Getting Started
 
-npm install dependencies
+- Install Node.js >= 4.5.0 [https://nodejs.org/](https://nodejs.org/)
+
+- Install a Git client. I recommend SourceTree [https://www.sourcetreeapp.com/](https://www.sourcetreeapp.com/)
+
+- Clone this repository to a folder in your computer [https://help.github.com/articles/which-remote-url-should-i-use/](https://help.github.com/articles/which-remote-url-should-i-use/)
+
+- npm install dependencies
 
 ````
 npm install
