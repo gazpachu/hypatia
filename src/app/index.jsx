@@ -15,9 +15,7 @@ import './components/bundle.scss';
 ReactGA.initialize('UA-00000000-1', {
 	debug: false,
 	titleCase: false,
-	gaOptions: {
-		userId: ''
-	}
+	gaOptions: {}
 });
 
 function logPageView() {

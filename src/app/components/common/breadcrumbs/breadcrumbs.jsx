@@ -4,8 +4,7 @@ import { history } from '../../../store';
 import { Link } from 'react-router';
 import Helpers from '../../common/helpers';
 import { connect } from 'react-redux';
-import { setBreadcrumbs } from '../../../actions/actions'; 
-import { readEndpoint, setEndpointHost, setEndpointPath } from 'redux-json-api';
+import { setBreadcrumbs } from '../../../actions/actions';
 
 import Icon from '../lib/icon/icon';
 import Back from '../../../../../static/back.svg';
@@ -28,11 +27,7 @@ class Breadcrumbs extends Component {
 	}
 	
 	componentDidUpdate() {	
-		if(this.props.topics.data.length > 0 && !this.state.initialised) {
-			this.setState({initialised: true}, function() {
-				this.updateTrail(this.props.location.query.question_id);
-			});
-		}
+		
 	}
 	
 	updateTrail(id) {
@@ -105,6 +100,6 @@ const mapDispatchToProps = {
 	setBreadcrumbs
 }
 
-const mapStateToProps = ({ api: { topics = { data: [] }, questions = { data: [] } }, mainReducer: { breadcrumbs } }) => ({ topics, questions, breadcrumbs });
+const mapStateToProps = ({ mainReducer: { breadcrumbs } }) => ({ breadcrumbs });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Breadcrumbs);

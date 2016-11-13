@@ -103,7 +103,6 @@ class Search extends Component {
 				<input type="text" className="search-input" value={this.state.keyword} onChange={this.handleChange} /><Icon glyph={SearchIcon} className="search-icon icon" /><button className="expand-icon" onClick={this.expandPanel}><Icon glyph={Expand} /></button>
 				<div className="search-scroll">
 					<ul className="search-items">
-						{this.props.questions.data ? this.state.questions.map((question, i) => this.renderItem(question, i)) : ''}
 						<li className="search-item no-results-found">-- no results found --</li>
 					</ul>
 				</div>
@@ -112,6 +111,6 @@ class Search extends Component {
 	}
 }
 
-const mapStateToProps = ({ api: { questions = { data: [] }, topics = { data: [] } } }) => ({ questions, topics });
+const mapStateToProps = ({ }) => ({ });
 
 export default connect(mapStateToProps)(Search);

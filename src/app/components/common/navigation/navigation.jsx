@@ -151,14 +151,9 @@ class Navigation extends Component {
 							</tr>
 						</tbody>
 					</table>
-					<ul className="mobile-exit-items js-exit-items">
-						<li className="exit-item"><Link to={this.props.header.data[0] ? this.props.header.data[0].attributes['container-url'] : '#'}><Icon glyph={Logout} />Back to Fingertips</Link></li>
-						<li className="exit-item"><Link to={this.props.header.data[0] ? this.props.header.data[0].attributes['logout-url'] : '#'}><Icon glyph={Logout} />Log out</Link></li>
-					</ul>
 					<div className="nav-scroll">
 						<ul className="nav-topics">
 							<li className={`nav-back ${goBackHidden}`} onClick={this.goBack}><span className="title"><Icon glyph={Back} /> Go back</span></li>
-							{this.props.topics.data ? this.props.topics.data.map((item, i) => this.renderTopic(item, i)) : ''}
 						</ul>
 					</div>
 				</div>
@@ -168,6 +163,6 @@ class Navigation extends Component {
 	}
 }
 
-const mapStateToProps = ({ api: { header = { data: [] },topics = { data: [] }, questions = { data: [] } } }) => ({ header, topics, questions });
+const mapStateToProps = ({ }) => ({ });
 
 export default connect(mapStateToProps)(Navigation);

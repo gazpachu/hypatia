@@ -6,7 +6,6 @@ import $ from 'jquery';
 import Icon from '../common/lib/icon/icon';
 
 import Icon404 from '../../../../static/404.svg';
-import LighthouseLogoDark from '../../../../static/lighthouse-logo-dark.svg';
 
 
 class NotFound extends Component {
@@ -21,8 +20,7 @@ class NotFound extends Component {
 	
 	render () {
 		return (
-			<section className="notFound page container-fluid">
-		
+			<section className="notFound page container-fluid">		
 				<div className="col-md-4 col-md-offset-4 col-xs-10 col-xs-offset-1">
 					<Icon glyph={Icon404} className="icon icon-404" />
 					
@@ -36,11 +34,6 @@ class NotFound extends Component {
 						<Link to="/" className="btn btn-primary btn-xs">dry land</Link>
 					</div>
 				</div>
-				
-				<div className="col-md-12 footer">
-					<Icon glyph={LighthouseLogoDark} />
-				</div>
-				
 			</section>
 		)
 	}

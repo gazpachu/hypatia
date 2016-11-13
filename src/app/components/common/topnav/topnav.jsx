@@ -7,7 +7,6 @@ import Navigation from '../navigation/navigation';
 import { setAlphaSorting } from '../../../actions/actions';
 
 import Icon from '../lib/icon/icon';
-import Logo from '../../../../../static/logo.svg';
 import Avatar from '../../../../../static/avatar.svg';
 import Star from '../../../../../static/star.svg';
 import Mail from '../../../../../static/mail.svg';
@@ -42,12 +41,6 @@ class TopNav extends Component {
 	componentDidMount() {
 		history.listen( location =>  {
 			let page = location.pathname.substring(1);
-
-			if (page === 'favourites' || page === 'inbox') {
-				$('.js-card-controls').show();
-			} else {
-				$('.js-card-controls').hide();
-			}
 		});	
 	}
 	
@@ -151,41 +144,6 @@ class TopNav extends Component {
 					<Link to="/inbox" className="top-nav-item" onClick={() => {this.closeNav(); this.closeSearch() }}><Icon glyph={Mail} className="icon mail" /></Link>
 					<button className="top-nav-item" onClick={() => {this.toggleSearch() }}>{this.state.searching ? <Icon glyph={Close} className="icon close-search" /> : <Icon glyph={Search} className="icon search" />}</button>
 					
-					<Link to="/"><Icon glyph={Logo} className="icon logo" /></Link>
-					<div className="waves">
-						<div className="wave wave-1"></div>
-						<div className="wave wave-2"></div>
-					</div>
-					
-					<div className="user-info">
-						<Icon glyph={Chat} className="icon chat" />
-						{this.props.header.data[0] && this.props.header.data[0].attributes['avatar_url'] ? <img className="avatar" src={this.props.header.data[0].attributes['avatar_url']} /> : <Icon glyph={Avatar} className="icon avatar" />}
-						<button className="username" onClick={this.toggleLogout}>{this.props.header.data[0] && this.props.header.data[0].attributes.name ? this.props.header.data[0].attributes.name : 'Test User'}<Icon glyph={SortActiveDown} /></button>
-						<ul className="exit-nav js-exit-items">
-							<li className="exit-item">
-								<a href={this.props.header.data[0] ? this.props.header.data[0].attributes['container_url'] : '#'}><Icon glyph={Logout} />Back to Fingertips</a>
-							</li>
-							<li className="exit-item">
-								<a href={this.props.header.data[0] ? this.props.header.data[0].attributes['logout_url'] : '#'}><Icon glyph={Logout} />Log out</a>
-							</li>
-						</ul>
-					</div>
-					
-					<div className="card-controls js-card-controls">
-						{/*<div className="top-nav-item sort-item from-sort">from<Icon glyph={SortPassive} className="icon sort-passive" /></div>*/}
-						<div className="top-nav-item sort-item alphabetical-sort js-alphabetical-sort" onClick={this.alphabeticSort.bind(this)}>AZ
-							<Icon glyph={SortPassive} className="icon sort-passive" style={noSortingStyle} />
-							<Icon glyph={SortActiveUp} className="icon sort-ascending" style={sortAscendingStyle} />
-							<Icon glyph={SortActiveDown} className="icon sort-descending" style={sortDescendingStyle} />
-						</div>
-						{/*<div className="top-nav-item sort-item date-sort">date<Icon glyph={SortActiveDown} className="icon sort-active-down" /></div>*/}
-						{/*<div className="top-nav-item sort-item read-sort">read<Icon glyph={SortActiveDown} className="icon sort-active-down" /></div>*/}
-						<span className="top-nav-item sort-item view-as">view as:</span>
-						<span className="toggle-switch">
-							<input type="checkbox" id="mode" name="mode" value="cards" onClick={(e) => {this.toggleView(e) }} />
-							<label className="radio" htmlFor="mode"></label>								
-						</span>
-					</div>
 				</div>
 				<Navigation location={this.props.location} toggleNav={this.toggleNav} openNav={this.openNav} closeNav={this.closeNav} toggleSearch={this.toggleSearch} openSearch={this.openSearch} closeSearch={this.closeSearch} searching={this.state.searching} navigating={this.state.navigating} toggleLogout={this.toggleLogout} />
 				<div className="overlay js-overlay" onClick={() => {this.closeNav(); this.closeSearch() }}></div>
@@ -194,10 +152,10 @@ class TopNav extends Component {
 	}
 }
 
-const mapStateToProps = ({ api: { filters = { data: [] }, header = { data: [] } }, mainReducer: { alphaSorting } }) => ({ filters, header, alphaSorting });
+const mapStateToProps = ({ mainReducer: { } }) => ({ });
 
 const mapDispatchToProps = {
-	setAlphaSorting
+	
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TopNav);

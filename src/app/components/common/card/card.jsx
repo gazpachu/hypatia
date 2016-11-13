@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { readEndpoint, deleteEntity, setEndpointHost, setEndpointPath, setAccessToken } from 'redux-json-api';
 import { API_URL, API_PATH } from '../../../constants/constants';
 import $ from 'jquery';
 import moment from 'moment';

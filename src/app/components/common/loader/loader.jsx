@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import $ from 'jquery';
 import Helpers from '../helpers';
 import Icon from '../lib/icon/icon';
-import LoaderLogo from '../../../../../static/lighthouse-logo.svg';
 
 class Loader extends Component {
 
@@ -21,7 +20,6 @@ class Loader extends Component {
 				<div className="loader__line-mask">
 					<div className="loader__line"></div>
 				</div>
-				<Icon glyph={LoaderLogo} className="loader__logo" />
 			</section>
 		)
 	}
