@@ -2,9 +2,9 @@ import * as firebase from 'firebase';
 import { firebaseConfig } from '../constants/firebase';
 
 // Firebase initialization
-firebase.initializeApp(firebaseConfig);
-export const ref = firebase.database().ref()
-export const firebaseAuth = firebase.auth;
+//firebase.initializeApp(firebaseConfig);
+//export const ref = firebase.database().ref()
+//export const firebaseAuth = firebase.auth;
 
 export function auth(email, pw) {
   	return firebaseAuth().createUserWithEmailAndPassword(email, pw)

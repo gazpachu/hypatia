@@ -10,8 +10,9 @@ import { auth, login, logout } from '../../../helpers/auth';
 import Icon from '../lib/icon/icon';
 import Logo from '../../../../../static/logo.svg';
 import Avatar from '../../../../../static/avatar.svg';
-import Star from '../../../../../static/star.svg';
-import Mail from '../../../../../static/mail.svg';
+import Trophy from '../../../../../static/trophy.svg';
+import Calendar from '../../../../../static/calendar.svg';
+import Info from '../../../../../static/info.svg';
 import Search from '../../../../../static/search.svg';
 import Close from '../../../../../static/x.svg';
 import SortPassive from '../../../../../static/sort-passive.svg';
@@ -129,13 +130,14 @@ class TopNav extends Component {
 	}
 	
 	handleSignup = (e) => {
-		e.preventDefault()
-    	auth(this.email.value, this.pw.value)
+		e.preventDefault();
+		if (this.pw.value === this.pw2.value)
+    		auth(this.email.value, this.pw.value);
 	}
 	
 	handleSignin = (e) => {
-		e.preventDefault()
-    	console.log(login(this.email.value, this.pw.value));
+		e.preventDefault();
+    	login(this.email.value, this.pw.value);
 	}
 	
 	render() {			
@@ -152,32 +154,44 @@ class TopNav extends Component {
 						<span></span>
 						<span></span>
 					</div>
-					<Link to="/favourites" className="top-nav-item" onClick={() => {this.closeNav(); this.closeSearch() }}><Icon glyph={Star} className="icon star" /></Link>
-					<Link to="/inbox" className="top-nav-item" onClick={() => {this.closeNav(); this.closeSearch() }}><Icon glyph={Mail} className="icon mail" /></Link>
 					<button className="top-nav-item" onClick={() => {this.toggleSearch() }}>{this.state.searching ? <Icon glyph={Close} className="icon close-search" /> : <Icon glyph={Search} className="icon search" />}</button>
+					<div className="top-nav-item" onClick={() => {this.closeNav(); this.closeSearch() }}><Icon glyph={Calendar} className="icon calendar" /></div>
+					<div className="top-nav-item" onClick={() => {this.closeNav(); this.closeSearch() }}><Icon glyph={Trophy} className="icon trophy" /></div>
+					<div className="top-nav-item" onClick={() => {this.closeNav(); this.closeSearch() }}><Icon glyph={Info} className="icon info" /></div>
 					
-					<Icon glyph={Logo} className="icon logo" />
+					<Link to="/" className="logo">
+						<Icon glyph={Logo} />
+						<span>Hypatia</span>
+					</Link>
 					
 					{(!this.props.user) ? 
-						<div className="user-form">
-							<form className="sign-up" onSubmit={this.handleSignup}>
-								<input type="text" className="form-control" ref={(email) => this.email = email} placeholder="Email" />
-								<input type="password" className="form-control" placeholder="Password" ref={(pw) => this.pw = pw} />
-								<button type="submit" className="btn btn-primary">Sign up</button>
-							</form>
-							<form className="sign-in" onSubmit={this.handleSignin}>
-								<input type="text" className="form-control" ref={(email) => this.email = email} placeholder="Email" />
-								<input type="password" className="form-control" placeholder="Password" ref={(pw) => this.pw = pw} />
-								<button type="submit" className="btn btn-primary">Sign in</button>
-							</form>
+						<div className="user-controls">
+							<div className="user-controls-cta sign-up-cta"><span>Sign up</span>
+								<form className="user-form sign-up" onSubmit={this.handleSignup}>
+									<input type="text" className="form-control" ref={(email) => this.email = email} placeholder="Email" />
+									<input type="password" className="form-control" placeholder="Password" ref={(pw) => this.pw = pw} />
+									<input type="password2" className="form-control" placeholder="Repeat password" ref={(pw2) => this.pw2 = pw2} />
+									<button type="submit" className="btn btn-primary">Sign up</button>
+								</form>
+							</div>
+							<div className="user-controls-cta sign-in-cta"><span>Sign in</span>
+								<form className="user-form sign-in" onSubmit={this.handleSignin}>
+									<input type="text" className="form-control" ref={(email) => this.email = email} placeholder="Email" />
+									<input type="password" className="form-control" placeholder="Password" ref={(pw) => this.pw = pw} />
+									<button type="submit" className="btn btn-primary">Sign in</button>
+								</form>
+							</div>
 						</div>:
-						<div className="user-form">
-							<div>{this.props.user.email}</div>
-							<button onClick={() => {
-								logout();
-								this.props.setUser(null);
-								history.push('/');
-							}}>Sign out</button>
+						<div className="user-controls">
+							<Icon glyph={Chat} className="icon chat" />
+							<div className="user-controls-cta account-cta">
+								<Link to="/account"><Icon glyph={Avatar} />Joan Mira{/*this.props.user.email*/}</Link>
+								<ul className="account-nav">
+									<li><Link to="/" onClick={() => { logout(); this.props.setUser(null);}}>Sign out</Link></li>
+								</ul>
+							</div>
+						
+							
 						</div>
 					}
 				</div>

@@ -7,8 +7,9 @@ import Search from '../search/search';
 import Helpers from '../../common/helpers';
 import $ from 'jquery';
 import Icon from '../lib/icon/icon';
-import Star from '../../../../../static/star.svg';
-import Mail from '../../../../../static/mail.svg';
+import Trophy from '../../../../../static/trophy.svg';
+import Calendar from '../../../../../static/calendar.svg';
+import Info from '../../../../../static/info.svg';
 import SearchIcon from '../../../../../static/search.svg';
 import Close from '../../../../../static/x.svg';
 import Forward from '../../../../../static/forward.svg';
@@ -16,125 +17,127 @@ import Back from '../../../../../static/back.svg';
 import Logout from '../../../../../static/logout.svg';
 import Chat from '../../../../../static/chat.svg';
 
+const defaultProps = {
+	nav_items: [{
+		id: 0,
+		title: 'Dashboard',
+		link: '/dashboard'
+	},
+	{
+		id: 10,
+		title: 'Account',
+		children: [{
+			id: 11,
+			title: 'Summary',
+			link: '/account'
+		},
+		{
+			id: 12,
+			title: 'Settings',
+			link: '/account/settings'
+		},
+		{
+			id: 13,
+			title: 'Notifications',
+			link: '/account/notifications'
+		},
+		{
+			id: 14,
+			title: 'Record',
+			link: '/account/record'
+		}]
+	},
+	{
+		id: 5,
+		title: 'News',
+		link: '/news'
+	},
+	{
+		id: 1,
+		title: 'Courses',
+		link: '/courses'
+	},
+	{
+		id: 2,
+		title: 'Subjects',
+		link: '/subjects'
+	},
+	{
+		id: 3,
+		title: 'Modules',
+		link: '/modules'
+	},
+	{
+		id: 4,
+		title: 'About',
+		children: [{
+			id: 15,
+			title: 'About',
+			link: '/about'
+		},
+		{
+			id: 6,
+			title: 'History',
+			link: '/about/history'
+		},
+		{
+			id: 7,
+			title: 'Research',
+			link: '/about/research'
+		},
+		{
+			id: 8,
+			title: 'People',
+			link: '/about/people'
+		},
+		{
+			id: 9,
+			title: 'Contact',
+			link: '/about/contact'
+		}]
+	}]
+};
+
+const propTypes = {
+	nav_items: PropTypes.array.isRequired,
+	location: PropTypes.object.isRequired,
+	toggleNav: PropTypes.func.isRequired,
+	toggleSearch: PropTypes.func.isRequired,
+	closeSearch: PropTypes.func.isRequired,
+	toggleLogout: PropTypes.func.isRequired
+};
+
 class Navigation extends Component {
 
 	constructor(props) {
 		super(props);
 		
-		this.loadQuestion = this.loadQuestion.bind(this);
-		this.resetNav = this.resetNav.bind(this);
-		this.renderTopic = this.renderTopic.bind(this);
-		this.renderQuestion = this.renderQuestion.bind(this);
+		this.renderItem = this.renderItem.bind(this);
 		this.clickItem = this.clickItem.bind(this);
-		this.setItem = this.setItem.bind(this);
-		this.goBack = this.goBack.bind(this);
-		
-		this.state = {
-			currentItem: null,
-			initialised: false
-		}
 	}
 	
 	componentDidMount() {
-		history.listen( location => {
-			let id = location.query.question_id || location.pathname.substring(1);
-			//this.checkLocation(id);
-		});
-	}
-	
-	componentDidUpdate() {	
-		if(this.props.topics.data.length > 0 && !this.state.initialised) {
-			this.setState({initialised: true}, function() {
-				//this.checkLocation(this.props.location.query.question_id);
-			});
-		}
-	}
-	
-	checkLocation(id) {
-		if (isNaN(parseInt(id))) this.resetNav(id); // If the question ID is not a number then reset to home
-		else {
-			let index = Helpers.findTopicIndexOfQuestion(this.props.topics, id);
-			if (index) {
-				if (this.props.topics.data[index].relationships.parent.data) {
-					this.setItem(this.props.topics.data[index].relationships.parent.data.id, this.props.topics.data[index].id);
-				}
-			}
-		}
-	}
-	
-	resetNav(id) {
-		if (id !== undefined) {
-			(id === '') ? this.setState({currentItem: {id: 'home', level: 0, name: 'Home', submenu: null}}) : this.setState({currentItem: {id: null, level: 0, name: '', submenu: null}});
-		}
-		else this.setState({currentItem: {id: null, level: 0, name: '', submenu: null}});
-	}
-	
-	setItem(id, submenu = null) {
-		let index = Helpers.findIndex(this.props.topics, id);
 		
-		if (index >= 0) {
-			this.setState({currentItem: {id: id, level: this.props.topics.data[index].attributes.level + 1, name: this.props.topics.data[index].attributes.name, submenu: submenu}});
-		}
-	}
-	
-	goBack() {
-		this.setState({currentItem: {id: null, level: this.state.currentItem.level - 1, name: '', submenu: null}});
-	}
-	
-	loadQuestion(id) {
-		//history.push('/insights?question_id=' + id);
-		if (this.props.navigating) this.props.toggleNav();
 	}
 	
 	clickItem(event) {
-		let $el = $(event.currentTarget).closest('.nav-topic'),
-			id = $el.data('id');
-		
-		if (!$el.hasClass('disabled')) { // Don't do anything if the item is disabled
-			if ($el.hasClass('has-topics')) this.setItem(id); // Navigating to another topic
-			else if ($el.hasClass('has-questions')) $el.toggleClass('opened'); // Toggling topic's questions submenu
-		}
-	}
-	
-	renderTopic(item, i) {
-
-		let hidden = '';
-		let opened = '';
-		
-		if (this.state.currentItem) {
-			let matchLevel = (this.state.currentItem.level == item.attributes.level) ? true : false;
-			let matchParent = true;
-			
-			if (this.state.currentItem.level > 0)
-				matchParent = (item.relationships.parent.data && this.state.currentItem.id == item.relationships.parent.data.id) ? true : false;
-			
-			hidden = (matchLevel && matchParent) ? '' : 'hidden';
-			opened = (this.state.currentItem.submenu == item.id) ? 'opened' : '';
-			//console.log(item.id, opened);
-		}
-		
-		let disabled = (item.attributes.status !== 'active') ? 'disabled' : '';
-		let hasTopics = (item.relationships.topics.data.length > 0) ? 'has-topics' : '';
-		let hasQuestions = (item.relationships.questions.data.length > 0) ? 'has-questions' : '';
-		
-		return <li className={`nav-topic ${opened} ${disabled} ${hidden} ${hasTopics} ${hasQuestions}`} key={i} data-parent={item.relationships.parent.data ? item.relationships.parent.data.id : ''} data-id={item.id} data-level={item.attributes.level}>
-			<span className="title" onClick={this.clickItem}>{item.attributes.name}</span><Icon glyph={Forward} />
-			<span className={`status ${item.attributes.status}`}>{item.attributes.status.replace(/_/g, ' ')}</span>
-			{(item.relationships.questions.data && this.props.questions.data) ? <ul className="nav-questions">
-				{item.relationships.questions.data.map((question, j) => this.renderQuestion(question, j))}
-			</ul>: ''}
-		</li>
+		let $el = $(event.currentTarget).closest('.nav-item');
+		$el.toggleClass('opened');
 	}
 														   
-	renderQuestion(item, i) {
-		let questionActive = (this.props.location.query.question_id === item.id) ? 'active' : '';
-		let index = Helpers.findIndex(this.props.questions, item.id);
+	renderItem(item, i) {
+		let itemActive = (this.props.location.pathname === item.link) ? 'active' : '',
+			hasChildren = (item.children) ? 'has-children' : '';
 		
-		return (this.props.questions.data[item.id]) ? <li key={i} className={`nav-question ${questionActive}`} onClick={(id) => {this.loadQuestion(id) }} data-id={item.id}><Link to={`/insights?question_id=${item.id}`}>{this.props.questions.data[index].attributes.short_title}</Link></li> : '';
+		return <li key={i} className={`nav-item ${hasChildren}`}>
+			{(item.children) ? <span className="title" onClick={this.clickItem}>{item.title}<Icon glyph={Forward} /></span> : <Link to={item.link} className="title">{item.title}</Link>}
+			{(item.children) ? <ul className="nav-children">
+				{item.children.map((child, j) => <li key={j} className={`nav-child`}><Link to={child.link}>{child.title}</Link></li>)}
+			</ul> : ''}
+		</li>;
 	}
 														   
 	render() {
-		let goBackHidden = (this.state.currentItem && this.state.currentItem.level > 0) ? '' : 'hidden';
 		return (
 			<nav className="navigation">
 				<Breadcrumbs location={this.props.location} setItem={this.setItem} resetNav={this.resetNav} />
@@ -143,17 +146,17 @@ class Navigation extends Component {
 					<table className="mobile-nav-items">
 						<tbody>
 							<tr>
-								<td><Link to="/favourites" className="mobile-nav-item" onClick={() => {this.props.toggleNav() }}><Icon glyph={Star} className="icon star" /></Link></td>
-								<td><Link to="/inbox" className="mobile-nav-item" onClick={() => {this.props.toggleNav() }}><Icon glyph={Mail} className="icon mail" /></Link></td>
+								<td><div className="mobile-nav-item" onClick={() => {this.props.toggleNav() }}><Icon glyph={Calendar} className="icon calendar" /></div></td>
+								<td><div className="mobile-nav-item" onClick={() => {this.props.toggleNav() }}><Icon glyph={Trophy} className="icon trophy" /></div></td>
+								<td><div className="mobile-nav-item" onClick={() => {this.props.toggleNav() }}><Icon glyph={Info} className="icon info" /></div></td>
 								<td><button className="mobile-nav-item" onClick={() => {this.props.toggleSearch() }}><Icon glyph={SearchIcon} className="icon search" /></button></td>
 								<td><button className="mobile-nav-item"><Icon glyph={Chat} /></button></td>
-								<td><button className="mobile-nav-item" onClick={() => {this.props.toggleLogout() }}><Icon glyph={Logout} className="icon logout" /></button></td>
 							</tr>
 						</tbody>
 					</table>
 					<div className="nav-scroll">
-						<ul className="nav-topics">
-							<li className={`nav-back ${goBackHidden}`} onClick={this.goBack}><span className="title"><Icon glyph={Back} /> Go back</span></li>
+						<ul className="nav-items">
+							{this.props.nav_items ? this.props.nav_items.map((item, i) => this.renderItem(item, i)) : ''}
 						</ul>
 					</div>
 				</div>
@@ -162,6 +165,9 @@ class Navigation extends Component {
 		)
 	}
 }
+
+Navigation.propTypes = propTypes;
+Navigation.defaultProps = defaultProps;
 
 const mapStateToProps = ({ }) => ({ });
 

@@ -13,13 +13,13 @@
 	    height: calc(100vh - 95px);
 	}
 	
-	.nav-topics, .mobile-nav-items, .mobile-exit-items {
+	.nav-items, .mobile-nav-items, .mobile-exit-items {
 		padding: 0;
 		list-style-type: none;
 		margin-bottom: 0;
 	}
 	
-	.nav-topics {
+	.nav-items {
 		position: absolute;
 		top: 0;
 		bottom: 0;
@@ -45,6 +45,8 @@
 			}
 			
 			.mobile-nav-item {
+				cursor: pointer;
+				
 				.icon {
 					width: 15px;
 					height: 15px;
@@ -98,53 +100,25 @@
 		}
 	}
 	
-	.nav-topic, .nav-back {
+	.nav-item {
 		border-bottom: 1px solid $lighter-grey;
 		cursor: pointer;
 		font-size: 14px;
-		color: $grey;
 		position: relative;
 		
 		.title {
+			color: $grey;
 			display: block;
 			padding: 15px 10px;
 			@include scale-anim(1.03);
-		}
-		
-		.status {
-			display: none;
-		}
-		
-		&.disabled {
-			color: #BBB;
-			cursor: not-allowed;
-			
-			.title {
-				padding: 10px 0 0 10px;
-			}
-			
-			.status {
-				display: inline-block;
-				margin: 0 0 10px 10px;
-			}
-			
-			&.has-topics .icon,
-			&.has-questions .icon {
-				top: 10px;
-			}
 		}
 		
 		&:hover {
 			background-color: $grey-bg;
 		}
 		
-		.icon {
-			display: none;
+		&.has-children .icon {
 			transition: all 0.2s ease;
-		}
-		
-		&.has-topics .icon,
-		&.has-questions .icon {
 			display: inline;
 			position: absolute;
 			right: 15px;
@@ -159,12 +133,8 @@
 			}
 		}
 		
-		&.has-questions .icon {
+		&.has-children .icon {
 			transform: rotate(90deg);
-		}
-		
-		&.hidden {
-			display: none;
 		}
 		
 		&.opened {
@@ -172,32 +142,17 @@
 				background-color: initial;
 			}
 			
-			.nav-questions {
+			.nav-children {
 				max-height: 1000px;
 			}
 			
-			&.has-questions .icon {
+			&.has-children .icon {
 				transform: rotate(-90deg);
 			}
 		}
 	}
 	
-	.nav-back {
-		
-		&:hover .icon {
-			transform: translateX(-3px);
-		}
-		
-		.icon {
-			display: inline;
-			width: 15px;
-			height: 15px;
-			margin-right: 5px;
-			fill: $grey;
-		}
-	}
-	
-	.nav-questions {
+	.nav-children {
 		max-height: 0;
 		list-style-type: none;
 		padding: 0;
@@ -205,7 +160,7 @@
 		transition: all 0.3s ease;
 	}
 	
-	.nav-question {
+	.nav-child {
 		border-top: 1px solid $lighter-grey;
 		cursor: pointer;
 		font-size: 12px;
