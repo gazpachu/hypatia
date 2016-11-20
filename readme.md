@@ -14,6 +14,18 @@ Project's website: [https://gazpachu.github.io/hypatia/](https://gazpachu.github
 
 - npm install dependencies
 
+- Create a file called `firebase.jsx` in `/app/src/constants/` and add the following code with your details from Firebase:
+
+````
+export const firebaseConfig = {
+  	apiKey: "",
+    authDomain: "",
+    databaseURL: "",
+	storageBucket: "",
+    messagingSenderId: ""
+}
+````
+
 ````
 npm install
 ````
