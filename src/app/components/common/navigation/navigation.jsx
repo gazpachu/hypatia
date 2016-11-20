@@ -38,14 +38,14 @@ class Navigation extends Component {
 	componentDidMount() {
 		history.listen( location => {
 			let id = location.query.question_id || location.pathname.substring(1);
-			this.checkLocation(id);
+			//this.checkLocation(id);
 		});
 	}
 	
 	componentDidUpdate() {	
 		if(this.props.topics.data.length > 0 && !this.state.initialised) {
 			this.setState({initialised: true}, function() {
-				this.checkLocation(this.props.location.query.question_id);
+				//this.checkLocation(this.props.location.query.question_id);
 			});
 		}
 	}

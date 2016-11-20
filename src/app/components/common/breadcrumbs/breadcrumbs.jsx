@@ -22,7 +22,7 @@ class Breadcrumbs extends Component {
 	componentDidMount() {
 		history.listen( location => {
 			let id = location.query.question_id || location.pathname.substring(1);
-			this.updateTrail(id);
+			//this.updateTrail(id);
 		});
 	}
 	

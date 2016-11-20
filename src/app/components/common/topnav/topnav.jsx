@@ -4,7 +4,8 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import $ from 'jquery';
 import Navigation from '../navigation/navigation';
-import { setAlphaSorting } from '../../../actions/actions';
+import { setAuthenticated } from '../../../actions/actions';
+import { auth, login, logout } from '../../../helpers/auth';
 
 import Icon from '../lib/icon/icon';
 import Logo from '../../../../../static/logo.svg';
@@ -127,6 +128,16 @@ class TopNav extends Component {
 		}
 	}
 	
+	handleSignup = (e) => {
+		e.preventDefault()
+    	auth(this.email.value, this.pw.value)
+	}
+	
+	handleSignin = (e) => {
+		e.preventDefault()
+    	console.log(login(this.email.value, this.pw.value));
+	}
+	
 	render() {			
 		let noSortingStyle = { display: (this.props.alphaSorting === '') ? 'inline-block' : 'none' };
 		let sortAscendingStyle = { display: (this.props.alphaSorting === 'ascending') ? 'inline-block' : 'none' };
@@ -147,6 +158,24 @@ class TopNav extends Component {
 					
 					<Icon glyph={Logo} className="icon logo" />
 					
+					{(!this.props.authenticated) ? 
+						<div className="forms">
+							<form className="sign-up" onSubmit={this.handleSignup}>
+								<input type="text" className="form-control" ref={(email) => this.email = email} placeholder="Email" />
+								<input type="password" className="form-control" placeholder="Password" ref={(pw) => this.pw = pw} />
+								<button type="submit" className="btn btn-primary">Sign up</button>
+							</form>
+							<form className="sign-in" onSubmit={this.handleSignin}>
+								<input type="text" className="form-control" ref={(email) => this.email = email} placeholder="Email" />
+								<input type="password" className="form-control" placeholder="Password" ref={(pw) => this.pw = pw} />
+								<button type="submit" className="btn btn-primary">Sign in</button>
+							</form>
+						</div>:
+						<div className="login">
+							<div>Hello there!</div>
+							<button onClick={() => { logout(); this.props.setAuthenticated(false) }}>Sign out</button>
+						</div>
+					}
 				</div>
 				<Navigation location={this.props.location} toggleNav={this.toggleNav} openNav={this.openNav} closeNav={this.closeNav} toggleSearch={this.toggleSearch} openSearch={this.openSearch} closeSearch={this.closeSearch} searching={this.state.searching} navigating={this.state.navigating} toggleLogout={this.toggleLogout} />
 				<div className="overlay js-overlay" onClick={() => {this.closeNav(); this.closeSearch() }}></div>
@@ -155,10 +184,10 @@ class TopNav extends Component {
 	}
 }
 
-const mapStateToProps = ({ mainReducer: { } }) => ({ });
+const mapStateToProps = ({ mainReducer: { authenticated } }) => ({ authenticated });
 
 const mapDispatchToProps = {
-	
+	setAuthenticated
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TopNav);

@@ -65,6 +65,7 @@
 		"redux": "^3.5.2",
 		"redux-promise": "^0.5.3",
 		"redux-thunk": "^2.1.0",
+		"firebase": "^3.6.1",
 		"sass-loader": "^3.2.0",
 		"style-loader": "^0.13.1",
 		"svg-sprite-loader": "0.0.26",

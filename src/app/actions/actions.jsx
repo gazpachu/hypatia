@@ -1,5 +1,12 @@
 import * as CONSTANTS from '../constants/constants';
 
+export function setAuthenticated(state) {
+	return {
+		type: 'SET_AUTHENTICATED',
+		payload: state
+	}
+}
+
 export function setLoading(state) {
 	return {
 		type: 'SET_LOADING',

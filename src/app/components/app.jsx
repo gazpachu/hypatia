@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { setLoading, setBreadcrumbs, changeViewport } from '../actions/actions';
-import { API_URL, API_PATH } from '../constants/constants';
+import { setAuthenticated, changeViewport } from '../actions/actions';
+import { firebaseAuth } from '../constants/firebase';
 import _ from "lodash";
 import $ from 'jquery';
 import ReactGA from 'react-ga';
@@ -35,6 +35,14 @@ class App extends Component {
 			let isDesktop = ($(window).width() > 768) ? true : false;
 			this.props.changeViewport(isDesktop);
 		}.bind(this), 500);
+		
+		this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
+      		if (user) this.props.setAuthenticated(true);
+      	});
+	}
+																
+	componentWillUnmount() {
+		this.removeListener()		
 	}
 	
 	render() {
@@ -58,10 +66,11 @@ class App extends Component {
 App.propTypes = propTypes;
 App.defaultProps = defaultProps;
 
-const mapStateToProps = ({ mainReducer: { isDesktop, breadcrumbs } }) => ({ isDesktop, breadcrumbs });
+const mapStateToProps = ({ mainReducer: { isDesktop, breadcrumbs, authenticated } }) => ({ isDesktop, breadcrumbs, authenticated });
 
 const mapDispatchToProps = {
-	changeViewport
+	changeViewport,
+	setAuthenticated
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
