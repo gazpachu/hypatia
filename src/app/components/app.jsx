@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
+import { history } from '../store';
 import { setAuthenticated, changeViewport } from '../actions/actions';
-import { firebaseAuth } from '../constants/firebase';
+import { firebaseAuth } from '../helpers/auth';
 import _ from "lodash";
 import $ from 'jquery';
 import ReactGA from 'react-ga';
@@ -38,6 +39,10 @@ class App extends Component {
 		
 		this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
       		if (user) this.props.setAuthenticated(true);
+			else {
+				if (this.props.location.pathname == '/dashboard' || this.props.location.pathname.indexOf('account') !== -1)
+					history.push('/');
+			}
       	});
 	}
 																

@@ -1,13 +1,10 @@
-import { ref, firebaseAuth } from '../constants/firebase';
+import * as firebase from 'firebase';
+import { firebaseConfig } from '../constants/firebase';
 
-export function requireAuth(nextState, replace) {
-    if(null === firebaseAuth().currentUser) {
-        replace({
-          pathname: '/',
-          state: { nextPathname: nextState.location.pathname }
-        })
-    }
-}
+// Firebase initialization
+firebase.initializeApp(firebaseConfig);
+export const ref = firebase.database().ref()
+export const firebaseAuth = firebase.auth;
 
 export function auth(email, pw) {
   	return firebaseAuth().createUserWithEmailAndPassword(email, pw)

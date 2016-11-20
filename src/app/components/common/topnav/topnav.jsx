@@ -173,7 +173,11 @@ class TopNav extends Component {
 						</div>:
 						<div className="login">
 							<div>Hello there!</div>
-							<button onClick={() => { logout(); this.props.setAuthenticated(false) }}>Sign out</button>
+							<button onClick={() => {
+								logout();
+								this.props.setAuthenticated(false);
+								history.push('/');
+							}}>Sign out</button>
 						</div>
 					}
 				</div>
