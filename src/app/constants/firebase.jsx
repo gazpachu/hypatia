@@ -6,7 +6,7 @@ export const firebaseConfig = {
     authDomain: "",
     databaseURL: "",
 	storageBucket: "",
-    messagingSenderId: ""
+    messagingSenderId: "" 
 }
 
 // Firebase initialization
