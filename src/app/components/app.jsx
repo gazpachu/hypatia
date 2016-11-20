@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { history } from '../store';
-import { setAuthenticated, changeViewport } from '../actions/actions';
+import { setUser, changeViewport } from '../actions/actions';
 import { firebaseAuth } from '../helpers/auth';
 import _ from "lodash";
 import $ from 'jquery';
@@ -38,7 +38,7 @@ class App extends Component {
 		}.bind(this), 500);
 		
 		this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
-      		if (user) this.props.setAuthenticated(true);
+      		if (user) this.props.setUser(user);
 			else {
 				if (this.props.location.pathname == '/dashboard' || this.props.location.pathname.indexOf('account') !== -1)
 					history.push('/');
@@ -71,11 +71,11 @@ class App extends Component {
 App.propTypes = propTypes;
 App.defaultProps = defaultProps;
 
-const mapStateToProps = ({ mainReducer: { isDesktop, breadcrumbs, authenticated } }) => ({ isDesktop, breadcrumbs, authenticated });
+const mapStateToProps = ({ mainReducer: { isDesktop, breadcrumbs, user } }) => ({ isDesktop, breadcrumbs, user });
 
 const mapDispatchToProps = {
 	changeViewport,
-	setAuthenticated
+	setUser
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

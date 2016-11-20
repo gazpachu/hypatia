@@ -1,8 +1,8 @@
 import * as CONSTANTS from '../constants/constants';
 
-export function setAuthenticated(state) {
+export function setUser(state) {
 	return {
-		type: 'SET_AUTHENTICATED',
+		type: 'SET_USER',
 		payload: state
 	}
 }

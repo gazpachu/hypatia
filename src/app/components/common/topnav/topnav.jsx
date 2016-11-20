@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import $ from 'jquery';
 import Navigation from '../navigation/navigation';
-import { setAuthenticated } from '../../../actions/actions';
+import { setUser } from '../../../actions/actions';
 import { auth, login, logout } from '../../../helpers/auth';
 
 import Icon from '../lib/icon/icon';
@@ -158,8 +158,8 @@ class TopNav extends Component {
 					
 					<Icon glyph={Logo} className="icon logo" />
 					
-					{(!this.props.authenticated) ? 
-						<div className="forms">
+					{(!this.props.user) ? 
+						<div className="user-form">
 							<form className="sign-up" onSubmit={this.handleSignup}>
 								<input type="text" className="form-control" ref={(email) => this.email = email} placeholder="Email" />
 								<input type="password" className="form-control" placeholder="Password" ref={(pw) => this.pw = pw} />
@@ -171,11 +171,11 @@ class TopNav extends Component {
 								<button type="submit" className="btn btn-primary">Sign in</button>
 							</form>
 						</div>:
-						<div className="login">
-							<div>Hello there!</div>
+						<div className="user-form">
+							<div>{this.props.user.email}</div>
 							<button onClick={() => {
 								logout();
-								this.props.setAuthenticated(false);
+								this.props.setUser(null);
 								history.push('/');
 							}}>Sign out</button>
 						</div>
@@ -188,10 +188,10 @@ class TopNav extends Component {
 	}
 }
 
-const mapStateToProps = ({ mainReducer: { authenticated } }) => ({ authenticated });
+const mapStateToProps = ({ mainReducer: { user } }) => ({ user });
 
 const mapDispatchToProps = {
-	setAuthenticated
+	setUser
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TopNav);
