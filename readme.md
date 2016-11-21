@@ -30,6 +30,24 @@ export const firebaseConfig = {
 }
 ````
 
+- Import `/data/hypatia-export.json` into your Firebase database
+
+- Set the Firebase database rules to:
+
+````
+".read": "true",
+".write": "auth != null"
+````
+
+- Create a `posts` folder in Firebase storage and upload images with the same filename as the posts' slugs
+
+- Set the Firebase storage rules to:
+
+````
+allow read: if true;
+allow write: if request.auth != null;
+````
+
 ### Start development server with hot reloading
 
 ````
