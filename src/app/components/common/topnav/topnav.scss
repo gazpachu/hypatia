@@ -314,19 +314,22 @@
 			}
 		}
 		
-		.sign-up-cta:hover {
+		.sign-up-cta:hover,
+		.sign-up-cta.active {
 			.sign-up {
 				display: block;
 			}
 		}
 		
-		.sign-in-cta:hover {
+		.sign-in-cta:hover,
+		.sign-in-cta.active {
 			.sign-in {
 				display: block;
 			}
 		}
 		
-		.account-cta:hover {
+		.account-cta:hover,
+		.account-cta.active {
 			.account-nav {
 				display: block;
 			}

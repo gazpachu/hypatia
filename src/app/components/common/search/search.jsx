@@ -100,7 +100,7 @@ class Search extends Component {
 		return (
 			<div className="search-panel js-search-panel flyout">
 				<button className="mobile-close" onClick={() => {this.props.closeSearch() }}><Icon glyph={Close} className="icon close" /></button>
-				<input type="text" className="search-input" value={this.state.keyword} onChange={this.handleChange} /><Icon glyph={SearchIcon} className="search-icon icon" /><button className="expand-icon" onClick={this.expandPanel}><Icon glyph={Expand} /></button>
+				<input type="text" className="search-input input-field" value={this.state.keyword} onChange={this.handleChange} /><Icon glyph={SearchIcon} className="search-icon icon" /><button className="expand-icon" onClick={this.expandPanel}><Icon glyph={Expand} /></button>
 				<div className="search-scroll">
 					<ul className="search-items">
 						<li className="search-item no-results-found">-- no results found --</li>

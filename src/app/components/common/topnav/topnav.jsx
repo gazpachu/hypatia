@@ -39,6 +39,7 @@ class TopNav extends Component {
 		this.openSearch = this.openSearch.bind(this);
 		this.closeSearch = this.closeSearch.bind(this);
 		this.toggleView = this.toggleView.bind(this);
+		this.toggleForm = this.toggleForm.bind(this);
 	}
 	
 	componentDidMount() {
@@ -117,16 +118,8 @@ class TopNav extends Component {
 		$(e.currentTarget).is(':checked') ? $('.js-page').addClass('list-view') : $('.js-page').removeClass('list-view');
 	}
 	
-	toggleLogout() {
-		$('.js-exit-items').toggleClass('active');
-	}
-	
-	alphabeticSort(e) {
-		if (this.props.alphaSorting === '' || this.props.alphaSorting === 'descending') {
-			this.props.setAlphaSorting('ascending');
-		} else {
-			this.props.setAlphaSorting('descending');
-		}
+	toggleForm(e) {
+		console.log(e);	
 	}
 	
 	handleSignup = (e) => {
@@ -155,9 +148,9 @@ class TopNav extends Component {
 						<span></span>
 					</div>
 					<button className="top-nav-item" onClick={() => {this.toggleSearch() }}>{this.state.searching ? <Icon glyph={Close} className="icon close-search" /> : <Icon glyph={Search} className="icon search" />}</button>
-					<div className="top-nav-item" onClick={() => {this.closeNav(); this.closeSearch() }}><Icon glyph={Calendar} className="icon calendar" /></div>
-					<div className="top-nav-item" onClick={() => {this.closeNav(); this.closeSearch() }}><Icon glyph={Trophy} className="icon trophy" /></div>
-					<div className="top-nav-item" onClick={() => {this.closeNav(); this.closeSearch() }}><Icon glyph={Info} className="icon info" /></div>
+					{(this.props.user) ? <div className="top-nav-item" onClick={() => {this.closeNav(); this.closeSearch() }}><Icon glyph={Calendar} className="icon calendar" /></div> : ''}
+					{(this.props.user) ? <div className="top-nav-item" onClick={() => {this.closeNav(); this.closeSearch() }}><Icon glyph={Trophy} className="icon trophy" /></div> : ''}
+					{(this.props.user) ? <div className="top-nav-item" onClick={() => {this.closeNav(); this.closeSearch() }}><Icon glyph={Info} className="icon info" /></div> : ''}
 					
 					<Link to="/" className="logo">
 						<Icon glyph={Logo} />
@@ -166,7 +159,7 @@ class TopNav extends Component {
 					
 					{(!this.props.user) ? 
 						<div className="user-controls">
-							<div className="user-controls-cta sign-up-cta"><span>Sign up</span>
+							<div className="user-controls-cta sign-up-cta" onClick={this.toggleForm}><span>Sign up</span>
 								<form className="user-form sign-up" onSubmit={this.handleSignup}>
 									<input type="text" className="form-control" ref={(email) => this.email = email} placeholder="Email" />
 									<input type="password" className="form-control" placeholder="Password" ref={(pw) => this.pw = pw} />
@@ -195,7 +188,7 @@ class TopNav extends Component {
 						</div>
 					}
 				</div>
-				<Navigation location={this.props.location} toggleNav={this.toggleNav} openNav={this.openNav} closeNav={this.closeNav} toggleSearch={this.toggleSearch} openSearch={this.openSearch} closeSearch={this.closeSearch} searching={this.state.searching} navigating={this.state.navigating} toggleLogout={this.toggleLogout} />
+				<Navigation location={this.props.location} toggleNav={this.toggleNav} openNav={this.openNav} closeNav={this.closeNav} toggleSearch={this.toggleSearch} openSearch={this.openSearch} closeSearch={this.closeSearch} searching={this.state.searching} navigating={this.state.navigating} />
 				<div className="overlay js-overlay" onClick={() => {this.closeNav(); this.closeSearch() }}></div>
             </section>
 		)

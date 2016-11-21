@@ -103,8 +103,7 @@ const propTypes = {
 	location: PropTypes.object.isRequired,
 	toggleNav: PropTypes.func.isRequired,
 	toggleSearch: PropTypes.func.isRequired,
-	closeSearch: PropTypes.func.isRequired,
-	toggleLogout: PropTypes.func.isRequired
+	closeSearch: PropTypes.func.isRequired
 };
 
 class Navigation extends Component {
