@@ -163,7 +163,7 @@ class TopNav extends Component {
 								<form className="user-form sign-up" onSubmit={this.handleSignup}>
 									<input type="text" className="form-control" ref={(email) => this.email = email} placeholder="Email" />
 									<input type="password" className="form-control" placeholder="Password" ref={(pw) => this.pw = pw} />
-									<input type="password2" className="form-control" placeholder="Repeat password" ref={(pw2) => this.pw2 = pw2} />
+									<input type="password" className="form-control" placeholder="Repeat password" ref={(pw2) => this.pw2 = pw2} />
 									<button type="submit" className="btn btn-primary">Sign up</button>
 								</form>
 							</div>

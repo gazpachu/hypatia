@@ -38,7 +38,6 @@ class App extends Component {
 		}.bind(this), 500);
 		
 		this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
-			console.log(user);
       		if (user) this.props.setUser(user);
 			else if (this.isPrivatePage()) history.push('/');
       	});
