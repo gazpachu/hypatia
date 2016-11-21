@@ -10,15 +10,17 @@ Project's website: [https://gazpachu.github.io/hypatia/](https://gazpachu.github
 
 - Install a Git client. I recommend SourceTree [https://www.sourcetreeapp.com/](https://www.sourcetreeapp.com/)
 
-- Clone this repository to a folder in your computer [https://help.github.com/articles/which-remote-url-should-i-use/](https://help.github.com/articles/which-remote-url-should-i-use/)
+- Clone this repository into a folder in your computer [https://help.github.com/articles/which-remote-url-should-i-use/](https://help.github.com/articles/which-remote-url-should-i-use/)
 
-- npm install dependencies
+- Install the NPM dependencies:
 
 ````
 npm install
 ````
 
-- Create a file called `firebase.jsx` in `/app/src/constants/` and add the following code with your details from Firebase:
+- Create a new project in your Firebase account
+
+- Create a file called `firebase.jsx` in `/app/src/constants/` and add the following code with the details from the project you created:
 
 ````
 export const firebaseConfig = {
@@ -39,7 +41,7 @@ export const firebaseConfig = {
 ".write": "auth != null"
 ````
 
-- Create a `posts` folder in Firebase storage and upload images with the same filename as the posts' slugs
+- Create a `posts` folder in Firebase storage and upload demo images with the same filename as the posts' slugs (i.e.: /posts/new-virtual-campus.jpg)
 
 - Set the Firebase storage rules to:
 
