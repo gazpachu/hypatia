@@ -14,20 +14,38 @@ Project's website: [https://gazpachu.github.io/hypatia/](https://gazpachu.github
 
 - npm install dependencies
 
-- Create a file called `firebase.jsx` in `/app/src/constants/` and add the following code with your details from Firebase:
+````
+npm install
+````
+
+- Create a file called `store.jsx` in `/app/src/` and add the following code with your details from Firebase:
 
 ````
-export const firebaseConfig = {
-  	apiKey: "",
+import { syncHistoryWithStore } from 'react-router-redux';
+import { browserHistory } from 'react-router';
+import { createStore, combineReducers, compose } from 'redux';
+import rootReducer from './reducers/index';
+import { reduxReactFirebase } from 'redux-react-firebase';
+import { createHistory } from 'history';
+
+const config = {
+	apiKey: "",
     authDomain: "",
     databaseURL: "",
 	storageBucket: "",
     messagingSenderId: ""
-}
-````
+};
 
-````
-npm install
+const createStoreWithFirebase = compose(
+    reduxReactFirebase(config),
+	window.devToolsExtension ? window.devToolsExtension() : f => f
+)(createStore);
+
+const store = createStoreWithFirebase(rootReducer, {});
+
+export const history = syncHistoryWithStore(browserHistory, store);
+
+export default store;
 ````
 
 ### Start development server with hot reloading
