@@ -124,8 +124,9 @@ class TopNav extends Component {
 	
 	handleSignup = (e) => {
 		e.preventDefault();
-		if (this.pw.value === this.pw2.value)
-    		auth(this.email.value, this.pw.value);
+		if (this.pwSignup.value === this.pw2.value) {
+    		auth(this.emailSignup.value, this.pwSignup.value);
+		}
 	}
 	
 	handleSignin = (e) => {
@@ -161,8 +162,8 @@ class TopNav extends Component {
 						<div className="user-controls">
 							<div className="user-controls-cta sign-up-cta" onClick={this.toggleForm}><span>Sign up</span>
 								<form className="user-form sign-up" onSubmit={this.handleSignup}>
-									<input type="text" className="form-control" ref={(email) => this.email = email} placeholder="Email" />
-									<input type="password" className="form-control" placeholder="Password" ref={(pw) => this.pw = pw} />
+									<input type="text" className="form-control" ref={(emailSignup) => this.emailSignup = emailSignup} placeholder="Email" />
+									<input type="password" className="form-control" placeholder="Password" ref={(pwSignup) => this.pwSignup = pwSignup} />
 									<input type="password" className="form-control" placeholder="Repeat password" ref={(pw2) => this.pw2 = pw2} />
 									<button type="submit" className="btn btn-primary">Sign up</button>
 								</form>
