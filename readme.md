@@ -14,6 +14,10 @@ Project's website: [https://gazpachu.github.io/hypatia/](https://gazpachu.github
 
 - npm install dependencies
 
+````
+npm install
+````
+
 - Create a file called `firebase.jsx` in `/app/src/constants/` and add the following code with your details from Firebase:
 
 ````
@@ -24,10 +28,6 @@ export const firebaseConfig = {
 	storageBucket: "",
     messagingSenderId: ""
 }
-````
-
-````
-npm install
 ````
 
 ### Start development server with hot reloading
