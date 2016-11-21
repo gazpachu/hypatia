@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { history } from '../store';
 import { setUser, changeViewport } from '../actions/actions';
-import { firebaseAuth } from '../helpers/auth';
+import { firebaseAuth } from '../helpers/firebase';
 import _ from "lodash";
 import $ from 'jquery';
 import ReactGA from 'react-ga';

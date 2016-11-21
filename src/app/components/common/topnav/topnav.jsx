@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import $ from 'jquery';
 import Navigation from '../navigation/navigation';
 import { setUser } from '../../../actions/actions';
-import { auth, login, logout } from '../../../helpers/auth';
+import { auth, login, logout } from '../../../helpers/firebase';
 
 import Icon from '../lib/icon/icon';
 import Logo from '../../../../../static/logo.svg';

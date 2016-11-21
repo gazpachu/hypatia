@@ -1,8 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { setLoading, setFilters } from '../../actions/actions';
-import {connect} from 'react-redux'
-import {firebase, helpers} from 'redux-react-firebase'
+import {connect} from 'react-redux';
+import { Link } from 'react-router';
+import { firebase, helpers } from 'redux-react-firebase';
+import { database, storage } from '../../helpers/firebase';
 import $ from 'jquery';
+import moment from 'moment';
+import showdown from 'showdown';
 import Icon from '../common/lib/icon/icon';
 
 const {isLoaded, isEmpty, dataToJS} = helpers;
@@ -38,6 +42,27 @@ class Home extends Component {
 //		});
 	}
 	
+	renderItem(post, id) {
+		
+		let imgRef = storage.child('posts/' + post.slug + '.jpg');
+		imgRef.getDownloadURL().then(function(url) {
+		  	this.refs['post-'+id+'-img'].src = url;
+		}.bind(this)).catch(function(error) {
+		  console.log(error);
+		});
+		
+		const converter = new showdown.Converter();
+		
+		return <li key={id} id={id} ref={`post-${id}`} className="post">
+			<h1><Link to={`/news/${post.slug}`}>{post.title}</Link></h1>
+			<div className="post-meta">
+				<p>By <span className="post-author">{post.author}</span> on <span className="post-data">{moment(post.data).format('D/M/YYYY')}</span></p>
+			</div>
+			<img ref={`post-${id}-img`} />
+			<div className="post-content" dangerouslySetInnerHTML={{__html: converter.makeHtml(post.content)}}></div>
+		</li>;
+	}
+	
 	render() {
 		const {firebase, posts} = this.props;
 		
@@ -45,11 +70,11 @@ class Home extends Component {
                           'Loading'
                         : (isEmpty(posts) ) ?
                               'Todo list is empty'
-						: posts.map((post, id) => <li key={id} id={id}>{post.title}</li>)
+						: posts.map((post, id) => this.renderItem(post, id))
 		
 		return (
             <section className="home page container-fluid">
-				<ul>
+				<ul className="posts">
 					{postsList}
 				</ul>
             </section>
