@@ -38,16 +38,24 @@ class App extends Component {
 		}.bind(this), 500);
 		
 		this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
+			console.log(user);
       		if (user) this.props.setUser(user);
-			else {
-				if (this.props.location.pathname == '/dashboard' || this.props.location.pathname.indexOf('account') !== -1)
-					history.push('/');
-			}
+			else if (this.isPrivatePage()) history.push('/');
       	});
+		
+		this.unlisten = history.listen( location => {
+			if (this.isPrivatePage(location.pathname)) history.push('/');
+		});
 	}
 																
 	componentWillUnmount() {
-		this.removeListener()		
+		this.removeListener();
+		this.unlisten();
+	}
+	
+	isPrivatePage(location) {
+		location = location || this.props.location.pathname;
+		(location == '/dashboard' || location.indexOf('account') !== -1) ? true : false;
 	}
 	
 	render() {

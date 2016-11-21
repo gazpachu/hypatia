@@ -2,7 +2,7 @@ import * as firebase from 'firebase';
 import { firebaseConfig } from '../constants/firebase';
 
 // Firebase initialization
-firebase.initializeApp(firebaseConfig);
+//firebase.initializeApp(firebaseConfig);
 export const ref = firebase.database().ref()
 export const firebaseAuth = firebase.auth;
 

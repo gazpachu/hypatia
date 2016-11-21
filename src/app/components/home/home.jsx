@@ -1,10 +1,20 @@
 import React, { Component, PropTypes } from 'react';
 import { setLoading, setFilters } from '../../actions/actions';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux'
+import {firebase, helpers} from 'redux-react-firebase'
 import $ from 'jquery';
 import Icon from '../common/lib/icon/icon';
-import * as firebase from 'firebase';
 
+const {isLoaded, isEmpty, dataToJS} = helpers;
+
+@firebase( [
+  	'posts'
+])
+@connect(
+  	({firebase}) => ({
+    	posts: dataToJS(firebase, 'posts'),
+  	})
+)
 class Home extends Component {
     
 	constructor(props) {
@@ -23,15 +33,25 @@ class Home extends Component {
 //			author: "gazpachu",
 //		  });
 		
-		firebase.database().ref('/posts/').once('value').then(function(snapshot) {
-		  	console.log(snapshot.val());
-		});
+//		firebase.database().ref('/posts/').once('value').then(function(snapshot) {
+//		  	console.log(snapshot.val());
+//		});
 	}
 	
 	render() {
+		const {firebase, posts} = this.props;
+		
+		const postsList = (!isLoaded(posts)) ?
+                          'Loading'
+                        : (isEmpty(posts) ) ?
+                              'Todo list is empty'
+						: posts.map((post, id) => <li key={id} id={id}>{post.title}</li>)
+		
 		return (
             <section className="home page container-fluid">
-				<h1>Hello World! Are you ready for realtime education?</h1>
+				<ul>
+					{postsList}
+				</ul>
             </section>
 		)
 	}
