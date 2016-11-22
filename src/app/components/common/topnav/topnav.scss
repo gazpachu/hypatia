@@ -4,6 +4,7 @@
 	z-index: 2;
 	position: fixed;
 	width: 100%;
+	border-bottom: 1px solid $border-light;
 	
 	.top-nav-bar {
 		padding: 15px 0;
@@ -294,6 +295,7 @@
 	.user-controls {
 		display: inline-block;
 		margin-left: 10px;
+		color: $white;
 		
 		@include desktop() {
 			float: right;

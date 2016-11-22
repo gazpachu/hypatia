@@ -73,10 +73,57 @@ class Home extends Component {
 						: posts.map((post, id) => this.renderItem(post, id))
 		
 		return (
-            <section className="home page container-fluid">
-				<ul className="posts">
-					{postsList}
-				</ul>
+            <section className="home page">
+				<div className="news column">
+					<ul className="posts">
+						{postsList}
+					</ul>
+				</div>
+				<div className="courses column">
+					<h2 className="courses-heading">Coming up courses. Enroll now</h2>
+					<ul className="courses-list">
+						<li className="course-item"><span className="course-title">Multimedia</span>, 4 slots available. Starts in 1 days</li>
+						<li className="course-item"><span className="course-title">Journalism</span>, 4 slots available. Starts in 1 days</li>
+						<li className="course-item"><span className="course-title">Climate change</span>, 4 slots available. Starts in 1 days</li>
+						<li className="course-item"><span className="course-title">Economics</span>, 4 slots available. Starts in 1 days</li>
+						<li className="course-item"><span className="course-title">Art History</span>, 4 slots available. Starts in 1 days</li>
+						<li className="course-item"><span className="course-title">Multimedia</span>, 4 slots available. Starts in 1 days</li>
+						<li className="course-item"><span className="course-title">Multimedia</span>, 4 slots available. Starts in 1 days</li>
+					</ul>
+					<h3 className="new-courses-heading">New courses</h3>
+					<ul className="new-courses-list">
+						<li className="course-item">
+							<div className="course-thumb"></div>
+							<span className="course-title">Self-driving cars</span>
+							<span>Starts in 1 days</span>
+						</li>
+						<li className="course-item">
+							<div className="course-thumb"></div>
+							<span className="course-title">Nanotechnology</span>
+							<span>Starts in 1 days</span>
+						</li>
+						<li className="course-item">
+							<div className="course-thumb"></div>
+							<span className="course-title">Microwaves</span>
+							<span>Starts in 1 days</span>
+						</li>
+						<li className="course-item">
+							<div className="course-thumb"></div>
+							<span className="course-title">Mathematics</span>
+							<span>Starts in 1 days</span>
+						</li>
+						<li className="course-item">
+							<div className="course-thumb"></div>
+							<span className="course-title">English II</span>
+							<span>Starts in 1 days</span>
+						</li>
+						<li className="course-item">
+							<div className="course-thumb"></div>
+							<span className="course-title">French I</span>
+							<span>Starts in 1 days</span>
+						</li>
+					</ul>
+				</div>
             </section>
 		)
 	}

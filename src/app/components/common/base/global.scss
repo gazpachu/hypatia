@@ -1,7 +1,8 @@
 body {
 	font-family: 'Fira Sans', sans-serif;
 	font-weight: lighter;
-	color: $white;
+	color: $dark-grey;
+	margin: 0;
 }
 
 textarea, input, button {
@@ -64,9 +65,18 @@ a, a:hover, a:active, a:visited, a:focus {
 
 }
 
+.column {
+	padding: 20px;
+	
+	@include mobile() {
+		width: 100%;
+	}
+}
+
 .page {
 	min-height: 100vh;
 	padding-top: 80px;
+	background-color: $grey-bg;
 	
 	@include desktop() {
 		padding-top: 95px;

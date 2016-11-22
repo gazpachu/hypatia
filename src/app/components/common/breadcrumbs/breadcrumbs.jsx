@@ -21,72 +21,19 @@ class Breadcrumbs extends Component {
 	
 	componentDidMount() {
 		this.unlisten = history.listen( location => {
-			let id = location.query.question_id || location.pathname.substring(1);
-			//this.updateTrail(id);
+			let newTrail = [];
+			if (location.pathname !== '/') {
+				newTrail = location.pathname.substring(1, location.pathname.lenght).split('/');
+			}
+			else
+				newTrail.push('Home');
+				
+			this.props.setBreadcrumbs(newTrail);
 		});
 	}
 	
 	componentWillUnmount() {
 		this.unlisten();
-	}
-	
-	componentDidUpdate() {	
-		
-	}
-	
-	updateTrail(id) {
-		if (id !== undefined) {
-			let newTrail = [];
-
-			if (id !== '') {
-				let index = Helpers.findTopicIndexOfQuestion(this.props.topics, id);
-
-				// Build the breadcrumbs trail if ID found in topics dataset
-				if (index) {
-					let level = this.props.topics.data[index].attributes.level,
-						name = this.props.topics.data[index].attributes.name,
-						parents = [];
-
-					// Find the item parents if there's any
-					for (let i=level; i>0; i--) {
-						let parentIndex = null,
-							parentId = this.props.topics.data[index].relationships.parent.data.id || null;
-
-						if (parentId) {
-							parentIndex = Helpers.findIndex(this.props.topics, parentId);
-							parents.push(this.props.topics.data[parentIndex].attributes.name);
-						}
-						index = parentIndex;
-					}
-
-					parents.reverse();
-
-					for (let i=0; i<parents.length; i++) {
-						newTrail.push(parents[i]);
-					}
-					
-					// Add the current topic name
-					newTrail.push(name);
-
-					// Add the current question at the end of the trail
-					let questionIndex = Helpers.findIndex(this.props.questions, id);
-					newTrail.push(this.props.questions.data[questionIndex].attributes.short_title);
-				}
-				else { // Case for static pages (i.e. favourites, inbox) or favourite links
-					if (!isNaN(id)) {
-						if (this.props.questions.data[0])
-							newTrail.push(this.props.questions.data[0].attributes.short_title);
-					}
-					else
-						newTrail.push(id);
-				}
-			}
-			else { // Case for the home page
-				newTrail.push('Home');
-			}
-
-			this.props.setBreadcrumbs(newTrail);
-		}
 	}
 	
 	render() {

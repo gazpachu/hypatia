@@ -58,7 +58,12 @@ class App extends Component {
 	}
 	
 	render() {
-		let title = "Hypatia | " + this.props.breadcrumbs.join(' > ');		
+		let title;
+		if (this.props.breadcrumbs[0] === 'Home') {
+			title = 'Hypatia';
+		} else {
+			title = this.props.breadcrumbs.reverse().join(' < ') + ' < Hypatia';
+		}
 		
 		return (
 			<div>
