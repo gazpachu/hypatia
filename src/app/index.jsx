@@ -9,7 +9,7 @@ import './components/bundle.scss';
 
 import App from './components/app';
 import Home from './components/home/home';
-import Dashboard from './components/home/home';
+import Dashboard from './components/dashboard/dashboard';
 import Account from './components/home/home';
 import AccountSettings from './components/home/home';
 import AccountNotifications from './components/home/home';
