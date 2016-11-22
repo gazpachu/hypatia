@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import { setBreadcrumbs } from '../../../actions/actions';
 
 import Icon from '../lib/icon/icon';
-import Back from '../../../../../static/back.svg';
 
 class Breadcrumbs extends Component {
 	

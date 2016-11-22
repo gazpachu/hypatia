@@ -66,7 +66,7 @@ class TopNav extends Component {
 	openNav() {
 		if (!$('.js-sidenav').hasClass('opened')) {
 			$('.flyout').removeClass('opened');
-			$('.js-overlay').show().animateCss('fadeIn');
+			$('.js-overlay').show().animateCss('fade-in');
 			$('.js-sidenav').addClass('opened').removeClass('closed');
 			$('.js-nav-icon').addClass('opened');
 			$('.js-dropdown-panel').removeClass('open');
@@ -77,7 +77,7 @@ class TopNav extends Component {
 	closeNav() {
 		if ($('.js-sidenav').hasClass('opened')) {
 			$('.js-sidenav').removeClass('opened').addClass('closed');
-			$('.js-overlay').animateCss('fadeOut', function() {
+			$('.js-overlay').animateCss('fade-out', function() {
 				$('.js-overlay').hide();
 			});
 			$('.js-nav-icon').removeClass('opened');
@@ -96,7 +96,7 @@ class TopNav extends Component {
 			$('.flyout').removeClass('opened');
 			$searchPanel.addClass('opened').removeClass('closed');
 			$('.js-nav-icon').removeClass('opened');
-			$('.js-overlay').show().animateCss('fadeIn');
+			$('.js-overlay').show().animateCss('fade-in');
 			$('.search-input').focus();
 			$('.js-dropdown-panel').removeClass('open');
 			this.setState({searching: true, navigating: false});
@@ -107,7 +107,7 @@ class TopNav extends Component {
 		let $searchPanel = $('.js-search-panel');
 		if ($searchPanel.hasClass('opened')) {
 			$searchPanel.removeClass('opened').addClass('closed');
-			$('.js-overlay').animateCss('fadeOut', function() {
+			$('.js-overlay').animateCss('fade-out', function() {
 				$('.js-overlay').hide();
 			});
 			this.setState({searching: false, navigating: false});

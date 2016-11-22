@@ -64,6 +64,7 @@
 		.search-input {
 			width: 75%;
 			margin-bottom: 20px;
+			color: $white;
 			
 			@include mobile() {
 				margin-top: 20px;

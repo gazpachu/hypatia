@@ -8,6 +8,8 @@ import $ from 'jquery';
 import moment from 'moment';
 import showdown from 'showdown';
 import Icon from '../common/lib/icon/icon';
+import Back from '../../../../static/back.svg';
+import Forward from '../../../../static/forward.svg';
 
 const {isLoaded, isEmpty, dataToJS} = helpers;
 
@@ -90,6 +92,10 @@ class Home extends Component {
 						<li className="course-item"><span className="course-title">Multimedia</span>, 4 slots available. Starts in 1 days</li>
 						<li className="course-item"><span className="course-title">Multimedia</span>, 4 slots available. Starts in 1 days</li>
 					</ul>
+					<div className="courses-nav">
+						<Icon glyph={Back} />
+						<Icon glyph={Forward} />
+					</div>
 					<h3 className="new-courses-heading">New courses</h3>
 					<ul className="new-courses-list">
 						<li className="course-item">

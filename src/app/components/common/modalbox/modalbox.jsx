@@ -7,7 +7,7 @@ class ModalBox extends Component {
 	closeModalBox () {
 		$('.js-modal-box').hide();
 		
-		$('.js-overlay').animateCss('fadeOut', function() {
+		$('.js-overlay').animateCss('fade-out', function() {
 			$('.js-overlay').hide();
 		});	
 		
@@ -17,7 +17,7 @@ class ModalBox extends Component {
 	submitModalBox () {
 		$('.js-modal-box').hide();
 		
-		$('.js-overlay').animateCss('fadeOut', function() {
+		$('.js-overlay').animateCss('fade-out', function() {
 			$('.js-overlay').hide();
 		});
 		
