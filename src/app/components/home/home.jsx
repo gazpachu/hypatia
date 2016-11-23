@@ -55,12 +55,12 @@ class Home extends Component {
 		
 		const converter = new showdown.Converter();
 		
-		return <li key={id} id={id} ref={`post-${id}`} className="post">
-			<h1><Link to={`/news/${post.slug}`}>{post.title}</Link></h1>
+		return <li key={id} id={id} ref={`post-${id}`} className="featured-post">
+			<h1 className="post-title"><Link to={`/news/${post.slug}`}>{post.title}</Link></h1>
+			<img className="post-image" ref={`post-${id}-img`} />
 			<div className="post-meta">
 				<p>By <span className="post-author">{post.author}</span> on <span className="post-data">{moment(post.data).format('D/M/YYYY')}</span></p>
 			</div>
-			<img ref={`post-${id}-img`} />
 			<div className="post-content" dangerouslySetInnerHTML={{__html: converter.makeHtml(post.content)}}></div>
 		</li>;
 	}
@@ -76,59 +76,62 @@ class Home extends Component {
 		
 		return (
             <section className="home page">
-				<div className="news column">
-					<ul className="posts">
-						{postsList}
-					</ul>
-				</div>
-				<div className="courses column">
-					<h2 className="courses-heading">Coming up courses. Enroll now</h2>
-					<ul className="courses-list">
-						<li className="course-item"><span className="course-title">Multimedia</span>, 4 slots available. Starts in 1 days</li>
-						<li className="course-item"><span className="course-title">Journalism</span>, 4 slots available. Starts in 1 days</li>
-						<li className="course-item"><span className="course-title">Climate change</span>, 4 slots available. Starts in 1 days</li>
-						<li className="course-item"><span className="course-title">Economics</span>, 4 slots available. Starts in 1 days</li>
-						<li className="course-item"><span className="course-title">Art History</span>, 4 slots available. Starts in 1 days</li>
-						<li className="course-item"><span className="course-title">Multimedia</span>, 4 slots available. Starts in 1 days</li>
-						<li className="course-item"><span className="course-title">Multimedia</span>, 4 slots available. Starts in 1 days</li>
-					</ul>
-					<div className="courses-nav">
-						<Icon glyph={Back} />
-						<Icon glyph={Forward} />
+				<div className="hero"></div>
+				<div className="home-columns">
+					<div className="news column">
+						<ul className="posts">
+							{postsList}
+						</ul>
 					</div>
-					<h3 className="new-courses-heading">New courses</h3>
-					<ul className="new-courses-list">
-						<li className="course-item">
-							<div className="course-thumb"></div>
-							<span className="course-title">Self-driving cars</span>
-							<span>Starts in 1 days</span>
-						</li>
-						<li className="course-item">
-							<div className="course-thumb"></div>
-							<span className="course-title">Nanotechnology</span>
-							<span>Starts in 1 days</span>
-						</li>
-						<li className="course-item">
-							<div className="course-thumb"></div>
-							<span className="course-title">Microwaves</span>
-							<span>Starts in 1 days</span>
-						</li>
-						<li className="course-item">
-							<div className="course-thumb"></div>
-							<span className="course-title">Mathematics</span>
-							<span>Starts in 1 days</span>
-						</li>
-						<li className="course-item">
-							<div className="course-thumb"></div>
-							<span className="course-title">English II</span>
-							<span>Starts in 1 days</span>
-						</li>
-						<li className="course-item">
-							<div className="course-thumb"></div>
-							<span className="course-title">French I</span>
-							<span>Starts in 1 days</span>
-						</li>
-					</ul>
+					<div className="courses column">
+						<h2 className="courses-heading">Coming up courses. Enroll now</h2>
+						<ul className="courses-list">
+							<li className="course-item"><span className="course-title">Multimedia</span>, 4 slots available. Starts in 1 days</li>
+							<li className="course-item"><span className="course-title">Journalism</span>, 4 slots available. Starts in 1 days</li>
+							<li className="course-item"><span className="course-title">Climate change</span>, 4 slots available. Starts in 1 days</li>
+							<li className="course-item"><span className="course-title">Economics</span>, 4 slots available. Starts in 1 days</li>
+							<li className="course-item"><span className="course-title">Art History</span>, 4 slots available. Starts in 1 days</li>
+							<li className="course-item"><span className="course-title">Multimedia</span>, 4 slots available. Starts in 1 days</li>
+							<li className="course-item"><span className="course-title">Multimedia</span>, 4 slots available. Starts in 1 days</li>
+						</ul>
+						<div className="courses-nav">
+							<Icon glyph={Back} />
+							<Icon glyph={Forward} />
+						</div>
+						<h3 className="new-courses-heading">New courses</h3>
+						<ul className="new-courses-list">
+							<li className="course-item">
+								<div className="course-thumb"></div>
+								<span className="course-title">Self-driving cars</span>
+								<span>Starts in 1 days</span>
+							</li>
+							<li className="course-item">
+								<div className="course-thumb"></div>
+								<span className="course-title">Nanotechnology</span>
+								<span>Starts in 1 days</span>
+							</li>
+							<li className="course-item">
+								<div className="course-thumb"></div>
+								<span className="course-title">Microwaves</span>
+								<span>Starts in 1 days</span>
+							</li>
+							<li className="course-item">
+								<div className="course-thumb"></div>
+								<span className="course-title">Mathematics</span>
+								<span>Starts in 1 days</span>
+							</li>
+							<li className="course-item">
+								<div className="course-thumb"></div>
+								<span className="course-title">English II</span>
+								<span>Starts in 1 days</span>
+							</li>
+							<li className="course-item">
+								<div className="course-thumb"></div>
+								<span className="course-title">French I</span>
+								<span>Starts in 1 days</span>
+							</li>
+						</ul>
+					</div>
 				</div>
             </section>
 		)

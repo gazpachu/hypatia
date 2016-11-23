@@ -17,6 +17,16 @@
     }
 }
 
+@mixin truncate($lines: 4, $lineHeight: 25) {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	line-height: #{$lineHeight}px;     /* fallback */
+	max-height: #{$lineHeight * $lines}px;      /* fallback */
+	-webkit-line-clamp: $lines; /* number of lines to show */
+	-webkit-box-orient: vertical;
+}
+
 @mixin toggle-switch($width: 50px, $height: 17px, $size: 13px) {
 	
 	width: $width;

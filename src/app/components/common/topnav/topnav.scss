@@ -1,17 +1,17 @@
 .top-nav {
 	background-color: $blue;
-    height: 60px;
+    height: 40px;
 	z-index: 2;
 	position: fixed;
 	width: 100%;
 	border-bottom: 1px solid $border-light;
 	
 	.top-nav-bar {
-		padding: 15px 0;
-		height: 60px;
+		padding: 6px 0;
+    	height: 40px;
 		
 		@include mobile() {
-			height: 50px;
+			padding: 10px 0;
 		}
 	}
 	
@@ -43,54 +43,32 @@
 	.logo {
 		position: absolute;
 		left: 0;
-		top: 8px;
+		top: 6px;
 		right: 0;
+		width: 200px;
 		margin: 0 auto;
-		width: 280px;
-		height: 44px;
 		text-align: center;
+		color: $white;
+		text-decoration: none;
+		
+		@include mobile() {
+			width: 40px;
+		}
 		
 		.icon {
-			width: 60px;
-			height: 44px;
+			width: 40px;
+			height: 28px;
 			stroke: white;
 			fill: white;
-
-			@include mobile() {
-				width: 240px;
-				left: -14px;
-				top: -1px;
-				z-index: -1;
-				margin: initial;
-			}
 		}
 		span {
 			text-transform: uppercase;
-			font-size: 30px;
-		    vertical-align: middle;
+			font-size: 20px;
+		    vertical-align: text-top;
 			
 			@include mobile() {
 				display: none;
 			}
-		}
-	}
-	
-	.waves {
-		position: absolute;
-		left: 23px;
-		right: 0;
-		margin: 0 auto;
-		top: 15px;
-		width: 38px;
-		height: 40px;
-		overflow: hidden;
-		
-		@include mobile() {
-			top: 12px;
-			left: 100px;
-			width: 30px;
-			height: 30px;
-			margin: initial;
 		}
 	}
 	

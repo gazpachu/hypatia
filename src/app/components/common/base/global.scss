@@ -15,8 +15,7 @@ textarea, input, button {
 }
 
 a, a:hover, a:active, a:visited, a:focus {
-	color: $white;
-	text-decoration: none
+	color: $blue;
 }
 
 .btn {
@@ -75,11 +74,11 @@ a, a:hover, a:active, a:visited, a:focus {
 
 .page {
 	min-height: 100vh;
-	padding-top: 80px;
+	padding-top: 60px;
 	background-color: $grey-bg;
 	
 	@include desktop() {
-		padding-top: 95px;
+		padding-top: 70px;
 	}
 }
 
@@ -104,7 +103,7 @@ a, a:hover, a:active, a:visited, a:focus {
 
 	@include desktop() {
 		width: 25%;
-		top: 95px;
+		top: 70px;
 	}
 }
 
@@ -119,7 +118,7 @@ a, a:hover, a:active, a:visited, a:focus {
 
 	@include desktop() {
 		width: 25%;
-		top: 95px;
+		top: 70px;
 	}
 }
 
@@ -135,7 +134,7 @@ a, a:hover, a:active, a:visited, a:focus {
 	animation-duration: .3s;
 	
 	@include desktop() {
-		top: 95px;
+		top: 70px;
 	}
 }
 

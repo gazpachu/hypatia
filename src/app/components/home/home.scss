@@ -1,8 +1,18 @@
 .home {
-	display: flex;
-	
-	@include mobile() {
+	.hero {
+		background: url(/static/img/graduation-banner.jpg) no-repeat;
+		background-position: center 60%;
+		height: 400px;
+		width: 100%;
 		display: block;
+	}
+	
+	.home-columns {
+		display: flex;
+
+		@include mobile() {
+			display: block;
+		}
 	}
 	
 	.news {
@@ -74,5 +84,19 @@
 	.posts {
 		list-style-type: none;
 		padding: 0;
+	}
+	
+	.featured-post {
+		.post-title {
+			font-size: 22px;
+		}
+		.post-content {
+			//@include truncate();
+		}
+	}
+	
+	.post-image {
+		width: 100%;
+		border: 1px solid;
 	}
 }
