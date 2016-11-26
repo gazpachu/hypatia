@@ -7,6 +7,13 @@ export function setUser(state) {
 	}
 }
 
+export function setPanel(state) {
+	return {
+		type: 'SET_PANEL',
+		payload: state
+	}
+}
+
 export function setLoading(state) {
 	return {
 		type: 'SET_LOADING',

@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { history } from '../store';
-import { setUser, changeViewport } from '../actions/actions';
+import { setUser, changeViewport, setPanel } from '../actions/actions';
 import { firebaseAuth } from '../helpers/firebase';
 import _ from "lodash";
 import $ from 'jquery';
@@ -10,6 +10,10 @@ import ReactGA from 'react-ga';
 import Helmet from "react-helmet";
 import TopNav from './common/topnav/topnav';
 import Loader from './common/loader/loader';
+import Chat from './common/chat/chat';
+
+import Icon from './common/lib/icon/icon';
+import Close from '../../../static/x.svg';
 
 const defaultProps = {
 	breadcrumbs: []
@@ -65,6 +69,8 @@ class App extends Component {
 			title = this.props.breadcrumbs.reverse().join(' < ') + ' < Hypatia';
 		}
 		
+		let panelClass = (this.props.panel === '') ? '' : 'open';
+		
 		return (
 			<div>
 				<Helmet title={String(title)} />
@@ -72,6 +78,13 @@ class App extends Component {
 				<div className="main js-main">
 					<Loader />
 					<TopNav location={this.props.location} />
+					<div className={`dropdown-panel js-dropdown-panel ${panelClass}`}>
+						<div onClick={() => this.props.setPanel('')}>
+							<Icon glyph={Close} className="close" />
+						</div>
+
+						{(this.props.panel === 'chat') ? <Chat /> : ''}
+					</div>
 					{React.cloneElement(this.props.children, this.props)}
 				</div>
 			</div>
@@ -83,11 +96,12 @@ class App extends Component {
 App.propTypes = propTypes;
 App.defaultProps = defaultProps;
 
-const mapStateToProps = ({ mainReducer: { isDesktop, breadcrumbs, user } }) => ({ isDesktop, breadcrumbs, user });
+const mapStateToProps = ({ mainReducer: { isDesktop, breadcrumbs, user, panel } }) => ({ isDesktop, breadcrumbs, user, panel });
 
 const mapDispatchToProps = {
 	changeViewport,
-	setUser
+	setUser,
+	setPanel
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

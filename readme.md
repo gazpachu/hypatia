@@ -4,6 +4,8 @@
 
 Project's website: [https://gazpachu.github.io/hypatia/](https://gazpachu.github.io/hypatia/)
 
+Slack group (invitation only): [https://hypatialms.slack.com](https://hypatialms.slack.com) To request for an invitation, contact me at hello [@] joanmira {.} com
+
 ## Getting Started
 
 - Install Node.js >= 4.5.0 [https://nodejs.org/](https://nodejs.org/)

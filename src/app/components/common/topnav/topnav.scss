@@ -281,14 +281,21 @@
 			margin-right: 20px;
 		}
 		
+		a {
+			color: $white;
+			font-size: 14px;
+		}
+		
 		.icon {
-			width: 30px;
-			height: 30px;
 			fill: white;
 			stroke: $white;
 			margin-right: 10px;
 			
 			&.chat {
+				margin: 0;
+				@include scale-anim();
+				cursor: pointer;
+				
 				@include mobile() {
 					display: none;
 				}
