@@ -68,6 +68,7 @@ class Chat extends Component {
 	
 	componentWillUnmount() {
 		this.resetInterval();
+		this.bot.close();
 	}
 	
 	resetInterval() {
@@ -111,13 +112,17 @@ class Chat extends Component {
 					
 					return resolve({ channels, users, currentChannel });
 				});
-
-				// tell the bot to listen
-				this.bot.listen({ token: slackConfig.apiToken });
+				
+				this.bot.im_created((payload) => {
+					console.log(payload);
+				});
 				
 				this.bot.user_typing(function(msg) {
 				  	console.log('several people are coding', msg)
 				});
+
+				// tell the bot to listen
+				this.bot.listen({ token: slackConfig.apiToken });
 			}
 			catch (err) {
 				return reject(err);
@@ -222,7 +227,7 @@ class Chat extends Component {
 				token: slackConfig.apiToken,
 				channel: this.state.currentChannel.id,
 				text,
-				username: "U37ETHA4U"
+				username: this.props.user.email
 			}, (err, data) => {
 				if (err) {
 					this.debugLog('failed to post', data, 'err:', err);
@@ -271,7 +276,7 @@ class Chat extends Component {
 					</ul>
 					<h3 className="sidebar-heading">Direct messages ({this.state.users.length})</h3>
 					<ul className="users">
-						{this.state.users.map((user, i) => <li key={user.id} ref={user.id} className={`user ${user.presence}`}>• {user.name}</li>)}
+						{this.state.users.map((user, i) => <li key={user.id} ref={user.id} className={`user ${user.presence}`}>• {user.real_name}</li>)}
 					</ul>
 				</div>
 				
