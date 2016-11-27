@@ -1,9 +1,8 @@
 .chat-panel {
 	display: flex;
-	background-color: $grey-bg;
 	
 	.sidebar, .groups {
-		border-right: 1px solid $border-dark;
+		border-right: 1px solid $light-grey;
 	}
 	
 	.groups {
@@ -44,7 +43,7 @@
 		}
 	}
 	
-	.channel, .user {
+	.channel {
 		margin: 3px 0;
 		padding: 2px 10px;
 		cursor: pointer;
@@ -59,11 +58,31 @@
 		}
 	}
 	
+	.user {
+		margin: 3px 0;
+		padding: 2px 10px;
+		opacity: .3;
+		
+		&.chatting {
+			font-weight: bold;
+			background-color: rgba(255,255,255,.6);
+		}
+		
+		&.active {
+			cursor: pointer;
+			opacity: 1;
+			
+			&:hover {
+				background-color: rgba(255,255,255,.6);
+			}
+		}
+	}
+	
 	.channel-title {
 		margin-bottom: 0;
 		padding: 5px 10px;
 		font-size: 22px;
-		border-bottom: 1px solid $border-dark;
+		border-bottom: 1px solid $light-grey;
 	}
 	
 	.sidebar {
@@ -93,11 +112,41 @@
 	.messages {
 		height: calc(100vh - 170px);
 		padding: 10px;
+		list-style-type: none;
+		padding: 10px;
+		margin: 0;
+	    overflow: scroll;
 	}
 	
 	.message {
+		display: flex;
+		margin: 5px 0;
+	}
+	
+	.user-name {
+		font-size: 12px;
+		font-weight: bold;
+	}
+	
+	.user-image {
+		width: 35px;
+		margin: 5px 10px 0px 0;
+		
+		img {
+			height: 35px;
+			display: block;
+			border-radius: 5px;
+		}
+	}
+	
+	.text {
+		font-size: 14px;
+	}
+	
+	.new-message {
 		width: 98%;
-		border: 1px solid;
+		border: 1px solid $light-grey;
+		border-radius: 5px;
 		margin-top: 10px;
 		height: 40px;
 		padding: 10px;
