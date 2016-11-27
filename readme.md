@@ -60,9 +60,9 @@ allow read: if true;
 allow write: if request.auth != null;
 ````
 
-- Create a new group in Slack.com and a custom integration (BOT)
+- Create as many groups (teams) in Slack.com as you want and add a custom integration (BOT) to each one of them
 
-- Create a file called `slack.jsx` in `/app/src/constants/` and add the following code with the API Token of the BOT you created:
+- Create a file called `slack.jsx` in `/app/src/constants/` with the following structure. Enter the apiToken for each BOT you created and enter the details that make more sense to your groups
 
 ````
 export const slackGroups = [{
