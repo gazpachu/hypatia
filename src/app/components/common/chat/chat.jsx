@@ -30,15 +30,9 @@ class Chat extends Component {
 			failed: false,
 			users: [],
 			channels: [],
-			defaultChannelId: null,
-			messages: [],
-			postMyMessage: '',
-			postMyFile: '',
-			chatbox: {
-				active: false,
-				channelActiveView: false,
-				chatActiveView: false
-			}
+			currentChannel: {},
+			currentGroup: {},
+			messages: []
 		};
 		
 		// Set class variables
@@ -49,6 +43,11 @@ class Chat extends Component {
 		  	emoji: false // default
 		};
 		
+		this.loadMessages = this.loadMessages.bind(this);
+		this.formatMessage = this.formatMessage.bind(this);
+	}
+	
+	componentDidMount() {
 		// Initiate Emoji Library
 		emojiLoader().then(() => { this.messageFormatter = { emoji: true }; })
 			.catch((err) => this.debugLog(`Cant initiate emoji library ${err}`));
@@ -56,23 +55,20 @@ class Chat extends Component {
 		// Connect bot
 		this.connectBot(this).then((data) => {
 			this.debugLog('got data', data);
-			this.setState({ users: data.users, channels: data.channels, defaultChannelId: data.defaultChannelId });
+			this.setState({ users: data.users, channels: data.channels, currentChannel: data.currentChannel });
 			this.loadMessages();
 		})
 		.catch((err) => {
 			this.debugLog('could not intialize slack bot', err);
 			this.setState({ failed: true });
 		});
-		
-		this.loadMessages = this.loadMessages.bind(this);
-		this.formatMessage = this.formatMessage.bind(this);
-	}
-	
-	componentDidMount() {
-		
 	}
 	
 	componentWillUnmount() {
+		this.resetInterval();
+	}
+	
+	resetInterval() {
 		if (this.activeChannelInterval) {
 			clearInterval(this.activeChannelInterval);
 			this.activeChannelInterval = null;
@@ -105,13 +101,13 @@ class Chat extends Component {
 					payload.users.map((user) => !user.is_bot ? users.push(new User(user)) : null);
 
 					const channels = [];
-					let defaultChannelId = null;
+					let currentChannel = null;
 					payload.channels.map((channel) => {
-						if (channel.name === 'general') defaultChannelId = channel.id;
+						if (channel.name === 'general') currentChannel = channel;
 						channels.push(channel);
 					});
 					
-					return resolve({ channels, users, defaultChannelId });
+					return resolve({ channels, users, currentChannel });
 				});
 
 				// tell the bot to listen
@@ -127,15 +123,23 @@ class Chat extends Component {
 		});
 	}
 	
+	changeCurrentChannel(channelId) {
+		$('.channel').removeClass('active');
+		$(this.refs[channelId]).addClass('active');
+		this.loadMessages(channelId);
+	}
+	
 	loadMessages(channelId) {
 		const that = this;
+		
+		this.resetInterval();
 		
 		// define loadMessages function
 		const getMessagesFromSlack = () => {
 			const messagesLength = that.state.messages.length;
 			channels.history({
 				token: slackConfig.apiToken,
-				channel: channelId || this.state.defaultChannelId
+				channel: channelId || this.state.currentChannel.id
 			}, (err, data) => {
 				if (err) {
 					this.debugLog(`There was an error loading messages for ${channelId}. ${err}`);
@@ -166,13 +170,31 @@ class Chat extends Component {
 		this.activeChannelInterval = setInterval(getMessagesFromSlack, this.refreshTime);
 	}
 	
+	getChannel(id) {
+		id = id || this.state.currentChannel;
+
+		this.state.channels.map((channel) => {
+			if (channel.id === id) return channel;
+		});
+		return {name: ''};
+	}
+	
+	getUser(id) {
+		let thisUser = null;
+		this.state.users.map((user) => {
+			if (user.id === id) thisUser = user;
+		});
+		return thisUser;
+	}
+	
 	formatMessage(message, i) {
-		let thisUser = {name: '', image: ''},
+		let messageText = message.text,
+			thisUser = this.getUser(message.user) || {name: '', image: ''},
 			sameUser = (i>1 && this.state.messages[i-1].user === message.user) ? true : false;
 
-		this.state.users.map((user) => {
-			if (user.id === message.user) thisUser = user;
-		});
+		if (this.messageFormatter.emoji && this.hasEmoji(messageText)) {
+			messageText = emojiParser(messageText);
+		}
 		
 		return <li key={i} className="message clearfix">
 			<div className="user-image">
@@ -181,7 +203,7 @@ class Chat extends Component {
 			<div className="content">
 				{(!sameUser) ? <span className="user-name">{thisUser.name}</span> : ''}
 				{(!sameUser) ? <span className="timestamp">{moment(message.ts).format('D/M/YYYY')}</span> : ''}
-				<div className="text">{message.text}</div>
+				<div className="text" dangerouslySetInnerHTML={{__html: messageText}}></div>
 			</div>
 		</li>;
 	}
@@ -204,20 +226,20 @@ class Chat extends Component {
 				<div className="sidebar">
 					<h3 className="sidebar-heading">Channels</h3>
 					<ul className="channels">
-						{this.state.channels.map((channel, i) => <li key={i} className={classNames('channel', {active: (channel.name === 'general')})}># {channel.name}</li>)}
+						{this.state.channels.map((channel, i) => <li key={channel.id} ref={channel.id} className={classNames('channel', {active: (channel.name === 'general')})} onClick={() => this.changeCurrentChannel(channel.id)}># {channel.name}</li>)}
 					</ul>
 					<h3 className="sidebar-heading">Direct messages</h3>
 					<ul className="users">
-						{this.state.users.map((user, i) => <li key={i} id={user.id} className={`user ${user.presence}`}>• {user.name}</li>)}
+						{this.state.users.map((user, i) => <li key={user.id} ref={user.id} className={`user ${user.presence}`}>• {user.name}</li>)}
 					</ul>
 				</div>
 				
 				<div className="messages-wrapper">
-					<h2 className="channel-title">MATHS #general</h2>
+					<h2 className="channel-title">MATHS #{this.state.currentChannel.name}</h2>
 					<ul className="messages">
 						{this.state.messages.map((message, i) => this.formatMessage(message, i))}
 					</ul>
-					<input type="text" className="new-message" />
+					<input type="text" className="new-message" placeholder={`Message #${this.state.currentChannel.name}`} />
 				</div>
             </section>
 		)
