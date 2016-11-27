@@ -71,6 +71,9 @@ class App extends Component {
 		
 		let panelClass = (this.props.panel === '') ? '' : 'open';
 		
+		if (panelClass === 'open') $('.page').css('position', 'fixed');
+		else $('.page').css('position', 'relative');
+		
 		return (
 			<div>
 				<Helmet title={String(title)} />

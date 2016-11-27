@@ -52,6 +52,16 @@ allow read: if true;
 allow write: if request.auth != null;
 ````
 
+- Create a new group in Slack.com and a custom integration (BOT)
+
+- Create a file called `slack.jsx` in `/app/src/constants/` and add the following code with the API Token of the BOT you created:
+
+````
+export const slackConfig = {
+  	apiToken: ""
+}
+````
+
 ### Start development server with hot reloading
 
 ````
