@@ -33,7 +33,7 @@ class Settings extends Component {
 		var user = firebaseAuth().currentUser;
 
 		user.updateProfile({
-		  	displayName: this.refs['first-name'].value + ' ' + this.refs['last-name1'].value + ' ' + this.refs['last-name2'].value,
+		  	displayName: this.refs['display-name'].value,
 		  	photoURL: 'http://www.gravatar.com/avatar/' + md5(this.props.user.email) + '.jpg?s=150'
 		}).then(function(response) {
 		  	console.log(response);
@@ -48,7 +48,7 @@ class Settings extends Component {
             	{(this.props.user) ?
 					<div className="account-details column">
 						<div className="profile-image">
-							{(this.props.user.photoURL) ? <img className="photo" src={this.props.user.photoURL} /> : <Icon glyph={Avatar} className="icon avatar" />}
+							{(this.props.user.email) ? <img className="photo" src={`http://www.gravatar.com/avatar/${md5(this.props.user.email)}.jpg?s=150`} /> : <Icon glyph={Avatar} className="icon avatar" />}
 						</div>
 						<input type="text" ref="username" placeholder="Username" />
 						<input type="text" ref="display-name" placeholder="Display name" defaultValue={this.props.user.displayName} />

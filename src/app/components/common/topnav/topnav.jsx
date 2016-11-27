@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import $ from 'jquery';
 import Navigation from '../navigation/navigation';
+import md5 from 'md5';
 import { setUser, setPanel } from '../../../actions/actions';
 import { auth, login, logout } from '../../../helpers/firebase';
 
@@ -191,7 +192,7 @@ class TopNav extends Component {
 							<button onClick={() => {this.changePanel('chat') }}>{this.props.panel === 'chat' ? <Icon glyph={Close} className="icon close-chat" /> : <Icon glyph={Chat} className="icon chat" />}</button>
 							
 							<div className="user-controls-cta account-cta">
-								<Link to="/account"><Icon glyph={Avatar} />Joan Mira{/*this.props.user.email*/}</Link>
+								{(this.props.user) ? <Link to="/account">{(this.props.user.email) ? <img className="photo" src={`http://www.gravatar.com/avatar/${md5(this.props.user.email)}.jpg?s=20`} /> : <Icon glyph={Avatar} />} {this.props.user.displayName}</Link> : ''}
 								<ul className="account-nav">
 									<li><Link to="/" onClick={() => { logout(); this.props.setUser(null);}}>Sign out</Link></li>
 								</ul>

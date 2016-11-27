@@ -326,6 +326,11 @@
 		.user-controls-cta {
 			display: inline-block;
 			margin-left: 10px;
+			
+			.photo {
+				border-radius: 25px;
+				margin-right: 5px;
+			}
 		}
 		
 		.user-form, .account-nav {
