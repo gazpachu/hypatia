@@ -1,0 +1,9 @@
+.account {
+	display: flex;
+	
+	@include mobile() {
+		display: block;
+	}
+	
+	
+}

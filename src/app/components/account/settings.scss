@@ -1,0 +1,40 @@
+.account-settings {
+	display: flex;
+	
+	@include mobile() {
+		display: block;
+	}
+	
+	.column {
+		width: 33%;
+		border-right: 1px solid $border-dark;
+	}
+	
+	.account-details {
+		input {
+			border-bottom: 1px solid $border-dark;
+		}
+	}
+	
+	.sidebar {
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+	    width: 100%;
+	}
+	
+	.sidebar-item {
+		border-bottom: 1px solid $border-dark;
+		
+		a {
+			padding: 20px;
+			width: 100%;
+			display: block;
+			
+			&:hover {
+				text-decoration: none;
+				background-color: $lighter-grey;
+			}
+		}
+	}
+}
