@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { setLoading } from '../../../actions/actions';
 import classNames from 'classnames';
 import {connect} from 'react-redux';
+import axios from 'axios';
 import { rtm, channels, chat } from 'slack';
 import { load as emojiLoader, parse as emojiParser } from 'gh-emoji';
 import { slackConfig } from '../../../constants/slack';
@@ -55,14 +56,28 @@ class Chat extends Component {
 			.catch((err) => this.debugLog(`Cant initiate emoji library ${err}`));
 		
 		// Connect bot
-		this.connectBot(this).then((data) => {
-			this.debugLog('got data', data);
-			this.setState({ users: data.users, channels: data.channels, currentChannel: data.currentChannel });
-			this.loadMessages();
+//		this.connectBot(this).then((data) => {
+//			this.debugLog('got data', data);
+//			this.setState({ users: data.users, channels: data.channels, currentChannel: data.currentChannel });
+//			this.loadMessages();
+//		})
+//		.catch((err) => {
+//			this.debugLog('could not intialize slack bot', err);
+//			this.setState({ failed: true });
+//		});
+		
+		axios.get('https://slack.com/oauth/authorize', {
+			params: {
+			  	client_id: slackConfig.clientID,
+				scope: 'channels:read chat:write',
+				state: 'test'
+			}
 		})
-		.catch((err) => {
-			this.debugLog('could not intialize slack bot', err);
-			this.setState({ failed: true });
+		.then(function (response) {
+			console.log(response);
+		})
+		.catch(function (error) {
+			console.log(error);
 		});
 	}
 	
