@@ -9,6 +9,11 @@
 		font-size: 28px;
 		background-color: $grey;
 		padding: 10px;
+		
+		.sidebar-heading {
+			padding: 0;
+			padding-bottom: 10px;
+		}
 	}
 	
 	.group {
@@ -83,6 +88,12 @@
 		padding: 5px 10px;
 		font-size: 22px;
 		border-bottom: 1px solid $light-grey;
+	}
+	
+	.group-title {
+		border-right: 1px solid $light-grey;
+		padding-right: 10px;
+		margin-right: 10px;
 	}
 	
 	.sidebar {

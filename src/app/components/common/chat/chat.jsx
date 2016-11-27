@@ -31,8 +31,9 @@ class Chat extends Component {
 			users: [],
 			channels: [],
 			currentChannel: {},
-			currentGroup: {},
-			messages: []
+			currentGroup: 'Maths',
+			messages: [],
+			postMyMessage: ''
 		};
 		
 		// Set class variables
@@ -45,6 +46,7 @@ class Chat extends Component {
 		
 		this.loadMessages = this.loadMessages.bind(this);
 		this.formatMessage = this.formatMessage.bind(this);
+		this.handleChange = this.handleChange.bind(this);
 	}
 	
 	componentDidMount() {
@@ -126,6 +128,7 @@ class Chat extends Component {
 	changeCurrentChannel(channelId) {
 		$('.channel').removeClass('active');
 		$(this.refs[channelId]).addClass('active');
+		this.setState({ currentChannel: this.getChannel(channelId)})
 		this.loadMessages(channelId);
 	}
 	
@@ -172,11 +175,12 @@ class Chat extends Component {
 	
 	getChannel(id) {
 		id = id || this.state.currentChannel;
+		let thisChannel = {name: ''};
 
 		this.state.channels.map((channel) => {
-			if (channel.id === id) return channel;
+			if (channel.id === id) thisChannel = channel;
 		});
-		return {name: ''};
+		return thisChannel;
 	}
 	
 	getUser(id) {
@@ -196,6 +200,10 @@ class Chat extends Component {
 			messageText = emojiParser(messageText);
 		}
 		
+		if (this.isSystemMessage) {
+			messageText;
+		}
+		
 		return <li key={i} className="message clearfix">
 			<div className="user-image">
 				{(!sameUser) ? <img src={thisUser.image} alt={thisUser.name} width="35" height="35" /> : ''}
@@ -208,38 +216,71 @@ class Chat extends Component {
 		</li>;
 	}
 	
+	postMessage(text) {
+		if (text !== '') {
+			return chat.postMessage({
+				token: slackConfig.apiToken,
+				channel: this.state.currentChannel.id,
+				text,
+				username: "U37ETHA4U"
+			}, (err, data) => {
+				if (err) {
+					this.debugLog('failed to post', data, 'err:', err);
+					return;
+				}
+				
+				this.debugLog('Successfully posted message', text, 'response:', data);
+				this.setState({ postMyMessage: '', sendingLoader: false }, () => {
+//					// Adjust scroll height
+//					setTimeout(() => {
+//						const chatMessages = this.refs.reactSlakChatMessages;
+//						chatMessages.scrollTop = chatMessages.scrollHeight;
+//					}, this.refreshTime);
+				});
+				
+				return this.forceUpdate();
+			});
+		}
+	}
+	
 	debugLog(...args) {
 		if (process.env.NODE_ENV !== 'production') {
 			return console.log('[Chat]', ...args);
 		}
 	}
 	
+	handleChange(e) {
+ 		this.setState({ postMyMessage: e.target.value });
+    	return;
+	}
+	
 	render() {
 		return (
             <section className={`chat-panel ${this.props.class}`}>
 				<ul className="groups">
+					<h3 className="sidebar-heading">Subjects</h3>
 					<li className="group active">MA</li>
 					<li className="group">EL</li>
 					<li className="group">NT</li>
 					<li className="group">QP</li>
 				</ul>
 				<div className="sidebar">
-					<h3 className="sidebar-heading">Channels</h3>
+					<h3 className="sidebar-heading">Channels ({this.state.channels.length})</h3>
 					<ul className="channels">
 						{this.state.channels.map((channel, i) => <li key={channel.id} ref={channel.id} className={classNames('channel', {active: (channel.name === 'general')})} onClick={() => this.changeCurrentChannel(channel.id)}># {channel.name}</li>)}
 					</ul>
-					<h3 className="sidebar-heading">Direct messages</h3>
+					<h3 className="sidebar-heading">Direct messages ({this.state.users.length})</h3>
 					<ul className="users">
 						{this.state.users.map((user, i) => <li key={user.id} ref={user.id} className={`user ${user.presence}`}>• {user.name}</li>)}
 					</ul>
 				</div>
 				
 				<div className="messages-wrapper">
-					<h2 className="channel-title">MATHS #{this.state.currentChannel.name}</h2>
+					<h2 className="channel-title"><span className="group-title">{this.state.currentGroup}</span>#{this.state.currentChannel.name}</h2>
 					<ul className="messages">
 						{this.state.messages.map((message, i) => this.formatMessage(message, i))}
 					</ul>
-					<input type="text" className="new-message" placeholder={`Message #${this.state.currentChannel.name}`} />
+					<input type="text" className="new-message" placeholder={`Message #${this.state.currentChannel.name}`} value={this.state.postMyMessage} onKeyPress={(e) => e.key === 'Enter' ? this.postMessage(this.state.postMyMessage) : null} onChange={ (e) => this.handleChange(e) } />
 				</div>
             </section>
 		)
@@ -253,6 +294,6 @@ const mapDispatchToProps = {
 	setLoading
 }
 
-const mapStateToProps = ({ mainReducer: { isDesktop } }) => ({ isDesktop });
+const mapStateToProps = ({ mainReducer: { isDesktop, user } }) => ({ isDesktop, user });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

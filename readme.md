@@ -6,6 +6,8 @@ Project's website: [https://gazpachu.github.io/hypatia/](https://gazpachu.github
 
 Slack group (invitation only): [https://hypatialms.slack.com](https://hypatialms.slack.com) To request for an invitation, contact me at hello [@] joanmira {.} com
 
+![Chat module](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/screenshots%2Fchat.png?alt=media&token=4479e9db-aff7-48a6-8e02-0b5fe4326cf5)
+
 ## Getting Started
 
 - Install Node.js >= 4.5.0 [https://nodejs.org/](https://nodejs.org/)
