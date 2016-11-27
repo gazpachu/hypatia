@@ -65,9 +65,19 @@ allow write: if request.auth != null;
 - Create a file called `slack.jsx` in `/app/src/constants/` and add the following code with the API Token of the BOT you created:
 
 ````
-export const slackConfig = {
-  	apiToken: ""
-}
+export const slackGroups = [{
+		name: 'Maths',
+		id: 'maths',
+		slug: 'MA',
+		apiToken: ""
+	},
+	{
+		name: 'English',
+		id: 'english',
+		slug: 'EL',
+		apiToken: ""
+	}						
+]
 ````
 
 ### Start development server with hot reloading
