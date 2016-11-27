@@ -17,12 +17,12 @@ class Account extends Component {
 	
 	componentDidMount() {
 		this.props.setLoading(false);  // Move this to API callback when implemented (if ever)
-		$('.js-main').removeClass().addClass('main js-main dashboard-page');
+		$('.js-main').removeClass().addClass('main js-main account-page');
 	}
 	
 	render() {
 		return (
-            <section className="dashboard page">
+            <section className="account page">
 				<div className="coming-up column">
 					<h2 className="courses-heading">To-do and coming up</h2>
 				</div>

@@ -131,7 +131,7 @@ class Navigation extends Component {
 		return <li key={i} className={`nav-item ${hasChildren}`}>
 			{(item.children) ? <span className="title" onClick={this.clickItem}>{item.title}<Icon glyph={Forward} /></span> : <Link to={item.link} className="title" onClick={this.props.toggleNav}>{item.title}</Link>}
 			{(item.children) ? <ul className="nav-children">
-				{item.children.map((child, j) => <li key={j} className={`nav-child`}><Link to={child.link}>{child.title}</Link></li>)}
+				{item.children.map((child, j) => <li key={j} className={`nav-child`}><Link to={child.link} onClick={this.props.toggleNav}>{child.title}</Link></li>)}
 			</ul> : ''}
 		</li>;
 	}

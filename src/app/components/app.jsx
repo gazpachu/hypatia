@@ -30,6 +30,12 @@ class App extends Component {
 	
 	constructor(props) {
 		super(props);
+		
+		this.state = {
+			redirectTo: '/'
+		}
+		
+		this.isPrivatePage = this.isPrivatePage.bind(this);
 	}
 	
 	componentDidMount() {
@@ -42,12 +48,18 @@ class App extends Component {
 		}.bind(this), 500);
 		
 		this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
-      		if (user) this.props.setUser(user);
+      		if (user) {
+				this.props.setUser(user);
+				history.push(this.state.redirectTo);
+			}
 			else if (this.isPrivatePage()) history.push('/');
       	});
 		
 		this.unlisten = history.listen( location => {
-			if (this.isPrivatePage(location.pathname)) history.push('/');
+			if (this.isPrivatePage(location.pathname) && !this.props.user) {
+				this.setState({ redirectTo: location.pathname });
+				history.push('/');
+			}
 		});
 	}
 																
@@ -58,7 +70,8 @@ class App extends Component {
 	
 	isPrivatePage(location) {
 		location = location || this.props.location.pathname;
-		(location == '/dashboard' || location.indexOf('account') !== -1) ? true : false;
+		if (location == '/dashboard' || location.indexOf('account') !== -1) return true;
+		else return false;
 	}
 	
 	render() {

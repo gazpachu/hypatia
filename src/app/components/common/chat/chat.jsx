@@ -51,14 +51,23 @@ class Chat extends Component {
 		// Initiate Emoji Library
 		emojiLoader().then(() => { this.messageFormatter = { emoji: true }; })
 			.catch((err) => this.debugLog(`Cant initiate emoji library ${err}`));
-		
-		// Load default group
-		this.loadGroup();
 	}
 	
 	componentWillUnmount() {
 		this.resetInterval();
 		this.bot.close();
+	}
+	
+	componentWillReceiveProps(newProps) {
+		if (newProps.class !== this.props.class) {
+
+			if (newProps.class === 'open') {
+				this.loadGroup();
+			}
+			else {
+				this.resetInterval();
+			}
+		}
 	}
 	
 	resetInterval() {

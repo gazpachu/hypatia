@@ -6,35 +6,27 @@
 	}
 	
 	.column {
-		width: 33%;
 		border-right: 1px solid $border-dark;
+		min-width: 33.3%;
 	}
 	
-	.account-details {
+	.account-details,
+	.personal-details {
 		input {
+			display: block;
+			width: 100%;
+			margin-bottom: 20px;
 			border-bottom: 1px solid $border-dark;
 		}
 	}
 	
-	.sidebar {
-		list-style-type: none;
-		padding: 0;
-		margin: 0;
-	    width: 100%;
-	}
-	
-	.sidebar-item {
-		border-bottom: 1px solid $border-dark;
-		
-		a {
-			padding: 20px;
-			width: 100%;
-			display: block;
-			
-			&:hover {
-				text-decoration: none;
-				background-color: $lighter-grey;
-			}
-		}
+	.profile-image {
+		width: 150px;
+		height: 150px;
+		margin: 0 auto 30px auto;
+		display: block;
+		border-radius: 100px;
+		border: 2px solid;
+		overflow: hidden;
 	}
 }

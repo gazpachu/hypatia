@@ -1,0 +1,29 @@
+.account {
+	.sidebar {
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+	    width: 100%;
+		max-width: 33%;
+		background-color: $white;
+	}
+	
+	.sidebar-item {
+		border-bottom: 1px solid $border-dark;
+		
+		&.active {
+			background-color: $lighter-grey;
+		}
+		
+		a {
+			padding: 20px;
+			width: 100%;
+			display: block;
+			
+			&:hover {
+				text-decoration: none;
+				background-color: $lighter-grey;
+			}
+		}
+	}
+}
