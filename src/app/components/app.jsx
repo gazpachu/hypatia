@@ -79,11 +79,7 @@ class App extends Component {
 					<Loader />
 					<TopNav location={this.props.location} />
 					<div className={`dropdown-panel js-dropdown-panel ${panelClass}`}>
-						<div onClick={() => this.props.setPanel('')}>
-							<Icon glyph={Close} className="close" />
-						</div>
-
-						{(this.props.panel === 'chat') ? <Chat /> : ''}
+						<Chat class={(this.props.panel === 'chat') ? 'open' : ''} />
 					</div>
 					{React.cloneElement(this.props.children, this.props)}
 				</div>
@@ -91,7 +87,6 @@ class App extends Component {
 		)
 	}
 }
-
 
 App.propTypes = propTypes;
 App.defaultProps = defaultProps;

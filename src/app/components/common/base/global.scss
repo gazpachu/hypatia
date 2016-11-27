@@ -148,13 +148,11 @@ a, a:hover, a:active, a:visited, a:focus {
 	z-index: 1;
 
 	@include mobile () {
-		top: 85px;
-		height: 85vh;
+		top: 70px;
 	}
 
 	.close {
 		right: 20px;
-		top: 20px;
 		fill: $darkest-grey;
 		cursor: pointer;
 	}		

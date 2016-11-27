@@ -291,7 +291,7 @@
 			stroke: $white;
 			margin-right: 10px;
 			
-			&.chat {
+			&.chat, &.close-chat {
 				margin: 0;
 				@include scale-anim();
 				cursor: pointer;

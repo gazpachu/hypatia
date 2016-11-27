@@ -157,8 +157,11 @@ class TopNav extends Component {
 						<span></span>
 					</div>
 					<button className="top-nav-item" onClick={() => {this.toggleSearch() }}>{this.state.searching ? <Icon glyph={Close} className="icon close-search" /> : <Icon glyph={Search} className="icon search" />}</button>
+					
 					{(this.props.user) ? <div className="top-nav-item" onClick={() => {this.changePanel('calendar') }}><Icon glyph={Calendar} className="icon calendar" /></div> : ''}
+					
 					{(this.props.user) ? <div className="top-nav-item" onClick={() => {this.changePanel('trophy') }}><Icon glyph={Trophy} className="icon trophy" /></div> : ''}
+					
 					{(this.props.user) ? <div className="top-nav-item" onClick={() => {this.changePanel('info') }}><Icon glyph={Info} className="icon info" /></div> : ''}
 					
 					<Link to="/" className="logo">
@@ -185,7 +188,8 @@ class TopNav extends Component {
 							</div>
 						</div>:
 						<div className="user-controls">
-							<button onClick={() => {this.changePanel('chat') }}><Icon glyph={Chat} className="icon chat" /></button>
+							<button onClick={() => {this.changePanel('chat') }}>{this.props.panel === 'chat' ? <Icon glyph={Close} className="icon close-chat" /> : <Icon glyph={Chat} className="icon chat" />}</button>
+							
 							<div className="user-controls-cta account-cta">
 								<Link to="/account"><Icon glyph={Avatar} />Joan Mira{/*this.props.user.email*/}</Link>
 								<ul className="account-nav">

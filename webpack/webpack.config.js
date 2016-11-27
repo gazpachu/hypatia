@@ -22,6 +22,10 @@ module.exports = (options) => {
       		extensions: ['', '.js', '.jsx'],
     	},
     	module: {
+			preLoaders: [{
+				test: /\.json$/,
+				loader: 'json'
+			}],
       		loaders: [{
         		test: /.jsx?$/,
         		include: Path.join(__dirname, '../src/app'),
