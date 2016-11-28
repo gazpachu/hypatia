@@ -229,9 +229,11 @@ class Chat extends Component {
 			messageText = emojiParser(messageText);
 		}
 		
-		if (this.isSystemMessage) {
-			messageText;
+		if (this.isSystemMessage(message)) {
+			messageText = messageText.replace('<','').replace('>','').substring(messageText.indexOf('|'), messageText.length);
 		}
+		
+		const timestamp = message.ts.substring(0, message.ts.indexOf('.'));
 		
 		return <li key={i} className="message clearfix">
 			<div className="user-image">
@@ -239,7 +241,7 @@ class Chat extends Component {
 			</div>
 			<div className="content">
 				{(!sameUser) ? <span className="user-name">{thisUser.name}</span> : ''}
-				{(!sameUser) ? <span className="timestamp">{moment(message.ts).format('D/M/YYYY')}</span> : ''}
+				{(!sameUser) ? <span className="timestamp">{moment.unix(timestamp).format('D MMM HH:MM')}</span> : ''}
 				<div className="text" dangerouslySetInnerHTML={{__html: messageText}}></div>
 			</div>
 		</li>;
@@ -278,8 +280,7 @@ class Chat extends Component {
 
 	isSystemMessage(message) {
 		const systemMessageRegex = /<@.[^|]*[|].*>/;
-		return systemMessageRegex.test(message.text) &&
-		  message.text.indexOf(message.user) > -1;
+		return systemMessageRegex.test(message.text) && message.text.indexOf(message.user) > -1;
 	}
 
 	hasEmoji(text) {

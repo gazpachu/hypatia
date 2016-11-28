@@ -6,6 +6,10 @@
 	    width: 100%;
 		max-width: 33%;
 		background-color: $white;
+		
+		@include mobile() {
+			display: none;
+		}
 	}
 	
 	.sidebar-item {
