@@ -2,10 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import { setLoading } from '../../../actions/actions';
 import classNames from 'classnames';
 import {connect} from 'react-redux';
-import axios from 'axios';
+import 'whatwg-fetch';
 import { rtm, channels, chat } from 'slack';
 import { load as emojiLoader, parse as emojiParser } from 'gh-emoji';
-import { slackConfig } from '../../../constants/slack';
+import { slackGroups } from '../../../constants/slack';
 import $ from 'jquery';
 import moment from 'moment';
 import User from './user';
@@ -66,19 +66,21 @@ class Chat extends Component {
 //			this.setState({ failed: true });
 //		});
 		
-		axios.get('https://slack.com/oauth/authorize', {
-			params: {
-			  	client_id: slackConfig.clientID,
-				scope: 'channels:read chat:write',
-				state: 'test'
-			}
-		})
-		.then(function (response) {
-			console.log(response);
-		})
-		.catch(function (error) {
-			console.log(error);
-		});
+		// We've got authorization from the user. Request a token
+		if (this.props.location.query.code && this.props.location.query.state === 'hypatia-slack') {
+			console.log(this.props.location.query.code);
+			fetch('https://slack.com/api/oauth.access', { 
+				method: 'POST', 
+				credentials: true,
+				params: { 
+					client_id: slackGroups[0].client_id,
+					client_secret: slackGroups[0].client_secret,
+					code: this.props.location.query.code
+				} 
+			}).then(function(response, data) { 
+				console.log(response.body); 
+			});
+		}
 	}
 	
 	componentWillUnmount() {
@@ -292,6 +294,7 @@ class Chat extends Component {
 				
 				<div className="messages-wrapper">
 					<h2 className="channel-title"><span className="group-title">{this.state.currentGroup}</span>#{this.state.currentChannel.name}</h2>
+					{(!this.props.location.query.code) ? <a href="https://slack.com/oauth/authorize?scope=client&client_id=109410725603.109487796098&state=hypatia-slack"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcSet="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a> : ''}
 					<ul className="messages">
 						{this.state.messages.map((message, i) => this.formatMessage(message, i))}
 					</ul>
