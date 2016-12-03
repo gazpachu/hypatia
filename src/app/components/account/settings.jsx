@@ -3,10 +3,10 @@ import { history } from '../../store';
 import { setLoading, setNotification, setUserInfo } from '../../actions/actions';
 import { DEMO_EMAIL, EMAIL_CHANGED, DISPLAY_NAME_CHANGED, PASSWORD_CHANGED, PASSWORD_MIN_LENGTH_ERROR, PASSWORD_MATCH_ERROR, USER_INFO_CHANGED } from '../../constants/constants';
 import {connect} from 'react-redux';
-import { firebaseAuth, database } from '../../helpers/firebase';
 import md5 from 'md5';
 import $ from 'jquery';
 import Sidebar from './sidebar';
+import firebase from 'firebase';
 
 import Icon from '../common/lib/icon/icon';
 import Avatar from '../../../../static/svg/avatar.svg';
@@ -64,8 +64,8 @@ class Settings extends Component {
 	fetchInfo(newProps) {
 		newProps = newProps || this.props;
 		if (newProps.user) {
-			database.child('/users/' + newProps.user.uid).once('value').then(function(snapshot) {
-				this.setState({ userInfo: snapshot.val().info });
+			firebase.database().ref('/users/' + newProps.user.uid).once('value').then(function(snapshot) {
+				if (snapshot.val()) this.setState({ userInfo: snapshot.val().info });
 			}.bind(this));
 		}
 	}
@@ -140,7 +140,7 @@ class Settings extends Component {
 			$('.js-btn-info').hide();
 			$('.js-info-loader').show();
 
-			database.child(`users/${this.props.user.uid}/info`).set({
+			firebase.database().ref(`users/${this.props.user.uid}/info`).set({
 				firstName: this.state.userInfo.firstName,
 				lastName1: this.state.userInfo.lastName1,
 				lastName2: this.state.userInfo.lastName2,
