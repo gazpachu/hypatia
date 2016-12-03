@@ -1,15 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import { history } from '../../store';
-import { setLoading, setNotification, setUserInfo } from '../../actions/actions';
+import { setLoading, setNotification } from '../../actions/actions';
 import { DEMO_EMAIL, EMAIL_CHANGED, DISPLAY_NAME_CHANGED, PASSWORD_CHANGED, PASSWORD_MIN_LENGTH_ERROR, PASSWORD_MATCH_ERROR, USER_INFO_CHANGED } from '../../constants/constants';
 import {connect} from 'react-redux';
 import md5 from 'md5';
 import $ from 'jquery';
 import Sidebar from './sidebar';
-import firebase from 'firebase';
-
 import Icon from '../common/lib/icon/icon';
 import Avatar from '../../../../static/svg/avatar.svg';
+import {firebase, helpers} from 'redux-react-firebase'
+
+const {isLoaded, isEmpty, dataToJS} = helpers
 
 const defaultProps = {
 
@@ -21,6 +22,16 @@ const propTypes = {
 	userInfo: PropTypes.object.isRequired
 };
 
+@firebase(
+  props => ([
+    `users/${props.id}`
+  ])
+)
+@connect(
+  (state, props) => ({
+    userInfo: dataToJS(state.firebase, `users/${props.id}`)
+  })
+)
 class Settings extends Component {
     
 	constructor(props) {
@@ -45,29 +56,6 @@ class Settings extends Component {
 	componentDidMount() {
 		this.props.setLoading(false);  // Move this to API callback when implemented (if ever)
 		$('.js-main').removeClass().addClass('main js-main account-settings-page');
-	
-		this.unlisten = history.listen( location => {
-			if (location.pathname === '/account/settings') {
-				this.fetchInfo();
-			}
-		});
-	}
-	
-	componentWillUnmount() {
-		this.unlisten();
-	}
-	
-	componentWillReceiveProps(newProps) {
-		this.fetchInfo(newProps);
-	}
-	
-	fetchInfo(newProps) {
-		newProps = newProps || this.props;
-		if (newProps.user) {
-			firebase.database().ref('/users/' + newProps.user.uid).once('value').then(function(snapshot) {
-				if (snapshot.val()) this.setState({ userInfo: snapshot.val().info });
-			}.bind(this));
-		}
 	}
 	
 	updateDisplayName() {
@@ -215,10 +203,9 @@ class Settings extends Component {
 
 const mapDispatchToProps = {
 	setLoading,
-	setNotification,
-	setUserInfo
+	setNotification
 }
 
-const mapStateToProps = ({ mainReducer: { isDesktop, user, userInfo } }) => ({ isDesktop, user, userInfo });
+const mapStateToProps = ({ mainReducer: { isDesktop, user } }) => ({ isDesktop, user });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);
