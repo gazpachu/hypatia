@@ -132,7 +132,8 @@ class TopNav extends Component {
 	
 	handleSignin = (e) => {
 		e.preventDefault();
-    	login(this.email.value, this.pw.value);
+		const email = String(this.email.value);
+    	login(email, this.pw.value);
 	}
 	
 	changePanel(panel) {
@@ -174,16 +175,16 @@ class TopNav extends Component {
 						<div className="user-controls">
 							<div className="user-controls-cta sign-up-cta" onClick={this.toggleForm}><span>Sign up</span>
 								<form className="user-form sign-up" onSubmit={this.handleSignup}>
-									<input type="text" className="form-control" ref={(emailSignup) => this.emailSignup = emailSignup} placeholder="Email" />
-									<input type="password" className="form-control" placeholder="Password" ref={(pwSignup) => this.pwSignup = pwSignup} />
-									<input type="password" className="form-control" placeholder="Repeat password" ref={(pw2) => this.pw2 = pw2} />
+									<input type="text" className="input-field" ref={(emailSignup) => this.emailSignup = emailSignup} placeholder="Email" />
+									<input type="password" className="input-field" placeholder="Password" ref={(pwSignup) => this.pwSignup = pwSignup} />
+									<input type="password" className="input-field" placeholder="Repeat password" ref={(pw2) => this.pw2 = pw2} />
 									<button type="submit" className="btn btn-primary">Sign up</button>
 								</form>
 							</div>
 							<div className="user-controls-cta sign-in-cta"><span>Sign in</span>
 								<form className="user-form sign-in" onSubmit={this.handleSignin}>
-									<input type="text" className="form-control" ref={(email) => this.email = email} placeholder="Email" />
-									<input type="password" className="form-control" placeholder="Password" ref={(pw) => this.pw = pw} />
+									<input type="text" className="input-field" ref={(email) => this.email = email} placeholder="Email" />
+									<input type="password" className="input-field" placeholder="Password" ref={(pw) => this.pw = pw} />
 									<button type="submit" className="btn btn-primary">Sign in</button>
 								</form>
 							</div>

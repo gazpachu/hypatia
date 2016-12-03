@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { history } from '../../store';
 import { setLoading, setNotification, setUserInfo } from '../../actions/actions';
 import { DEMO_EMAIL, EMAIL_CHANGED, DISPLAY_NAME_CHANGED, PASSWORD_CHANGED, PASSWORD_MIN_LENGTH_ERROR, PASSWORD_MATCH_ERROR, USER_INFO_CHANGED } from '../../constants/constants';
 import {connect} from 'react-redux';
@@ -44,12 +45,29 @@ class Settings extends Component {
 	componentDidMount() {
 		this.props.setLoading(false);  // Move this to API callback when implemented (if ever)
 		$('.js-main').removeClass().addClass('main js-main account-settings-page');
+	
+		this.unlisten = history.listen( location => {
+			if (location.pathname === '/account/settings') {
+				this.fetchInfo();
+			}
+		});
+	}
+	
+	componentWillUnmount() {
+		this.unlisten();
 	}
 	
 	componentWillReceiveProps(newProps) {
-		database.child('/users/' + newProps.user.uid).once('value').then(function(snapshot) {
-			this.setState({ userInfo: snapshot.val().info });
-		}.bind(this));
+		this.fetchInfo(newProps);
+	}
+	
+	fetchInfo(newProps) {
+		newProps = newProps || this.props;
+		if (newProps.user) {
+			database.child('/users/' + newProps.user.uid).once('value').then(function(snapshot) {
+				this.setState({ userInfo: snapshot.val().info });
+			}.bind(this));
+		}
 	}
 	
 	updateDisplayName() {
