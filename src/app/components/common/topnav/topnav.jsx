@@ -9,18 +9,18 @@ import { setUser, setPanel } from '../../../actions/actions';
 import { auth, login, logout } from '../../../helpers/firebase';
 
 import Icon from '../lib/icon/icon';
-import Logo from '../../../../../static/logo.svg';
-import Avatar from '../../../../../static/avatar.svg';
-import Trophy from '../../../../../static/trophy.svg';
-import Calendar from '../../../../../static/calendar.svg';
-import Info from '../../../../../static/info.svg';
-import Search from '../../../../../static/search.svg';
-import Close from '../../../../../static/x.svg';
-import SortPassive from '../../../../../static/sort-passive.svg';
-import SortActiveUp from '../../../../../static/sort-active-up.svg';
-import SortActiveDown from '../../../../../static/sort-active-down.svg';
-import Logout from '../../../../../static/logout.svg';
-import Chat from '../../../../../static/chat.svg';
+import Logo from '../../../../../static/svg/logo.svg';
+import Avatar from '../../../../../static/svg/avatar.svg';
+import Trophy from '../../../../../static/svg/trophy.svg';
+import Calendar from '../../../../../static/svg/calendar.svg';
+import Info from '../../../../../static/svg/info.svg';
+import Search from '../../../../../static/svg/search.svg';
+import Close from '../../../../../static/svg/x.svg';
+import SortPassive from '../../../../../static/svg/sort-passive.svg';
+import SortActiveUp from '../../../../../static/svg/sort-active-up.svg';
+import SortActiveDown from '../../../../../static/svg/sort-active-down.svg';
+import Logout from '../../../../../static/svg/logout.svg';
+import Chat from '../../../../../static/svg/chat.svg';
 
 class TopNav extends Component {
     

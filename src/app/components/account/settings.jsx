@@ -7,7 +7,7 @@ import $ from 'jquery';
 import Sidebar from './sidebar';
 
 import Icon from '../common/lib/icon/icon';
-import Avatar from '../../../../static/avatar.svg';
+import Avatar from '../../../../static/svg/avatar.svg';
 
 const defaultProps = {
 

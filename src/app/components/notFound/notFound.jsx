@@ -5,7 +5,7 @@ import { setLoading } from '../../actions/actions';
 import $ from 'jquery';
 import Icon from '../common/lib/icon/icon';
 
-import Icon404 from '../../../../static/404.svg';
+import Icon404 from '../../../../static/svg/404.svg';
 
 
 class NotFound extends Component {

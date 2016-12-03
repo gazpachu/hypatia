@@ -248,7 +248,7 @@ class Chat extends Component {
 	}
 	
 	postMessage(text) {
-		if (text !== '') {
+		if (text !== '' && this.props.user.email !== 'demo@hypatialms.com') {
 			return chat.postMessage({
 				token: this.state.currentGroup.apiToken,
 				channel: this.state.currentChannel.id,
@@ -300,6 +300,7 @@ class Chat extends Component {
 	}
 	
 	render() {
+		const demoUser = (this.props.user && this.props.user.email === 'demo@hypatialms.com') ? '(Demo account is read-only)' : '';
 		return (
             <section className={`chat-panel ${this.props.class}`}>
 				<ul className="groups">
@@ -321,7 +322,7 @@ class Chat extends Component {
 					<ul className="messages">
 						{this.state.messages.map((message, i) => this.formatMessage(message, i))}
 					</ul>
-					<input type="text" className="new-message" placeholder={`Message #${this.state.currentChannel.name}`} value={this.state.postMyMessage} onKeyPress={(e) => e.key === 'Enter' ? this.postMessage(this.state.postMyMessage) : null} onChange={ (e) => this.handleChange(e) } />
+					<input type="text" className="new-message" placeholder={`Message #${this.state.currentChannel.name} ${demoUser}`} value={this.state.postMyMessage} onKeyPress={(e) => e.key === 'Enter' ? this.postMessage(this.state.postMyMessage) : null} onChange={ (e) => this.handleChange(e) } />
 				</div>
             </section>
 		)

@@ -1,6 +1,6 @@
 import React from 'react';
-import Back from '../../../../../../static/back.svg';
-import Forward from '../../../../../../static/forward.svg';
+import Back from '../../../../../../static/svg/back.svg';
+import Forward from '../../../../../../static/svg/forward.svg';
 
 
 export default function Icon({glyph, width, height, className='icon', style}){

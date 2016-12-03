@@ -8,8 +8,8 @@ import $ from 'jquery';
 import moment from 'moment';
 import showdown from 'showdown';
 import Icon from '../common/lib/icon/icon';
-import Back from '../../../../static/back.svg';
-import Forward from '../../../../static/forward.svg';
+import Back from '../../../../static/svg/back.svg';
+import Forward from '../../../../static/svg/forward.svg';
 
 const {isLoaded, isEmpty, dataToJS} = helpers;
 

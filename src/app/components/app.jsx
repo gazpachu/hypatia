@@ -13,7 +13,7 @@ import Loader from './common/loader/loader';
 import Chat from './common/chat/chat';
 
 import Icon from './common/lib/icon/icon';
-import Close from '../../../static/x.svg';
+import Close from '../../../static/svg/x.svg';
 
 const defaultProps = {
 	breadcrumbs: []

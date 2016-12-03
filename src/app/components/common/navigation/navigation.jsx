@@ -7,15 +7,15 @@ import Search from '../search/search';
 import Helpers from '../../common/helpers';
 import $ from 'jquery';
 import Icon from '../lib/icon/icon';
-import Trophy from '../../../../../static/trophy.svg';
-import Calendar from '../../../../../static/calendar.svg';
-import Info from '../../../../../static/info.svg';
-import SearchIcon from '../../../../../static/search.svg';
-import Close from '../../../../../static/x.svg';
-import Forward from '../../../../../static/forward.svg';
-import Back from '../../../../../static/back.svg';
-import Logout from '../../../../../static/logout.svg';
-import Chat from '../../../../../static/chat.svg';
+import Trophy from '../../../../../static/svg/trophy.svg';
+import Calendar from '../../../../../static/svg/calendar.svg';
+import Info from '../../../../../static/svg/info.svg';
+import SearchIcon from '../../../../../static/svg/search.svg';
+import Close from '../../../../../static/svg/x.svg';
+import Forward from '../../../../../static/svg/forward.svg';
+import Back from '../../../../../static/svg/back.svg';
+import Logout from '../../../../../static/svg/logout.svg';
+import Chat from '../../../../../static/svg/chat.svg';
 
 const defaultProps = {
 	nav_items: [{

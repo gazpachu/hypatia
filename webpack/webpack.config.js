@@ -61,7 +61,9 @@ module.exports = (options) => {
     	webpackConfig.plugins.push(
       		new Webpack.optimize.OccurenceOrderPlugin(),
 			new CopyWebpackPlugin([
-				{ from: 'static', to: 'static' }
+				{ from: 'static', to: 'static' },
+				{ from: 'manifest.json' },
+				{ from: 'browserconfig.xml' }
 			]),
       		new Webpack.optimize.UglifyJsPlugin({
         		compressor: {

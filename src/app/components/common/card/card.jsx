@@ -8,9 +8,9 @@ import moment from 'moment';
 import ModalBox from '../modalbox/modalbox';
 import BasicAreaChart from '../../common/charts/basicareachart';
 import Icon from '../lib/icon/icon';
-import Remove from '../../../../../static/remove.svg';
-import Close from '../../../../../static/close.svg';
-import SpeechBubble from '../../../../../static/speech-bubble.svg';
+import Remove from '../../../../../static/svg/remove.svg';
+import Close from '../../../../../static/svg/close.svg';
+import SpeechBubble from '../../../../../static/svg/speech-bubble.svg';
 
 
 class Card extends Component {

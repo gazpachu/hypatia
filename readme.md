@@ -6,6 +6,10 @@ The project is currently under development, with countinous changes and some bit
 
 ## More info
 
+Demo: [https://hypatia-8d923.firebaseapp.com](https://hypatia-8d923.firebaseapp.com)
+
+Demo account: demo@hypatialms.com / demouser
+
 Project's website: [https://gazpachu.github.io/hypatia/](https://gazpachu.github.io/hypatia/)
 
 Slack group (invitation only): [https://hypatialms.slack.com](https://hypatialms.slack.com) To request for an invitation, contact me at hello [@] joanmira {.} com
