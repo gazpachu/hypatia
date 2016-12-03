@@ -34,6 +34,7 @@ class Calendar extends Component {
            			<div className="subjects">
            				<h2 className="heading">Subjects</h2>
            				<ul className="items">
+           					<li className="item">Show all / hide all</li>
            					<li className="item">Maths</li>
            					<li className="item">English Literature</li>
            					<li className="item">Graphic design</li>
@@ -43,6 +44,7 @@ class Calendar extends Component {
            			<div className="activities">
            				<h2 className="heading">Activities</h2>
            				<ul className="items">
+           					<li className="item">Show all / hide all</li>
            					<li className="item">Start module</li>
            					<li className="item">End module</li>
            					<li className="item">Start activity</li>
