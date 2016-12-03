@@ -1,5 +1,9 @@
 .chat-panel {
-	display: flex;
+	display: none;
+	
+	&.open {
+		display: flex;
+	}
 	
 	.sidebar, .groups {
 		border-right: 1px solid $light-grey;

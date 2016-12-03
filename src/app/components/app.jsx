@@ -11,6 +11,9 @@ import Helmet from "react-helmet";
 import TopNav from './common/topnav/topnav';
 import Loader from './common/loader/loader';
 import Chat from './common/chat/chat';
+import Calendar from './common/calendar/calendar';
+import Grades from './common/grades/grades';
+import Help from './common/help/help';
 import Notification from './common/notification/notification';
 
 import Icon from './common/lib/icon/icon';
@@ -98,6 +101,9 @@ class App extends Component {
 					<TopNav location={this.props.location} />
 					<div className={`dropdown-panel js-dropdown-panel ${panelClass}`}>
 						<Chat class={(this.props.panel === 'chat') ? 'open' : ''} />
+						<Calendar class={(this.props.panel === 'calendar') ? 'open' : ''} />
+						<Grades class={(this.props.panel === 'grades') ? 'open' : ''} />
+						<Help class={(this.props.panel === 'help') ? 'open' : ''} />
 					</div>
 					{React.cloneElement(this.props.children, this.props)}
 				</div>

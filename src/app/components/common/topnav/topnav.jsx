@@ -207,11 +207,11 @@ class TopNav extends Component {
 					</div>
 					<button className="top-nav-item" onClick={() => {this.toggleSearch() }}>{this.state.searching ? <Icon glyph={Close} className="icon close-search" /> : <Icon glyph={Search} className="icon search" />}</button>
 					
-					{(this.props.user) ? <div className="top-nav-item" onClick={() => {this.changePanel('calendar') }}><Icon glyph={Calendar} className="icon calendar" /></div> : ''}
+					{(this.props.user) ? <div className="top-nav-item" onClick={() => {this.changePanel('calendar') }}>{this.props.panel === 'calendar' ? <Icon glyph={Close} /> : <Icon glyph={Calendar} className="icon calendar" />}</div> : ''}
 					
-					{(this.props.user) ? <div className="top-nav-item" onClick={() => {this.changePanel('trophy') }}><Icon glyph={Trophy} className="icon trophy" /></div> : ''}
+					{(this.props.user) ? <div className="top-nav-item" onClick={() => {this.changePanel('grades') }}>{this.props.panel === 'grades' ? <Icon glyph={Close} /> : <Icon glyph={Trophy} className="icon trophy" />}</div> : ''}
 					
-					{(this.props.user) ? <div className="top-nav-item" onClick={() => {this.changePanel('info') }}><Icon glyph={Info} className="icon info" /></div> : ''}
+					{(this.props.user) ? <div className="top-nav-item" onClick={() => {this.changePanel('help') }}>{this.props.panel === 'help' ? <Icon glyph={Close} /> : <Icon glyph={Info} className="icon info" />}</div> : ''}
 					
 					<Link to="/" className="logo">
 						<Icon glyph={Logo} />
@@ -248,8 +248,6 @@ class TopNav extends Component {
 								{(this.props.user) ? <Link to="/account">{(this.props.user.email) ? <img className="photo" src={`http://www.gravatar.com/avatar/${md5(this.props.user.email)}.jpg?s=20`} /> : <Icon glyph={Avatar} />} {this.props.user.displayName}</Link> : ''}
 								<button onClick={() => { firebase.auth().signOut(); this.props.setUser(null);}}><Icon glyph={Logout} className="icon sign-out" /></button>
 							</div>
-						
-							
 						</div>
 					}
 				</div>
