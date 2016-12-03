@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { setLoading } from '../../../actions/actions';
+import { DEMO_EMAIL, DEMO_CHAT_WARNING } from '../../../constants/constants';
 import classNames from 'classnames';
 import {connect} from 'react-redux';
 import { rtm, channels, chat } from 'slack';
@@ -248,7 +249,7 @@ class Chat extends Component {
 	}
 	
 	postMessage(text) {
-		if (text !== '' && this.props.user.email !== 'demo@hypatialms.com') {
+		if (text !== '' && this.props.user.email !== DEMO_EMAIL) {
 			return chat.postMessage({
 				token: this.state.currentGroup.apiToken,
 				channel: this.state.currentChannel.id,
@@ -300,7 +301,7 @@ class Chat extends Component {
 	}
 	
 	render() {
-		const demoUser = (this.props.user && this.props.user.email === 'demo@hypatialms.com') ? '(Demo account is read-only)' : '';
+		const demoUser = (this.props.user && this.props.user.email === DEMO_EMAIL) ? DEMO_CHAT_WARNING : '';
 		return (
             <section className={`chat-panel ${this.props.class}`}>
 				<ul className="groups">

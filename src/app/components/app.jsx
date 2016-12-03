@@ -11,6 +11,7 @@ import Helmet from "react-helmet";
 import TopNav from './common/topnav/topnav';
 import Loader from './common/loader/loader';
 import Chat from './common/chat/chat';
+import Notification from './common/notification/notification';
 
 import Icon from './common/lib/icon/icon';
 import Close from '../../../static/svg/x.svg';
@@ -93,6 +94,7 @@ class App extends Component {
 
 				<div className="main js-main">
 					<Loader />
+					<Notification />
 					<TopNav location={this.props.location} />
 					<div className={`dropdown-panel js-dropdown-panel ${panelClass}`}>
 						<Chat class={(this.props.panel === 'chat') ? 'open' : ''} />

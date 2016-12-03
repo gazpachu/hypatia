@@ -8,7 +8,7 @@ The project is currently under development, with countinous changes and some bit
 
 Demo: [https://hypatia-8d923.firebaseapp.com](https://hypatia-8d923.firebaseapp.com)
 
-Demo account: demo@hypatialms.com / demouser
+You can sign up or use the demo account (read-only): demo@hypatialms.com / demouser
 
 Project's website: [https://gazpachu.github.io/hypatia/](https://gazpachu.github.io/hypatia/)
 
