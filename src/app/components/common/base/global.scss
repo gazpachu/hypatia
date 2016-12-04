@@ -63,6 +63,7 @@ a, a:hover, a:active, a:visited, a:focus {
 .page {
 	min-height: 100vh;
 	padding-top: 60px;
+	width: 100%;
 	background-color: $grey-bg;
 	
 	@include desktop() {

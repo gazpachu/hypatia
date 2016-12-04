@@ -44,11 +44,6 @@ const defaultProps = {
 		}]
 	},
 	{
-		id: 5,
-		title: 'News',
-		link: '/news'
-	},
-	{
 		id: 1,
 		title: 'Courses',
 		link: '/courses'

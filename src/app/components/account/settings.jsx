@@ -178,7 +178,7 @@ class Settings extends Component {
 						<div className="profile-image">
 							{(this.props.user.email) ? <img className="photo" src={`http://www.gravatar.com/avatar/${md5(this.props.user.email)}.jpg?s=150`} /> : <Icon glyph={Avatar} className="icon avatar" />}
 						</div>
-						<a className="update-photo" href="http://www.gravatar.com/" target="_blank">Update photo</a>
+						<a className="update-photo" href="https://www.gravatar.com/" target="_blank">Update photo</a>
 						<input type="text" ref="display-name" placeholder="Display name" defaultValue={this.props.user.displayName} />
 						<button className="btn btn-primary btn-xs js-btn-display-name" onClick={() => this.updateDisplayName()}>Update display name</button>
 						<div className="loader-small js-display-name-loader"></div>
