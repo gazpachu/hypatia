@@ -3,7 +3,7 @@ import { setLoading, setFilters } from '../../actions/actions';
 import {connect} from 'react-redux';
 import { Link } from 'react-router';
 import { firebase, helpers } from 'redux-react-firebase';
-import { database, storage } from '../../helpers/firebase';
+//import { database, storage } from '../../constants/firebase';
 import $ from 'jquery';
 import moment from 'moment';
 import showdown from 'showdown';
@@ -46,12 +46,12 @@ class Home extends Component {
 	
 	renderItem(post, id) {
 		
-		let imgRef = storage.child('posts/' + post.slug + '.jpg');
-		imgRef.getDownloadURL().then(function(url) {
-		  	this.refs['post-'+id+'-img'].src = url;
-		}.bind(this)).catch(function(error) {
-		  console.log(error);
-		});
+//		let imgRef = firebase.storage().child('posts/' + post.slug + '.jpg');
+//		imgRef.getDownloadURL().then(function(url) {
+//		  	this.refs['post-'+id+'-img'].src = url;
+//		}.bind(this)).catch(function(error) {
+//		  console.log(error);
+//		});
 		
 		const converter = new showdown.Converter();
 		

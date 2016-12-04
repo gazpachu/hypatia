@@ -10,7 +10,7 @@ import './components/bundle.scss';
 import App from './components/app';
 import Home from './components/home/home';
 import Dashboard from './components/dashboard/dashboard';
-import Account from './components/account/account';
+import Notifications from './components/account/notifications';
 import Settings from './components/account/settings';
 import AccountNotifications from './components/home/home';
 import AccountRecord from './components/home/home';
@@ -39,8 +39,7 @@ ReactDOM.render(
 			<Route path="/" component={App}>
 				<IndexRoute component={Home} />
 				<Route path="/dashboard" component={Dashboard} />
-				<Route path="/account" component={Account} />
-					<Route path="/account/settings" component={Settings} />
+				<Route path="/account" component={Settings} />
 					<Route path="/account/notifications" component={AccountNotifications} />
 					<Route path="/account/record" component={AccountRecord} />
 				<Route path="/courses" component={ListingPage} />
@@ -48,7 +47,6 @@ ReactDOM.render(
 				<Route path="/subjects" component={ListingPage} />
 				<Route path="/news" component={ListingPage} />
 				<Route path="/about" component={DetailPage} />
-					<Route path="/about/history" component={DetailPage} />
 					<Route path="/about/research" component={DetailPage} />
 					<Route path="/about/people" component={ListingPage} />
 					<Route path="/about/contact" component={DetailPage} />

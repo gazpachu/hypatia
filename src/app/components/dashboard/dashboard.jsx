@@ -2,8 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { setLoading, setFilters } from '../../actions/actions';
 import {connect} from 'react-redux';
 import { Link } from 'react-router';
-import { firebase, helpers } from 'redux-react-firebase';
-import { database, storage } from '../../helpers/firebase';
 import $ from 'jquery';
 import moment from 'moment';
 import showdown from 'showdown';

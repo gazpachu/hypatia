@@ -26,15 +26,11 @@ const defaultProps = {
 	{
 		id: 10,
 		title: 'Account',
-		children: [{
-			id: 11,
-			title: 'Summary',
-			link: '/account'
-		},
+		children: [
 		{
 			id: 12,
-			title: 'Settings',
-			link: '/account/settings'
+			title: 'My account',
+			link: '/account'
 		},
 		{
 			id: 13,
@@ -71,14 +67,9 @@ const defaultProps = {
 		id: 4,
 		title: 'About',
 		children: [{
-			id: 15,
-			title: 'About',
+			id: 7,
+			title: 'Summary',
 			link: '/about'
-		},
-		{
-			id: 6,
-			title: 'History',
-			link: '/about/history'
 		},
 		{
 			id: 7,

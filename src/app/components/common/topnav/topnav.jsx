@@ -143,8 +143,8 @@ class TopNav extends Component {
 			
 			const email = String(this.emailSignup.value);
 			
-			firebase.auth().createUserWithEmailAndPassword(email, this.pwSignup.value).then(function() {
-				this.saveUser();
+			firebase.auth().createUserWithEmailAndPassword(email, this.pwSignup.value).then(function(user) {
+				this.saveUser(user);
 			}.bind(this)).catch(function(error) {
 				$('.js-btn-signup').show();
 				$('.js-signup-loader').hide();
@@ -153,10 +153,10 @@ class TopNav extends Component {
 		}
 	}
 	
-	saveUser() {
+	saveUser(user) {
 		return firebase.database().ref(`users/${user.uid}/info`).set({
       		uid: user.uid
-    	}).then(() => {
+    	}).then(function() {
 			user.sendEmailVerification();
 			$('.js-btn-signup').show();
 			$('.js-signup-loader').hide();
@@ -165,7 +165,11 @@ class TopNav extends Component {
 			});
 			this.props.setNotification({message: USER_CREATED, type: 'success'});
 			user
-		})
+		}.bind(this)).catch(function(error) {
+			$('.js-btn-signup').show();
+			$('.js-signup-loader').hide();
+			this.props.setNotification({message: String(error), type: 'error'});
+		}.bind(this))
 	}
 	
 	handleSignin = (e) => {

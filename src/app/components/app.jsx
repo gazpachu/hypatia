@@ -3,7 +3,8 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { history } from '../store';
 import { setUser, changeViewport, setPanel } from '../actions/actions';
-import { firebaseAuth } from '../helpers/firebase';
+import firebase from 'firebase';
+//import { auth } from '../constants/firebase';
 import _ from "lodash";
 import $ from 'jquery';
 import ReactGA from 'react-ga';
@@ -51,7 +52,7 @@ class App extends Component {
 			this.props.changeViewport(isDesktop);
 		}.bind(this), 500);
 		
-		this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
+		this.removeListener = firebase.auth().onAuthStateChanged((user) => {
       		if (user) {
 				this.props.setUser(user);
 				history.push(this.state.redirectTo);
