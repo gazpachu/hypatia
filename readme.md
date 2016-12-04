@@ -116,7 +116,7 @@ Linting is using Airbnb Eslint configuration
 npm run lint
 ````
 
-### Production
+### Deploy to production
 
 Build for production
 
@@ -124,8 +124,21 @@ Build for production
 npm run build
 ````
 
-Start production server
+Install Firebase tools (if you haven't done it yet)
 
 ````
-npm run start
+npm install -g firebase-tools
+````
+
+Login and init the project
+
+````
+firebase login
+firebase init
+````
+
+Deploy to Firebase
+
+````
+firebase deploy
 ````
