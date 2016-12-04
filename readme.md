@@ -18,6 +18,10 @@ Slack group (invitation only): [https://hypatialms.slack.com](https://hypatialms
 
 ![Chat module](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/screenshots%2Fchat.png?alt=media&token=4479e9db-aff7-48a6-8e02-0b5fe4326cf5)
 
+![Account module](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/screenshots%2Faccount.png?alt=media&token=6a035c52-84df-4acc-a56d-c15e352f34da)
+
+![Calendar module](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/screenshots%2Fcalendar.png?alt=media&token=17ab3011-9c46-4afd-adf5-124797422217)
+
 ## Getting Started
 
 - Install Node.js >= 4.5.0 [https://nodejs.org/](https://nodejs.org/)
