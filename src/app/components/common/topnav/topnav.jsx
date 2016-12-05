@@ -151,6 +151,9 @@ class TopNav extends Component {
 				this.props.setNotification({message: String(error), type: 'error'});
 			}.bind(this));
 		}
+		else {
+			this.props.setNotification({message: PASSWORD_MATCH_ERROR, type: 'error'});
+		}
 	}
 	
 	saveUser(user) {
