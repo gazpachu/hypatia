@@ -25,7 +25,6 @@
 	"license": "MIT",
 	"devDependencies": {
 		"autoprefixer": "^6.5.3",
-		"axios": "^0.14.0",
 		"babel-core": "^6.8.0",
 		"babel-loader": "^6.2.4",
 		"babel-plugin-recharts": "^1.0.2",
@@ -79,8 +78,7 @@
 		"svg-sprite-loader": "0.0.26",
 		"url-loader": "^0.5.7",
 		"webpack": "^1.13.0",
-		"webpack-dev-server": "^1.14.1",
-		"whatwg-fetch": "^2.0.1"
+		"webpack-dev-server": "^1.14.1"
   	},
   	"dependencies": {}
 }
