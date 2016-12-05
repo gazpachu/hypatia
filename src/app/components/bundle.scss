@@ -14,7 +14,14 @@
 @import './common/loader/loader';
 @import './common/modalbox/modalbox';
 @import './common/chat/chat';
+@import './common/calendar/calendar';
+@import './common/grades/grades';
+@import './common/help/help';
+@import './common/notification/notification';
 
 @import './home/home';
 @import './dashboard/dashboard';
 @import './notFound/notFound';
+@import './account/notifications';
+@import './account/sidebar';
+@import './account/settings';

@@ -2,46 +2,21 @@
     color: $white;
     border-width: 1px;
     border-style: solid;
-    margin: 5px;
-    border-radius: 25px;	
-    
-    /*&:hover, &:active, &:focus {
-        background-color: initial;   
-    }*/
+    border-radius: 25px;
+	padding: 3px 13px;;
 	
     &:focus {
         outline: none !important;
     }	
 	
     &.btn-xs { 
-        padding: 2px 20px;
+        padding: 2px 10px;
+    	font-size: 12px;
     }	
     
 	&.btn-primary {
 		background-color: $green;
-    	border: none;
-		
-		&:active:focus:hover, &.disabled:hover {
-			background-color: $green-dark;
-		}		
-	}
-	
-    &.btn-danger {
-        border: none;
-    }	
-	
-    &.btn-action {
-        background-color: $dark-grey;
-
-        &:hover {
-            background-color: $darker-grey;
-        }
-    }
-	
-	&.btn-clear {
-		background-color: none;
-		border: 1px solid $white;
-		font-size: 12px;
+    	border: none;		
 	}
 	
 	&.btn-outline {
@@ -49,7 +24,3 @@
 		border-color: $grey;
 	}
 }
-
-.btn-link, .btn-link:hover {
-    color: $white;
-} 

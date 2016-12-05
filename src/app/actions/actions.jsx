@@ -34,3 +34,17 @@ export function changeViewport(state) {
 		payload: state
 	}
 }
+
+export function setNotification(state) {
+	return {
+		type: 'SET_NOTIFICATION',
+		payload: state
+	}
+}
+
+export function setUserInfo(state) {
+	return {
+		type: 'SET_USER_INFO',
+		payload: state
+	}
+}

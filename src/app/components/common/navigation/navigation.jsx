@@ -7,15 +7,15 @@ import Search from '../search/search';
 import Helpers from '../../common/helpers';
 import $ from 'jquery';
 import Icon from '../lib/icon/icon';
-import Trophy from '../../../../../static/trophy.svg';
-import Calendar from '../../../../../static/calendar.svg';
-import Info from '../../../../../static/info.svg';
-import SearchIcon from '../../../../../static/search.svg';
-import Close from '../../../../../static/x.svg';
-import Forward from '../../../../../static/forward.svg';
-import Back from '../../../../../static/back.svg';
-import Logout from '../../../../../static/logout.svg';
-import Chat from '../../../../../static/chat.svg';
+import Trophy from '../../../../../static/svg/trophy.svg';
+import Calendar from '../../../../../static/svg/calendar.svg';
+import Info from '../../../../../static/svg/info.svg';
+import SearchIcon from '../../../../../static/svg/search.svg';
+import Close from '../../../../../static/svg/x.svg';
+import Forward from '../../../../../static/svg/forward.svg';
+import Back from '../../../../../static/svg/back.svg';
+import Logout from '../../../../../static/svg/logout.svg';
+import Chat from '../../../../../static/svg/chat.svg';
 
 const defaultProps = {
 	nav_items: [{
@@ -26,15 +26,11 @@ const defaultProps = {
 	{
 		id: 10,
 		title: 'Account',
-		children: [{
-			id: 11,
-			title: 'Summary',
-			link: '/account'
-		},
+		children: [
 		{
 			id: 12,
-			title: 'Settings',
-			link: '/account/settings'
+			title: 'My account',
+			link: '/account'
 		},
 		{
 			id: 13,
@@ -46,11 +42,6 @@ const defaultProps = {
 			title: 'Record',
 			link: '/account/record'
 		}]
-	},
-	{
-		id: 5,
-		title: 'News',
-		link: '/news'
 	},
 	{
 		id: 1,
@@ -71,14 +62,9 @@ const defaultProps = {
 		id: 4,
 		title: 'About',
 		children: [{
-			id: 15,
-			title: 'About',
+			id: 7,
+			title: 'Summary',
 			link: '/about'
-		},
-		{
-			id: 6,
-			title: 'History',
-			link: '/about/history'
 		},
 		{
 			id: 7,
@@ -131,7 +117,7 @@ class Navigation extends Component {
 		return <li key={i} className={`nav-item ${hasChildren}`}>
 			{(item.children) ? <span className="title" onClick={this.clickItem}>{item.title}<Icon glyph={Forward} /></span> : <Link to={item.link} className="title" onClick={this.props.toggleNav}>{item.title}</Link>}
 			{(item.children) ? <ul className="nav-children">
-				{item.children.map((child, j) => <li key={j} className={`nav-child`}><Link to={child.link}>{child.title}</Link></li>)}
+				{item.children.map((child, j) => <li key={j} className={`nav-child`}><Link to={child.link} onClick={this.props.toggleNav}>{child.title}</Link></li>)}
 			</ul> : ''}
 		</li>;
 	}

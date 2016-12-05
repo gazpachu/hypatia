@@ -1,0 +1,7 @@
+.grades-panel {
+	display: none;
+	
+	&.open {
+		display: flex;
+	}
+}

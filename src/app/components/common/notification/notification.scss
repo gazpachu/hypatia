@@ -1,0 +1,55 @@
+.notification {
+	display: none;
+	border: 1px solid $black;
+	background-color: rgba(255,255,255,.95);
+	padding: 10px;
+	position: absolute;
+	top: 20px;
+	margin-right: 20px;
+    right: 0;
+    width: 200px;
+	z-index: 3;
+	border-radius: 5px;
+	color: $black;
+	animation-duration: .4s;
+	
+	&.success {
+		border: 1px solid $green;
+		
+		.success-icon {
+			display: inline-block;
+			fill: $green;
+		}
+		.info-icon {
+			display: none;
+		}
+	}
+	
+	&.error {
+		border: 1px solid $red;
+		
+		.error-icon {
+			display: inline-block;
+			fill: $red;
+		}
+		.info-icon {
+			display: none;
+		}
+	}
+	
+	.info-icon {
+		fill: $blue;
+	}
+	
+	.icon {
+		margin-right: 10px;
+	}
+	
+	.error-icon, .success-icon {
+		display: none;
+	}
+	
+	.message {
+		font-size: 12px;
+	}
+}

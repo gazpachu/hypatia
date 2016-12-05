@@ -7,10 +7,10 @@ import $ from 'jquery';
 import classNames from 'classnames';
 
 import Icon from '../lib/icon/icon';
-import SearchIcon from '../../../../../static/search.svg';
-import Forward from '../../../../../static/forward.svg';
-import Close from '../../../../../static/x.svg';
-import Expand from '../../../../../static/expand.svg';
+import SearchIcon from '../../../../../static/svg/search.svg';
+import Forward from '../../../../../static/svg/forward.svg';
+import Close from '../../../../../static/svg/x.svg';
+import Expand from '../../../../../static/svg/expand.svg';
 
 class Search extends Component {
 

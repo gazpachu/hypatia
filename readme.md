@@ -6,6 +6,10 @@ The project is currently under development, with countinous changes and some bit
 
 ## More info
 
+Demo: [https://hypatia-8d923.firebaseapp.com](https://hypatia-8d923.firebaseapp.com)
+
+You can sign up or use the demo account (read-only): demo@hypatialms.com / demouser
+
 Project's website: [https://gazpachu.github.io/hypatia/](https://gazpachu.github.io/hypatia/)
 
 Slack group (invitation only): [https://hypatialms.slack.com](https://hypatialms.slack.com) To request for an invitation, contact me at hello [@] joanmira {.} com
@@ -13,6 +17,10 @@ Slack group (invitation only): [https://hypatialms.slack.com](https://hypatialms
 ![Home module](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/screenshots%2Fhome.png?alt=media&token=07e2df57-71cf-4b50-99cb-c25ad83fa13c)
 
 ![Chat module](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/screenshots%2Fchat.png?alt=media&token=4479e9db-aff7-48a6-8e02-0b5fe4326cf5)
+
+![Account module](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/screenshots%2Faccount.png?alt=media&token=6a035c52-84df-4acc-a56d-c15e352f34da)
+
+![Calendar module](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/screenshots%2Fcalendar.png?alt=media&token=17ab3011-9c46-4afd-adf5-124797422217)
 
 ## Getting Started
 
@@ -60,14 +68,24 @@ allow read: if true;
 allow write: if request.auth != null;
 ````
 
-- Create a new group in Slack.com and a custom integration (BOT)
+- Create as many groups (teams) in Slack.com as you want and add a custom integration (BOT) to each one of them
 
-- Create a file called `slack.jsx` in `/app/src/constants/` and add the following code with the API Token of the BOT you created:
+- Create a file called `slack.jsx` in `/app/src/constants/` with the following structure. Enter the apiToken for each BOT you created and enter the details that make more sense to your groups
 
 ````
-export const slackConfig = {
-  	apiToken: ""
-}
+export const slackGroups = [{
+		name: 'Maths',
+		id: 'maths',
+		slug: 'MA',
+		apiToken: ""
+	},
+	{
+		name: 'English',
+		id: 'english',
+		slug: 'EL',
+		apiToken: ""
+	}						
+]
 ````
 
 ### Start development server with hot reloading
@@ -98,7 +116,7 @@ Linting is using Airbnb Eslint configuration
 npm run lint
 ````
 
-### Production
+### Deploy to production
 
 Build for production
 
@@ -106,8 +124,21 @@ Build for production
 npm run build
 ````
 
-Start production server
+Install Firebase tools (if you haven't done it yet)
 
 ````
-npm run start
+npm install -g firebase-tools
+````
+
+Login and init the project
+
+````
+firebase login
+firebase init
+````
+
+Deploy to Firebase
+
+````
+firebase deploy
 ````

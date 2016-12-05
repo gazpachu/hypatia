@@ -274,10 +274,12 @@
 		display: inline-block;
 		margin-left: 10px;
 		color: $white;
+		font-size: 14px;
 		
 		@include desktop() {
 			float: right;
 			margin-left: 0;
+			margin-top: 3px;
 			margin-right: 20px;
 		}
 		
@@ -291,6 +293,12 @@
 			stroke: $white;
 			margin-right: 10px;
 			
+			&.sign-out {
+				margin-right: 0;
+				margin-left: 3px;
+				height: 15px;
+			}
+			
 			&.chat, &.close-chat {
 				margin: 0;
 				@include scale-anim();
@@ -302,39 +310,31 @@
 			}
 		}
 		
-		.sign-up-cta:hover,
-		.sign-up-cta.active {
-			.sign-up {
-				display: block;
-			}
-		}
-		
-		.sign-in-cta:hover,
-		.sign-in-cta.active {
-			.sign-in {
-				display: block;
-			}
-		}
-		
-		.account-cta:hover,
+		.user-form.active,
 		.account-cta.active {
-			.account-nav {
-				display: block;
-			}
+			display: block;
 		}
 		
 		.user-controls-cta {
 			display: inline-block;
 			margin-left: 10px;
+			cursor: pointer;
+			
+			.photo {
+				border-radius: 25px;
+				margin-right: 5px;
+			}
 		}
 		
 		.user-form, .account-nav {
 			display: none;
 			position: absolute;
 			right: 20px;
-			background: rgba(255,255,255,.9);
+			background: $white;
 			padding: 20px;
 			border-radius: 5px;
+			top: 50px;
+			z-index: 2;
 			
 			@include mobile() {
 				left: 20px;
@@ -342,7 +342,11 @@
 			}
 			
 			input {
-				margin-bottom: 5px;
+				margin-bottom: 10px;
+				display: block;
+				border-color: $grey;
+				color: $blue;
+				min-width: 200px;
 			}
 		}
 
@@ -352,6 +356,12 @@
 			a {
 				color: $black;
 			}
+		}
+		
+		.loader-small {
+			position: relative;
+			top: initial;
+			margin-top: 10px;
 		}
 	}
 }

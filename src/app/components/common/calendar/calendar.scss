@@ -1,0 +1,23 @@
+.calendar-panel {
+	display: none;
+	padding: 20px;
+	
+	&.open {
+		display: flex;
+	}
+	
+	.sidebar {
+		margin: 20px 0 0 30px;
+		width: 30%;
+	}
+	
+	.heading {
+		font-size: 22px;
+    	border-bottom: 1px solid grey;
+	}
+	
+	.items {
+		list-style-type: none;
+		padding: 0;
+	}
+}

@@ -1,0 +1,9 @@
+.notifications {
+	display: flex;
+	
+	@include mobile() {
+		display: block;
+	}
+	
+	
+}

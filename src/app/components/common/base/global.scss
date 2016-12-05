@@ -16,6 +16,7 @@ textarea, input, button {
 
 a, a:hover, a:active, a:visited, a:focus {
 	color: $blue;
+	text-decoration: none;
 }
 
 .btn {
@@ -47,19 +48,6 @@ a, a:hover, a:active, a:visited, a:focus {
 	z-index: 1;
 }
 
-.notification {
-	border-radius: 20px;
-	background-color: $red;
-	color: $white;
-	width: 17px;
-    height: 17px;
-    display: inline-block;
-    font-size: 12px;
-    text-align: center;
-    line-height: 18px;
-    margin: 3px;
-}
-
 .main {
 
 }
@@ -75,6 +63,7 @@ a, a:hover, a:active, a:visited, a:focus {
 .page {
 	min-height: 100vh;
 	padding-top: 60px;
+	width: 100%;
 	background-color: $grey-bg;
 	
 	@include desktop() {

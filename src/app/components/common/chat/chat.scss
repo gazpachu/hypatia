@@ -1,5 +1,9 @@
 .chat-panel {
-	display: flex;
+	display: none;
+	
+	&.open {
+		display: flex;
+	}
 	
 	.sidebar, .groups {
 		border-right: 1px solid $light-grey;
@@ -137,6 +141,12 @@
 	.user-name {
 		font-size: 12px;
 		font-weight: bold;
+	}
+	
+	.timestamp {
+		font-size: 12px;
+		color: $grey;
+		margin-left: 10px;
 	}
 	
 	.user-image {

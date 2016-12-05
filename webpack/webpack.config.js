@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = (options) => {
   	const ExtractSASS = new ExtractTextPlugin(`/styles/${options.cssFileName}`);
@@ -59,6 +60,11 @@ module.exports = (options) => {
 
     	webpackConfig.plugins.push(
       		new Webpack.optimize.OccurenceOrderPlugin(),
+			new CopyWebpackPlugin([
+				{ from: 'static', to: 'static' },
+				{ from: 'manifest.json' },
+				{ from: 'browserconfig.xml' }
+			]),
       		new Webpack.optimize.UglifyJsPlugin({
         		compressor: {
           			warnings: false,
