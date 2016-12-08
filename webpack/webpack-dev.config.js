@@ -3,5 +3,5 @@ module.exports = require('./webpack.config.js')({
   devtool: 'cheap-eval-source-map',
   jsFileName: 'app.js',
   cssFileName: 'app.css',
-  port: 3000,
+  port: 4000,
 });

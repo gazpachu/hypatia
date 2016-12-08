@@ -21,8 +21,8 @@
 		"type": "git",
 		"url": "git+https://github.com/gazpachu/hypatia"
   	},
-	"author": "Joan Mira",
-	"license": "MIT",
+	"author": "Joan Mira <hello@joanmira.com> (http://joanmira.com/)",
+	"license": "GPLv2",
 	"devDependencies": {
 		"autoprefixer": "^6.5.3",
 		"axios": "^0.14.0",
