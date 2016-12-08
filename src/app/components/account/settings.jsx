@@ -47,7 +47,7 @@ class Settings extends Component {
 		$('.js-main').removeClass().addClass('main js-main account-settings-page');
 	
 		this.unlisten = history.listen( location => {
-			if (location.pathname === '/account/settings') {
+			if (location.pathname === '/account') {
 				this.fetchInfo();
 			}
 		});

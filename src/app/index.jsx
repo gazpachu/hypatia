@@ -17,6 +17,7 @@ import AccountRecord from './components/home/home';
 import ListingPage from './components/home/home';
 import DetailPage from './components/home/home';
 import NotFound from './components/notFound/notFound';
+import Admin from './components/admin/admin';
 
 // Google Analytics initializacion
 ReactGA.initialize('UA-00000000-1', {
@@ -50,6 +51,7 @@ ReactDOM.render(
 					<Route path="/about/research" component={DetailPage} />
 					<Route path="/about/people" component={ListingPage} />
 					<Route path="/about/contact" component={DetailPage} />
+				<Route path="/admin" component={Admin} />
 				<Route path="*" component={NotFound} />
 			</Route>
 		</Router>

@@ -19,3 +19,6 @@ export const PASSWORD_CHANGED = 'Password changed successfully!';
 export const PASSWORD_MATCH_ERROR = 'Passwords don\'t match';
 export const PASSWORD_MIN_LENGTH_ERROR = 'Password min. length is 6 characters';
 export const USER_INFO_CHANGED = 'User details changed successfully!';
+
+// User level
+export const ADMIN_LEVEL = 5;

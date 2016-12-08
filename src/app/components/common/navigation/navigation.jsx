@@ -3,6 +3,7 @@ import { history } from '../../../store';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Breadcrumbs from '../breadcrumbs/breadcrumbs';
+import { ADMIN_LEVEL } from '../../../constants/constants';
 import Search from '../search/search';
 import Helpers from '../../common/helpers';
 import $ from 'jquery';
@@ -59,6 +60,11 @@ const defaultProps = {
 		link: '/modules'
 	},
 	{
+		id: 1,
+		title: 'News',
+		link: '/news'
+	},
+	{
 		id: 4,
 		title: 'About',
 		children: [{
@@ -81,6 +87,12 @@ const defaultProps = {
 			title: 'Contact',
 			link: '/about/contact'
 		}]
+	},
+	{
+		id: 1,
+		title: 'Admin',
+		link: '/admin',
+		level: ADMIN_LEVEL
 	}]
 };
 
@@ -101,10 +113,6 @@ class Navigation extends Component {
 		this.clickItem = this.clickItem.bind(this);
 	}
 	
-	componentDidMount() {
-		
-	}
-	
 	clickItem(event) {
 		let $el = $(event.currentTarget).closest('.nav-item');
 		$el.toggleClass('opened');
@@ -114,12 +122,12 @@ class Navigation extends Component {
 		let itemActive = (this.props.location.pathname === item.link) ? 'active' : '',
 			hasChildren = (item.children) ? 'has-children' : '';
 		
-		return <li key={i} className={`nav-item ${hasChildren}`}>
+		return (!item.level || (item.level && item.level <= this.props.userInfo.level)) ? <li key={i} className={`nav-item ${hasChildren}`}>
 			{(item.children) ? <span className="title" onClick={this.clickItem}>{item.title}<Icon glyph={Forward} /></span> : <Link to={item.link} className="title" onClick={this.props.toggleNav}>{item.title}</Link>}
 			{(item.children) ? <ul className="nav-children">
 				{item.children.map((child, j) => <li key={j} className={`nav-child`}><Link to={child.link} onClick={this.props.toggleNav}>{child.title}</Link></li>)}
 			</ul> : ''}
-		</li>;
+		</li> : '';
 	}
 														   
 	render() {
@@ -154,6 +162,6 @@ class Navigation extends Component {
 Navigation.propTypes = propTypes;
 Navigation.defaultProps = defaultProps;
 
-const mapStateToProps = ({ }) => ({ });
+const mapStateToProps = ({ mainReducer: { user, userInfo } }) => ({ user, userInfo });
 
 export default connect(mapStateToProps)(Navigation);
