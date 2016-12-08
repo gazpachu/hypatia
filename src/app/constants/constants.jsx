@@ -12,7 +12,7 @@ export const DEMO_EMAIL = 'demo@hypatialms.com';
 export const DEMO_CHAT_WARNING = '(Demo account is read-only)';
 
 // Messages
-export const USER_CREATED = 'Account created successfully!'
+export const USER_CONFIRM_EMAIL = 'Please confirm your email to be able to login'
 export const EMAIL_CHANGED = 'Email changed successfully!';
 export const DISPLAY_NAME_CHANGED = 'Display name changed successfully!';
 export const PASSWORD_CHANGED = 'Password changed successfully!';

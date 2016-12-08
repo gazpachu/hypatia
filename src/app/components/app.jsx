@@ -2,7 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { history } from '../store';
-import { setUser, changeViewport, setPanel } from '../actions/actions';
+import { setUser, changeViewport, setPanel, setNotification } from '../actions/actions';
+import { USER_CONFIRM_EMAIL } from '../constants/constants';
 import firebase from 'firebase';
 //import { auth } from '../constants/firebase';
 import _ from "lodash";
@@ -54,8 +55,13 @@ class App extends Component {
 		
 		this.removeListener = firebase.auth().onAuthStateChanged((user) => {
       		if (user) {
-				this.props.setUser(user);
-				history.push(this.state.redirectTo);
+				if (user.emailVerified) {
+					this.props.setUser(user);
+					history.push(this.state.redirectTo);
+				}
+				else {
+					this.props.setNotification({message: USER_CONFIRM_EMAIL, type: 'info'});
+				}
 			}
 			else if (this.isPrivatePage()) history.push('/');
       	});
@@ -121,7 +127,8 @@ const mapStateToProps = ({ mainReducer: { isDesktop, breadcrumbs, user, panel } 
 const mapDispatchToProps = {
 	changeViewport,
 	setUser,
-	setPanel
+	setPanel,
+	setNotification
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

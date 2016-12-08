@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import $ from 'jquery';
 import Navigation from '../navigation/navigation';
 import md5 from 'md5';
-import { USER_CREATED } from '../../../constants/constants';
+import { USER_CONFIRM_EMAIL } from '../../../constants/constants';
 import { setUser, setPanel, setNotification } from '../../../actions/actions';
 import firebase from 'firebase';
 
@@ -164,10 +164,10 @@ class TopNav extends Component {
 			$('.js-btn-signup').show();
 			$('.js-signup-loader').hide();
 			$('.js-overlay').animateCss('fade-out', function() {
+				$('.js-overlay').click();
 				$('.js-overlay').hide();
 			});
-			this.props.setNotification({message: USER_CREATED, type: 'success'});
-			user
+			this.props.setNotification({message: USER_CONFIRM_EMAIL, type: 'success'});
 		}.bind(this)).catch(function(error) {
 			$('.js-btn-signup').show();
 			$('.js-signup-loader').hide();
