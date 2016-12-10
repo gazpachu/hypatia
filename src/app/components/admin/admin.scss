@@ -1,14 +1,70 @@
 .admin {
 	
+	.blocks {
+		width: 100%;
+		
+		@include desktop() {
+			position: fixed;
+			width: 20%;
+		}
+	}
+	
+	.item-content {
+		width: 100%;
+		
+		@include desktop() {
+			width: 80%;
+			margin-left: 20%;
+		}
+		
+		.heading {
+			font-size: 14px;
+			margin-top: 15px;
+			cursor: pointer;
+			
+			.icon {
+				transform: rotate(90deg);
+				transition: all .2s;
+				margin-left: 10px;
+				width: 15px;
+				height: 15px;
+			}
+			
+			&.active {
+				.icon {
+					transform: rotate(-90deg);
+				}
+			}
+		}
+		
+		.editor-wrapper {
+			max-height: 0;
+			transition: all .5s;
+			overflow: hidden;
+			
+			&.active {
+				max-height: 1000px;
+			}
+		}
+		
+		.input-field {
+			margin-top: 15px;
+		}
+	}
+	
 	.block {
 		border: 1px solid $grey;
 		border-radius: 5px;
 		margin-bottom: 20px;
 		padding: 20px;
+		
+		.icon {
+			margin-right: 10px;
+		}
 	}
 	
 	.block-title {
-	    font-size: 20px;
+	    font-size: 18px;
 	}
 	
 	.input-field,
@@ -44,10 +100,6 @@
 		margin-left: 0;
 	}
 	
-	.item-content {
-		width: 80%;
-	}
-	
 	.icon.calendar {
 		left: -30px;
 		position: relative;
@@ -55,5 +107,11 @@
 	
 	.loader-small {
 		float: right;
+	}
+	
+	.footer-buttons {
+		margin-top: 30px;
+		padding-top: 20px;
+		border-top: 1px solid $grey;
 	}
 }

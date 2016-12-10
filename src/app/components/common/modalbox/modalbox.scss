@@ -8,6 +8,7 @@
     left: 25vw;
     width: 50vw;
 	z-index: 2;
+	border-radius: 5px;
 	
 	@include mobile () {
 		padding: 30px 25px;
