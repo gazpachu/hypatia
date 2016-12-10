@@ -37,12 +37,6 @@ class App extends Component {
 	
 	constructor(props) {
 		super(props);
-		
-		this.state = {
-			redirectTo: '/'
-		}
-		
-		this.isPrivatePage = this.isPrivatePage.bind(this);
 	}
 	
 	componentDidMount() {
@@ -61,33 +55,17 @@ class App extends Component {
 					firebase.database().ref('/users/' + user.uid).once('value').then(function(snapshot) {
 						if (snapshot.val()) this.props.setUserInfo(snapshot.val().info);
 					}.bind(this));
-					history.push(this.state.redirectTo);
 				}
 				else {
 					user.sendEmailVerification();
 					this.props.setNotification({message: USER_CONFIRM_EMAIL, type: 'info'});
 				}
 			}
-			else if (this.isPrivatePage()) history.push('/');
       	});
-		
-		this.unlisten = history.listen( location => {
-			if (this.isPrivatePage(location.pathname) && !this.props.user) {
-				this.setState({ redirectTo: location.pathname });
-				history.push('/');
-			}
-		});
 	}
 																
 	componentWillUnmount() {
 		this.removeListener();
-		this.unlisten();
-	}
-	
-	isPrivatePage(location) {
-		location = location || this.props.location.pathname;
-		if (location == '/dashboard' || location.indexOf('account') !== -1 || (location == '/admin' && this.props.userInfo.level < ADMIN_LEVEL)) return true;
-		else return false;
 	}
 	
 	render() {

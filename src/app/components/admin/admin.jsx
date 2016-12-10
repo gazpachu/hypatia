@@ -18,7 +18,12 @@ class Admin extends Component {
 	render () {
 		return (
 			<section className="admin page container-fluid">		
-				<h1>Hello world</h1>
+				<h2>Modules</h2>
+				<select className="select-items">
+					<option></option>
+				</select>
+				<input type="text" className="input-field" placeholder="New module" />
+				<button className="btn btn-primary">Add module</button>
 			</section>
 		)
 	}
