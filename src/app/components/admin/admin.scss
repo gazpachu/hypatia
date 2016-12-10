@@ -65,6 +65,10 @@
 	
 	.block-title {
 	    font-size: 18px;
+		
+		.btn {
+			font-weight: lighter;
+		}
 	}
 	
 	.input-field,
@@ -79,6 +83,31 @@
 	
 	.input-field {
 		border-color: $grey;
+	}
+	
+	.date-input {
+		width: 80px;
+		margin-right: 20px;
+	}
+	
+	.credits-input {
+		margin-left: 10px;
+		width: 80px;
+	}
+	
+	.dates-wrapper {
+		float: left;
+		width: 70%;
+	}
+	
+	.credits-wrapper {
+		width: 30%;
+		float: right;
+		text-align: right;
+	}
+	
+	.icon.calendar {
+		margin-left: 10px;
 	}
 	
 	.title-input {
@@ -98,11 +127,6 @@
 	.btn-cancel {
 		float: left;
 		margin-left: 0;
-	}
-	
-	.icon.calendar {
-		left: -30px;
-		position: relative;
 	}
 	
 	.loader-small {

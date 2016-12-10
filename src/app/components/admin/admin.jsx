@@ -191,8 +191,11 @@ class Admin extends Component {
 		const subjectsList = this.loadItems('subjects');
 		const modulesList = this.loadItems('modules');
 		const activitiesList = this.loadItems('activities');
+		
 		const title = (this.state.selectedItem && this.state.selectedItem.title) ? this.state.selectedItem.title : '';
+		const iconHeading = (this.state.type === 'courses') ? <Icon glyph={Course} /> : (this.state.type === 'subjects') ? <Icon glyph={Subject} /> : (this.state.type === 'modules') ? <Icon glyph={Module} /> : <Icon glyph={Activity} />;
 		const code = (this.state.selectedItem && this.state.selectedItem.code) ? this.state.selectedItem.code : '';
+		const credits = (this.state.selectedItem && this.state.selectedItem.credits) ? this.state.selectedItem.credits : '';
 		const startDate = (this.state.selectedItem && this.state.selectedItem.startDate) ? moment(this.state.selectedItem.startDate) : moment();
 		const endDate = (this.state.selectedItem && this.state.selectedItem.endDate) ? moment(this.state.selectedItem.endDate) : moment();
 		
@@ -231,17 +234,24 @@ class Admin extends Component {
 					</div>
 					<div className={classNames('item-content column', {hidden: this.state.action === ''})}>
 						<div className="block clearfix">
-							<h3 className="block-title">{(this.state.action === 'new') ? <span>Adding a new item in {this.state.type}</span> : <span>Editing an item in {this.state.type}</span>}<button className="btn btn-primary btn-xs" ref="saveTop" onClick={() => this.save()}>save in {this.state.type}</button><div className="loader-small" ref="loaderTop"></div></h3>
+							<h3 className="block-title">{iconHeading}{(this.state.action === 'new') ? <span>You are adding a new item in {this.state.type}...</span> : <span>You are editing an item in {this.state.type}...</span>}<button className="btn btn-primary btn-xs" ref="saveTop" onClick={() => this.save()}>save in {this.state.type}</button><div className="loader-small" ref="loaderTop"></div></h3>
 							<input type="text" className="input-field title-input" ref="title-input" placeholder="Title" value={title} onChange={(event) => this.updateItem(event, 'title')} />
 							<input type="text" className="input-field code-input" ref="code-input" placeholder="Code" value={code} onChange={(event) => this.updateItem(event, 'code')} />
 							
-							<div className={classNames({hidden: this.state.type !== 'courses' || this.state.type !== 'activities'})}>
-								From <DatePicker className="input-field date-input" readOnly selected={startDate} selectsStart startDate={startDate} endDate={endDate} onChange={(date) => this.updateDate(date, 'startDate')} dateFormat="YYYY-MM-DD" /><Icon glyph={Calendar} className="icon calendar" />
-								Until <DatePicker className="input-field date-input" readOnly selected={endDate} selectsEnd startDate={startDate} endDate={endDate} onChange={(date) => this.updateDate(date, 'endDate')} dateFormat="YYYY-MM-DD" /><Icon glyph={Calendar} className="icon calendar" />
+							<div className="clearfix">
+								<div className={classNames('dates-wrapper', {hidden: (this.state.type !== 'courses') && (this.state.type !== 'activities')})}>
+									From<Icon glyph={Calendar} className="icon calendar" /><DatePicker className="input-field date-input" readOnly selected={startDate} selectsStart startDate={startDate} endDate={endDate} onChange={(date) => this.updateDate(date, 'startDate')} dateFormat="YYYY-MM-DD" />
+									Until<Icon glyph={Calendar} className="icon calendar" /><DatePicker className="input-field date-input" readOnly selected={endDate} selectsEnd startDate={startDate} endDate={endDate} onChange={(date) => this.updateDate(date, 'endDate')} dateFormat="YYYY-MM-DD" />
+								</div>
+								<div className={classNames('credits-wrapper', {hidden: (this.state.type !== 'courses') && (this.state.type !== 'subjects')})}>
+									<label>Credits</label><input type="text" className="input-field credits-input" ref="credits-input" placeholder="Credits" value={credits} onChange={(event) => this.updateItem(event, 'credits')} />
+								</div>
 							</div>
 							
-							<h4 className="heading">Primary content block</h4>
-							<textarea className="input-field" id="editor1" ref="editor1" value={(this.state.selectedItem) ?this.state.selectedItem.content1 : ''} onChange={(event) => this.updateItem(event, 'content1')}></textarea>
+							<h4 className="heading active" ref="editor1-heading" onClick={() => (this.toggleElement('editor1-heading'), this.toggleElement('editor1-wrapper'))}>Primary content block<Icon glyph={Forward} /></h4>
+							<div className="editor-wrapper active" ref="editor1-wrapper">
+								<textarea className="input-field" id="editor1" ref="editor1" value={(this.state.selectedItem) ?this.state.selectedItem.content1 : ''} onChange={(event) => this.updateItem(event, 'content1')}></textarea>
+							</div>
 							
 							<h4 className="heading" ref="editor2-heading" onClick={() => (this.toggleElement('editor2-heading'), this.toggleElement('editor2-wrapper'))}>Secondary content block<Icon glyph={Forward} /></h4>
 							<div className="editor-wrapper" ref="editor2-wrapper">
