@@ -68,16 +68,14 @@ class Home extends Component {
 	render() {
 		const {firebase, posts} = this.props;
 		
-		const postsList = (!isLoaded(posts)) ?
-                          'Loading'
-                        : (isEmpty(posts) ) ?
-                              'Todo list is empty'
-						: posts.map((post, id) => this.renderItem(post, id))
+		console.log(posts);
+		
+		const postsList = (!isLoaded(posts)) ? 'Loading' : (isEmpty(posts) ) ? 'News list is empty' : posts.map((post, id) => this.renderItem(post, id));
 		
 		return (
             <section className="home page">
 				<div className="hero"></div>
-				<div className="home-columns">
+				<div className="columns">
 					<div className="news column">
 						<ul className="posts">
 							{postsList}

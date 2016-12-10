@@ -1,14 +1,40 @@
 .admin {
-	padding-top: 100px;
-	padding-left: 20px;
-	padding-right: 20px;
+	
+	.block {
+		border: 1px solid $grey;
+		border-radius: 5px;
+		margin-bottom: 20px;
+		padding: 20px;
+	}
+	
+	.block-title {
+	    font-size: 20px;
+	}
+	
+	.input-field,
+	.select-items {
+		width: 100%;
+		margin-bottom: 10px;
+	}
 	
 	.select-items {
-		display: block;
 		margin-bottom: 10px;
 	}
 	
 	.input-field {
 		border-color: $grey;
+	}
+	
+	.btn {
+		margin-left: 10px;
+		float: right;
+	}
+	
+	.btn-cancel {
+		float: left;
+	}
+	
+	.item-content {
+		width: 80%;
 	}
 }

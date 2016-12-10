@@ -8,14 +8,6 @@
 		display: block;
 	}
 	
-	.home-columns {
-		display: flex;
-
-		@include mobile() {
-			display: block;
-		}
-	}
-	
 	.news {
 		border-right: 1px solid $border-dark;
 		flex-flow: 0;

@@ -5,22 +5,13 @@ body {
 	margin: 0;
 }
 
-textarea, input, button {
-	border: none;
-    background: none;
-	
-	&:focus {
-        outline: none !important;
-    }
-}
-
 a, a:hover, a:active, a:visited, a:focus {
 	color: $blue;
 	text-decoration: none;
 }
 
-.btn {
-	@include scale-anim();
+.hidden {
+	display: none;
 }
 
 .icon {
@@ -52,6 +43,14 @@ a, a:hover, a:active, a:visited, a:focus {
 
 }
 
+.columns {
+	display: flex;
+
+	@include mobile() {
+		display: block;
+	}
+}
+
 .column {
 	padding: 20px;
 	
@@ -68,16 +67,6 @@ a, a:hover, a:active, a:visited, a:focus {
 	
 	@include desktop() {
 		padding-top: 70px;
-	}
-}
-
-.react-datepicker {
-	border-radius: 0;
-	font-family: inherit;
-	
-	.datepicker__day--selected,
-	.datepicker__day:hover {
-		border-radius: 0;
 	}
 }
 

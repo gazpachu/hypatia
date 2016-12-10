@@ -1,4 +1,12 @@
-/* radio buttons and checkboxes */
+textarea, input, button {
+	border: none;
+    background: none;
+	
+	&:focus {
+        outline: none !important;
+    }
+}
+
 label.radio,
 label.checkbox {
     display: inline-block;

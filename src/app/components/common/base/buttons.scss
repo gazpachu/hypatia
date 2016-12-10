@@ -3,7 +3,8 @@
     border-width: 1px;
     border-style: solid;
     border-radius: 25px;
-	padding: 3px 13px;;
+	padding: 3px 13px;
+	@include scale-anim();
 	
     &:focus {
         outline: none !important;
@@ -16,7 +17,12 @@
     
 	&.btn-primary {
 		background-color: $green;
-    	border: none;		
+    	border-color: $green;	
+	}
+	
+	&.btn-cancel {
+		background-color: $red;
+    	border-color: $red;	
 	}
 	
 	&.btn-outline {
