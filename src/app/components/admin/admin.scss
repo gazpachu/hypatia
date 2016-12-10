@@ -25,6 +25,15 @@
 		border-color: $grey;
 	}
 	
+	.title-input {
+		width: 80%;
+	}
+	
+	.code-input {
+		width: 18%;
+		margin-left: 2%;
+	}
+	
 	.btn {
 		margin-left: 10px;
 		float: right;
@@ -32,9 +41,19 @@
 	
 	.btn-cancel {
 		float: left;
+		margin-left: 0;
 	}
 	
 	.item-content {
 		width: 80%;
+	}
+	
+	.icon.calendar {
+		left: -30px;
+		position: relative;
+	}
+	
+	.loader-small {
+		float: right;
 	}
 }

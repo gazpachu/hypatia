@@ -28,9 +28,9 @@ class ModalBox extends Component {
 	render () {		
 		return (
 			<div className="modal-box js-modal-box">
-				<h4 className="modal-box-title">Remove &ldquo;{this.props.title}&rdquo; from <span className="text-capitalize">{this.props.location.pathname ? this.props.location.pathname.substring(1) : ''}</span>?</h4>
+				<h4 className="modal-box-title">{this.props.title}</h4>
 				<button className="btn btn-outline btn-xs" onClick={this.closeModalBox.bind(this)}>cancel</button>
-				<button className="btn btn-primary btn-xs" onClick={this.submitModalBox.bind(this)}>submit</button>
+				<button className="btn btn-primary btn-xs" onClick={this.submitModalBox.bind(this)}>accept</button>
 			</div>
 		)
 	}

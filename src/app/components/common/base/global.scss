@@ -135,3 +135,55 @@ a, a:hover, a:active, a:visited, a:focus {
 		cursor: pointer;
 	}		
 }
+
+.react-datepicker__tether-element {
+	@include mobile() {
+		width: 100%;
+		height: 100%;
+		position: fixed !important;
+		margin-top: 0 !important;
+		transform: none !important;
+	}
+}
+
+.react-datepicker__input-container {
+	margin-right: 10px;
+}
+
+.react-datepicker {
+	border-radius: 0;
+	font-family: inherit;
+	cursor: pointer;
+	
+	@include mobile() {
+		width: 100%;
+		height: 100%;
+		font-size: 16px;
+	}
+	
+	.datepicker__day {
+		@include mobile() {
+			width: 35px;
+			line-height: 35px;
+		}
+	}
+	
+	.datepicker__day--selected,
+	.datepicker__day:hover {
+		border-radius: 0;
+	}
+	
+	.react-datepicker__navigation {
+		z-index: 1;
+		
+		@include mobile() {
+			border-width: 10px;
+		}
+	}
+	
+	.react-datepicker__current-month {
+		@include mobile() {
+			font-size: 18px;
+		}
+	}
+}

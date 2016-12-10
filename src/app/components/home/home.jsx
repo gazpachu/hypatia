@@ -68,8 +68,6 @@ class Home extends Component {
 	render() {
 		const {firebase, posts} = this.props;
 		
-		console.log(posts);
-		
 		const postsList = (!isLoaded(posts)) ? 'Loading' : (isEmpty(posts) ) ? 'News list is empty' : posts.map((post, id) => this.renderItem(post, id));
 		
 		return (

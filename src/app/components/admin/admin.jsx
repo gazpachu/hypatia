@@ -7,33 +7,37 @@ import { firebase, helpers } from 'redux-react-firebase';
 import $ from 'jquery';
 import classNames from 'classnames';
 import SimpleMDE from 'simplemde';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+import ModalBox from '../common/modalbox/modalbox'
 import Helpers from '../common/helpers';
 import Icon from '../common/lib/icon/icon';
+import Calendar from '../../../../static/svg/calendar.svg';
 
 const {isLoaded, isEmpty, dataToJS} = helpers;
 
 const defaultProps = {
-	module: {
-		title: '',
-		content: '',
-		slug: ''
-	}
 };
 
 const propTypes = {
-	module: PropTypes.object
+	modules: PropTypes.object,
+	subjects: PropTypes.object,
+	courses: PropTypes.object,
+	activities: PropTypes.object
 };
 
 @firebase( [
   	'modules',
 	'subjects',
-	'courses'
+	'courses',
+	'activities'
 ])
 @connect(
   	({firebase}) => ({
     	modules: dataToJS(firebase, 'modules'),
 		subjects: dataToJS(firebase, 'subjects'),
-		courses: dataToJS(firebase, 'courses')
+		courses: dataToJS(firebase, 'courses'),
+		activities: dataToJS(firebase, 'activities')
   	})
 )
 class Admin extends Component {
@@ -45,7 +49,8 @@ class Admin extends Component {
 			action: '',
 			type: '',
 			selectedId: '',
-			selectedItem: null
+			selectedItem: null,
+			modalTitle: ''
 		}
 		
 		this.editor = null;
@@ -65,6 +70,10 @@ class Admin extends Component {
 	}
 	
 	handleSelect(event, action, type) {
+		const index = event.target.selectedIndex;
+		this.reset();
+		event.target.selectedIndex = index;
+		
 		if (isLoaded(type) && !isEmpty(type) && event.target.value !== '') {
 			let selectedItem = this.props[type][event.target.value];
 
@@ -72,34 +81,39 @@ class Admin extends Component {
 				console.log(this.state.action, this.state.type, this.state.selectedId, this.state.selectedItem);
 			}.bind(this));
 		}
-		else this.cancel();
 	}
 	
 	new(type) {
-		this.setState({ action: 'new', type, selectedId: '', selectedItem: null });
+		this.cancel();
+		this.setState({ action: 'new', type });
 	}
 	
 	cancel() {
 		this.setState({ action: '', type: '', selectedId: '' });
+		this.reset();
+	}
+	
+	reset() {
 		this.refs['modules-select'].selectedIndex = 0;
 		this.refs['subjects-select'].selectedIndex = 0;
 		this.refs['courses-select'].selectedIndex = 0;
+		this.refs['activities-select'].selectedIndex = 0;
 	}
 	
 	save() {
+		this.toggleButtons(false);
+		let item = this.state.selectedItem;
+		item.startDate = moment(item.startDate).format('YYYY-MM-DD');
+		item.endDate = moment(item.endDate).format('YYYY-MM-DD');
+		
 		if (this.state.action === 'new') {
-			this.props.firebase.push(this.state.type, {
-				title: this.refs['title-input'].value,
-				slug: Helpers.slugify(this.refs['title-input'].value),
-				content: this.refs['editor'].value
-			}, () => this.props.setNotification({message: CONSTANTS.ITEM_SAVED, type: 'success'}));
+			this.props.firebase.push(this.state.type, item, () => this.props.setNotification({message: CONSTANTS.ITEM_SAVED, type: 'success'}));
 		}
 		else {
-			this.props.firebase.set(this.state.type+'/'+this.state.selectedId, {
-				title: this.refs['title-input'].value,
-				slug: Helpers.slugify(this.refs['title-input'].value),
-				content: this.refs['editor'].value
-			}, () => this.props.setNotification({message: CONSTANTS.ITEM_SAVED, type: 'success'}));
+			this.props.firebase.set(this.state.type+'/'+this.state.selectedId, item, function() {
+				this.toggleButtons(true);
+				this.props.setNotification({message: CONSTANTS.ITEM_SAVED, type: 'success'})
+			}.bind(this));
 		}
 	}
 	
@@ -112,26 +126,39 @@ class Admin extends Component {
 		this.setState({ selectedItem: newItem });
 	}
 	
+	updateDate(date, prop) {
+		if (prop === 'endDate' && moment(date).isBefore(moment(this.state.selectedItem.startDate))) {
+			date = this.state.selectedItem.endDate;
+		}
+		
+		const newItem = Object.assign({}, this.state.selectedItem, {[prop]: date});
+		this.setState({ selectedItem: newItem });
+	}
+	
+	loadItems(type) {
+		return (isLoaded(this.props[type]) && !isEmpty(this.props[type])) ? Object.keys(this.props[type]).map(function(key) {
+			let item = this.props[type][key];
+			return <option key={key} value={key}>{item.title}</option>;
+		}.bind(this)) : '';
+	}
+	
+	toggleButtons(state) {
+		$(this.refs.remove).toggle(state);
+		$(this.refs.save).toggle(state);
+		$(this.refs.cancel).toggle(state);
+		$(this.refs.loader).toggle(!state);
+	}
+	
 	render () {
-		const {firebase, modules, subjects, courses} = this.props;
-
-		const modulesList = (isLoaded(modules) && !isEmpty(modules)) ?
-			Object.keys(modules).map(function(key) {
-				let item = modules[key];
-				return <option key={key} value={key}>{item.title}</option>;
-			}) : '';
+		const modulesList = this.loadItems('modules');
+		const subjectsList = this.loadItems('subjects');
+		const coursesList = this.loadItems('courses');
+		const activitiesList = this.loadItems('activities');
 		
-		const subjectsList = (isLoaded(subjects) && !isEmpty(subjects)) ?
-			Object.keys(subjects).map(function(key) {
-				let item = subjects[key];
-				return <option key={key} value={key}>{item.title}</option>;
-			}) : '';
-		
-		const coursesList = (isLoaded(courses) && !isEmpty(courses)) ?
-			Object.keys(courses).map(function(key) {
-				let item = courses[key];
-				return <option key={key} value={key}>{item.title}</option>;
-			}) : '';
+		const title = (this.state.selectedItem && this.state.selectedItem.title) ? this.state.selectedItem.title : '';
+		const code = (this.state.selectedItem && this.state.selectedItem.code) ? this.state.selectedItem.code : '';
+		const startDate = (this.state.selectedItem && this.state.selectedItem.startDate) ? moment(this.state.selectedItem.startDate) : moment();
+		const endDate = (this.state.selectedItem && this.state.selectedItem.endDate) ? moment(this.state.selectedItem.endDate) : moment();
 		
 		return (
 			<section className="admin page container-fluid">
@@ -161,19 +188,35 @@ class Admin extends Component {
 							</select>
 							<button className="btn btn-primary btn-xs" onClick={() => this.new('courses')}>Add new course</button>
 						</div>
+						<div className="block clearfix">		
+							<h3 className="block-title">Activities</h3>
+							<select className="select-items" ref="activities-select" onChange={(event) => this.handleSelect(event, 'edit', 'activities')}>
+								<option value="">Select to edit</option>
+								{activitiesList}
+							</select>
+							<button className="btn btn-primary btn-xs" onClick={() => this.new('activities')}>Add new activity</button>
+						</div>
 					</div>
 					<div className={classNames('item-content column', {hidden: this.state.action === ''})}>
 						<div className="block clearfix">
 							<h3 className="block-title">{(this.state.action === 'new') ? <span>New item for {this.state.type}</span> : <span>Edit {this.state.type} item</span>}</h3>
-							<input type="text" className="input-field" ref="title-input" placeholder="Title" value={(this.state.selectedItem) ? this.state.selectedItem.title : ''} onChange={(event) => this.updateItem(event, 'title')} />
+							<input type="text" className="input-field title-input" ref="title-input" placeholder="Title" value={title} onChange={(event) => this.updateItem(event, 'title')} />
+							<input type="text" className="input-field code-input" ref="code-input" placeholder="Code" value={code} onChange={(event) => this.updateItem(event, 'code')} />
 							<textarea className="input-field" id="editor" ref="editor" value={(this.state.selectedItem) ?this.state.selectedItem.content : ''} onChange={(event) => this.updateItem(event, 'content')}></textarea>
-							<button className="btn btn-cancel btn-xs" onClick={() => this.delete()}>Remove</button>
 							
-							<button className="btn btn-primary btn-xs" onClick={() => this.save()}>Save</button>
-							<button className="btn btn-outline btn-xs" onClick={() => this.cancel()}>Cancel</button>
+							{(this.state.type === 'courses' || this.state.type === 'activities') ? <div>
+								From <DatePicker className="input-field date-input" readOnly selected={startDate} selectsStart startDate={startDate} endDate={endDate} onChange={(date) => this.updateDate(date, 'startDate')} dateFormat="YYYY-MM-DD" /><Icon glyph={Calendar} className="icon calendar" />
+								Until <DatePicker className="input-field date-input" readOnly selected={endDate} selectsEnd startDate={startDate} endDate={endDate} onChange={(date) => this.updateDate(date, 'endDate')} dateFormat="YYYY-MM-DD" /><Icon glyph={Calendar} className="icon calendar" />
+							</div> : ''}
+							
+							<button className="btn btn-cancel btn-xs" ref="remove" onClick={() => this.delete()}>Remove</button>
+							<button className="btn btn-primary btn-xs" ref="save" onClick={() => this.save()}>Save</button>
+							<button className="btn btn-outline btn-xs" ref="cancel" onClick={() => this.cancel()}>Cancel</button>
+							<div className="loader-small" ref="loader"></div>
 						</div>
 					</div>
 				</div>
+				<ModalBox title={this.state.modalTitle} answer={this.updateModalAnswer.bind(this)} />
 			</section>
 		)
 	}
