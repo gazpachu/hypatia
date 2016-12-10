@@ -17,8 +17,12 @@
 			margin-left: 20%;
 		}
 		
-		.heading {
+		.heading, label {
 			font-size: 14px;
+			font-weight: bold;
+		}
+		
+		.heading {
 			margin-top: 15px;
 			cursor: pointer;
 			
@@ -71,14 +75,14 @@
 		}
 	}
 	
-	.input-field,
-	.select-items {
+	.input-field {
 		width: 100%;
 		margin-bottom: 10px;
 	}
 	
 	.select-items {
-		margin-bottom: 10px;
+		width: 100%;
+		margin-bottom: 20px;
 	}
 	
 	.input-field {
@@ -87,7 +91,7 @@
 	
 	.date-input {
 		width: 80px;
-		margin-right: 20px;
+		margin-right: 10px;
 	}
 	
 	.credits-input {
@@ -97,11 +101,15 @@
 	
 	.dates-wrapper {
 		float: left;
-		width: 70%;
+		width: 75%;
+	}
+	
+	.grade-wrapper {
+		display: inline-block;
 	}
 	
 	.credits-wrapper {
-		width: 30%;
+		width: 25%;
 		float: right;
 		text-align: right;
 	}

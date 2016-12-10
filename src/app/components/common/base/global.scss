@@ -11,7 +11,7 @@ a, a:hover, a:active, a:visited, a:focus {
 }
 
 .hidden {
-	display: none;
+	display: none !important;
 }
 
 .icon {
