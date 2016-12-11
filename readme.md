@@ -20,6 +20,8 @@ Slack group (invitation only): [https://hypatialms.slack.com](https://hypatialms
 
 ![Account module](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/screenshots%2Faccount.png?alt=media&token=6a035c52-84df-4acc-a56d-c15e352f34da)
 
+![Admin module](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/screenshots%2Fadmin.png?alt=media&token=8ebbf715-8d70-491a-8e40-b4f148193c7d)
+
 ![Calendar module](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/screenshots%2Fcalendar.png?alt=media&token=17ab3011-9c46-4afd-adf5-124797422217)
 
 ## Getting Started
