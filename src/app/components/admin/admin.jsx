@@ -141,7 +141,7 @@ class Admin extends Component {
 	}
 	
 	updateInput(event, prop) {
-		this.updateItem(event.target.value, prop);
+		this.updateItem(event.arget.value, prop);
 	}
 	
 	updateDate(date, prop) {
@@ -152,6 +152,11 @@ class Admin extends Component {
 	}
 	
 	updateSelect(select, prop) {
+		let value = (select.selectedIndex >= 0) ? select.options[select.selectedIndex].value : '';
+		this.updateItem(value, prop);
+	}
+	
+	updateMultiSelect(select, prop) {
 		let selectedValues = [];
 		
 		for (var i=0; i<select.length; i++) {
@@ -162,8 +167,13 @@ class Admin extends Component {
 	}
 	
 	updateItem(value, prop) {
-		const newItem = Object.assign({}, this.state.selectedItem, {[prop]: value});
-		this.setState({ selectedItem: newItem });
+		let newItem = null;
+		
+		if (value && !isEmpty(value)) newItem = Object.assign({}, this.state.selectedItem, {[prop]: value});
+		else newItem = _.omit(this.state.selectedItem, [prop]);
+		
+		if (!isEmpty(newItem) && JSON.stringify(newItem) !== JSON.stringify(this.state.selectedItem))
+			this.setState({ selectedItem: newItem });
 	}
 	
 	toggleButtons(state) {
@@ -223,22 +233,22 @@ class Admin extends Component {
 					<div className="blocks column">
 						<div className="block clearfix">
 							<h3 className="block-title"><Icon glyph={User} />Users<button className="btn btn-primary btn-xs" onClick={() => this.new('users')}>+ add</button></h3>
-							<Select2 className="select-items" style={{width: '100%'}} ref="users-select" data={users} options={{placeholder: 'Select user'}} onChange={(event) => this.handleSelect(event, 'edit', 'users')} />
+							<Select2 className="select-items" style={{width: '100%'}} ref="users-select" data={users} defaultValue={this.state.selectedId} options={{placeholder: 'Select user', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'users')} />
 							
 							<h3 className="block-title"><Icon glyph={Group} />Groups<button className="btn btn-primary btn-xs" onClick={() => this.new('groups')}>+ add</button></h3>
-							<Select2 className="select-items" style={{width: '100%'}} ref="groups-select" data={groups} options={{placeholder: 'Select group'}} onChange={(event) => this.handleSelect(event, 'edit', 'groups')} />
+							<Select2 className="select-items" style={{width: '100%'}} ref="groups-select" data={groups} defaultValue={this.state.selectedId} options={{placeholder: 'Select group', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'groups')} />
 									
 							<h3 className="block-title"><Icon glyph={Course} />Courses<button className="btn btn-primary btn-xs" onClick={() => this.new('courses')}>+ add</button></h3>
-							<Select2 className="select-items" style={{width: '100%'}} ref="courses-select" data={courses} options={{placeholder: 'Select course'}} onChange={(event) => this.handleSelect(event, 'edit', 'courses')} />
+							<Select2 className="select-items" style={{width: '100%'}} ref="courses-select" data={courses} defaultValue={this.state.selectedId} options={{placeholder: 'Select course', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'courses')} />
 	
 							<h3 className="block-title"><Icon glyph={Subject} />Subjects<button className="btn btn-primary btn-xs" onClick={() => this.new('subjects')}>+ add</button></h3>
-							<Select2 className="select-items" style={{width: '100%'}} ref="subjects-select" data={subjects} options={{placeholder: 'Select subject'}} onChange={(event) => this.handleSelect(event, 'edit', 'subjects')} />
+							<Select2 className="select-items" style={{width: '100%'}} ref="subjects-select" data={subjects} defaultValue={this.state.selectedId} options={{placeholder: 'Select subject', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'subjects')} />
 		
 							<h3 className="block-title"><Icon glyph={Module} />Modules<button className="btn btn-primary btn-xs" onClick={() => this.new('modules')}>+ add</button></h3>
-							<Select2 className="select-items" style={{width: '100%'}} ref="modules-select" data={modules} options={{placeholder: 'Select module'}} onChange={(event) => this.handleSelect(event, 'edit', 'modules')} />
+							<Select2 className="select-items" style={{width: '100%'}} ref="modules-select" data={modules} defaultValue={this.state.selectedId} options={{placeholder: 'Select module', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'modules')} />
 		
 							<h3 className="block-title"><Icon glyph={Activity} />Activities<button className="btn btn-primary btn-xs" onClick={() => this.new('activities')}>+ add</button></h3>
-							<Select2 className="select-items" style={{width: '100%'}} ref="activities-select" data={activities} options={{placeholder: 'Select activity'}} onChange={(event) => this.handleSelect(event, 'edit', 'activities')} />
+							<Select2 className="select-items" style={{width: '100%'}} ref="activities-select" data={activities} defaultValue={this.state.selectedId} options={{placeholder: 'Select activity', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'activities')} />
 						</div>
 					</div>
 					<div className={classNames('item-content column', {hidden: this.state.action === ''})}>
@@ -248,7 +258,8 @@ class Admin extends Component {
 							<input type="text" className="input-field code-input" ref="code-input" placeholder="Code" value={code} onChange={(event) => this.updateInput(event, 'code')} />
 							
 							<div className={classNames({hidden: (this.state.type !== 'groups')})}>
-								<Select2 style={{width: '100%'}} multiple data={this.state.usersList} defaultValue={(this.state.selectedItem && this.state.selectedItem.users) ? this.state.selectedItem.users : []} options={{placeholder: 'Users in this group...'}} onChange={(event) => this.updateSelect(event.currentTarget, 'users')} />
+								<Select2 style={{width: '100%'}} multiple data={users} value={(this.state.selectedItem && this.state.selectedItem.users) ? this.state.selectedItem.users : []} options={{placeholder: 'Users in this group...', allowClear: true}} onChange={(event) => this.updateMultiSelect(event.currentTarget, 'users')} />
+								<Select2 style={{width: '100%'}} data={courses} value={(this.state.selectedItem && this.state.selectedItem.course) ? this.state.selectedItem.course : ''} options={{placeholder: 'Select a course...', allowClear: true}} onChange={(event) => this.updateSelect(event.currentTarget, 'course')} />
 							</div>
 							
 							<div className="clearfix">
