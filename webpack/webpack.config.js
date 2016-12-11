@@ -31,9 +31,13 @@ module.exports = (options) => {
         		test: /.jsx?$/,
         		include: Path.join(__dirname, '../src/app'),
         		loader: 'babel',
-				},
+			},
 			{
-			test: /\.svg$/,
+				test: /\.css$/,
+				loader: "style-loader!css-loader"
+			},
+			{
+				test: /\.svg$/,
 				loader: 'svg-sprite?' + JSON.stringify({
 					name: '[name]_[hash]',
 					prefixize: true

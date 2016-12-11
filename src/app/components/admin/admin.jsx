@@ -7,6 +7,8 @@ import { firebase, helpers } from 'redux-react-firebase';
 import $ from 'jquery';
 import classNames from 'classnames';
 import SimpleMDE from 'react-simplemde-editor';
+import Select2 from 'react-select2-wrapper';
+import 'react-select2-wrapper/css/select2.css';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import ModalBox from '../common/modalbox/modalbox'
@@ -149,16 +151,19 @@ class Admin extends Component {
 		this.updateItem(date, prop);
 	}
 	
+	updateSelect(select, prop) {
+		let selectedValues = [];
+		
+		for (var i=0; i<select.length; i++) {
+			if (select.options[i].selected) selectedValues.push(select.options[i].value);
+		}
+
+		this.updateItem(selectedValues, prop);
+	}
+	
 	updateItem(value, prop) {
 		const newItem = Object.assign({}, this.state.selectedItem, {[prop]: value});
 		this.setState({ selectedItem: newItem });
-	}
-	
-	loadItems(type) {
-		return (isLoaded(this.props[type]) && !isEmpty(this.props[type])) ? Object.keys(this.props[type]).map(function(key) {
-			let item = this.props[type][key];
-			return <option key={key} value={key}>{(type === 'users') ? item.info.firstName + ' ' + item.info.lastName1 + ' ' + item.info.lastName2 : item.title}</option>;
-		}.bind(this)) : '';
 	}
 	
 	toggleButtons(state) {
@@ -185,13 +190,24 @@ class Admin extends Component {
 		$(this.refs[ref]).toggleClass('active');
 	}
 	
+	createList(type) {
+		let newList = [];
+		if (isLoaded(this.props[type]) && !isEmpty(this.props[type])) {
+			newList = Object.keys(this.props[type]).map(function(key) {
+					let item = this.props[type][key];
+					return (type === 'users') ? {text: item.info.firstName + ' ' + item.info.lastName1 + ' ' + item.info.lastName2, id: key} : {text: item.title, id: key};
+			}.bind(this));
+		}
+		return newList;
+	}
+	
 	render () {
-		const usersList = this.loadItems('users');
-		const groupsList = this.loadItems('groups');
-		const coursesList = this.loadItems('courses');
-		const subjectsList = this.loadItems('subjects');
-		const modulesList = this.loadItems('modules');
-		const activitiesList = this.loadItems('activities');
+		const users = this.createList('users');
+		const groups = this.createList('groups');
+		const courses = this.createList('courses');
+		const subjects = this.createList('subjects');
+		const modules = this.createList('modules');
+		const activities = this.createList('activities');
 		
 		const title = (this.state.selectedItem && this.state.selectedItem.title) ? this.state.selectedItem.title : '';
 		const iconHeading = (this.state.type === 'courses') ? <Icon glyph={Course} /> : (this.state.type === 'subjects') ? <Icon glyph={Subject} /> : (this.state.type === 'modules') ? <Icon glyph={Module} /> : <Icon glyph={Activity} />;
@@ -207,40 +223,22 @@ class Admin extends Component {
 					<div className="blocks column">
 						<div className="block clearfix">
 							<h3 className="block-title"><Icon glyph={User} />Users<button className="btn btn-primary btn-xs" onClick={() => this.new('users')}>+ add</button></h3>
-							<select className="select-items" ref="users-select" onChange={(event) => this.handleSelect(event, 'edit', 'users')}>
-								<option value="">Select to edit</option>
-								{usersList}
-							</select>
+							<Select2 className="select-items" style={{width: '100%'}} ref="users-select" data={users} options={{placeholder: 'Select user'}} onChange={(event) => this.handleSelect(event, 'edit', 'users')} />
 							
 							<h3 className="block-title"><Icon glyph={Group} />Groups<button className="btn btn-primary btn-xs" onClick={() => this.new('groups')}>+ add</button></h3>
-							<select className="select-items" ref="groups-select" onChange={(event) => this.handleSelect(event, 'edit', 'groups')}>
-								<option value="">Select to edit</option>
-								{groupsList}
-							</select>
+							<Select2 className="select-items" style={{width: '100%'}} ref="groups-select" data={groups} options={{placeholder: 'Select group'}} onChange={(event) => this.handleSelect(event, 'edit', 'groups')} />
 									
 							<h3 className="block-title"><Icon glyph={Course} />Courses<button className="btn btn-primary btn-xs" onClick={() => this.new('courses')}>+ add</button></h3>
-							<select className="select-items" ref="courses-select" onChange={(event) => this.handleSelect(event, 'edit', 'courses')}>
-								<option value="">Select to edit</option>
-								{coursesList}
-							</select>
+							<Select2 className="select-items" style={{width: '100%'}} ref="courses-select" data={courses} options={{placeholder: 'Select course'}} onChange={(event) => this.handleSelect(event, 'edit', 'courses')} />
 	
 							<h3 className="block-title"><Icon glyph={Subject} />Subjects<button className="btn btn-primary btn-xs" onClick={() => this.new('subjects')}>+ add</button></h3>
-							<select className="select-items" ref="subjects-select" onChange={(event) => this.handleSelect(event, 'edit', 'subjects')}>
-								<option value="">Select to edit</option>
-								{subjectsList}
-							</select>
+							<Select2 className="select-items" style={{width: '100%'}} ref="subjects-select" data={subjects} options={{placeholder: 'Select subject'}} onChange={(event) => this.handleSelect(event, 'edit', 'subjects')} />
 		
 							<h3 className="block-title"><Icon glyph={Module} />Modules<button className="btn btn-primary btn-xs" onClick={() => this.new('modules')}>+ add</button></h3>
-							<select className="select-items" ref="modules-select" onChange={(event) => this.handleSelect(event, 'edit', 'modules')}>
-								<option value="">Select to edit</option>
-								{modulesList}
-							</select>
+							<Select2 className="select-items" style={{width: '100%'}} ref="modules-select" data={modules} options={{placeholder: 'Select module'}} onChange={(event) => this.handleSelect(event, 'edit', 'modules')} />
 		
 							<h3 className="block-title"><Icon glyph={Activity} />Activities<button className="btn btn-primary btn-xs" onClick={() => this.new('activities')}>+ add</button></h3>
-							<select className="select-items" ref="activities-select" onChange={(event) => this.handleSelect(event, 'edit', 'activities')}>
-								<option value="">Select to edit</option>
-								{activitiesList}
-							</select>
+							<Select2 className="select-items" style={{width: '100%'}} ref="activities-select" data={activities} options={{placeholder: 'Select activity'}} onChange={(event) => this.handleSelect(event, 'edit', 'activities')} />
 						</div>
 					</div>
 					<div className={classNames('item-content column', {hidden: this.state.action === ''})}>
@@ -248,6 +246,10 @@ class Admin extends Component {
 							<h3 className="block-title">{iconHeading}{(this.state.action === 'new') ? <span>You are adding a new {(this.state.type === 'activities') ? 'activity' : this.state.type.slice(0, -1)}...</span> : <span>You are editing {(this.state.type === 'activities') ? 'an activity' : 'a ' + this.state.type.slice(0, -1)}...</span>}<button className="btn btn-primary btn-xs" ref="saveTop" onClick={() => this.save()}>save in {this.state.type}</button><div className="loader-small" ref="loaderTop"></div></h3>
 							<input type="text" className="input-field title-input" ref="title-input" placeholder="Title" value={title} onChange={(event) => this.updateInput(event, 'title')} />
 							<input type="text" className="input-field code-input" ref="code-input" placeholder="Code" value={code} onChange={(event) => this.updateInput(event, 'code')} />
+							
+							<div className={classNames({hidden: (this.state.type !== 'groups')})}>
+								<Select2 style={{width: '100%'}} multiple data={this.state.usersList} defaultValue={(this.state.selectedItem && this.state.selectedItem.users) ? this.state.selectedItem.users : []} options={{placeholder: 'Users in this group...'}} onChange={(event) => this.updateSelect(event.currentTarget, 'users')} />
+							</div>
 							
 							<div className="clearfix">
 								<div className={classNames('dates-wrapper', {hidden: (this.state.type !== 'courses') && (this.state.type !== 'activities')})}>
@@ -275,6 +277,11 @@ class Admin extends Component {
 							<h4 className="heading" ref="editor3-heading" onClick={() => (this.toggleElement('editor3-heading'), this.toggleElement('editor3-wrapper'))}>Tertiary content block<Icon glyph={Forward} /></h4>
 							<div className="editor-wrapper" ref="editor3-wrapper">
 								<SimpleMDE ref="editor3" value={(this.state.selectedItem && this.state.selectedItem.content3) ? this.state.selectedItem.content3 : ''} onChange={(event) => this.updateItem(event, 'content3')} />
+							</div>
+							
+							<h4 className="heading" ref="editor4-heading" onClick={() => (this.toggleElement('editor4-heading'), this.toggleElement('editor4-wrapper'))}>Private notes<Icon glyph={Forward} /></h4>
+							<div className="editor-wrapper" ref="editor4-wrapper">
+								<SimpleMDE ref="editor4" value={(this.state.selectedItem && this.state.selectedItem.notes) ? this.state.selectedItem.content4 : ''} onChange={(event) => this.updateItem(event, 'content4')} />
 							</div>
 							
 							<div className="footer-buttons">

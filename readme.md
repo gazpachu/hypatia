@@ -142,3 +142,7 @@ Deploy to Firebase
 ````
 firebase deploy
 ````
+
+## Copyright & License
+
+Copyright (c) 2016-2017 Joan Siddharta Mira Martos - Released under the [GPLv2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html) license.

@@ -187,3 +187,7 @@ a, a:hover, a:active, a:visited, a:focus {
 		}
 	}
 }
+
+.page .select2-container--default.select2-container--focus .select2-selection--multiple {
+	border-color: $grey;
+}
