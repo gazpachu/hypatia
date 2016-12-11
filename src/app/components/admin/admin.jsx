@@ -6,7 +6,7 @@ import * as CONSTANTS from '../../constants/constants';
 import { firebase, helpers } from 'redux-react-firebase';
 import $ from 'jquery';
 import classNames from 'classnames';
-import SimpleMDE from 'simplemde';
+import SimpleMDE from 'react-simplemde-editor';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import ModalBox from '../common/modalbox/modalbox'
@@ -65,22 +65,10 @@ class Admin extends Component {
 			selectedItem: null,
 			modalTitle: ''
 		}
-		
-		this.editor1 = null;
-		this.editor2 = null;
-		this.editor3 = null;
 	}
 	
 	componentDidMount() {
 		this.props.setLoading(false);
-		
-		this.editor1 = new SimpleMDE({ element: document.getElementById('editor1'), forceSync: true });
-		this.editor2 = new SimpleMDE({ element: document.getElementById('editor2'), forceSync: true });
-		this.editor3 = new SimpleMDE({ element: document.getElementById('editor3'), forceSync: true });
-		
-		this.editor1.codemirror.on('change', function() { this.updateItem(null, 'content1', this.editor1.value()); }.bind(this));
-		this.editor2.codemirror.on('change', function() { this.updateItem(null, 'content2', this.editor2.value()); }.bind(this));
-		this.editor3.codemirror.on('change', function() { this.updateItem(null, 'content3', this.editor3.value()); }.bind(this));
 	}
 	
 	handleSelect(event, action, type) {
@@ -150,17 +138,19 @@ class Admin extends Component {
 		});
 	}
 	
-	updateItem(event, prop, value) {
-		const newItem = Object.assign({}, this.state.selectedItem, {[prop]: value || event.target.value});
-		this.setState({ selectedItem: newItem });
+	updateInput(event, prop) {
+		this.updateItem(event.target.value, prop);
 	}
 	
 	updateDate(date, prop) {
 		if (prop === 'endDate' && moment(date).isBefore(moment(this.state.selectedItem.startDate))) {
 			date = this.state.selectedItem.endDate;
 		}
-		
-		const newItem = Object.assign({}, this.state.selectedItem, {[prop]: date});
+		this.updateItem(date, prop);
+	}
+	
+	updateItem(value, prop) {
+		const newItem = Object.assign({}, this.state.selectedItem, {[prop]: value});
 		this.setState({ selectedItem: newItem });
 	}
 	
@@ -256,8 +246,8 @@ class Admin extends Component {
 					<div className={classNames('item-content column', {hidden: this.state.action === ''})}>
 						<div className="block clearfix">
 							<h3 className="block-title">{iconHeading}{(this.state.action === 'new') ? <span>You are adding a new {(this.state.type === 'activities') ? 'activity' : this.state.type.slice(0, -1)}...</span> : <span>You are editing {(this.state.type === 'activities') ? 'an activity' : 'a ' + this.state.type.slice(0, -1)}...</span>}<button className="btn btn-primary btn-xs" ref="saveTop" onClick={() => this.save()}>save in {this.state.type}</button><div className="loader-small" ref="loaderTop"></div></h3>
-							<input type="text" className="input-field title-input" ref="title-input" placeholder="Title" value={title} onChange={(event) => this.updateItem(event, 'title')} />
-							<input type="text" className="input-field code-input" ref="code-input" placeholder="Code" value={code} onChange={(event) => this.updateItem(event, 'code')} />
+							<input type="text" className="input-field title-input" ref="title-input" placeholder="Title" value={title} onChange={(event) => this.updateInput(event, 'title')} />
+							<input type="text" className="input-field code-input" ref="code-input" placeholder="Code" value={code} onChange={(event) => this.updateInput(event, 'code')} />
 							
 							<div className="clearfix">
 								<div className={classNames('dates-wrapper', {hidden: (this.state.type !== 'courses') && (this.state.type !== 'activities')})}>
@@ -268,23 +258,23 @@ class Admin extends Component {
 									</div>
 								</div>
 								<div className={classNames('credits-wrapper', {hidden: (this.state.type !== 'courses') && (this.state.type !== 'subjects')})}>
-									<label>Credits</label><input type="text" className="input-field credits-input" ref="credits-input" placeholder="Credits" value={credits} onChange={(event) => this.updateItem(event, 'credits')} />
+									<label>Credits</label><input type="text" className="input-field credits-input" ref="credits-input" placeholder="Credits" value={credits} onChange={(event) => this.updateInput(event, 'credits')} />
 								</div>
 							</div>
 							
 							<h4 className="heading active" ref="editor1-heading" onClick={() => (this.toggleElement('editor1-heading'), this.toggleElement('editor1-wrapper'))}>Primary content block<Icon glyph={Forward} /></h4>
 							<div className="editor-wrapper active" ref="editor1-wrapper">
-								<textarea className="input-field" id="editor1" ref="editor1" value={(this.state.selectedItem) ?this.state.selectedItem.content1 : ''} onChange={(event) => this.updateItem(event, 'content1')}></textarea>
+								<SimpleMDE ref="editor1" value={(this.state.selectedItem && this.state.selectedItem.content1) ? this.state.selectedItem.content1 : ''} onChange={(event) => this.updateItem(event, 'content1')} />
 							</div>
 							
 							<h4 className="heading" ref="editor2-heading" onClick={() => (this.toggleElement('editor2-heading'), this.toggleElement('editor2-wrapper'))}>Secondary content block<Icon glyph={Forward} /></h4>
 							<div className="editor-wrapper" ref="editor2-wrapper">
-								<textarea className="input-field" id="editor2" ref="editor2" value={(this.state.selectedItem) ?this.state.selectedItem.content2 : ''} onChange={(event) => this.updateItem(event, 'content2')}></textarea>
+								<SimpleMDE ref="editor2" value={(this.state.selectedItem && this.state.selectedItem.content2) ? this.state.selectedItem.content2 : ''} onChange={(event) => this.updateItem(event, 'content2')} />
 							</div>
 
 							<h4 className="heading" ref="editor3-heading" onClick={() => (this.toggleElement('editor3-heading'), this.toggleElement('editor3-wrapper'))}>Tertiary content block<Icon glyph={Forward} /></h4>
 							<div className="editor-wrapper" ref="editor3-wrapper">
-								<textarea className="input-field" id="editor3" ref="editor3" value={(this.state.selectedItem) ?this.state.selectedItem.content3 : ''} onChange={(event) => this.updateItem(event, 'content3')}></textarea>
+								<SimpleMDE ref="editor3" value={(this.state.selectedItem && this.state.selectedItem.content3) ? this.state.selectedItem.content3 : ''} onChange={(event) => this.updateItem(event, 'content3')} />
 							</div>
 							
 							<div className="footer-buttons">
