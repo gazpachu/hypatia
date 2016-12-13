@@ -10,7 +10,7 @@ Demo: [https://hypatia-8d923.firebaseapp.com](https://hypatia-8d923.firebaseapp.
 
 You can sign up or use the demo account (read-only): demo@hypatialms.com / demouser
 
-Project's website: [https://gazpachu.github.io/hypatia/](https://gazpachu.github.io/hypatia/)
+Project's website: [https://theonapps.github.io/hypatia/](https://theonapps.github.io/hypatia/)
 
 Slack group (invitation only): [https://hypatialms.slack.com](https://hypatialms.slack.com) To request for an invitation, contact me at hello [@] joanmira {.} com
 
@@ -147,4 +147,4 @@ firebase deploy
 
 ## Copyright & License
 
-Copyright (c) 2016-2017 Joan Siddharta Mira Martos - Released under the [GPLv2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html) license.
+Copyright (c) 2016-2017 Joan Siddharta Mira Martos (Theon.io) - Released under the [GPLv2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html) license.
