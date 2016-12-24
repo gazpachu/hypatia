@@ -6,21 +6,19 @@
 			position: absolute;
 			fill: white;
 			opacity: .1;
-			top: -20px;
+			top: -50px;
 			width: 100%;
 			height: 500px;
 			display: none;
-			animation-delay: 1s;
+			animation-delay: .5s;
 		}
 		
 		.hero-content {
 			display: none;
 			position: absolute;
-			top: 90px;
-			margin: 0 auto;
-			left: 0;
-			right: 0;
-			width: 430px;
+			top: 130px;
+			right: 130px;
+			width: 400px;
 		}
 		
 		.logo {
@@ -38,7 +36,66 @@
 			padding-left: 210px;
 			line-height: 34px;
 		}
+		
+		.circle {
+			display: none;
+			position: absolute;
+			color: rgba(255,255,255,.6);
+			text-align: center;
+			font-size: 13px;
+    		padding-top: 6px;
+			width: 30px;
+			height: 30px;
+			border-radius: 25px;
+			cursor: pointer;
+			transition: all .5s;
+			
+			&:hover {
+				background-color: rgba(255,255,255,.3);
+				color: $darker-grey;
+				
+				.spinner {	
+					border-style: solid;
+				}
+			}
+			
+			.spinner {
+				position: absolute;
+				left: 0;
+    			top: 0;
+				border: 1px dashed rgba(255,255,255,.6);
+				border-radius: 25px;
+				width: 30px;
+				height: 30px;
+				animation: spinner linear 3s forwards infinite;
+			}
+			
+			@keyframes spinner {
+				0% { transform: rotate(0deg) }
+				100% { transform: rotate(360deg) }
+			}
+			
+			&.usa { top: 160px; left: 140px }
+			&.brazil { top: 310px; left: 370px; animation-delay: .5s; }
+			&.argentina { top: 390px; left: 340px; animation-delay: 1s; }
+			&.spain { top: 157px; left: 480px; animation-delay: 1.5s; }
+			&.uk { top: 100px; left: 480px; animation-delay: 2s; }
+			&.france { top: 120px; left: 504px; animation-delay: 2.5s; }
+			&.usa2 { top: 170px; left: 264px; animation-delay: 3s; }
+			&.colombia { top: 300px; left: 270px; animation-delay: 3.5s; }
+			&.africa1 { top: 400px; left: 550px; animation-delay: 2.5s; }
+			&.africa2 { top: 260px; left: 494px; animation-delay: 4s; }
+			&.russia1 { top: 100px; left: 624px; animation-delay: 4.5s; }
+			&.arabia { top: 190px; left: 604px; animation-delay: 3.5s; }
+			&.india { top: 237px; left: 704px; animation-delay: 5.5s; }
+			&.china { top: 160px; left: 734px; animation-delay: 5s; }
+			&.japan { top: 150px; left: 884px; animation-delay: 5.5s; }
+			&.thailand { top: 230px; left: 774px; animation-delay: 6s; }
+			&.philippines { top: 240px; left: 834px; animation-delay: 6.5s; }
+			&.indonesia { top: 310px; left: 794px; animation-delay: 7s; }
+		}
 	}
+	
 	.news {
 		border-right: 1px solid $border-dark;
 		flex-flow: 0;

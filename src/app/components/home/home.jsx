@@ -47,7 +47,9 @@ class Home extends Component {
 //		});
 		
 		$('.hero .world-map').show().animateCss('slideInUp', function() {
-			$('.hero .hero-content').show().animateCss('fadeInUp');
+			$('.hero .hero-content').show().animateCss('fadeInUp', function() {
+				$('.hero .circle').show().animateCss('fadeInUp');				
+			});
 		});
 	}
 	
@@ -83,8 +85,26 @@ class Home extends Component {
 					<Icon glyph={World} className="world-map" />
 					<div className="hero-content">
 						<Icon glyph={Logo} className="logo" />
-						<div className="slogan">Ultimate Realtime Education</div>
+						<div className="slogan">Open Realtime Education</div>
 					</div>
+					<div className="circle tooltip usa">JF<div className="spinner"></div><span className="tooltip-text">Jeff Francis<span>San Francisco, USA</span></span></div>
+					<div className="circle tooltip brazil">MC<div className="spinner"></div><span className="tooltip-text">Maria Castro<span>Rio de Janeiro, Brazil</span></span></div>
+					<div className="circle tooltip argentina">LU<div className="spinner"></div><span className="tooltip-text">Leonardo Ugarte<span>Buenos Aires, Argentina</span></span></div>
+					<div className="circle tooltip spain">JM<div className="spinner"></div><span className="tooltip-text">Joan Mira<span>Alicante, Spain</span></span></div>
+					<div className="circle tooltip uk">TG<div className="spinner"></div><span className="tooltip-text">Tina Goldfinger<span>London, UK</span></span></div>
+					<div className="circle tooltip france">FT<div className="spinner"></div><span className="tooltip-text">Fiona Toulouse<span>Paris, France</span></span></div>
+					<div className="circle tooltip usa2">JL<div className="spinner"></div><span className="tooltip-text">Jennifer Lawrence<span>New York, USA</span></span></div>
+					<div className="circle tooltip colombia">FL<div className="spinner"></div><span className="tooltip-text">Fernando Lopez<span>Bogota, Colombia</span></span></div>
+					<div className="circle tooltip africa1">DS<div className="spinner"></div><span className="tooltip-text">Daniel Da Silva<span>Johannesburg, South Africa</span></span></div>
+					<div className="circle tooltip africa2">EI<div className="spinner"></div><span className="tooltip-text">Eniola Iquo<span>Lagos, Nigeria</span></span></div>
+					<div className="circle tooltip russia1">AB<div className="spinner"></div><span className="tooltip-text">Alexei Borislav<span>Moscow, Russia</span></span></div>
+					<div className="circle tooltip arabia">AR<div className="spinner"></div><span className="tooltip-text">Amira Raheem<span>Baghdad, Iraq</span></span></div>
+					<div className="circle tooltip india">AH<div className="spinner"></div><span className="tooltip-text">Ankit Harish<span>New Delhi, India</span></span></div>
+					<div className="circle tooltip china">HM<div className="spinner"></div><span className="tooltip-text">Huan Mei<span>Xian, China</span></span></div>
+					<div className="circle tooltip japan">WM<div className="spinner"></div><span className="tooltip-text">Watanabe Miyazaki<span>Tokyo, Japan</span></span></div>
+					<div className="circle tooltip thailand">LK<div className="spinner"></div><span className="tooltip-text">Lawan Kanda<span>Bangkok, Thailand</span></span></div>
+					<div className="circle tooltip philippines">SG<div className="spinner"></div><span className="tooltip-text">Sonia Gutierrez<span>Manila, Philippines</span></span></div>
+					<div className="circle tooltip indonesia">SW<div className="spinner"></div><span className="tooltip-text">Sari Wati<span>Kuala Lumpur, Indonesia</span></span></div>
 				</div>
 				<div className="columns">
 					<div className="news column">
