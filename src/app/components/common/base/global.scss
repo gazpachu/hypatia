@@ -50,10 +50,10 @@ a, a:hover, a:active, a:visited, a:focus {
 	position: absolute;
 	z-index: 1;
 	width: 100%;
-	height: 75%;
+	height: 520px;
 	overflow: hidden;
-    transform: skewY(-8deg);
-    transform-origin: 0;
+//    transform: skewY(-8deg);
+//    transform-origin: 0;
     background: linear-gradient(150deg, #53f 15%, #05d5ff 70%, #a6ffcb 94%);
 	
 	&:before {
@@ -217,10 +217,16 @@ a, a:hover, a:active, a:visited, a:focus {
     position: relative;
     display: inline-block;
 	
+	&:hover .tooltip-text,
+	&.active .tooltip-text {
+		visibility: visible;
+		opacity: 1;
+	}
+	
 	.tooltip-text {
 		visibility: hidden;
 		width: 120px;
-		background-color: rgba(255,255,255,.5);
+		background-color: rgba(255,255,255,.7);
 		color: $dark-grey;
 		text-align: center;
 		border-radius: 6px;
@@ -237,21 +243,16 @@ a, a:hover, a:active, a:visited, a:focus {
 			font-size: 11px;
 			display: block;
 		}
+		
+		&::after {
+			content: '';
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			margin-left: -5px;
+			border-width: 5px;
+			border-style: solid;
+			border-color: rgba(255,255,255,.5) transparent transparent transparent;
+		}
 	}
-}
-
-.tooltip .tooltip-text::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: rgba(255,255,255,.5) transparent transparent transparent;
-}
-
-.tooltip:hover .tooltip-text {
-    visibility: visible;
-    opacity: 1;
 }

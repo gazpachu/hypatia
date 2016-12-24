@@ -8,7 +8,7 @@
 			opacity: .1;
 			top: -50px;
 			width: 100%;
-			height: 500px;
+			height: 100%;
 			display: none;
 			animation-delay: .5s;
 		}
@@ -16,9 +16,18 @@
 		.hero-content {
 			display: none;
 			position: absolute;
-			top: 130px;
+			top: 100px;
 			right: 130px;
 			width: 400px;
+		}
+		
+		.elevator-pitch {
+			display: none;
+			position: absolute;
+			top: 240px;
+			right: 130px;
+    		width: 300px;
+			color: $white;
 		}
 		
 		.logo {
@@ -35,12 +44,34 @@
 			position: absolute;
 			padding-left: 210px;
 			line-height: 34px;
+			
+			.word {
+				width: 1px;
+				overflow: hidden; /* Ensures the content is not revealed until the animation */
+				border-right: 3px solid transparent; /* The typwriter cursor */
+				white-space: nowrap; /* Keeps the content on a single line */
+				animation: typing 1s steps(40, end) forwards, blink-caret .75s step-end 2;
+				
+				&.word1 { animation-delay: 1s; }
+				&.word2 { animation-delay: 2.5s; }
+				&.word3 { animation-delay: 4s; }
+			}
+		}
+		
+		@keyframes typing {
+			from { width: 0 }
+			to { width: 100% }
+		}
+
+		@keyframes blink-caret {
+			from, to { border-color: $white }
+			50% { border-color: $white; }
 		}
 		
 		.circle {
 			display: none;
 			position: absolute;
-			color: rgba(255,255,255,.6);
+			color: rgba(255,255,255,.8);
 			text-align: center;
 			font-size: 13px;
     		padding-top: 6px;
@@ -50,7 +81,7 @@
 			cursor: pointer;
 			transition: all .5s;
 			
-			&:hover {
+			&.active, &:hover {
 				background-color: rgba(255,255,255,.3);
 				color: $darker-grey;
 				
@@ -63,7 +94,7 @@
 				position: absolute;
 				left: 0;
     			top: 0;
-				border: 1px dashed rgba(255,255,255,.6);
+				border: 1px dashed rgba(255,255,255,.8);
 				border-radius: 25px;
 				width: 30px;
 				height: 30px;
@@ -76,23 +107,60 @@
 			}
 			
 			&.usa { top: 160px; left: 140px }
-			&.brazil { top: 310px; left: 370px; animation-delay: .5s; }
-			&.argentina { top: 390px; left: 340px; animation-delay: 1s; }
-			&.spain { top: 157px; left: 480px; animation-delay: 1.5s; }
-			&.uk { top: 100px; left: 480px; animation-delay: 2s; }
-			&.france { top: 120px; left: 504px; animation-delay: 2.5s; }
-			&.usa2 { top: 170px; left: 264px; animation-delay: 3s; }
-			&.colombia { top: 300px; left: 270px; animation-delay: 3.5s; }
-			&.africa1 { top: 400px; left: 550px; animation-delay: 2.5s; }
-			&.africa2 { top: 260px; left: 494px; animation-delay: 4s; }
-			&.russia1 { top: 100px; left: 624px; animation-delay: 4.5s; }
-			&.arabia { top: 190px; left: 604px; animation-delay: 3.5s; }
-			&.india { top: 237px; left: 704px; animation-delay: 5.5s; }
-			&.china { top: 160px; left: 734px; animation-delay: 5s; }
-			&.japan { top: 150px; left: 884px; animation-delay: 5.5s; }
-			&.thailand { top: 230px; left: 774px; animation-delay: 6s; }
-			&.philippines { top: 240px; left: 834px; animation-delay: 6.5s; }
-			&.indonesia { top: 310px; left: 794px; animation-delay: 7s; }
+			&.brazil { top: 310px; left: 370px; animation-delay: .2s; }
+			&.argentina { top: 390px; left: 340px; animation-delay: .4s; }
+			&.spain { top: 157px; left: 480px; animation-delay: .6s; }
+			&.uk { top: 100px; left: 480px; animation-delay: .8s; }
+			&.france { top: 120px; left: 504px; animation-delay: 1s; }
+			&.usa2 { top: 170px; left: 264px; animation-delay: 1.2s; }
+			&.colombia { top: 300px; left: 270px; animation-delay: 1.4s; }
+			&.africa1 { top: 400px; left: 550px; animation-delay: 1.6s; }
+			&.africa2 { top: 260px; left: 494px; animation-delay: 1.8s; }
+			&.russia1 { top: 100px; left: 624px; animation-delay: 2s; }
+			&.arabia { top: 190px; left: 604px; animation-delay: 2.2s; }
+			&.india { top: 237px; left: 704px; animation-delay: 2.4s; }
+			&.china { top: 160px; left: 734px; animation-delay: 2.6s; }
+			&.japan { top: 150px; left: 884px; animation-delay: 2.8s; }
+			&.thailand { top: 230px; left: 774px; animation-delay: 3s; }
+			&.philippines { top: 240px; left: 834px; animation-delay: 3.2s; }
+			&.indonesia { top: 310px; left: 794px; animation-delay: 3.4s; }
+		}
+		
+		.line{
+			display: none;
+			transform-origin: 0 100%;
+			height: 1px;
+			background: $white;
+			position: absolute;
+			opacity: .4;
+			
+			&.teacher-l1 {
+				width: 520px;
+				top: 189px;
+				left: 293px;
+				transform: rotate(15deg);
+			}
+			
+			&.teacher-l2 {
+				width: 520px;
+				top: 189px;
+				left: 293px;
+				transform: rotate(15deg);
+			}
+			
+			&.teacher-l3 {
+				width: 520px;
+				top: 189px;
+				left: 293px;
+				transform: rotate(15deg);
+			}
+			
+			&.teacher-l4 {
+				width: 520px;
+				top: 189px;
+				left: 293px;
+				transform: rotate(15deg);
+			}
 		}
 	}
 	

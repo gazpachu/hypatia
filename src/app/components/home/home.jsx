@@ -48,6 +48,7 @@ class Home extends Component {
 		
 		$('.hero .world-map').show().animateCss('slideInUp', function() {
 			$('.hero .hero-content').show().animateCss('fadeInUp', function() {
+				$('.hero .elevator-pitch').show().animateCss('fadeInUp');
 				$('.hero .circle').show().animateCss('fadeInUp');				
 			});
 		});
@@ -85,7 +86,15 @@ class Home extends Component {
 					<Icon glyph={World} className="world-map" />
 					<div className="hero-content">
 						<Icon glyph={Logo} className="logo" />
-						<div className="slogan">Open Realtime Education</div>
+						<div className="slogan">
+							<div className="word word1">Open</div>
+							<div className="word word2">Realtime</div>
+							<div className="word word3">Education</div>
+						</div>
+					</div>
+					<div className="elevator-pitch">
+						<p>Hypatia is a <strong>FREE</strong>, Open Source LMS (Learning Management System) focussed in UX and remote coworking. You can use it to build your online school, academy or university.</p>
+						<p><button className="btn btn-primary">Show example</button></p>
 					</div>
 					<div className="circle tooltip usa">JF<div className="spinner"></div><span className="tooltip-text">Jeff Francis<span>San Francisco, USA</span></span></div>
 					<div className="circle tooltip brazil">MC<div className="spinner"></div><span className="tooltip-text">Maria Castro<span>Rio de Janeiro, Brazil</span></span></div>
@@ -93,7 +102,7 @@ class Home extends Component {
 					<div className="circle tooltip spain">JM<div className="spinner"></div><span className="tooltip-text">Joan Mira<span>Alicante, Spain</span></span></div>
 					<div className="circle tooltip uk">TG<div className="spinner"></div><span className="tooltip-text">Tina Goldfinger<span>London, UK</span></span></div>
 					<div className="circle tooltip france">FT<div className="spinner"></div><span className="tooltip-text">Fiona Toulouse<span>Paris, France</span></span></div>
-					<div className="circle tooltip usa2">JL<div className="spinner"></div><span className="tooltip-text">Jennifer Lawrence<span>New York, USA</span></span></div>
+					<div className="circle tooltip active usa2">JL<div className="spinner"></div><span className="tooltip-text">Jennifer Lawrence<span>Maths teacher</span><span>New York, USA</span></span></div>
 					<div className="circle tooltip colombia">FL<div className="spinner"></div><span className="tooltip-text">Fernando Lopez<span>Bogota, Colombia</span></span></div>
 					<div className="circle tooltip africa1">DS<div className="spinner"></div><span className="tooltip-text">Daniel Da Silva<span>Johannesburg, South Africa</span></span></div>
 					<div className="circle tooltip africa2">EI<div className="spinner"></div><span className="tooltip-text">Eniola Iquo<span>Lagos, Nigeria</span></span></div>
@@ -105,6 +114,11 @@ class Home extends Component {
 					<div className="circle tooltip thailand">LK<div className="spinner"></div><span className="tooltip-text">Lawan Kanda<span>Bangkok, Thailand</span></span></div>
 					<div className="circle tooltip philippines">SG<div className="spinner"></div><span className="tooltip-text">Sonia Gutierrez<span>Manila, Philippines</span></span></div>
 					<div className="circle tooltip indonesia">SW<div className="spinner"></div><span className="tooltip-text">Sari Wati<span>Kuala Lumpur, Indonesia</span></span></div>
+					
+					<div className="line teacher-l1"></div>
+					<div className="line teacher-l2"></div>
+					<div className="line teacher-l3"></div>
+					<div className="line teacher-l4"></div>
 				</div>
 				<div className="columns">
 					<div className="news column">
