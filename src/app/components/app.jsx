@@ -70,7 +70,8 @@ class App extends Component {
 	
 	render() {
 		let title;
-		if (this.props.breadcrumbs[0] === 'Home') {
+
+		if (!this.props.breadcrumbs[0]) {
 			title = 'Hypatia';
 		} else {
 			title = this.props.breadcrumbs.reverse().join(' < ') + ' < Hypatia';
@@ -89,6 +90,7 @@ class App extends Component {
 					<Loader />
 					<Notification />
 					<TopNav location={this.props.location} />
+					<div className="main-background"></div>
 					<div className={`dropdown-panel js-dropdown-panel ${panelClass}`}>
 						<Chat class={(this.props.panel === 'chat') ? 'open' : ''} />
 						<Calendar class={(this.props.panel === 'calendar') ? 'open' : ''} />

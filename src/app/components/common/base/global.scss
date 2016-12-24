@@ -40,7 +40,20 @@ a, a:hover, a:active, a:visited, a:focus {
 }
 
 .main {
+	&.has-hero {
+		
+	}
+}
 
+.main-background {
+	position: absolute;
+	z-index: 1;
+	width: 100%;
+	height: 75%;
+	overflow: hidden;
+    transform: skewY(-8deg);
+    transform-origin: 0;
+    background: linear-gradient(150deg, #53f 15%, #05d5ff 70%, #a6ffcb 94%);
 }
 
 .columns {
@@ -63,7 +76,8 @@ a, a:hover, a:active, a:visited, a:focus {
 	min-height: 100vh;
 	padding-top: 60px;
 	width: 100%;
-	background-color: $grey-bg;
+	position: relative;
+	z-index: 1;
 	
 	@include desktop() {
 		padding-top: 70px;
@@ -81,7 +95,6 @@ a, a:hover, a:active, a:visited, a:focus {
 
 	@include desktop() {
 		width: 25%;
-		top: 70px;
 	}
 }
 
@@ -110,20 +123,16 @@ a, a:hover, a:active, a:visited, a:focus {
 	z-index: 1;
 	display: none;
 	animation-duration: .3s;
-	
-	@include desktop() {
-		top: 70px;
-	}
 }
 
 .dropdown-panel {
 	background-color: $white;
 	position: fixed;
-	top: 70px;
+	top: 40px;
 	width: 100%;
 	height: 100vh;
 	overflow: scroll;
-	z-index: 1;
+	z-index: 2;
 
 	@include mobile () {
 		top: 70px;

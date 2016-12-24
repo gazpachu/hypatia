@@ -1,10 +1,8 @@
 .top-nav {
-	background-color: $blue;
     height: 40px;
 	z-index: 2;
-	position: fixed;
+	position: absolute;
 	width: 100%;
-	border-bottom: 1px solid $border-light;
 	
 	.top-nav-bar {
 		padding: 6px 0;
@@ -61,11 +59,10 @@
 			stroke: white;
 			fill: white;
 		}
-		span {
-			text-transform: uppercase;
-			font-size: 20px;
-		    vertical-align: text-top;
-			
+		
+		.logo-wording {
+			width: 80px;
+
 			@include mobile() {
 				display: none;
 			}
@@ -286,6 +283,11 @@
 		a {
 			color: $white;
 			font-size: 14px;
+		}
+		
+		.lang {
+			display: inline-block;
+			margin-right: 12px;
 		}
 		
 		.icon {

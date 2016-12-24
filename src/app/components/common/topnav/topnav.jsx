@@ -11,6 +11,7 @@ import firebase from 'firebase';
 
 import Icon from '../lib/icon/icon';
 import Logo from '../../../../../static/svg/logo.svg';
+import LogoWording from '../../../../../static/svg/logo-wording.svg';
 import Avatar from '../../../../../static/svg/avatar.svg';
 import Trophy from '../../../../../static/svg/trophy.svg';
 import Calendar from '../../../../../static/svg/calendar.svg';
@@ -222,11 +223,12 @@ class TopNav extends Component {
 					
 					<Link to="/" className="logo">
 						<Icon glyph={Logo} />
-						<span>Hypatia</span>
+						<Icon glyph={LogoWording} className="icon logo-wording" />
 					</Link>
 					
 					{(!this.props.user) ? 
 						<div className="user-controls">
+							<div className="lang">EN</div>
 							<div className="user-controls-cta sign-up-cta">
 								<span onClick={this.showForm}>Sign up</span>
 								<form className="user-form sign-up" onSubmit={this.handleSignup}>
@@ -249,6 +251,7 @@ class TopNav extends Component {
 						</div>
 					:
 						<div className="user-controls">
+							<div className="lang">EN</div>
 							<button onClick={() => {this.changePanel('chat') }}>{this.props.panel === 'chat' ? <Icon glyph={Close} className="icon close-chat" /> : <Icon glyph={Chat} className="icon chat" />}</button>
 							
 							<div className="user-controls-cta account-cta">

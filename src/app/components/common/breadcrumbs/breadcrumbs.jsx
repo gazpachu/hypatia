@@ -27,8 +27,6 @@ class Breadcrumbs extends Component {
 					newTrail[i] = newTrail[i].charAt(0).toUpperCase() + newTrail[i].slice(1);
 				}
 			}
-			else
-				newTrail.push('Home');
 				
 			this.props.setBreadcrumbs(newTrail);
 		});

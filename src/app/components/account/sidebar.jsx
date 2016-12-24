@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import classNames from 'classnames';
 
 export default function Sidebar(props) {
-	return <ul className="sidebar">
+	return <ul className="sidebar column">
 				<li className={classNames('sidebar-item', {active: (props.active === 'account')})}><Link to="/account">Account</Link></li>
 				<li className={classNames('sidebar-item', {active: (props.active === 'settings')})}><Link to="/account/settings">Settings</Link></li>
 				<li className={classNames('sidebar-item', {active: (props.active === 'notifications')})}><Link to="/account/notifications">Notifications</Link></li>

@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { setLoading, setFilters } from '../../actions/actions';
 import {connect} from 'react-redux';
 import { Link } from 'react-router';
+import Hero from '../common/hero/hero';
 import { firebase, helpers } from 'redux-react-firebase';
 //import { database, storage } from '../../constants/firebase';
 import $ from 'jquery';
@@ -10,6 +11,8 @@ import showdown from 'showdown';
 import Icon from '../common/lib/icon/icon';
 import Back from '../../../../static/svg/back.svg';
 import Forward from '../../../../static/svg/forward.svg';
+import World from '../../../../static/svg/world.svg';
+import Logo from '../../../../static/svg/logo.svg';
 
 const {isLoaded, isEmpty, dataToJS} = helpers;
 
@@ -29,7 +32,7 @@ class Home extends Component {
 	
 	componentDidMount() {
 		this.props.setLoading(false);  // Move this to API callback when implemented (if ever)
-		$('.js-main').removeClass().addClass('main js-main home-page');
+		$('.js-main').removeClass().addClass('main js-main home-page has-hero');
 		
 //		firebase.database().ref('posts/0').set({
 //			title: "New virtual campus",
@@ -42,6 +45,10 @@ class Home extends Component {
 //		firebase.database().ref('/posts/').once('value').then(function(snapshot) {
 //		  	console.log(snapshot.val());
 //		});
+		
+		$('.hero .world-map').show().animateCss('slideInUp', function() {
+			$('.hero .hero-content').show().animateCss('fadeInUp');
+		});
 	}
 	
 	renderItem(post, id) {
@@ -72,7 +79,13 @@ class Home extends Component {
 		
 		return (
             <section className="home page">
-				<div className="hero"></div>
+				<div className="hero">
+					<Icon glyph={World} className="world-map" />
+					<div className="hero-content">
+						<Icon glyph={Logo} className="logo" />
+						<div className="slogan">Ultimate Realtime Education</div>
+					</div>
+				</div>
 				<div className="columns">
 					<div className="news column">
 						<ul className="posts">
