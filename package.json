@@ -73,7 +73,7 @@
     "react-simplemde-editor": "^3.6.8",
     "redux": "^3.5.2",
     "redux-promise": "^0.5.3",
-    "redux-react-firebase": "^2.3.3",
+    "redux-react-firebase": "^2.3.5",
     "redux-thunk": "^2.1.0",
     "sass-loader": "^3.2.0",
     "showdown": "^1.5.0",

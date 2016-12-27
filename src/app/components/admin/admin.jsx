@@ -11,7 +11,7 @@ import Select2 from 'react-select2-wrapper';
 import 'react-select2-wrapper/css/select2.css';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-import ModalBox from '../common/modalbox/modalbox'
+import ModalBox from '../common/modalbox/modalbox';
 import Helpers from '../common/helpers';
 import Icon from '../common/lib/icon/icon';
 import Calendar from '../../../../static/svg/calendar.svg';
@@ -21,6 +21,7 @@ import Course from '../../../../static/svg/course.svg';
 import Subject from '../../../../static/svg/subject.svg';
 import Module from '../../../../static/svg/module.svg';
 import Activity from '../../../../static/svg/activity.svg';
+import Post from '../../../../static/svg/post.svg';
 import Forward from '../../../../static/svg/forward.svg';
 
 const {isLoaded, isEmpty, dataToJS} = helpers;
@@ -43,7 +44,8 @@ const propTypes = {
 	'courses',
 	'subjects',
 	'modules',
-	'activities'
+	'activities',
+	'posts'
 ])
 @connect(
   	({firebase}) => ({
@@ -52,7 +54,8 @@ const propTypes = {
 		courses: dataToJS(firebase, 'courses'),
 		subjects: dataToJS(firebase, 'subjects'),
 		modules: dataToJS(firebase, 'modules'),
- 		activities: dataToJS(firebase, 'activities')
+ 		activities: dataToJS(firebase, 'activities'),
+		posts: dataToJS(firebase, 'posts')
   	})
 )
 class Admin extends Component {
@@ -107,6 +110,7 @@ class Admin extends Component {
 		this.refs['subjects-select'].selectedIndex = 0;
 		this.refs['modules-select'].selectedIndex = 0;
 		this.refs['activities-select'].selectedIndex = 0;
+		this.refs['posts-select'].selectedIndex = 0;
 	}
 	
 	save() {
@@ -135,13 +139,17 @@ class Admin extends Component {
 	
 	delete() {
 		this.setState({ modalTitle: CONSTANTS.CONFIRM_DELETE + ' \"' + this.state.selectedItem.title + '\"?'}, function() {
-			$('.js-modal-box').show();
-			$('.js-overlay').show().animateCss('fade-in');
+			$('.js-modal-box-wrapper').show().animateCss('fade-in');
 		});
 	}
 	
 	updateInput(event, prop) {
-		this.updateItem(event.arget.value, prop);
+		this.updateItem(event.target.value, prop);
+	}
+	
+	updateCheckbox(event, prop) {
+		let val = (event.target.checked) ? 'active' : 'inactive';
+		this.updateItem(val, prop);
 	}
 	
 	updateDate(date, prop) {
@@ -169,8 +177,12 @@ class Admin extends Component {
 	updateItem(value, prop) {
 		let newItem = null;
 		
-		if (value && !isEmpty(value)) newItem = Object.assign({}, this.state.selectedItem, {[prop]: value});
-		else newItem = _.omit(this.state.selectedItem, [prop]);
+		if (value && !isEmpty(value)) {
+			newItem = Object.assign({}, this.state.selectedItem, {[prop]: value});
+		}
+		else {
+			newItem = _.omit(this.state.selectedItem, [prop]);
+		}
 		
 		if (!isEmpty(newItem) && JSON.stringify(newItem) !== JSON.stringify(this.state.selectedItem))
 			this.setState({ selectedItem: newItem });
@@ -218,6 +230,7 @@ class Admin extends Component {
 		const subjects = this.createList('subjects');
 		const modules = this.createList('modules');
 		const activities = this.createList('activities');
+		const posts = this.createList('posts');
 		
 		const title = (this.state.selectedItem && this.state.selectedItem.title) ? this.state.selectedItem.title : '';
 		const iconHeading = (this.state.type === 'courses') ? <Icon glyph={Course} /> : (this.state.type === 'subjects') ? <Icon glyph={Subject} /> : (this.state.type === 'modules') ? <Icon glyph={Module} /> : <Icon glyph={Activity} />;
@@ -226,6 +239,7 @@ class Admin extends Component {
 		const startDate = (this.state.selectedItem && this.state.selectedItem.startDate) ? moment(this.state.selectedItem.startDate) : null;
 		const endDate = (this.state.selectedItem && this.state.selectedItem.endDate) ? moment(this.state.selectedItem.endDate) : null;
 		const gradeDate = (this.state.selectedItem && this.state.selectedItem.gradeDate) ? moment(this.state.selectedItem.gradeDate) : null;
+		const status = (this.state.selectedItem && this.state.selectedItem.status && this.state.selectedItem.status === 'active') ? true : false;;
 		
 		return (
 			<section className="admin page container-fluid">
@@ -249,13 +263,16 @@ class Admin extends Component {
 		
 							<h3 className="block-title"><Icon glyph={Activity} />Activities<button className="btn btn-primary btn-xs" onClick={() => this.new('activities')}>+ add</button></h3>
 							<Select2 className="select-items" style={{width: '100%'}} ref="activities-select" data={activities} defaultValue={this.state.selectedId} options={{placeholder: 'Select activity', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'activities')} />
+							
+							<h3 className="block-title"><Icon glyph={Post} />Posts<button className="btn btn-primary btn-xs" onClick={() => this.new('posts')}>+ add</button></h3>
+							<Select2 className="select-items" style={{width: '100%'}} ref="posts-select" data={posts} defaultValue={this.state.selectedId} options={{placeholder: 'Select post', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'posts')} />
 						</div>
 					</div>
 					<div className={classNames('item-content column', {hidden: this.state.action === ''})}>
-						<div className="block clearfix">
-							<h3 className="block-title">{iconHeading}{(this.state.action === 'new') ? <span>You are adding a new {(this.state.type === 'activities') ? 'activity' : this.state.type.slice(0, -1)}...</span> : <span>You are editing {(this.state.type === 'activities') ? 'an activity' : 'a ' + this.state.type.slice(0, -1)}...</span>}<button className="btn btn-primary btn-xs" ref="saveTop" onClick={() => this.save()}>save in {this.state.type}</button><div className="loader-small" ref="loaderTop"></div></h3>
+						<div className={`block clearfix ${this.state.type}`}>
+							<h3 className="block-title">{iconHeading}{(this.state.action === 'new') ? <span>You are adding a new {(this.state.type === 'activities') ? 'activity' : this.state.type.slice(0, -1)}...</span> : <span>You are editing {(this.state.type === 'activities') ? 'an activity' : 'a ' + this.state.type.slice(0, -1)}...</span>}<button className="btn btn-primary btn-xs" ref="saveTop" onClick={() => this.save()}>save in {this.state.type}</button><button className="btn btn-outline btn-xs" ref="cancel" onClick={() => this.cancel()}>Cancel</button><div className="loader-small" ref="loaderTop"></div></h3>
 							<input type="text" className="input-field title-input" ref="title-input" placeholder="Title" value={title} onChange={(event) => this.updateInput(event, 'title')} />
-							<input type="text" className="input-field code-input" ref="code-input" placeholder="Code" value={code} onChange={(event) => this.updateInput(event, 'code')} />
+							<input type="text" className={classNames('input-field code-input', {hidden: (this.state.type === 'posts')})} ref="code-input" placeholder="Code" value={code} onChange={(event) => this.updateInput(event, 'code')} />
 							
 							<div className={classNames({hidden: (this.state.type !== 'groups')})}>
 								<Select2 style={{width: '100%'}} multiple data={users} value={(this.state.selectedItem && this.state.selectedItem.users) ? this.state.selectedItem.users : []} options={{placeholder: 'Users in this group...', allowClear: true}} onChange={(event) => this.updateMultiSelect(event.currentTarget, 'users')} />
@@ -280,20 +297,24 @@ class Admin extends Component {
 								<SimpleMDE ref="editor1" value={(this.state.selectedItem && this.state.selectedItem.content1) ? this.state.selectedItem.content1 : ''} onChange={(event) => this.updateItem(event, 'content1')} />
 							</div>
 							
-							<h4 className="heading" ref="editor2-heading" onClick={() => (this.toggleElement('editor2-heading'), this.toggleElement('editor2-wrapper'))}>Secondary content block<Icon glyph={Forward} /></h4>
-							<div className="editor-wrapper" ref="editor2-wrapper">
-								<SimpleMDE ref="editor2" value={(this.state.selectedItem && this.state.selectedItem.content2) ? this.state.selectedItem.content2 : ''} onChange={(event) => this.updateItem(event, 'content2')} />
-							</div>
+							<div className={classNames({hidden: (this.state.type === 'posts')})}>
+								<h4 className="heading" ref="editor2-heading" onClick={() => (this.toggleElement('editor2-heading'), this.toggleElement('editor2-wrapper'))}>Secondary content block<Icon glyph={Forward} /></h4>
+								<div className="editor-wrapper" ref="editor2-wrapper">
+									<SimpleMDE ref="editor2" value={(this.state.selectedItem && this.state.selectedItem.content2) ? this.state.selectedItem.content2 : ''} onChange={(event) => this.updateItem(event, 'content2')} />
+								</div>
 
-							<h4 className="heading" ref="editor3-heading" onClick={() => (this.toggleElement('editor3-heading'), this.toggleElement('editor3-wrapper'))}>Tertiary content block<Icon glyph={Forward} /></h4>
-							<div className="editor-wrapper" ref="editor3-wrapper">
-								<SimpleMDE ref="editor3" value={(this.state.selectedItem && this.state.selectedItem.content3) ? this.state.selectedItem.content3 : ''} onChange={(event) => this.updateItem(event, 'content3')} />
+								<h4 className="heading" ref="editor3-heading" onClick={() => (this.toggleElement('editor3-heading'), this.toggleElement('editor3-wrapper'))}>Tertiary content block<Icon glyph={Forward} /></h4>
+								<div className="editor-wrapper" ref="editor3-wrapper">
+									<SimpleMDE ref="editor3" value={(this.state.selectedItem && this.state.selectedItem.content3) ? this.state.selectedItem.content3 : ''} onChange={(event) => this.updateItem(event, 'content3')} />
+								</div>
 							</div>
 							
 							<h4 className="heading" ref="editor4-heading" onClick={() => (this.toggleElement('editor4-heading'), this.toggleElement('editor4-wrapper'))}>Private notes<Icon glyph={Forward} /></h4>
 							<div className="editor-wrapper" ref="editor4-wrapper">
 								<SimpleMDE ref="editor4" value={(this.state.selectedItem && this.state.selectedItem.notes) ? this.state.selectedItem.content4 : ''} onChange={(event) => this.updateItem(event, 'content4')} />
 							</div>
+							
+							<label className="checkbox-label">Active </label><input type="checkbox" className="status-checkbox" ref="status-checkbox" checked={status} onChange={(event) => this.updateCheckbox(event, 'status')} />
 							
 							<div className="footer-buttons">
 								<button className="btn btn-cancel btn-xs" ref="remove" onClick={() => this.delete()}>Remove from {this.state.type}</button>

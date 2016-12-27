@@ -7,51 +7,6 @@ textarea, input, button {
     }
 }
 
-label.radio,
-label.checkbox {
-    display: inline-block;
-    cursor: pointer;
-    position: relative;
-    margin: 0;
-}
-
-input[type=radio],
-input[type=checkbox]{
-    display: none;
-}
-
-label.radio:before,
-label.checkbox:before {
-    content: "";
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    border-width: 1px;
-    border-style: solid;
-    margin-right: 10px;
-    border-color: $grey;
-    vertical-align: middle;
-}
-
-label.radio:before {
-    border-radius: 20px;
-}	
-
-label.checkbox:before {
-	border-radius: 0;
-}
-
-input[type=radio]:checked + label:before,
-input[type=checkbox]:checked + label:before{
-    content: "";
-    background-color: $green;
-}
-
-label.radio .text {
-	color: $grey;
-	font-weight: 500;
-}
-
 .input-field {
 	border-bottom: 1px solid $white;
 }

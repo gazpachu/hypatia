@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { setLoading, setFilters } from '../../actions/actions';
 import {connect} from 'react-redux';
 import { Link } from 'react-router';
-import Hero from '../common/hero/hero';
 import { firebase, helpers } from 'redux-react-firebase';
 //import { database, storage } from '../../constants/firebase';
 import $ from 'jquery';
@@ -10,6 +9,7 @@ import moment from 'moment';
 import showdown from 'showdown';
 import Icon from '../common/lib/icon/icon';
 import Back from '../../../../static/svg/back.svg';
+import Calendar from '../../../../static/svg/calendar2.svg';
 import Forward from '../../../../static/svg/forward.svg';
 import World from '../../../../static/svg/world.svg';
 import Logo from '../../../../static/svg/logo.svg';
@@ -17,34 +17,26 @@ import Logo from '../../../../static/svg/logo.svg';
 const {isLoaded, isEmpty, dataToJS} = helpers;
 
 @firebase( [
-  	'posts'
+  	'posts',
+	'courses'
 ])
 @connect(
   	({firebase}) => ({
     	posts: dataToJS(firebase, 'posts'),
+		courses: dataToJS(firebase, 'courses'),
   	})
 )
 class Home extends Component {
     
 	constructor(props) {
 		super(props);
+		
+		this.converter = new showdown.Converter();
 	}
 	
 	componentDidMount() {
 		this.props.setLoading(false);  // Move this to API callback when implemented (if ever)
 		$('.js-main').removeClass().addClass('main js-main home-page has-hero');
-		
-//		firebase.database().ref('posts/0').set({
-//			title: "New virtual campus",
-//			slug: "new-virtual-campus",
-//			content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin auctor pretium arcu, ac ultrices ipsum hendrerit vitae. Nunc at efficitur leo. Nulla tellus mauris, feugiat in mauris volutpat, dictum pellentesque dui. Etiam sed scelerisque odio. Nam fringilla ligula sed tincidunt dapibus. Maecenas eget purus malesuada, blandit nisl in, ornare metus. Phasellus nec sem ipsum. Nulla non enim tristique, pretium leo id, congue lorem. Etiam vitae consectetur tortor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas sed lobortis felis. Vestibulum tristique aliquam nunc, nec consectetur metus condimentum feugiat. Praesent at magna a leo tincidunt volutpat ac a mauris.\n\nProin nec orci eu odio faucibus commodo. Donec sed turpis viverra, hendrerit nunc sed, rutrum est. Cras pellentesque libero vel maximus viverra. Fusce dictum nisi euismod rutrum lobortis. Praesent sed magna quam. Mauris eu risus tempor, ullamcorper nulla eu, dignissim nulla. Integer viverra ipsum eget eros feugiat, tempus pulvinar tellus facilisis. Vivamus sed magna ac ipsum tincidunt suscipit sit amet non velit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus eleifend mi, in auctor quam. Integer ut metus fringilla nunc cursus molestie. Praesent eget tortor sagittis, viverra felis sit amet, tempor lectus.\n\nEtiam leo elit, tempor ac tellus eget, commodo mattis orci. Nullam quis mauris eu augue interdum hendrerit. Quisque vehicula aliquet consequat. Nulla in facilisis neque. Proin ut neque auctor, hendrerit purus et, feugiat est. Maecenas sed ornare libero. Nullam ut facilisis ex, elementum sodales urna. Aenean rhoncus blandit nibh, quis sollicitudin augue pretium pellentesque. Aliquam ac sodales nunc, ut mattis massa.\n\nDonec finibus, risus et maximus tempor, risus tortor sagittis velit, vitae commodo lacus nisi quis arcu. Proin aliquet iaculis nulla ut consequat. Vivamus gravida pulvinar neque, eu ultrices nisi dapibus non. Quisque ac diam volutpat, bibendum ligula vel, faucibus purus. Ut nec magna urna. Phasellus dolor massa, rutrum ut luctus interdum, fringilla eget dolor. Nam vitae orci sed felis molestie posuere. Quisque vitae felis commodo, faucibus risus vitae, tristique diam. Pellentesque porttitor rhoncus libero, eu ullamcorper metus blandit a. Pellentesque sed risus turpis.",
-//			timestamp: 1479760748,
-//			author: "gazpachu",
-//		  });
-		
-//		firebase.database().ref('/posts/').once('value').then(function(snapshot) {
-//		  	console.log(snapshot.val());
-//		});
 		
 		$('.hero .world-map').show().animateCss('slideInUp', function() {
 			$('.hero .hero-content').show().animateCss('fadeInUp', function() {
@@ -54,31 +46,47 @@ class Home extends Component {
 		});
 	}
 	
-	renderItem(post, id) {
+	renderItems(type) {
+		const {firebase} = this.props;
 		
-//		let imgRef = firebase.storage().child('posts/' + post.slug + '.jpg');
-//		imgRef.getDownloadURL().then(function(url) {
-//		  	this.refs['post-'+id+'-img'].src = url;
-//		}.bind(this)).catch(function(error) {
-//		  console.log(error);
-//		});
+		let newList = [],
+			className = type.substring(0, type.length-1),
+			path = (type === 'posts') ? 'news' : 'courses',
+			storageRef =  firebase.storage().ref();
 		
-		const converter = new showdown.Converter();
-		
-		return <li key={id} id={id} ref={`post-${id}`} className="featured-post">
-			<h1 className="post-title"><Link to={`/news/${post.slug}`}>{post.title}</Link></h1>
-			<img className="post-image" ref={`post-${id}-img`} />
-			<div className="post-meta">
-				<p>By <span className="post-author">{post.author}</span> on <span className="post-data">{moment(post.data).format('D/M/YYYY')}</span></p>
-			</div>
-			<div className="post-content" dangerouslySetInnerHTML={{__html: converter.makeHtml(post.content)}}></div>
-		</li>;
+		if (isLoaded(this.props[type]) && !isEmpty(this.props[type])) {
+			newList = Object.keys(this.props[type]).map(function(key) {
+					let item = this.props[type][key];
+				
+					// Load post image from firebase storage
+					let imgRef = storageRef.child(type + '/' + item.slug + '.jpg');
+					if (imgRef) imgRef.getDownloadURL().then(function(url) {
+						this.refs[className+'-'+key+'-img'].src = url;
+					}.bind(this)).catch(function(error) {
+					  console.log(error);
+					});
+				
+					return <li key={key} ref={`${className}-${key}`} className={className}>
+						{(type === 'posts') ? <img className="image" ref={`${className}-${key}-img`} /> : ''}
+						<h3 className="title"><Link to={`/${path}/${item.slug}`}>{(type === 'courses') ? <span className="course-icon">{item.code}</span> : ''}{item.title}</Link></h3>
+						<div className="meta">
+							<p><Icon glyph={Calendar} />{(type === 'posts') ? <span className="author">By {item.author} </span> : 'Starts '}on <span className="date">{moment(item.startDate).format('D/M/YYYY')}</span></p>
+						</div>
+						<div className="content" dangerouslySetInnerHTML={{__html: this.converter.makeHtml(item.content1)}}></div>
+						<div className="actions">
+							{(type === 'courses') ? <button className="btn btn-xs btn-primary enroll-now">Enroll now</button> : ''}
+							<button className="btn btn-xs btn-secondary"><Link to={`/${path}/${item.slug}`}>Read more</Link></button>
+						</div>
+					</li>;
+			}.bind(this));
+		}
+		else return <div className="loader-small"></div>;
+		return newList;
 	}
 	
 	render() {
-		const {firebase, posts} = this.props;
-		
-		const postsList = (!isLoaded(posts)) ? 'Loading' : (isEmpty(posts) ) ? 'News list is empty' : posts.map((post, id) => this.renderItem(post, id));
+		const postsList = this.renderItems('posts');
+		const coursesList = this.renderItems('courses');
 		
 		return (
             <section className="home page">
@@ -94,7 +102,7 @@ class Home extends Component {
 					</div>
 					<div className="elevator-pitch">
 						<p>Hypatia is a <strong>FREE</strong>, Open Source LMS (Learning Management System) focussed in UX and remote coworking. You can use it to build your online school, academy or university.</p>
-						<p><button className="btn btn-primary">Show example</button></p>
+						<p><button className="btn btn-primary">Start quick tour</button></p>
 					</div>
 					<div className="circle tooltip usa">JF<div className="spinner"></div><span className="tooltip-text">Jeff Francis<span>San Francisco, USA</span></span></div>
 					<div className="circle tooltip brazil">MC<div className="spinner"></div><span className="tooltip-text">Maria Castro<span>Rio de Janeiro, Brazil</span></span></div>
@@ -120,61 +128,17 @@ class Home extends Component {
 					<div className="line teacher-l3"></div>
 					<div className="line teacher-l4"></div>
 				</div>
-				<div className="columns">
-					<div className="news column">
-						<ul className="posts">
-							{postsList}
-						</ul>
-					</div>
-					<div className="courses column">
-						<h2 className="courses-heading">Coming up courses. Enroll now</h2>
-						<ul className="courses-list">
-							<li className="course-item"><span className="course-title">Multimedia</span>, 4 slots available. Starts in 1 days</li>
-							<li className="course-item"><span className="course-title">Journalism</span>, 4 slots available. Starts in 1 days</li>
-							<li className="course-item"><span className="course-title">Climate change</span>, 4 slots available. Starts in 1 days</li>
-							<li className="course-item"><span className="course-title">Economics</span>, 4 slots available. Starts in 1 days</li>
-							<li className="course-item"><span className="course-title">Art History</span>, 4 slots available. Starts in 1 days</li>
-							<li className="course-item"><span className="course-title">Multimedia</span>, 4 slots available. Starts in 1 days</li>
-							<li className="course-item"><span className="course-title">Multimedia</span>, 4 slots available. Starts in 1 days</li>
-						</ul>
-						<div className="courses-nav">
-							<Icon glyph={Back} />
-							<Icon glyph={Forward} />
-						</div>
-						<h3 className="new-courses-heading">New courses</h3>
-						<ul className="new-courses-list">
-							<li className="course-item">
-								<div className="course-thumb"></div>
-								<span className="course-title">Self-driving cars</span>
-								<span>Starts in 1 days</span>
-							</li>
-							<li className="course-item">
-								<div className="course-thumb"></div>
-								<span className="course-title">Nanotechnology</span>
-								<span>Starts in 1 days</span>
-							</li>
-							<li className="course-item">
-								<div className="course-thumb"></div>
-								<span className="course-title">Microwaves</span>
-								<span>Starts in 1 days</span>
-							</li>
-							<li className="course-item">
-								<div className="course-thumb"></div>
-								<span className="course-title">Mathematics</span>
-								<span>Starts in 1 days</span>
-							</li>
-							<li className="course-item">
-								<div className="course-thumb"></div>
-								<span className="course-title">English II</span>
-								<span>Starts in 1 days</span>
-							</li>
-							<li className="course-item">
-								<div className="course-thumb"></div>
-								<span className="course-title">French I</span>
-								<span>Starts in 1 days</span>
-							</li>
-						</ul>
-					</div>
+				<div className="courses">
+					<h2 className="section-heading">Available courses</h2>
+					<ul className="courses-list">
+						{coursesList}
+					</ul>
+				</div>
+           		<div className="posts">
+					<h2 className="section-heading">Latest news</h2>
+					<ul className="posts-list">
+						{postsList}
+					</ul>
 				</div>
             </section>
 		)
