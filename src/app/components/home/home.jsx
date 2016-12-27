@@ -58,26 +58,33 @@ class Home extends Component {
 			newList = Object.keys(this.props[type]).map(function(key) {
 					let item = this.props[type][key];
 				
-					// Load post image from firebase storage
-					let imgRef = storageRef.child(type + '/' + item.slug + '.jpg');
-					if (imgRef) imgRef.getDownloadURL().then(function(url) {
-						this.refs[className+'-'+key+'-img'].src = url;
-					}.bind(this)).catch(function(error) {
-					  console.log(error);
-					});
-				
-					return <li key={key} ref={`${className}-${key}`} className={className}>
-						{(type === 'posts') ? <img className="image" ref={`${className}-${key}-img`} /> : ''}
-						<h3 className="title"><Link to={`/${path}/${item.slug}`}>{(type === 'courses') ? <span className="course-icon">{item.code}</span> : ''}{item.title}</Link></h3>
-						<div className="meta">
-							<p><Icon glyph={Calendar} />{(type === 'posts') ? <span className="author">By {item.author} </span> : 'Starts '}on <span className="date">{moment(item.startDate).format('D/M/YYYY')}</span></p>
-						</div>
-						<div className="content" dangerouslySetInnerHTML={{__html: this.converter.makeHtml(item.content1)}}></div>
-						<div className="actions">
-							{(type === 'courses') ? <button className="btn btn-xs btn-primary enroll-now">Enroll now</button> : ''}
-							<button className="btn btn-xs btn-secondary"><Link to={`/${path}/${item.slug}`}>Read more</Link></button>
-						</div>
-					</li>;
+					if (item.status === 'active') {
+						// Load post image from firebase storage
+						let imgRef = storageRef.child(type + '/' + item.slug + '.jpg');
+						imgRef.getDownloadURL().then(function(url) {
+							let img = this.refs[className+'-'+key+'-img'];
+							img.src = url;
+							img.style.display = 'block';
+						}.bind(this)).catch(function(error) {
+						  //console.log(error);
+						});
+
+						return <li key={key} ref={`${className}-${key}`} className={className}>
+							<Link to={`/${path}/${item.slug}`}><img className="image" ref={`${className}-${key}-img`} /></Link>
+							<h3 className="title"><Link to={`/${path}/${item.slug}`}>{(type === 'courses') ? <span className="course-icon">{item.code}</span> : ''}{item.title}</Link></h3>
+							<div className="meta">
+								<p><Icon glyph={Calendar} />{(type === 'courses') ? 'Starts on ' : ''}<span className="date">{moment(item.startDate).format('D/M/YYYY')}</span></p>
+							</div>
+							<div className="content" dangerouslySetInnerHTML={{__html: this.converter.makeHtml(item.content1)}}></div>
+							<div className="actions">
+								{(type === 'courses') ? <button className="btn btn-xs btn-primary enroll-now">Enroll now</button> : ''}
+								<button className="btn btn-xs btn-secondary"><Link to={`/${path}/${item.slug}`}>Read more</Link></button>
+							</div>
+						</li>;
+					}
+					else {
+						return '';
+					}
 			}.bind(this));
 		}
 		else return <div className="loader-small"></div>;
@@ -129,7 +136,7 @@ class Home extends Component {
 					<div className="line teacher-l4"></div>
 				</div>
 				<div className="courses">
-					<h2 className="section-heading">Available courses</h2>
+					<h2 className="section-heading">Most popular courses</h2>
 					<ul className="courses-list">
 						{coursesList}
 					</ul>
