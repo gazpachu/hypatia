@@ -288,6 +288,10 @@
 		.lang {
 			display: inline-block;
 			margin-right: 12px;
+			
+			@include mobile() {
+				display: none;
+			}
 		}
 		
 		.icon {

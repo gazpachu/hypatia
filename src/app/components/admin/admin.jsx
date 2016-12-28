@@ -25,6 +25,7 @@ import Post from '../../../../static/svg/post.svg';
 import File from '../../../../static/svg/file.svg';
 import Folder from '../../../../static/svg/folder.svg';
 import LinkIcon from '../../../../static/svg/link.svg';
+import Metadata from '../../../../static/svg/metadata.svg';
 import Forward from '../../../../static/svg/forward.svg';
 
 const {isLoaded, isEmpty, dataToJS} = helpers;
@@ -78,7 +79,8 @@ class Admin extends Component {
 			type: '',
 			selectedId: '',
 			selectedItem: null,
-			modalTitle: ''
+			modalTitle: '',
+			fileMetadata: null
 		}
 		
 		this.storageRef =  this.props.firebase.storage().ref();
@@ -106,7 +108,15 @@ class Admin extends Component {
 			let selectedItem = this.props[type][id];
 
 			this.setState({ action, type, selectedId: id, selectedItem }, function() {
-				console.log(this.state.action, this.state.type, this.state.selectedId, this.state.selectedItem);
+				if (type === 'files') {
+					// Load file meta data
+					var fileRef = this.storageRef.child('files/'+this.state.selectedItem.file);
+					fileRef.getMetadata().then(function(metadata) {
+						this.setState({fileMetadata: metadata});
+					}.bind(this)).catch(function(error) {
+						this.props.setNotification({message: error, type: 'error'});
+					}.bind(this));
+				}
 			}.bind(this));
 		}
 	}
@@ -144,10 +154,12 @@ class Admin extends Component {
 		if (item && item.title) {
 			if (this.state.type !== 'files')
 				item.slug = Helpers.slugify(item.title);
-			else if (this.tempFile) {
-				item.file = this.tempFile.name;
-				uploadFile = true;
-				this.uploadFile(this.tempFile);
+			else {
+				if (this.tempFile) {
+					item.file = this.tempFile.name;
+					uploadFile = true;
+					this.uploadFile(this.tempFile);
+				}
 			}
 
 			if (item.date) item.date = moment(item.date).format('YYYY-MM-DD');
@@ -205,7 +217,7 @@ class Admin extends Component {
 			$('.file-input').show();
 			$('.file-upload-wrapper').hide();
 			this.tempFile = null;
-			this.uploadStatus = ''; 
+			this.uploadStatus = '';
 			
 			this.updateItem(this.uploadTask.snapshot.downloadURL, 'url', function() {
 				this.save();
@@ -361,6 +373,11 @@ class Admin extends Component {
 		const endDate = (this.state.selectedItem && this.state.selectedItem.endDate) ? moment(this.state.selectedItem.endDate) : null;
 		const gradeDate = (this.state.selectedItem && this.state.selectedItem.gradeDate) ? moment(this.state.selectedItem.gradeDate) : null;
 		const status = (this.state.selectedItem && this.state.selectedItem.status && this.state.selectedItem.status === 'inactive') ? false : true;;
+		const fileContentType = (this.state.fileMetadata) ? this.state.fileMetadata.contentType : '';
+		let fileSize = (this.state.fileMetadata) ? Math.round(this.state.fileMetadata.size/1000) : 0;
+		fileSize = (fileSize < 1000) ? Math.round(fileSize)+'KB' : (fileSize < 1000000) ? Math.round(fileSize/1000)+'MB' : (fileSize < 1000000000) ? Math.round(fileSize/1000000)+'GB' : Math.round(fileSize/1000000000)+'TB'; 
+		const fileCreatedOn = (this.state.fileMetadata) ? moment(this.state.fileMetadata.timeCreated).format('YYYY-MM-DD HH:MM:SS') : '';
+		const fileUpdatedOn = (this.state.fileMetadata) ? moment(this.state.fileMetadata.updated).format('YYYY-MM-DD HH:MM:SS') : '';
 		
 		return (
 			<section className="admin page container-fluid">
@@ -369,55 +386,55 @@ class Admin extends Component {
 						<div className="block clearfix">
 							<div className="clearfix">
 								<Icon glyph={User} />
-								<Select2 className="select-items" style={{width: '70%'}} ref="users-select" data={users} defaultValue={this.state.selectedId} options={{placeholder: 'Users', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'users')} />
+								<Select2 className="select-items" style={{width: '50%'}} ref="users-select" data={users} defaultValue={this.state.selectedId} options={{placeholder: 'Users', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'users')} />
 								<button className="btn btn-primary btn-xs" onClick={() => this.new('users')}>new</button>
 							</div>
 							
 							<div className="clearfix">
 								<Icon glyph={Group} />
-								<Select2 className="select-items" style={{width: '70%'}} ref="groups-select" data={groups} defaultValue={this.state.selectedId} options={{placeholder: 'Groups', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'groups')} />
+								<Select2 className="select-items" style={{width: '50%'}} ref="groups-select" data={groups} defaultValue={this.state.selectedId} options={{placeholder: 'Groups', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'groups')} />
 								<button className="btn btn-primary btn-xs" onClick={() => this.new('groups')}>new</button>
 							</div>
 							
 							<div className="clearfix">
 								<Icon glyph={Course} />
-								<Select2 className="select-items" style={{width: '70%'}} ref="courses-select" data={courses} defaultValue={this.state.selectedId} options={{placeholder: 'Courses', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'courses')} />
+								<Select2 className="select-items" style={{width: '50%'}} ref="courses-select" data={courses} defaultValue={this.state.selectedId} options={{placeholder: 'Courses', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'courses')} />
 								<button className="btn btn-primary btn-xs" onClick={() => this.new('courses')}>new</button>
 							</div>
 	
 							<div className="clearfix">
 								<Icon glyph={Subject} />
-								<Select2 className="select-items" style={{width: '70%'}} ref="subjects-select" data={subjects} defaultValue={this.state.selectedId} options={{placeholder: 'Subjects', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'subjects')} />
+								<Select2 className="select-items" style={{width: '50%'}} ref="subjects-select" data={subjects} defaultValue={this.state.selectedId} options={{placeholder: 'Subjects', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'subjects')} />
 								<button className="btn btn-primary btn-xs" onClick={() => this.new('subjects')}>new</button>
 							</div>
 		
 							<div className="clearfix">
 								<Icon glyph={Module} />
-								<Select2 className="select-items" style={{width: '70%'}} ref="modules-select" data={modules} defaultValue={this.state.selectedId} options={{placeholder: 'Modules', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'modules')} />
+								<Select2 className="select-items" style={{width: '50%'}} ref="modules-select" data={modules} defaultValue={this.state.selectedId} options={{placeholder: 'Modules', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'modules')} />
 								<button className="btn btn-primary btn-xs" onClick={() => this.new('modules')}>new</button>
 							</div>
 		
 							<div className="clearfix">
 								<Icon glyph={Activity} />
-								<Select2 className="select-items" style={{width: '70%'}} ref="activities-select" data={activities} defaultValue={this.state.selectedId} options={{placeholder: 'Activities', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'activities')} />
+								<Select2 className="select-items" style={{width: '50%'}} ref="activities-select" data={activities} defaultValue={this.state.selectedId} options={{placeholder: 'Activities', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'activities')} />
 								<button className="btn btn-primary btn-xs" onClick={() => this.new('activities')}>new</button>
 							</div>
 							
 							<div className="clearfix">
 								<Icon glyph={Post} />
-								<Select2 className="select-items" style={{width: '70%'}} ref="posts-select" data={posts} defaultValue={this.state.selectedId} options={{placeholder: 'Posts', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'posts')} />
+								<Select2 className="select-items" style={{width: '50%'}} ref="posts-select" data={posts} defaultValue={this.state.selectedId} options={{placeholder: 'Posts', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'posts')} />
 								<button className="btn btn-primary btn-xs" onClick={() => this.new('posts')}>new</button>
 							</div>
 							
 							<div className="clearfix">
 								<Icon glyph={Post} />
-								<Select2 className="select-items" style={{width: '70%'}} ref="pages-select" data={pages} defaultValue={this.state.selectedId} options={{placeholder: 'Pages', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'pages')} />
+								<Select2 className="select-items" style={{width: '50%'}} ref="pages-select" data={pages} defaultValue={this.state.selectedId} options={{placeholder: 'Pages', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'pages')} />
 								<button className="btn btn-primary btn-xs" onClick={() => this.new('pages')}>new</button>
 							</div>
 							
 							<div className="clearfix">
 								<Icon glyph={File} />
-								<Select2 className="select-items" style={{width: '70%'}} ref="files-select" data={files} defaultValue={this.state.selectedId} options={{placeholder: 'Files', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'files')} />
+								<Select2 className="select-items" style={{width: '50%'}} ref="files-select" data={files} defaultValue={this.state.selectedId} options={{placeholder: 'Files', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'files')} />
 								<button className="btn btn-primary btn-xs" onClick={() => this.new('files')}>new</button>
 							</div>
 						</div>
@@ -470,7 +487,7 @@ class Admin extends Component {
 							
 							<div className={classNames({hidden: (this.state.type !== 'files')})}>
 								<Icon glyph={Folder} />
-								<Select2 className="select-items folders-select" style={{width: '50%'}} ref="folders-select" data={[
+								<Select2 className="select-items folders-select" style={{width: '30%'}} ref="folders-select" data={[
 									{ text: 'Image (JPG, PNG, SVG, etc)', id: 'images' },
 									{ text: 'Doc (PDF, DOC, XLS, PPT, ODT, etc)', id: 'docs' },
 									{ text: 'Sound (MP3, WAV, OGG, etc)', id: 'sounds' },
@@ -478,10 +495,23 @@ class Admin extends Component {
 									{ text: 'Other (ZIP, RAR, ISO, etc)', id: 'other' },
 								]} value={(this.state.selectedItem && this.state.selectedItem.type) ? this.state.selectedItem.type : ''} options={{placeholder: 'File type', allowClear: false}} onChange={(event) => this.updateSelect(event.currentTarget, 'type')} />
 								<div>
-									{(this.state.selectedItem && this.state.selectedItem.url) ? <span>
-										<Icon glyph={LinkIcon} />
-										<a href={this.state.selectedItem.url} target="_blank">View/download file</a>
-									</span> :
+									{(this.state.selectedItem && this.state.selectedItem.url) ? <div>
+										<div className="clearfix">
+											<Icon glyph={LinkIcon} />
+											<a href={this.state.selectedItem.url} target="_blank">View/download file</a>
+										</div>
+										<div className="file-metadata">
+											<Icon glyph={Metadata} /><span>File metadata</span>
+											<ul>
+												<li><span>Original file name:</span>{this.state.selectedItem.file}</li>
+												<li><span>Content type:</span>{fileContentType}</li>
+												<li><span>File size:</span>{fileSize}</li>
+												<li><span>Created on:</span>{fileCreatedOn}</li>
+												<li><span>Updated on:</span>{fileUpdatedOn}</li>
+											</ul>
+										</div>
+										{(fileContentType.indexOf('image') !== -1) ? <img className="file-preview" src={this.state.selectedItem.url} /> : (fileContentType.indexOf('video') !== -1) ? <video className="file-preview" src={this.state.selectedItem.url} controls></video> : <object className="file-preview" data={this.state.selectedItem.url} width="50%" height="80%" type={fileContentType}></object>}
+									</div> :
 									<div>
 										<input type="file" className="file-input" ref="file-input" placeholder="Select file" onChange={(event) => this.updateFile(event, 'file')}/>
 										<span className="file-upload-wrapper">Uploading {(this.tempFile) ? this.tempFile.name : ''} <progress className="file-progress" max="100" value="0"></progress><button className="btn btn-outline btn-xs" ref="pause-upload" onClick={() => this.changeUploadStatus('paused')}>pause</button><button className="btn btn-cancel btn-xs" ref="cancel-upload" onClick={() => this.changeUploadStatus('cancelled')}>cancel</button></span>

@@ -31,6 +31,15 @@
 				float: right;
 			}
 		}
+		
+		.select2 {
+			@media (min-width: 1150px) {
+				width: 70% !important;
+			}
+			@include mobile() {
+				width: 70% !important;
+			}
+		}
 	}
 	
 	.item-content {
@@ -88,7 +97,6 @@
 		border: 1px solid $light-grey;
 		background-color: $white;
 		border-radius: 5px;
-		margin-bottom: 20px;
 		padding: 20px;
 		
 		.icon {
@@ -101,6 +109,9 @@
 		
 		.btn {
 			font-weight: lighter;
+			@include mobile() {
+				display: none;
+			}
 		}
 	}
 	
@@ -150,6 +161,28 @@
 		width: 75%;
 	}
 	
+	.block.files {
+		@include desktop() {
+			position: relative;
+			min-height: calc(100vh - 100px);
+			padding-bottom: 80px;
+
+			.title-input {
+				width: 35%;
+			}
+			
+			.editor-wrapper {
+				width: 45%;	
+			}
+
+			.footer-buttons {
+				position: absolute;
+				width: calc(100% - 40px);
+				bottom: 20px;
+			}
+		}
+	}
+	
 	.code-input {
 		width: 18%;
 		margin-left: 2%;
@@ -184,5 +217,47 @@
 	.file-progress {
 		vertical-align: middle;
     	margin: 0 10px;
+	}
+	
+	.file-metadata {
+		margin-top: 20px;
+		max-width: 45%;
+		
+		ul {
+			margin-top: 10px;
+			padding-left: 25px;
+			
+			li {
+				font-size: 14px;
+				
+				span {
+					font-weight: bold;
+					margin-right: 5px;
+				}
+			}
+		}
+	}
+	
+	.file-preview {
+		@include mobile() {
+			width: 100%;
+			min-height: 500px;
+		}
+		
+		@include desktop() {
+			position: absolute;
+			top: 60px;
+			right: 20px;
+			max-width: 40%;
+			max-height: 75%;
+
+			@media (min-width: 1150px) {
+				max-width: 60%;
+			}
+
+			@media (min-width: 900px) {
+				max-width: 50%;
+			}
+		}
 	}
 }

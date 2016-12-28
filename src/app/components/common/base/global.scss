@@ -85,12 +85,8 @@ a, a:hover, a:active, a:visited, a:focus {
 
 .page {
 	min-height: 100vh;
-	padding-top: 60px;
+	padding-top: 70px;
 	width: 100%;
-	
-	@include desktop() {
-		padding-top: 70px;
-	}
 }
 
 .flyout {
