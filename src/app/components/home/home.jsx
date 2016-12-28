@@ -32,6 +32,7 @@ class Home extends Component {
 		super(props);
 		
 		this.converter = new showdown.Converter();
+		this.storageRef =  this.props.firebase.storage().ref();
 	}
 	
 	componentDidMount() {
@@ -47,44 +48,42 @@ class Home extends Component {
 	}
 	
 	renderItems(type) {
-		const {firebase} = this.props;
-		
 		let newList = [],
 			className = type.substring(0, type.length-1),
-			path = (type === 'posts') ? 'news' : 'courses',
-			storageRef =  firebase.storage().ref();
+			path = (type === 'posts') ? 'news' : 'courses';
 		
 		if (isLoaded(this.props[type]) && !isEmpty(this.props[type])) {
 			newList = Object.keys(this.props[type]).map(function(key) {
-					let item = this.props[type][key];
-				
-					if (item.status === 'active') {
-						// Load post image from firebase storage
-						let imgRef = storageRef.child(type + '/' + item.slug + '.jpg');
-						imgRef.getDownloadURL().then(function(url) {
-							let img = this.refs[className+'-'+key+'-img'];
-							img.src = url;
-							img.style.display = 'block';
-						}.bind(this)).catch(function(error) {
-						  //console.log(error);
-						});
+				let item = this.props[type][key],
+					date = (type === 'courses') ? item.startDate : item.date;
 
-						return <li key={key} ref={`${className}-${key}`} className={className}>
-							<Link to={`/${path}/${item.slug}`}><img className="image" ref={`${className}-${key}-img`} /></Link>
-							<h3 className="title"><Link to={`/${path}/${item.slug}`}>{(type === 'courses') ? <span className="course-icon">{item.code}</span> : ''}{item.title}</Link></h3>
-							<div className="meta">
-								<p><Icon glyph={Calendar} />{(type === 'courses') ? 'Starts on ' : ''}<span className="date">{moment(item.startDate).format('D/M/YYYY')}</span></p>
-							</div>
-							<div className="content" dangerouslySetInnerHTML={{__html: this.converter.makeHtml(item.content1)}}></div>
-							<div className="actions">
-								{(type === 'courses') ? <button className="btn btn-xs btn-primary enroll-now">Enroll now</button> : ''}
-								<button className="btn btn-xs btn-secondary"><Link to={`/${path}/${item.slug}`}>Read more</Link></button>
-							</div>
-						</li>;
-					}
-					else {
-						return '';
-					}
+				if (item.status === 'active') {
+					// Load post image from firebase storage
+					let imgRef = this.storageRef.child(type + '/' + item.slug + '.jpg');
+					imgRef.getDownloadURL().then(function(url) {
+						let img = this.refs[className+'-'+key+'-img'];
+						img.src = url;
+						img.style.display = 'block';
+					}.bind(this)).catch(function(error) {
+					  //console.log(error);
+					});
+
+					return <li key={key} ref={`${className}-${key}`} className={className}>
+						<Link to={`/${path}/${item.slug}`}><img className="image" ref={`${className}-${key}-img`} /></Link>
+						<h3 className="title"><Link to={`/${path}/${item.slug}`}>{(type === 'courses') ? <span className="course-icon">{item.code}</span> : ''}{item.title}</Link></h3>
+						<div className="meta">
+							<p><Icon glyph={Calendar} />{(type === 'courses') ? 'Starts on ' : ''}<span className="date">{moment(date).format('D/M/YYYY')}</span></p>
+						</div>
+						<div className="content" dangerouslySetInnerHTML={{__html: this.converter.makeHtml(item.content1)}}></div>
+						<div className="actions">
+							{(type === 'courses') ? <button className="btn btn-xs btn-primary enroll-now">Enroll now</button> : ''}
+							<button className="btn btn-xs btn-secondary"><Link to={`/${path}/${item.slug}`}>Read more</Link></button>
+						</div>
+					</li>;
+				}
+				else {
+					return '';
+				}
 			}.bind(this));
 		}
 		else return <div className="loader-small"></div>;

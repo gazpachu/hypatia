@@ -45,7 +45,7 @@
     "eslint-plugin-jsx-a11y": "^1.2.0",
     "eslint-plugin-react": "^5.1.1",
     "extract-text-webpack-plugin": "^1.0.1",
-    "firebase": "^3.6.1",
+    "firebase": "^3.6.4",
     "gh-emoji": "^0.2.5",
     "history": "^2.0.0",
     "html-webpack-plugin": "^2.16.1",

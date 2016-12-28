@@ -1,11 +1,35 @@
+.admin-page {
+	.main-background {
+		position: fixed;
+		height: 100%;
+	}
+}
+
 .admin {
+	.column {
+	    padding-top: 0;
+	}
 	
-	.blocks {
+	.nav {
 		width: 100%;
 		
 		@include desktop() {
 			position: absolute;
-			width: 23%;
+			width: 30%;
+			padding-right: 0;
+		}
+		
+		.block {
+			.icon {
+				vertical-align: top;
+				margin-top: 4px;
+			}
+			
+			.btn {
+				margin-top: 2px;
+				margin-left: 10px;
+				float: right;
+			}
 		}
 	}
 	
@@ -13,8 +37,8 @@
 		width: 100%;
 		
 		@include desktop() {
-			width: 77%;
-			margin-left: 23%;
+			width: 70%;
+			margin-left: 30%;
 		}
 		
 		.heading, label {
@@ -54,6 +78,10 @@
 		.input-field {
 			margin-top: 15px;
 		}
+		
+		.select2 {
+			margin-top: 20px;
+		}
 	}
 	
 	.block {
@@ -90,7 +118,7 @@
 	}
 	
 	.date-input {
-		width: 80px;
+		width: 100px;
 		margin-right: 10px;
 	}
 	
@@ -118,8 +146,8 @@
 		margin-left: 10px;
 	}
 	
-	.block:not(.posts) .title-input {
-		width: 80%;
+	.block:not(.pages):not(.files) .title-input {
+		width: 75%;
 	}
 	
 	.code-input {
@@ -127,14 +155,8 @@
 		margin-left: 2%;
 	}
 	
-	.btn {
+	.btn-save {
 		margin-left: 10px;
-		float: right;
-	}
-	
-	.btn-cancel {
-		float: left;
-		margin-left: 0;
 	}
 	
 	.loader-small {
@@ -149,5 +171,18 @@
 	
 	.checkbox-label {
 		margin-right: 10px;
+	}
+	
+	.file-upload-wrapper {
+		display: none;
+		
+		.btn-cancel {
+			margin-left: 10px;
+		}
+	}
+	
+	.file-progress {
+		vertical-align: middle;
+    	margin: 0 10px;
 	}
 }

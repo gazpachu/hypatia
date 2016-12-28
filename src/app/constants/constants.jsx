@@ -22,6 +22,8 @@ export const USER_INFO_CHANGED = 'User details changed successfully!';
 export const ITEM_SAVED = 'Item saved!';
 export const ITEM_REMOVED = 'Item removed!';
 export const CONFIRM_DELETE = 'Are you sure you want to delete';
+export const NEED_TITLE = 'You need at least a title';
+export const WAIT_FINISH_OPERATION = 'Please wait until the current operation ends';
 
 // User level
 export const ADMIN_LEVEL = 5;

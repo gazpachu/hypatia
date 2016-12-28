@@ -22,6 +22,9 @@ import Subject from '../../../../static/svg/subject.svg';
 import Module from '../../../../static/svg/module.svg';
 import Activity from '../../../../static/svg/activity.svg';
 import Post from '../../../../static/svg/post.svg';
+import File from '../../../../static/svg/file.svg';
+import Folder from '../../../../static/svg/folder.svg';
+import LinkIcon from '../../../../static/svg/link.svg';
 import Forward from '../../../../static/svg/forward.svg';
 
 const {isLoaded, isEmpty, dataToJS} = helpers;
@@ -35,7 +38,10 @@ const propTypes = {
 	courses: PropTypes.object,
 	subjects: PropTypes.object,
 	modules: PropTypes.object,
-	activities: PropTypes.object
+	activities: PropTypes.object,
+	posts: PropTypes.object,
+	pages: PropTypes.object,
+	files: PropTypes.object
 };
 
 @firebase( [
@@ -45,7 +51,9 @@ const propTypes = {
 	'subjects',
 	'modules',
 	'activities',
-	'posts'
+	'posts',
+	'pages',
+	'files'
 ])
 @connect(
   	({firebase}) => ({
@@ -55,7 +63,9 @@ const propTypes = {
 		subjects: dataToJS(firebase, 'subjects'),
 		modules: dataToJS(firebase, 'modules'),
  		activities: dataToJS(firebase, 'activities'),
-		posts: dataToJS(firebase, 'posts')
+		posts: dataToJS(firebase, 'posts'),
+		pages: dataToJS(firebase, 'pages'),
+		files: dataToJS(firebase, 'files')
   	})
 )
 class Admin extends Component {
@@ -70,17 +80,25 @@ class Admin extends Component {
 			selectedItem: null,
 			modalTitle: ''
 		}
+		
+		this.storageRef =  this.props.firebase.storage().ref();
+		this.tempFile = null;
+		this.uploadStatus = '';
+		this.uploadTask = null;
 	}
 	
 	componentDidMount() {
 		this.props.setLoading(false);
+		$('.js-main').removeClass().addClass('main js-main admin-page');
 	}
 	
 	handleSelect(event, action, type) {
-		const index = event.target.selectedIndex;
-		this.reset();
-		event.target.selectedIndex = index;
-		this.loadItem(event.target.value, action, type);
+		if (this.uploadStatus === '') {
+			const index = event.target.selectedIndex;
+			this.reset();
+			event.target.selectedIndex = index;
+			this.loadItem(event.target.value, action, type);
+		}
 	}
 	
 	loadItem(id, action, type) {
@@ -94,8 +112,10 @@ class Admin extends Component {
 	}
 	
 	new(type) {
-		this.cancel();
-		this.setState({ action: 'new', type });
+		if (this.uploadStatus === '') {
+			this.cancel();
+			this.setState({ action: 'new', type });
+		}
 	}
 	
 	cancel() {
@@ -111,30 +131,101 @@ class Admin extends Component {
 		this.refs['modules-select'].selectedIndex = 0;
 		this.refs['activities-select'].selectedIndex = 0;
 		this.refs['posts-select'].selectedIndex = 0;
+		this.refs['pages-select'].selectedIndex = 0;
+		this.refs['files-select'].selectedIndex = 0;
 	}
 	
 	save() {
 		let item = this.state.selectedItem,
 			method = (this.state.action === 'new') ? 'push' : 'set',
-			path = (this.state.action === 'new') ? this.state.type : this.state.type + '/' + this.state.selectedId;
+			path = (this.state.action === 'new') ? this.state.type : this.state.type + '/' + this.state.selectedId,
+			uploadFile = false;
 		
-		item.slug = Helpers.slugify(item.title);
-		
-		if (item.startDate) item.startDate = moment(item.startDate).format('YYYY-MM-DD');
-		if (item.endDate) item.endDate = moment(item.endDate).format('YYYY-MM-DD');
-		if (item.gradeDate) item.gradeDate = moment(item.gradeDate).format('YYYY-MM-DD');
+		if (item && item.title) {
+			if (this.state.type !== 'files')
+				item.slug = Helpers.slugify(item.title);
+			else if (this.tempFile) {
+				item.file = this.tempFile.name;
+				uploadFile = true;
+				this.uploadFile(this.tempFile);
+			}
+
+			if (item.date) item.date = moment(item.date).format('YYYY-MM-DD');
+			if (item.startDate) item.startDate = moment(item.startDate).format('YYYY-MM-DD');
+			if (item.endDate) item.endDate = moment(item.endDate).format('YYYY-MM-DD');
+			if (item.gradeDate) item.gradeDate = moment(item.gradeDate).format('YYYY-MM-DD');
+
+			this.toggleButtons(false);
 			
-		this.toggleButtons(false);
-		this.props.firebase[method](path, item).then(function(snap) {
-			this.toggleButtons(true);
-			this.props.setNotification({message: CONSTANTS.ITEM_SAVED, type: 'success'});
-			
-			if (snap) {
-				this.setState({ selectedId: snap.key }, function() {
-					this.loadItem(snap.key, 'edit', this.state.type);
+			if (!uploadFile) {
+				this.props.firebase[method](path, item).then(function(snap) {
+					this.toggleButtons(true);
+					this.props.setNotification({message: CONSTANTS.ITEM_SAVED, type: 'success'});
+
+					if (snap) {
+						this.setState({ selectedId: snap.key }, function() {
+							this.loadItem(snap.key, 'edit', this.state.type);
+						}.bind(this));
+					}
 				}.bind(this));
 			}
+		}
+		else {
+			this.props.setNotification({message: CONSTANTS.NEED_TITLE, type: 'error'});
+		}
+	}
+	
+	uploadFile(file) {
+		const {firebase} = this.props;
+		
+		this.uploadTask = this.storageRef.child('files/' + file.name).put(file);
+		$('.file-input').hide();
+		$('.file-upload-wrapper').show();
+		
+		this.uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, function(snapshot) {
+			var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+			$('.file-progress').attr('value', progress);
+			
+			switch (snapshot.state) {
+				case firebase.storage.TaskState.PAUSED: this.uploadStatus = 'paused'; break;
+				case firebase.storage.TaskState.RUNNING: this.uploadStatus = 'uploading'; break;
+			}
+		}.bind(this), function(error) {
+			$('.file-input').show();
+			$('.file-upload-wrapper').hide();
+			this.toggleButtons(true);
+			this.uploadStatus = '';
+			
+			switch (error.code) {
+				case 'storage/unauthorized': break;
+				case 'storage/canceled': break;
+				case 'storage/unknown': break;
+			}
+		}.bind(this), function() {
+			$('.file-input').show();
+			$('.file-upload-wrapper').hide();
+			this.tempFile = null;
+			this.uploadStatus = ''; 
+			
+			this.updateItem(this.uploadTask.snapshot.downloadURL, 'url', function() {
+				this.save();
+			}.bind(this));
 		}.bind(this));
+	}
+	
+	changeUploadStatus(status) {
+		if (status === 'paused' && this.uploadStatus === 'paused') {
+			$(this.refs['pause-upload']).html('pause');
+			this.uploadTask.resume();
+		}
+		else if (status === 'paused') {
+			$(this.refs['pause-upload']).html('resume');
+			this.uploadTask.pause();
+		}
+		else if (status === 'cancelled') {
+			if (this.uploadStatus === 'paused') this.uploadTask.resume();
+			this.uploadTask.cancel();
+		}
 	}
 	
 	delete() {
@@ -150,6 +241,13 @@ class Admin extends Component {
 	updateCheckbox(event, prop) {
 		let val = (event.target.checked) ? 'active' : 'inactive';
 		this.updateItem(val, prop);
+	}
+	
+	updateFile(event, prop) {
+		this.tempFile = event.target.files[0];
+
+		this.updateItem(this.tempFile.name, 'file');
+		if (this.refs['title-input'].value === '') this.updateItem(this.tempFile.name, 'title');
 	}
 	
 	updateDate(date, prop) {
@@ -174,7 +272,7 @@ class Admin extends Component {
 		this.updateItem(selectedValues, prop);
 	}
 	
-	updateItem(value, prop) {
+	updateItem(value, prop, callback) {
 		let newItem = null;
 		
 		if (value && !isEmpty(value)) {
@@ -185,7 +283,9 @@ class Admin extends Component {
 		}
 		
 		if (!isEmpty(newItem) && JSON.stringify(newItem) !== JSON.stringify(this.state.selectedItem))
-			this.setState({ selectedItem: newItem });
+			this.setState({ selectedItem: newItem }, function() {
+				if (callback) callback();
+			});
 	}
 	
 	toggleButtons(state) {
@@ -193,6 +293,7 @@ class Admin extends Component {
 		$(this.refs.save).toggle(state);
 		$(this.refs.saveTop).toggle(state);
 		$(this.refs.cancel).toggle(state);
+		$(this.refs.cancelTop).toggle(state);
 		$(this.refs.loader).toggle(!state);
 		$(this.refs.loaderTop).toggle(!state);
 	}
@@ -231,48 +332,87 @@ class Admin extends Component {
 		const modules = this.createList('modules');
 		const activities = this.createList('activities');
 		const posts = this.createList('posts');
+		const pages = this.createList('pages');
+		const files = this.createList('files');
 		
 		const title = (this.state.selectedItem && this.state.selectedItem.title) ? this.state.selectedItem.title : '';
 		const iconHeading = (this.state.type === 'courses') ? <Icon glyph={Course} /> : (this.state.type === 'subjects') ? <Icon glyph={Subject} /> : (this.state.type === 'modules') ? <Icon glyph={Module} /> : <Icon glyph={Activity} />;
 		const code = (this.state.selectedItem && this.state.selectedItem.code) ? this.state.selectedItem.code : '';
 		const credits = (this.state.selectedItem && this.state.selectedItem.credits) ? this.state.selectedItem.credits : '';
+		const date = (this.state.selectedItem && this.state.selectedItem.date) ? moment(this.state.selectedItem.date) : null;
 		const startDate = (this.state.selectedItem && this.state.selectedItem.startDate) ? moment(this.state.selectedItem.startDate) : null;
 		const endDate = (this.state.selectedItem && this.state.selectedItem.endDate) ? moment(this.state.selectedItem.endDate) : null;
 		const gradeDate = (this.state.selectedItem && this.state.selectedItem.gradeDate) ? moment(this.state.selectedItem.gradeDate) : null;
-		const status = (this.state.selectedItem && this.state.selectedItem.status && this.state.selectedItem.status === 'active') ? true : false;;
+		const status = (this.state.selectedItem && this.state.selectedItem.status && this.state.selectedItem.status === 'inactive') ? false : true;;
 		
 		return (
 			<section className="admin page container-fluid">
 				<div className="columns">
-					<div className="blocks column">
+					<div className="nav column">
 						<div className="block clearfix">
-							<h3 className="block-title"><Icon glyph={User} />Users<button className="btn btn-primary btn-xs" onClick={() => this.new('users')}>+ add</button></h3>
-							<Select2 className="select-items" style={{width: '100%'}} ref="users-select" data={users} defaultValue={this.state.selectedId} options={{placeholder: 'Select user', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'users')} />
+							<div className="clearfix">
+								<Icon glyph={User} />
+								<Select2 className="select-items" style={{width: '70%'}} ref="users-select" data={users} defaultValue={this.state.selectedId} options={{placeholder: 'Users', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'users')} />
+								<button className="btn btn-primary btn-xs" onClick={() => this.new('users')}>new</button>
+							</div>
 							
-							<h3 className="block-title"><Icon glyph={Group} />Groups<button className="btn btn-primary btn-xs" onClick={() => this.new('groups')}>+ add</button></h3>
-							<Select2 className="select-items" style={{width: '100%'}} ref="groups-select" data={groups} defaultValue={this.state.selectedId} options={{placeholder: 'Select group', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'groups')} />
-									
-							<h3 className="block-title"><Icon glyph={Course} />Courses<button className="btn btn-primary btn-xs" onClick={() => this.new('courses')}>+ add</button></h3>
-							<Select2 className="select-items" style={{width: '100%'}} ref="courses-select" data={courses} defaultValue={this.state.selectedId} options={{placeholder: 'Select course', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'courses')} />
+							<div className="clearfix">
+								<Icon glyph={Group} />
+								<Select2 className="select-items" style={{width: '70%'}} ref="groups-select" data={groups} defaultValue={this.state.selectedId} options={{placeholder: 'Groups', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'groups')} />
+								<button className="btn btn-primary btn-xs" onClick={() => this.new('groups')}>new</button>
+							</div>
+							
+							<div className="clearfix">
+								<Icon glyph={Course} />
+								<Select2 className="select-items" style={{width: '70%'}} ref="courses-select" data={courses} defaultValue={this.state.selectedId} options={{placeholder: 'Courses', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'courses')} />
+								<button className="btn btn-primary btn-xs" onClick={() => this.new('courses')}>new</button>
+							</div>
 	
-							<h3 className="block-title"><Icon glyph={Subject} />Subjects<button className="btn btn-primary btn-xs" onClick={() => this.new('subjects')}>+ add</button></h3>
-							<Select2 className="select-items" style={{width: '100%'}} ref="subjects-select" data={subjects} defaultValue={this.state.selectedId} options={{placeholder: 'Select subject', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'subjects')} />
+							<div className="clearfix">
+								<Icon glyph={Subject} />
+								<Select2 className="select-items" style={{width: '70%'}} ref="subjects-select" data={subjects} defaultValue={this.state.selectedId} options={{placeholder: 'Subjects', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'subjects')} />
+								<button className="btn btn-primary btn-xs" onClick={() => this.new('subjects')}>new</button>
+							</div>
 		
-							<h3 className="block-title"><Icon glyph={Module} />Modules<button className="btn btn-primary btn-xs" onClick={() => this.new('modules')}>+ add</button></h3>
-							<Select2 className="select-items" style={{width: '100%'}} ref="modules-select" data={modules} defaultValue={this.state.selectedId} options={{placeholder: 'Select module', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'modules')} />
+							<div className="clearfix">
+								<Icon glyph={Module} />
+								<Select2 className="select-items" style={{width: '70%'}} ref="modules-select" data={modules} defaultValue={this.state.selectedId} options={{placeholder: 'Modules', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'modules')} />
+								<button className="btn btn-primary btn-xs" onClick={() => this.new('modules')}>new</button>
+							</div>
 		
-							<h3 className="block-title"><Icon glyph={Activity} />Activities<button className="btn btn-primary btn-xs" onClick={() => this.new('activities')}>+ add</button></h3>
-							<Select2 className="select-items" style={{width: '100%'}} ref="activities-select" data={activities} defaultValue={this.state.selectedId} options={{placeholder: 'Select activity', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'activities')} />
+							<div className="clearfix">
+								<Icon glyph={Activity} />
+								<Select2 className="select-items" style={{width: '70%'}} ref="activities-select" data={activities} defaultValue={this.state.selectedId} options={{placeholder: 'Activities', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'activities')} />
+								<button className="btn btn-primary btn-xs" onClick={() => this.new('activities')}>new</button>
+							</div>
 							
-							<h3 className="block-title"><Icon glyph={Post} />Posts<button className="btn btn-primary btn-xs" onClick={() => this.new('posts')}>+ add</button></h3>
-							<Select2 className="select-items" style={{width: '100%'}} ref="posts-select" data={posts} defaultValue={this.state.selectedId} options={{placeholder: 'Select post', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'posts')} />
+							<div className="clearfix">
+								<Icon glyph={Post} />
+								<Select2 className="select-items" style={{width: '70%'}} ref="posts-select" data={posts} defaultValue={this.state.selectedId} options={{placeholder: 'Posts', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'posts')} />
+								<button className="btn btn-primary btn-xs" onClick={() => this.new('posts')}>new</button>
+							</div>
+							
+							<div className="clearfix">
+								<Icon glyph={Post} />
+								<Select2 className="select-items" style={{width: '70%'}} ref="pages-select" data={pages} defaultValue={this.state.selectedId} options={{placeholder: 'Pages', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'pages')} />
+								<button className="btn btn-primary btn-xs" onClick={() => this.new('pages')}>new</button>
+							</div>
+							
+							<div className="clearfix">
+								<Icon glyph={File} />
+								<Select2 className="select-items" style={{width: '70%'}} ref="files-select" data={files} defaultValue={this.state.selectedId} options={{placeholder: 'Files', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'files')} />
+								<button className="btn btn-primary btn-xs" onClick={() => this.new('files')}>new</button>
+							</div>
 						</div>
 					</div>
 					<div className={classNames('item-content column', {hidden: this.state.action === ''})}>
 						<div className={`block clearfix ${this.state.type}`}>
-							<h3 className="block-title">{iconHeading}{(this.state.action === 'new') ? <span>You are adding a new {(this.state.type === 'activities') ? 'activity' : this.state.type.slice(0, -1)}...</span> : <span>You are editing {(this.state.type === 'activities') ? 'an activity' : 'a ' + this.state.type.slice(0, -1)}...</span>}<button className="btn btn-primary btn-xs" ref="saveTop" onClick={() => this.save()}>save in {this.state.type}</button><button className="btn btn-outline btn-xs" ref="cancel" onClick={() => this.cancel()}>Cancel</button><div className="loader-small" ref="loaderTop"></div></h3>
-							<input type="text" className="input-field title-input" ref="title-input" placeholder="Title" value={title} onChange={(event) => this.updateInput(event, 'title')} />
-							<input type="text" className={classNames('input-field code-input', {hidden: (this.state.type === 'posts')})} ref="code-input" placeholder="Code" value={code} onChange={(event) => this.updateInput(event, 'code')} />
+							<h3 className="block-title">{iconHeading}{(this.state.action === 'new') ? <span>You are adding a new {(this.state.type === 'activities') ? 'activity' : this.state.type.slice(0, -1)}...</span> : <span>You are editing {(this.state.type === 'activities') ? 'an activity' : 'a ' + this.state.type.slice(0, -1)}...</span>}<button className="btn btn-primary btn-xs float-right btn-save" ref="saveTop" onClick={() => this.save()}>save in {this.state.type}</button><button className="btn btn-outline btn-xs float-right" ref="cancelTop" onClick={() => this.cancel()}>Cancel</button><div className="loader-small" ref="loaderTop"></div></h3>
+							<input type="text" className="input-field title-input" ref="title-input" placeholder={(this.state.type === 'activities') ? 'Activity title' : this.state.type.slice(0, -1).capitalize() + ' title'} value={title} onChange={(event) => this.updateInput(event, 'title')} />
+							<input type="text" className={classNames('input-field code-input', {hidden: (this.state.type === 'posts' || this.state.type === 'pages' || this.state.type === 'files')})} ref="code-input" placeholder="Code" value={code} onChange={(event) => this.updateInput(event, 'code')} />
+							<div className={classNames('float-right', {hidden: (this.state.type !== 'posts')})}>
+								<Icon glyph={Calendar} className="icon calendar" /><DatePicker className="input-field date-input" selected={date} date={date} placeholderText="Date" isClearable={true} onChange={(date) => this.updateDate(date, 'date')} dateFormat="YYYY-MM-DD" popoverAttachment="bottom right" popoverTargetAttachment="bottom right" popoverTargetOffset="0px 0px" />
+							</div>
 							
 							<div className={classNames({hidden: (this.state.type !== 'groups')})}>
 								<Select2 style={{width: '100%'}} multiple data={users} value={(this.state.selectedItem && this.state.selectedItem.users) ? this.state.selectedItem.users : []} options={{placeholder: 'Users in this group...', allowClear: true}} onChange={(event) => this.updateMultiSelect(event.currentTarget, 'users')} />
@@ -281,10 +421,10 @@ class Admin extends Component {
 							
 							<div className="clearfix">
 								<div className={classNames('dates-wrapper', {hidden: (this.state.type !== 'courses') && (this.state.type !== 'activities')})}>
-									<label>From</label><Icon glyph={Calendar} className="icon calendar" /><DatePicker className="input-field date-input" readOnly selected={startDate} selectsStart startDate={startDate} endDate={endDate} onChange={(date) => this.updateDate(date, 'startDate')} dateFormat="YYYY-MM-DD" />
-									<label>Until</label><Icon glyph={Calendar} className="icon calendar" /><DatePicker className="input-field date-input" readOnly selected={endDate} selectsEnd startDate={startDate} endDate={endDate} onChange={(date) => this.updateDate(date, 'endDate')} dateFormat="YYYY-MM-DD" />
+									<label>From</label><Icon glyph={Calendar} className="icon calendar" /><DatePicker className="input-field date-input" selected={startDate} placeholderText="Date" isClearable={true} selectsStart startDate={startDate} endDate={endDate} onChange={(date) => this.updateDate(date, 'startDate')} dateFormat="YYYY-MM-DD" />
+									<label>Until</label><Icon glyph={Calendar} className="icon calendar" /><DatePicker className="input-field date-input" selected={endDate} placeholderText="Date" isClearable={true} selectsEnd startDate={startDate} endDate={endDate} onChange={(date) => this.updateDate(date, 'endDate')} dateFormat="YYYY-MM-DD" />
 									<div className={classNames('grade-wrapper', {hidden: (this.state.type !== 'activities')})}>
-										<label>Grade</label><Icon glyph={Calendar} className="icon calendar" /><DatePicker className="input-field date-input" readOnly selected={gradeDate} onChange={(date) => this.updateDate(date, 'gradeDate')} dateFormat="YYYY-MM-DD" />
+										<label>Grade</label><Icon glyph={Calendar} className="icon calendar" /><DatePicker className="input-field date-input" selected={gradeDate} placeholderText="Date" isClearable={true} onChange={(date) => this.updateDate(date, 'gradeDate')} dateFormat="YYYY-MM-DD" />
 									</div>
 								</div>
 								<div className={classNames('credits-wrapper', {hidden: (this.state.type !== 'courses') && (this.state.type !== 'subjects')})}>
@@ -292,12 +432,14 @@ class Admin extends Component {
 								</div>
 							</div>
 							
-							<h4 className="heading active" ref="editor1-heading" onClick={() => (this.toggleElement('editor1-heading'), this.toggleElement('editor1-wrapper'))}>Primary content block<Icon glyph={Forward} /></h4>
-							<div className="editor-wrapper active" ref="editor1-wrapper">
-								<SimpleMDE ref="editor1" value={(this.state.selectedItem && this.state.selectedItem.content1) ? this.state.selectedItem.content1 : ''} onChange={(event) => this.updateItem(event, 'content1')} />
+							<div className={classNames({hidden: (this.state.type === 'files')})}>
+								<h4 className="heading active" ref="editor1-heading" onClick={() => (this.toggleElement('editor1-heading'), this.toggleElement('editor1-wrapper'))}>Primary content block<Icon glyph={Forward} /></h4>
+								<div className="editor-wrapper active" ref="editor1-wrapper">
+									<SimpleMDE ref="editor1" value={(this.state.selectedItem && this.state.selectedItem.content1) ? this.state.selectedItem.content1 : ''} onChange={(event) => this.updateItem(event, 'content1')} />
+								</div>
 							</div>
 							
-							<div className={classNames({hidden: (this.state.type === 'posts')})}>
+							<div className={classNames({hidden: (this.state.type === 'posts' || this.state.type === 'files')})}>
 								<h4 className="heading" ref="editor2-heading" onClick={() => (this.toggleElement('editor2-heading'), this.toggleElement('editor2-wrapper'))}>Secondary content block<Icon glyph={Forward} /></h4>
 								<div className="editor-wrapper" ref="editor2-wrapper">
 									<SimpleMDE ref="editor2" value={(this.state.selectedItem && this.state.selectedItem.content2) ? this.state.selectedItem.content2 : ''} onChange={(event) => this.updateItem(event, 'content2')} />
@@ -309,6 +451,27 @@ class Admin extends Component {
 								</div>
 							</div>
 							
+							<div className={classNames({hidden: (this.state.type !== 'files')})}>
+								<Icon glyph={Folder} />
+								<Select2 className="select-items folders-select" style={{width: '50%'}} ref="folders-select" data={[
+									{ text: 'Image (JPG, PNG, SVG, etc)', id: 'images' },
+									{ text: 'Doc (PDF, DOC, XLS, PPT, ODT, etc)', id: 'docs' },
+									{ text: 'Sound (MP3, WAV, OGG, etc)', id: 'sounds' },
+									{ text: 'Video (MP4, AVI, MOV, etc)', id: 'videos' },
+									{ text: 'Other (ZIP, RAR, ISO, etc)', id: 'other' },
+								]} value={(this.state.selectedItem && this.state.selectedItem.type) ? this.state.selectedItem.type : ''} options={{placeholder: 'File type', allowClear: false}} onChange={(event) => this.updateSelect(event.currentTarget, 'type')} />
+								<div>
+									{(this.state.selectedItem && this.state.selectedItem.url) ? <span>
+										<Icon glyph={LinkIcon} />
+										<a href={this.state.selectedItem.url} target="_blank">View/download file</a>
+									</span> :
+									<div>
+										<input type="file" className="file-input" ref="file-input" placeholder="Select file" onChange={(event) => this.updateFile(event, 'file')}/>
+										<span className="file-upload-wrapper">Uploading {(this.tempFile) ? this.tempFile.name : ''} <progress className="file-progress" max="100" value="0"></progress><button className="btn btn-outline btn-xs" ref="pause-upload" onClick={() => this.changeUploadStatus('paused')}>pause</button><button className="btn btn-cancel btn-xs" ref="cancel-upload" onClick={() => this.changeUploadStatus('cancelled')}>cancel</button></span>
+									</div>}
+								</div>
+							</div>
+							
 							<h4 className="heading" ref="editor4-heading" onClick={() => (this.toggleElement('editor4-heading'), this.toggleElement('editor4-wrapper'))}>Private notes<Icon glyph={Forward} /></h4>
 							<div className="editor-wrapper" ref="editor4-wrapper">
 								<SimpleMDE ref="editor4" value={(this.state.selectedItem && this.state.selectedItem.notes) ? this.state.selectedItem.content4 : ''} onChange={(event) => this.updateItem(event, 'content4')} />
@@ -317,9 +480,9 @@ class Admin extends Component {
 							<label className="checkbox-label">Active </label><input type="checkbox" className="status-checkbox" ref="status-checkbox" checked={status} onChange={(event) => this.updateCheckbox(event, 'status')} />
 							
 							<div className="footer-buttons">
-								<button className="btn btn-cancel btn-xs" ref="remove" onClick={() => this.delete()}>Remove from {this.state.type}</button>
-								<button className="btn btn-primary btn-xs" ref="save" onClick={() => this.save()}>save in {this.state.type}</button>
-								<button className="btn btn-outline btn-xs" ref="cancel" onClick={() => this.cancel()}>Cancel</button>
+								<button className="btn btn-cancel btn-xs float-left" ref="remove" onClick={() => this.delete()}>Remove from {this.state.type}</button>
+								<button className="btn btn-primary btn-xs float-right btn-save" ref="save" onClick={() => this.save()}>save in {this.state.type}</button>
+								<button className="btn btn-outline btn-xs float-right" ref="cancel" onClick={() => this.cancel()}>Cancel</button>
 								<div className="loader-small" ref="loader"></div>
 							</div>
 						</div>
