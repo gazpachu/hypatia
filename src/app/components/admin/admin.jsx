@@ -301,11 +301,28 @@ class Admin extends Component {
 	modalBoxAnswer(answer) {
 		if (answer === 'accept') {
 			this.toggleButtons(false);
-			this.props.firebase.remove(this.state.type+'/'+this.state.selectedId, function() {
-				this.toggleButtons(true);
-				this.cancel();
-				this.props.setNotification({message: CONSTANTS.ITEM_REMOVED, type: 'success'})
-			}.bind(this));
+			
+			// Delete the file first (if there's any)
+			if (this.state.selectedItem.file) {
+				var desertRef = this.storageRef.child('files/' + this.state.selectedItem.file);
+
+				desertRef.delete().then(function() {
+					this.props.firebase.remove(this.state.type+'/'+this.state.selectedId, function() {
+						this.toggleButtons(true);
+						this.cancel();
+						this.props.setNotification({message: CONSTANTS.ITEM_REMOVED, type: 'success'});
+					}.bind(this));
+				}.bind(this)).catch(function(error) {
+					this.props.setNotification({message: error, type: 'error'})
+				});
+			}
+			else {
+				this.props.firebase.remove(this.state.type+'/'+this.state.selectedId, function() {
+					this.toggleButtons(true);
+					this.cancel();
+					this.props.setNotification({message: CONSTANTS.ITEM_REMOVED, type: 'success'});
+				}.bind(this));
+			}
 		}
 	}
 	
