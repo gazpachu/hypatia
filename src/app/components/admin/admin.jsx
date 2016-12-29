@@ -219,6 +219,7 @@ class Admin extends Component {
 			this.tempFile = null;
 			this.uploadStatus = '';
 			
+			this.updateItem(this.uploadTask.snapshot.metadata.contentType, 'type');
 			this.updateItem(this.uploadTask.snapshot.downloadURL, 'url', function() {
 				this.save();
 			}.bind(this));
@@ -284,6 +285,11 @@ class Admin extends Component {
 		this.updateItem(selectedValues, prop);
 	}
 	
+	fileSelected(select) {
+		let value = (select.selectedIndex >= 0) ? select.options[select.selectedIndex].value : '';
+		console.log(value);
+	}
+	
 	updateItem(value, prop, callback) {
 		let newItem = null;
 		
@@ -347,7 +353,7 @@ class Admin extends Component {
 		if (isLoaded(this.props[type]) && !isEmpty(this.props[type])) {
 			newList = Object.keys(this.props[type]).map(function(key) {
 					let item = this.props[type][key];
-					return (type === 'users') ? {text: item.info.firstName + ' ' + item.info.lastName1 + ' ' + item.info.lastName2, id: key} : {text: item.title, id: key};
+					return (type === 'users') ? {text: item.info.firstName + ' ' + item.info.lastName1 + ' ' + item.info.lastName2, id: key} : (type === 'files') ? {text: (item.type) ? '[' + item.type + '] ' + item.title : item.title, id: key} : {text: item.title, id: key};
 			}.bind(this));
 		}
 		return newList;
@@ -466,6 +472,10 @@ class Admin extends Component {
 								</div>
 							</div>
 							
+							<div className={classNames({hidden: (this.state.type === 'users') || (this.state.type === 'groups') || (this.state.type === 'files')})}>
+								<Select2 style={{width: '100%'}} data={files} options={{placeholder: 'Select a file to copy its URL...', allowClear: true}} onChange={(event) => this.fileSelected(event)} />
+							</div>
+							
 							<div className={classNames({hidden: (this.state.type === 'files')})}>
 								<h4 className="heading active" ref="editor1-heading" onClick={() => (this.toggleElement('editor1-heading'), this.toggleElement('editor1-wrapper'))}>Primary content block<Icon glyph={Forward} /></h4>
 								<div className="editor-wrapper active" ref="editor1-wrapper">
@@ -486,17 +496,9 @@ class Admin extends Component {
 							</div>
 							
 							<div className={classNames({hidden: (this.state.type !== 'files')})}>
-								<Icon glyph={Folder} />
-								<Select2 className="select-items folders-select" style={{width: '30%'}} ref="folders-select" data={[
-									{ text: 'Image (JPG, PNG, SVG, etc)', id: 'images' },
-									{ text: 'Doc (PDF, DOC, XLS, PPT, ODT, etc)', id: 'docs' },
-									{ text: 'Sound (MP3, WAV, OGG, etc)', id: 'sounds' },
-									{ text: 'Video (MP4, AVI, MOV, etc)', id: 'videos' },
-									{ text: 'Other (ZIP, RAR, ISO, etc)', id: 'other' },
-								]} value={(this.state.selectedItem && this.state.selectedItem.type) ? this.state.selectedItem.type : ''} options={{placeholder: 'File type', allowClear: false}} onChange={(event) => this.updateSelect(event.currentTarget, 'type')} />
 								<div>
 									{(this.state.selectedItem && this.state.selectedItem.url) ? <div>
-										<div className="clearfix">
+										<div className="clearfix file-download">
 											<Icon glyph={LinkIcon} />
 											<a href={this.state.selectedItem.url} target="_blank">View/download file</a>
 										</div>
