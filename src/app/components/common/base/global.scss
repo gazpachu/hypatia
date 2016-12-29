@@ -161,7 +161,13 @@ a, a:hover, a:active, a:visited, a:focus {
 }
 
 .react-datepicker__input-container {
-	margin-right: 10px;
+	
+	.react-datepicker__close-icon:after {
+		background-color: transparent;
+		color: $grey;
+		border: 1px solid $grey;
+		right: 0;
+	}
 }
 
 .react-datepicker {

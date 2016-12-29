@@ -87,6 +87,7 @@ class Admin extends Component {
 		this.tempFile = null;
 		this.uploadStatus = '';
 		this.uploadTask = null;
+		this.selectedImage = null;
 	}
 	
 	componentDidMount() {
@@ -286,8 +287,22 @@ class Admin extends Component {
 	}
 	
 	fileSelected(select) {
-		let value = (select.selectedIndex >= 0) ? select.options[select.selectedIndex].value : '';
-		console.log(value);
+		let key = (select.selectedIndex >= 0) ? select.options[select.selectedIndex].value : '';
+		if (key) {
+			Helpers.copyTextToClipboard(this.props.files[key].url);
+			if (this.props.files[key].type.indexOf('image') !== -1) {
+				$(this.refs['btn-featured-image']).removeClass('disabled');
+				this.selectedImage = key;
+			}
+			else {
+				$(this.refs['btn-featured-image']).addClass('disabled');
+				this.selectedImage = null;
+			}
+		}
+		else {
+			$(this.refs['btn-featured-image']).addClass('disabled');
+			this.selectedImage = null;
+		}
 	}
 	
 	updateItem(value, prop, callback) {
@@ -346,6 +361,13 @@ class Admin extends Component {
 	
 	toggleElement(ref) {
 		$(this.refs[ref]).toggleClass('active');
+	}
+	
+	formatFileType(state) {
+		if (!state.id) { return state.text; }
+		let contentType = state.text.substring(state.text.indexOf('[')+1, state.text.indexOf(']'));
+		var $state = $('<span><img src="//www.stdicon.com/crystal/' + contentType + '?size=24" class="select2-img" />' + state.text.substring(state.text.indexOf(']')+1, state.text.length) + '</span>');
+		return $state;
 	}
 	
 	createList(type) {
@@ -440,7 +462,7 @@ class Admin extends Component {
 							
 							<div className="clearfix">
 								<Icon glyph={File} />
-								<Select2 className="select-items" style={{width: '50%'}} ref="files-select" data={files} defaultValue={this.state.selectedId} options={{placeholder: 'Files', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'files')} />
+								<Select2 className="select-items" style={{width: '50%'}} ref="files-select" data={files} defaultValue={this.state.selectedId} options={{placeholder: 'Files', allowClear: true, templateResult: this.formatFileType, templateSelection: this.formatFileType}} onChange={(event) => this.handleSelect(event, 'edit', 'files')} />
 								<button className="btn btn-primary btn-xs" onClick={() => this.new('files')}>new</button>
 							</div>
 						</div>
@@ -462,9 +484,9 @@ class Admin extends Component {
 							<div className="clearfix">
 								<div className={classNames('dates-wrapper', {hidden: (this.state.type !== 'courses') && (this.state.type !== 'activities')})}>
 									<label>From</label><Icon glyph={Calendar} className="icon calendar" /><DatePicker className="input-field date-input" selected={startDate} placeholderText="Date" isClearable={true} selectsStart startDate={startDate} endDate={endDate} onChange={(date) => this.updateDate(date, 'startDate')} dateFormat="YYYY-MM-DD" />
-									<label>Until</label><Icon glyph={Calendar} className="icon calendar" /><DatePicker className="input-field date-input" selected={endDate} placeholderText="Date" isClearable={true} selectsEnd startDate={startDate} endDate={endDate} onChange={(date) => this.updateDate(date, 'endDate')} dateFormat="YYYY-MM-DD" />
+									<label className="date-label">Until</label><Icon glyph={Calendar} className="icon calendar" /><DatePicker className="input-field date-input" selected={endDate} placeholderText="Date" isClearable={true} selectsEnd startDate={startDate} endDate={endDate} onChange={(date) => this.updateDate(date, 'endDate')} dateFormat="YYYY-MM-DD" />
 									<div className={classNames('grade-wrapper', {hidden: (this.state.type !== 'activities')})}>
-										<label>Grade</label><Icon glyph={Calendar} className="icon calendar" /><DatePicker className="input-field date-input" selected={gradeDate} placeholderText="Date" isClearable={true} onChange={(date) => this.updateDate(date, 'gradeDate')} dateFormat="YYYY-MM-DD" />
+										<label className="date-label">Grade</label><Icon glyph={Calendar} className="icon calendar" /><DatePicker className="input-field date-input" selected={gradeDate} placeholderText="Date" isClearable={true} onChange={(date) => this.updateDate(date, 'gradeDate')} dateFormat="YYYY-MM-DD" />
 									</div>
 								</div>
 								<div className={classNames('credits-wrapper', {hidden: (this.state.type !== 'courses') && (this.state.type !== 'subjects')})}>
@@ -472,8 +494,11 @@ class Admin extends Component {
 								</div>
 							</div>
 							
-							<div className={classNames({hidden: (this.state.type === 'users') || (this.state.type === 'groups') || (this.state.type === 'files')})}>
-								<Select2 style={{width: '100%'}} data={files} options={{placeholder: 'Select a file to copy its URL...', allowClear: true}} onChange={(event) => this.fileSelected(event)} />
+							<div className={classNames('clearfix', {hidden: (this.state.type === 'users') || (this.state.type === 'groups') || (this.state.type === 'files')})}>
+								<Select2 style={{width: '70%'}} data={files} options={{placeholder: 'Select a file to copy its URL...', allowClear: true, templateResult: this.formatFileType, templateSelection: this.formatFileType}} onChange={(event) => this.fileSelected(event.currentTarget)} />
+								<div className="featured-image-wrapper">
+									{(this.state.selectedItem && this.state.selectedItem.featuredImage) ? <img className="featured-image" src={this.props.files[this.state.selectedItem.featuredImage].url} /> : <button className="btn btn-primary btn-xs btn-featured-image disabled" ref="btn-featured-image" onClick={() => this.updateItem(this.selectedImage, 'featuredImage')}>Set as featured image</button>}
+								</div>
 							</div>
 							
 							<div className={classNames({hidden: (this.state.type === 'files')})}>
@@ -503,7 +528,7 @@ class Admin extends Component {
 											<a href={this.state.selectedItem.url} target="_blank">View/download file</a>
 										</div>
 										<div className="file-metadata">
-											<Icon glyph={Metadata} /><span>File metadata</span>
+											<img src={`//www.stdicon.com/crystal/${fileContentType}?size=24`} /><span>File metadata</span>
 											<ul>
 												<li><span>Original file name:</span>{this.state.selectedItem.file}</li>
 												<li><span>Content type:</span>{fileContentType}</li>

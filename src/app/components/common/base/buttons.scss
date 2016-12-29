@@ -29,4 +29,8 @@
 		color: $grey;
 		border-color: $grey;
 	}
+	
+	&.disabled {
+		opacity: .3;
+	}
 }

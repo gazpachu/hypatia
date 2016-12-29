@@ -130,7 +130,6 @@
 	
 	.date-input {
 		width: 100px;
-		margin-right: 10px;
 	}
 	
 	.credits-input {
@@ -185,10 +184,12 @@
 	
 	.code-input {
 		width: 18%;
-		margin-left: 2%;
+		float: right;
 	}
 	
-	.btn-save {
+	.btn-save,
+	.btn-featured-image,
+	.date-label {
 		margin-left: 10px;
 	}
 	
@@ -227,6 +228,10 @@
 		margin-top: 20px;
 		max-width: 45%;
 		
+		img {
+			margin-right: 5px;
+		}
+		
 		ul {
 			margin-top: 10px;
 			padding-left: 25px;
@@ -263,5 +268,17 @@
 				max-width: 50%;
 			}
 		}
+	}
+	
+	.featured-image-wrapper {
+		float: right;
+		max-width: 20%;
+		margin-top: 20px;
+	}
+	
+	.featured-image {
+		max-width: 100%;
+		max-height: 100px;
+		display: block;
 	}
 }
