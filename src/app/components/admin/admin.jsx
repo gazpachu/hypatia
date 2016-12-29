@@ -499,6 +499,30 @@ class Admin extends Component {
 								</div>
 							</div>
 							
+							<div className={classNames({hidden: (this.state.type !== 'courses')})}>
+								<Select2 className="select-items course-level-select" style={{width: '70%'}} ref="course-level-select" data={[
+									{ text: 'Online course', id: 'Course' },
+									{ text: 'L4. Higher apprenticeship', id: 'HA' },
+									{ text: 'L4. Certificate of higher education', id: 'CertHE' },
+									{ text: 'L4. Higher national certificate', id: 'HNC' },
+									{ text: 'L5. Diploma of higher education', id: 'DipHE' },
+									{ text: 'L5. Foundation degree', id: 'FD' },
+									{ text: 'L5. Higher national diploma', id: 'HND' },
+									{ text: 'L6. Bachelor degree with honors', id: 'BD' },
+									{ text: 'L6. Bachelor of the arts with honors', id: 'BA' },
+									{ text: 'L6. Bachelor of science with honors', id: 'BSc' },
+									{ text: 'L6. Graduate certificate', id: 'GradCert' },
+									{ text: 'L6. Graduate diploma', id: 'GradDipl' },
+									{ text: 'L7. Master of engineering', id: 'MEng' },
+									{ text: 'L7. Master of arts', id: 'MA' },
+									{ text: 'L7. Master of science', id: 'MSc' },
+									{ text: 'L7. Masters degree', id: 'MD' },
+									{ text: 'L7. Postgraduate certificate', id: 'PostCert' },
+									{ text: 'L7. Postgraduate diploma', id: 'PostDipl' },
+									{ text: 'L8. Doctorate', id: 'D' },
+								]} value={(this.state.selectedItem && this.state.selectedItem.level) ? this.state.selectedItem.level : ''} options={{placeholder: 'Course level', allowClear: false}} onChange={(event) => this.updateSelect(event.currentTarget, 'level')} />
+							</div>
+							
 							<div className={classNames('clearfix', {hidden: (this.state.type === 'users') || (this.state.type === 'groups') || (this.state.type === 'files')})}>
 								<div className="file-settings-block">
 									<Select2 style={{width: '100%'}} data={files} options={{placeholder: 'Select a file to copy its URL...', allowClear: true, templateResult: this.formatFileType, templateSelection: this.formatFileType}} onChange={(event) => this.fileSelected(event.currentTarget)} />

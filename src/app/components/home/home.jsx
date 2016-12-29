@@ -3,13 +3,14 @@ import { setLoading, setFilters } from '../../actions/actions';
 import {connect} from 'react-redux';
 import { Link } from 'react-router';
 import { firebase, helpers } from 'redux-react-firebase';
-//import { database, storage } from '../../constants/firebase';
 import $ from 'jquery';
 import moment from 'moment';
 import showdown from 'showdown';
 import Icon from '../common/lib/icon/icon';
 import Back from '../../../../static/svg/back.svg';
 import Calendar from '../../../../static/svg/calendar2.svg';
+import Course from '../../../../static/svg/course.svg';
+import Users from '../../../../static/svg/users.svg';
 import Forward from '../../../../static/svg/forward.svg';
 import World from '../../../../static/svg/world.svg';
 import Logo from '../../../../static/svg/logo.svg';
@@ -65,7 +66,10 @@ class Home extends Component {
 						<div className="item-content clearfix">
 							<h3 className="title"><Link to={`/${path}/${item.slug}`}>{item.title}</Link></h3>
 							<div className="meta">
-								<p><Icon glyph={Calendar} />{(type === 'courses') ? 'Starts on ' : ''}<span className="date">{moment(date).format('D/M/YYYY')}</span></p>
+								<p><Icon glyph={Calendar} />{(type === 'courses') ? 'Starts ' : ''}
+									<span className="date">{item.startDate || item.date ? moment(date).format('D/M/YYYY') : 'anytime'}</span>
+									{(type === 'courses' && item.level) ? <span><Icon glyph={Course} />{item.level}</span> : ''}
+								</p>
 							</div>
 							<div className="content" dangerouslySetInnerHTML={{__html: this.converter.makeHtml(item.content1)}}></div>
 							{(type === 'posts') ? 
@@ -73,8 +77,8 @@ class Home extends Component {
 									<button className="btn btn-xs btn-secondary float-right"><Link to={`/${path}/${item.slug}`}>Read more</Link></button>
 								</div>
 							: <div className="info">
-									<span className="enrolled">1.5K enrolled</span>
-									<span className="price">{item.price}€</span>
+									<span className="enrolled"><Icon glyph={Users} /> 1.5K enrolled</span>
+									{item.price ? <span className="price">{item.price}€</span> : ''}
 							</div>}
 						</div>
 					</li>;

@@ -43,7 +43,7 @@ a, a:hover, a:active, a:visited, a:focus {
 .main {
 	&.has-hero {
 		.main-background {
-			height: 520px;
+			height: 450px;
 		}
 	}
 }
@@ -233,7 +233,6 @@ a, a:hover, a:active, a:visited, a:focus {
 		border-radius: 6px;
 		padding: 5px 3px;
 		position: absolute;
-		z-index: 1;
 		bottom: 125%;
 		left: 50%;
 		margin-left: -60px;

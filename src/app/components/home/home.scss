@@ -1,5 +1,5 @@
 .home {
-	padding-top: 560px;
+	padding-top: 480px;
 	
 	.hero {
 		.world-map {
@@ -172,6 +172,9 @@
 	.posts {
 		text-align: center;
 		margin-bottom: 50px;
+		max-width: 1200px;
+		margin-left: auto;
+		margin-right: auto;
 	}
 	
 	.courses-list,
@@ -272,10 +275,12 @@
 			
 			.icon {
 				margin-right: 5px;
+				margin-bottom: 5px;
 			}
 			
 			.date {
 				font-weight: bold;
+				margin-right: 10px;
 			}
 		}
 		
@@ -324,7 +329,7 @@
 	
 	.course {
 		.item-content {
-			margin-bottom: 5px;
+			margin-bottom: 10px;
 		}
 	}
 	
