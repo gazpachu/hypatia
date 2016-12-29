@@ -167,6 +167,8 @@ class Admin extends Component {
 			if (item.startDate) item.startDate = moment(item.startDate).format('YYYY-MM-DD');
 			if (item.endDate) item.endDate = moment(item.endDate).format('YYYY-MM-DD');
 			if (item.gradeDate) item.gradeDate = moment(item.gradeDate).format('YYYY-MM-DD');
+			
+			item.status = this.refs['status-checkbox'].checked ? 'active' : 'inactive';
 
 			this.toggleButtons(false);
 			
@@ -395,6 +397,7 @@ class Admin extends Component {
 		const title = (this.state.selectedItem && this.state.selectedItem.title) ? this.state.selectedItem.title : '';
 		const iconHeading = (this.state.type === 'courses') ? <Icon glyph={Course} /> : (this.state.type === 'subjects') ? <Icon glyph={Subject} /> : (this.state.type === 'modules') ? <Icon glyph={Module} /> : <Icon glyph={Activity} />;
 		const code = (this.state.selectedItem && this.state.selectedItem.code) ? this.state.selectedItem.code : '';
+		const price = (this.state.selectedItem && this.state.selectedItem.price) ? this.state.selectedItem.price : '';
 		const credits = (this.state.selectedItem && this.state.selectedItem.credits) ? this.state.selectedItem.credits : '';
 		const date = (this.state.selectedItem && this.state.selectedItem.date) ? moment(this.state.selectedItem.date) : null;
 		const startDate = (this.state.selectedItem && this.state.selectedItem.startDate) ? moment(this.state.selectedItem.startDate) : null;
@@ -469,9 +472,11 @@ class Admin extends Component {
 					</div>
 					<div className={classNames('item-content column', {hidden: this.state.action === ''})}>
 						<div className={`block clearfix ${this.state.type}`}>
-							<h3 className="block-title">{iconHeading}{(this.state.action === 'new') ? <span>You are adding a new {(this.state.type === 'activities') ? 'activity' : this.state.type.slice(0, -1)}...</span> : <span>You are editing {(this.state.type === 'activities') ? 'an activity' : 'a ' + this.state.type.slice(0, -1)}...</span>}<button className="btn btn-primary btn-xs float-right btn-save" ref="saveTop" onClick={() => this.save()}>save in {this.state.type}</button><button className="btn btn-outline btn-xs float-right" ref="cancelTop" onClick={() => this.cancel()}>Cancel</button><div className="loader-small" ref="loaderTop"></div></h3>
+							<h3 className="block-title">{iconHeading}{(this.state.action === 'new') ? <span>You are adding a new {(this.state.type === 'activities') ? 'activity' : this.state.type.slice(0, -1)}...</span> : <span>You are editing {(this.state.type === 'activities') ? 'an activity' : 'a ' + this.state.type.slice(0, -1)}...</span>}<button className="btn btn-primary btn-xs float-right btn-save" ref="saveTop" onClick={() => this.save()}>save in {this.state.type}</button><button className="btn btn-outline btn-xs float-right" ref="cancelTop" onClick={() => this.cancel()}>cancel</button><div className="loader-small" ref="loaderTop"></div></h3>
+							
 							<input type="text" className="input-field title-input" ref="title-input" placeholder={(this.state.type === 'activities') ? 'Activity title' : this.state.type.slice(0, -1).capitalize() + ' title'} value={title} onChange={(event) => this.updateInput(event, 'title')} />
 							<input type="text" className={classNames('input-field code-input', {hidden: (this.state.type === 'posts' || this.state.type === 'pages' || this.state.type === 'files')})} ref="code-input" placeholder="Code" value={code} onChange={(event) => this.updateInput(event, 'code')} />
+							<input type="text" className={classNames('input-field price-input', {visible: (this.state.type === 'courses')})} ref="price-input" placeholder="Price" value={price} onChange={(event) => this.updateInput(event, 'price')} />
 							<div className={classNames('float-right', {hidden: (this.state.type !== 'posts')})}>
 								<Icon glyph={Calendar} className="icon calendar" /><DatePicker className="input-field date-input" selected={date} date={date} placeholderText="Date" isClearable={true} onChange={(date) => this.updateDate(date, 'date')} dateFormat="YYYY-MM-DD" popoverAttachment="bottom right" popoverTargetAttachment="bottom right" popoverTargetOffset="0px 0px" />
 							</div>
@@ -495,9 +500,14 @@ class Admin extends Component {
 							</div>
 							
 							<div className={classNames('clearfix', {hidden: (this.state.type === 'users') || (this.state.type === 'groups') || (this.state.type === 'files')})}>
-								<Select2 style={{width: '70%'}} data={files} options={{placeholder: 'Select a file to copy its URL...', allowClear: true, templateResult: this.formatFileType, templateSelection: this.formatFileType}} onChange={(event) => this.fileSelected(event.currentTarget)} />
+								<div className="file-settings-block">
+									<Select2 style={{width: '100%'}} data={files} options={{placeholder: 'Select a file to copy its URL...', allowClear: true, templateResult: this.formatFileType, templateSelection: this.formatFileType}} onChange={(event) => this.fileSelected(event.currentTarget)} />
+									<label className="option-label">Featured image</label>
+									<span>{(this.state.selectedItem && this.state.selectedItem.featuredImage) ? <a href={this.props.files[this.state.selectedItem.featuredImage] ? this.props.files[this.state.selectedItem.featuredImage].url : ''} target="_blank">{this.props.files[this.state.selectedItem.featuredImage] ? this.props.files[this.state.selectedItem.featuredImage].file : ''}</a> : 'none'}</span>
+									<button className={classNames('btn btn-cancel btn-xs', {visible: (this.state.selectedItem && this.state.selectedItem.featuredImage && this.state.selectedItem.featuredImage !== '')})} onClick={() => this.updateItem('', 'featuredImage')}>unlink</button>
+								</div>
 								<div className="featured-image-wrapper">
-									{(this.state.selectedItem && this.state.selectedItem.featuredImage) ? <img className="featured-image" src={this.props.files[this.state.selectedItem.featuredImage].url} /> : <button className="btn btn-primary btn-xs btn-featured-image disabled" ref="btn-featured-image" onClick={() => this.updateItem(this.selectedImage, 'featuredImage')}>Set as featured image</button>}
+									{(this.state.selectedItem && this.state.selectedItem.featuredImage) ? <img className="featured-image" src={this.props.files[this.state.selectedItem.featuredImage] ? this.props.files[this.state.selectedItem.featuredImage].url : ''} /> : <button className="btn btn-primary btn-xs btn-featured-image disabled" ref="btn-featured-image" onClick={() => this.updateItem(this.selectedImage, 'featuredImage')}>Set as featured image</button>}
 								</div>
 							</div>
 							
@@ -554,9 +564,9 @@ class Admin extends Component {
 							<label className="checkbox-label">Active </label><input type="checkbox" className="status-checkbox" ref="status-checkbox" checked={status} onChange={(event) => this.updateCheckbox(event, 'status')} />
 							
 							<div className="footer-buttons">
-								<button className="btn btn-cancel btn-xs float-left" ref="remove" onClick={() => this.delete()}>Remove from {this.state.type}</button>
+								<button className="btn btn-cancel btn-xs float-left" ref="remove" onClick={() => this.delete()}>remove from {this.state.type}</button>
 								<button className="btn btn-primary btn-xs float-right btn-save" ref="save" onClick={() => this.save()}>save in {this.state.type}</button>
-								<button className="btn btn-outline btn-xs float-right" ref="cancel" onClick={() => this.cancel()}>Cancel</button>
+								<button className="btn btn-outline btn-xs float-right" ref="cancel" onClick={() => this.cancel()}>cancel</button>
 								<div className="loader-small" ref="loader"></div>
 							</div>
 						</div>

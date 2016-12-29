@@ -86,3 +86,7 @@
 		right: 12px;			
 	}
 }
+
+@mixin random-color($selector) {
+  	#{$selector}: unquote("rgba(#{random(256) - 1}, #{random(256)-1}, #{random(256 - 1)}, #{random(100)/100})");
+}

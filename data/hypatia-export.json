@@ -1,9 +1,242 @@
 {
-  "posts" : [ {
-    "author" : "gazpachu",
-    "content" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin auctor pretium arcu, ac ultrices ipsum hendrerit vitae. Nunc at efficitur leo. Nulla tellus mauris, feugiat in mauris volutpat, dictum pellentesque dui. Etiam sed scelerisque odio. Nam fringilla ligula sed tincidunt dapibus. Maecenas eget purus malesuada, blandit nisl in, ornare metus. Phasellus nec sem ipsum. Nulla non enim tristique, pretium leo id, congue lorem. Etiam vitae consectetur tortor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas sed lobortis felis. Vestibulum tristique aliquam nunc, nec consectetur metus condimentum feugiat. Praesent at magna a leo tincidunt volutpat ac a mauris.\n\nProin nec orci eu odio faucibus commodo. Donec sed turpis viverra, hendrerit nunc sed, rutrum est. Cras pellentesque libero vel maximus viverra. Fusce dictum nisi euismod rutrum lobortis. Praesent sed magna quam. Mauris eu risus tempor, ullamcorper nulla eu, dignissim nulla. Integer viverra ipsum eget eros feugiat, tempus pulvinar tellus facilisis. Vivamus sed magna ac ipsum tincidunt suscipit sit amet non velit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus eleifend mi, in auctor quam. Integer ut metus fringilla nunc cursus molestie. Praesent eget tortor sagittis, viverra felis sit amet, tempor lectus.\n\nEtiam leo elit, tempor ac tellus eget, commodo mattis orci. Nullam quis mauris eu augue interdum hendrerit. Quisque vehicula aliquet consequat. Nulla in facilisis neque. Proin ut neque auctor, hendrerit purus et, feugiat est. Maecenas sed ornare libero. Nullam ut facilisis ex, elementum sodales urna. Aenean rhoncus blandit nibh, quis sollicitudin augue pretium pellentesque. Aliquam ac sodales nunc, ut mattis massa.\n\nDonec finibus, risus et maximus tempor, risus tortor sagittis velit, vitae commodo lacus nisi quis arcu. Proin aliquet iaculis nulla ut consequat. Vivamus gravida pulvinar neque, eu ultrices nisi dapibus non. Quisque ac diam volutpat, bibendum ligula vel, faucibus purus. Ut nec magna urna. Phasellus dolor massa, rutrum ut luctus interdum, fringilla eget dolor. Nam vitae orci sed felis molestie posuere. Quisque vitae felis commodo, faucibus risus vitae, tristique diam. Pellentesque porttitor rhoncus libero, eu ullamcorper metus blandit a. Pellentesque sed risus turpis.",
-    "slug" : "new-virtual-campus",
-    "timestamp" : 1479760748,
-    "title" : "New virtual campus"
-  } ]
+  "activities" : {
+    "-KYdG0x7Yc9xnosECLuv" : {
+      "content" : "Build a spaceship in two days",
+      "content1" : "Description for activity one with a [link](http://google.com)",
+      "endDate" : "2016-12-15",
+      "gradeDate" : "2016-12-21",
+      "slug" : "activity-i",
+      "startDate" : "2016-12-06",
+      "title" : "Activity I"
+    }
+  },
+  "courses" : {
+    "-KYe9erY6vwSQBM_nLxA" : {
+      "code" : "IT",
+      "content1" : "Computing and IT skills have become fundamental to the way we live, work, socialise and play. This degree course opens up the world of technology and an array of exciting career opportunities. It will help you to become a confident user and manager of information technologies; to administer and manage network or database systems; and to develop new software solutions to meet specific market or organisational needs.\n\nKey features of the course\n\n* A flexible degree with a choice of routes\n* Focus on computer science, digital technologies, software development, web development, or networking\n* Increase your employability in a wide range of sectors, including finance, government, health, education, the voluntary sector, business, gaming and commerce",
+      "content2" : "Just a test in secondary",
+      "content3" : "Just a test in tertiary",
+      "credits" : "240",
+      "endDate" : "2019-01-25",
+      "slug" : "computing-and-it",
+      "startDate" : "2017-02-01",
+      "status" : "active",
+      "title" : "Computing and IT"
+    },
+    "-KZzlMVCEQ2wMgzeezuQ" : {
+      "code" : "BM",
+      "content1" : "What roles do accountants play in organisations? What kinds of information do they work with and how does their work and the information they produce influence the daily decisions and activities of an organisation? In this specialist route available in our BA (Honours) Business Management degree, you will develop an interdisciplinary perspective on the management of business organisations and build specialised knowledge and skills in financial and management accounting. You will be equipped with the necessary skills to use and apply accounting techniques and concepts in the workplace, and receive accreditation by professional accounting bodies for some parts of their qualifications.\n\nKey features of the course\n\n* Develops your understanding of business organisations and their key elements\n* Develops your ability to apply and evaluate financial and management accounting techniques and concepts\n* Helps you relate your studies to your own experience\n* Equips you for a wide range of employment opportunities across all sectors",
+      "credits" : "120",
+      "endDate" : "2018-12-23",
+      "slug" : "business-management-accounting",
+      "startDate" : "2017-01-01",
+      "status" : "active",
+      "title" : "Business Management (Accounting)"
+    },
+    "-KZzlpqW_w6tRh4PECGc" : {
+      "code" : "AH",
+      "content1" : "From poetry to string quartets, and from sculpture to short stories, the extraordinary range of human culture offers rich possibilities for study. This broad and absorbing course develops a deep understanding of the world we live in and how we got here, covering a fascinating variety of perspectives, periods and subjects – including art history, classical studies, creative writing, English language and English literature, history, modern languages, music, philosophy and religious studies.\n\nKey features of the course\n\n* Study a broad range of subjects with the option to specialise in one or two disciplines. \n* Learn how to approach the arts from an academic perspective, construct an argument and communicate your ideas effectively \n* Have the opportunity to develop a project based on independent study ",
+      "credits" : "120",
+      "endDate" : "2018-09-26",
+      "slug" : "arts-and-humanities",
+      "startDate" : "2017-09-20",
+      "status" : "active",
+      "title" : "Arts and Humanities"
+    },
+    "-K_0AjaGuG-yDOGGezkz" : {
+      "code" : "DI",
+      "content1" : "Design and innovation have a huge impact on society well beyond the creative industries – finding solutions to problems that affect every aspect of our lives. This ground-breaking course features online design studios, social networking, and inspiring study materials, and each module has a significant practical component. Alongside design and innovation you will study a complementary subject – choosing from arts, business, engineering or environment – to gain knowledge and skills that will be useful in a wide range of careers.\n\nKey features of the course\n\n* Focus on the process of design, working with and for others, and applying design and innovation in real-world contexts\n* Put your learning into practice as you study\n* Build a highly relevant portfolio of design work",
+      "credits" : "180",
+      "endDate" : "2018-09-20",
+      "slug" : "design-and-innovation",
+      "startDate" : "2017-08-15",
+      "status" : "active",
+      "title" : "Design and Innovation"
+    },
+    "-K_0BFn6MC97Ho5QoiZ-" : {
+      "code" : "EL",
+      "content1" : "If you are interested in reading between the lines, and being challenged by new ideas and ways of seeing, then this course is for you. English literature is a broad, accessible and important subject. On this course you will study a range of texts dating from around 1570 to the present, from poetry to fiction to film, and discover a variety of approaches for reading them. You will develop your skills of analysis and communication, enabling you to take a fresh look at familiar texts, and to encounter new texts and ideas with confidence.\n\nKey features of the course\n\n* Learn how to analyse a wide range of texts including fiction, poetry and drama\n* Explore the work of some famous authors alongside some lesser known - but equally fascinating - writers \n* Choose options in Creative writing or English language \n* Develop advanced skills in analysis, evaluation and communication that are highly valued in the workplace. ",
+      "credits" : "90",
+      "endDate" : "2018-03-07",
+      "slug" : "english-literature",
+      "startDate" : "2017-01-11",
+      "status" : "active",
+      "title" : "English Literature"
+    },
+    "-K_0BcZLVozeupoLVjsa" : {
+      "code" : "HS",
+      "content1" : "In today's fast-changing care sector, professionals at all levels need to be proactive and flexible to succeed. This degree provides a sound and critical understanding of health and social care policy, theory and practice, and the skills you need for effective practice in a diverse, multidisciplinary environment. You’ll also understand how ethical, legal, social, economic and political factors influence the provision and development of services; and gain the critical and analytical skills that underpin evidence-based practice.\n\nKey features of the course\n\n* A choice of four routes: Health and wellbeing; Older adults; Mental health; or Work with children, young people and families\n* Helps you to develop as an independent and reflective learner \n* Explores the context and processes of change and new ways of working across agencies and professional boundaries.",
+      "credits" : "180",
+      "endDate" : "2019-02-13",
+      "slug" : "health-and-social-care",
+      "startDate" : "2017-01-11",
+      "status" : "active",
+      "title" : "Health and Social Care"
+    }
+  },
+  "files" : {
+    "-K_6ukQ5TITUoLYXdJ-z" : {
+      "file" : "day-eurostar.jpg",
+      "title" : "day-eurostar.jpg",
+      "type" : "image/jpeg",
+      "url" : "https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/files%2Fday-eurostar.jpg?alt=media&token=3c48bac8-75a8-44a2-8171-231df16385d1"
+    },
+    "-K_91-dpOJW7xjkYnNDa" : {
+      "file" : "PRA2.pdf",
+      "title" : "UOC Practica 2",
+      "type" : "application/pdf",
+      "url" : "https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/files%2FPRA2.pdf?alt=media&token=4ecc14c8-b084-415f-9a71-b47b7628f8a7"
+    },
+    "-K_9_Q1bM3QA5CTecw5L" : {
+      "file" : "day-flowers.jpg",
+      "title" : "day-flowers.jpg",
+      "type" : "image/jpeg",
+      "url" : "https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/files%2Fday-flowers.jpg?alt=media&token=1a9b5f0f-ddb5-4c4c-aa78-f8119dc6789d"
+    }
+  },
+  "groups" : {
+    "-KYeuNvDcUX6PNSfNWEv" : {
+      "code" : "G-1",
+      "content1" : "This is just a hidden description",
+      "slug" : "test-group",
+      "title" : "Test group",
+      "users" : [ "4bEhibZomjYUl5qH6diVEvTM6762", "4yCkq8Ud2NfgW0FkSj6Y4NL4oti1" ]
+    }
+  },
+  "modules" : {
+    "-KYe7DCVMq8OIShRzj1q" : {
+      "code" : "A-1",
+      "content" : "reg werg wr gewr",
+      "content1" : "Algebra!!!",
+      "slug" : "algebra-i",
+      "title" : "Algebra I"
+    }
+  },
+  "pages" : {
+    "-K_0GyONxSTiMuxe8CoC" : {
+      "content1" : "This is just a test for the about page",
+      "slug" : "about",
+      "status" : "active",
+      "title" : "About"
+    }
+  },
+  "posts" : {
+    "-KZzaVbL4D7V6wm5vUyP" : {
+      "content1" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin arcu mauris, varius in sodales ut, dictum ut leo. Nunc turpis nibh, commodo et sem sed, facilisis egestas quam. In eu ante dui. Nunc commodo, neque eget efficitur laoreet, sapien felis rhoncus nisl, non sollicitudin ante massa sit amet metus. Nulla id dictum mauris, id congue risus. Vivamus in eros sollicitudin, varius turpis ac, laoreet lacus. Donec varius et enim sed accumsan. Donec ac nulla vel augue dictum rhoncus. Etiam eu convallis nisl. Phasellus eget tortor quis metus tempor blandit. Aenean viverra sem non nisi eleifend, suscipit pharetra lacus dignissim. Curabitur mattis, velit id commodo accumsan, diam lectus aliquam dui, eu lobortis eros metus a lacus. Vivamus in lectus et justo pellentesque vulputate. Praesent congue enim id nisi aliquam condimentum. Suspendisse iaculis ipsum ac mauris aliquet pretium.\n\nIn ornare urna magna, nec porttitor massa elementum quis. Fusce semper augue vel ex facilisis, et venenatis felis congue. Phasellus pretium, est id gravida auctor, augue ante faucibus turpis, et pulvinar dui tortor ut ligula. Nullam maximus pharetra diam id porttitor. Nullam semper tellus efficitur, pulvinar ante ac, pretium mauris. Nunc turpis dolor, efficitur vitae urna non, tristique euismod nisl. Cras sed metus ultricies ligula accumsan accumsan. Nulla vulputate leo dolor, ut consequat leo auctor et. Nulla mattis fermentum aliquam. Nulla facilisi. Phasellus vel elit congue, ultrices sem at, convallis leo.\n\nMaecenas ac interdum metus, sed blandit metus. Fusce in eros quis tortor semper eleifend vitae eu dui. Praesent non nulla ipsum. Aliquam non tellus ut diam eleifend maximus. Pellentesque facilisis porta turpis quis lobortis. Mauris eleifend purus non ipsum aliquam interdum. Ut pellentesque purus non arcu cursus, venenatis fringilla nunc posuere. Ut lobortis venenatis augue, sit amet faucibus nulla ornare et. Sed in dui sed lorem tincidunt tincidunt. Sed eget ipsum commodo, porttitor est quis, aliquet felis. Duis consequat aliquet dignissim. Aenean nulla lectus, laoreet in dapibus nec, gravida at tellus.",
+      "date" : "2016-11-28",
+      "slug" : "new-virtual-campus",
+      "status" : "active",
+      "title" : "New virtual campus"
+    },
+    "-KZzyJq_uezqSk2NCFsx" : {
+      "content1" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempor diam a nisi malesuada, ut pretium orci elementum. Donec finibus orci id rutrum interdum. Suspendisse convallis volutpat magna, eget rhoncus eros vestibulum imperdiet. Morbi at semper ex. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vulputate, ipsum ut convallis varius, nisl augue feugiat nibh, ut tempor risus sem ut sem. Quisque dignissim lectus eros, quis malesuada quam sollicitudin commodo. Mauris euismod elit eu convallis porttitor. Nulla nec felis volutpat, cursus arcu non, maximus mi. Etiam ultrices ligula et feugiat commodo. Proin vel dui a neque tempus pulvinar quis id ligula. Sed fermentum dignissim massa, eget scelerisque magna malesuada eget. In placerat suscipit odio, eu eleifend purus vehicula sed. Donec tempor lorem lectus. Vivamus ut orci quis mauris mattis venenatis nec nec dui.\n\nUt ultricies, metus et viverra pulvinar, arcu ante tristique orci, nec elementum nisi lectus at est. Aliquam lacinia ut quam sed tempor. Nulla porttitor purus purus, sed auctor leo dapibus porta. In commodo nulla at lectus hendrerit mollis. Nunc scelerisque tincidunt quam at suscipit. Suspendisse a ligula mauris. Phasellus rhoncus orci bibendum velit suscipit ornare. Donec quis commodo dolor. Suspendisse nibh nulla, dictum eget tellus ac, porttitor faucibus ipsum. Nunc vitae dictum dolor. Suspendisse feugiat mi sit amet mattis fringilla. Donec arcu erat, elementum elementum egestas eget, sagittis fermentum urna. Duis fermentum, sem quis eleifend convallis, risus nisl sodales ligula, nec pulvinar urna elit id ipsum. Proin blandit consectetur nisi in mollis.",
+      "date" : "2016-10-24",
+      "slug" : "a-new-story-has-been-published",
+      "status" : "active",
+      "title" : "A new story has been published!"
+    },
+    "-KZzyafnLnKLWKMLQOF-" : {
+      "content1" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempor diam a nisi malesuada, ut pretium orci elementum. Donec finibus orci id rutrum interdum. Suspendisse convallis volutpat magna, eget rhoncus eros vestibulum imperdiet. Morbi at semper ex. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vulputate, ipsum ut convallis varius, nisl augue feugiat nibh, ut tempor risus sem ut sem. Quisque dignissim lectus eros, quis malesuada quam sollicitudin commodo. Mauris euismod elit eu convallis porttitor. Nulla nec felis volutpat, cursus arcu non, maximus mi. Etiam ultrices ligula et feugiat commodo. Proin vel dui a neque tempus pulvinar quis id ligula. Sed fermentum dignissim massa, eget scelerisque magna malesuada eget. In placerat suscipit odio, eu eleifend purus vehicula sed. Donec tempor lorem lectus. Vivamus ut orci quis mauris mattis venenatis nec nec dui.\n\nUt ultricies, metus et viverra pulvinar, arcu ante tristique orci, nec elementum nisi lectus at est. Aliquam lacinia ut quam sed tempor. Nulla porttitor purus purus, sed auctor leo dapibus porta. In commodo nulla at lectus hendrerit mollis. Nunc scelerisque tincidunt quam at suscipit. Suspendisse a ligula mauris. Phasellus rhoncus orci bibendum velit suscipit ornare. Donec quis commodo dolor. Suspendisse nibh nulla, dictum eget tellus ac, porttitor faucibus ipsum. Nunc vitae dictum dolor. Suspendisse feugiat mi sit amet mattis fringilla. Donec arcu erat, elementum elementum egestas eget, sagittis fermentum urna. Duis fermentum, sem quis eleifend convallis, risus nisl sodales ligula, nec pulvinar urna elit id ipsum. Proin blandit consectetur nisi in mollis.",
+      "slug" : "one-more-story",
+      "status" : "active",
+      "title" : "One more story"
+    },
+    "-K_02Sx9N0rryUv0ipY3" : {
+      "content1" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt ligula id risus vulputate commodo. Maecenas viverra libero ac enim facilisis ullamcorper. Nulla congue hendrerit turpis, a auctor nulla facilisis a. Integer id pharetra felis. Fusce ornare mi et sapien faucibus, id rutrum quam viverra. Donec vel fermentum magna. Nunc malesuada metus eu fringilla porta. Nullam luctus nisi vitae scelerisque gravida. Donec a ligula non diam sagittis consectetur in a odio. Suspendisse potenti. Donec iaculis ligula elit, egestas pretium erat cursus ut. Phasellus nunc turpis, egestas id ullamcorper at, tempus vel ligula.\n\nInterdum et malesuada fames ac ante ipsum primis in faucibus. Nunc quis ex neque. Mauris porta lobortis scelerisque. Nunc cursus viverra diam, ac lobortis eros ultricies eu. Mauris at lectus nec sem vulputate auctor rhoncus quis libero. Vivamus eget molestie sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas quis orci elit. Praesent id purus at justo rutrum rhoncus sit amet ac nisl. Quisque eu neque velit. Aliquam porttitor mattis arcu, non tempus sem venenatis sit amet. Phasellus imperdiet tincidunt ultrices. Praesent pretium purus non felis gravida, ut efficitur nisl luctus. Donec eget velit lacinia, laoreet leo in, finibus orci. Praesent non porttitor ex, consectetur viverra quam.",
+      "slug" : "just-another-story",
+      "title" : "Just another story"
+    }
+  },
+  "subjects" : {
+    "-KYdDowIweDb-Pb-wgOv" : {
+      "content" : "HO HO HO!",
+      "content1" : "This is a subject",
+      "slug" : "another-one",
+      "title" : "Another one"
+    }
+  },
+  "users" : {
+    "4bEhibZomjYUl5qH6diVEvTM6762" : {
+      "info" : {
+        "address" : "testt address3",
+        "address2" : "",
+        "city" : "",
+        "country" : "",
+        "firstName" : "Tuesday",
+        "language" : "",
+        "lastName1" : "Gutierrez",
+        "lastName2" : "",
+        "postcode" : "",
+        "province" : ""
+      }
+    },
+    "4yCkq8Ud2NfgW0FkSj6Y4NL4oti1" : {
+      "info" : {
+        "address" : "28, Dr. Emmet Brown",
+        "address2" : "Lyon Estates",
+        "city" : "Los Angeles",
+        "country" : "United States",
+        "firstName" : "Marty",
+        "language" : "English",
+        "lastName1" : "McFly",
+        "lastName2" : "",
+        "postcode" : "09303",
+        "province" : "Pasadena, CA"
+      }
+    },
+    "AUIsrsgKQLTRg3Z8a1rFotfUVTt1" : {
+      "info" : {
+        "uid" : "AUIsrsgKQLTRg3Z8a1rFotfUVTt1"
+      }
+    },
+    "GzeXmK1kDVODalsJUYAeyrZGPAi1" : {
+      "info" : {
+        "uid" : "GzeXmK1kDVODalsJUYAeyrZGPAi1"
+      }
+    },
+    "NNnSU1eXCRQbCB17Mr9vq7HElwo2" : {
+      "info" : {
+        "address" : "Calle whatever",
+        "address2" : "",
+        "city" : "",
+        "country" : "",
+        "firstName" : "Joan",
+        "language" : "",
+        "lastName1" : "Mira",
+        "lastName2" : "",
+        "level" : 5,
+        "postcode" : "",
+        "province" : ""
+      }
+    },
+    "YcrVSLI2VaW8kdsnJbFnLmq5NoB2" : {
+      "info" : {
+        "uid" : "YcrVSLI2VaW8kdsnJbFnLmq5NoB2"
+      }
+    },
+    "oZuivUXHoMYhROx1YLW4kdIPMrh2" : {
+      "info" : {
+        "address" : "",
+        "address2" : "",
+        "city" : "",
+        "country" : "",
+        "firstName" : "Joan",
+        "language" : "",
+        "lastName1" : "Mira",
+        "lastName2" : "",
+        "postcode" : "",
+        "province" : ""
+      }
+    },
+    "x1C8cMKPTcXlpGcJ27kiSdYuVKt2" : {
+      "info" : {
+        "uid" : "x1C8cMKPTcXlpGcJ27kiSdYuVKt2"
+      }
+    },
+    "xpW9nfctR1P6SaqWvK0xKzux1M92" : {
+      "info" : {
+        "uid" : "xpW9nfctR1P6SaqWvK0xKzux1M92"
+      }
+    }
+  }
 }

@@ -2,6 +2,7 @@ body {
 	font-family: 'Fira Sans', sans-serif;
 	font-weight: lighter;
 	color: $dark-grey;
+	background-color: #f4f3f2;
 	margin: 0;
 }
 
@@ -40,16 +41,17 @@ a, a:hover, a:active, a:visited, a:focus {
 }
 
 .main {
-	
 	&.has-hero {
-		
+		.main-background {
+			height: 520px;
+		}
 	}
 }
 
 .main-background {
 	position: absolute;
 	width: 100%;
-	height: 520px;
+	height: 70px;
 	overflow: hidden;
 //    transform: skewY(-8deg);
 //    transform-origin: 0;

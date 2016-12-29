@@ -197,11 +197,13 @@
 	.course,
 	.post {
 		display: inline-block;
-		width: 33%;
+		width: 20%;
 		flex-grow: 1;
 		vertical-align: top;
+		background-color: white;
 		text-align: left;
-		padding: 20px;
+		margin: 10px;
+		@include scale-anim(1.05);
 		
 		@include mobile() {
 			width: 100%;
@@ -211,16 +213,38 @@
 			margin-right: 0;
 		}
 		
-		.image {
-			display: none;
+		.thumb {
 			width: 100%;
-			border-radius: 5px;
+			text-align: center;
+			height: 150px;
+			border-top-left-radius: 5px;
+			border-top-right-radius: 5px;
 			margin-bottom: 10px;
+			display: table;
+			font-size: 70px;
+			color: $white;
+			background-color: #6ad0dc;
+			
+			span {
+				display: table-cell;
+				vertical-align: middle;
+			}
+			
+			&.image {
+				background-size: cover;
+				background-repeat: no-repeat;
+			}
+		}
+		
+		.item-content {
+			padding: 0 10px;
+			margin-bottom: 15px;
 		}
 		
 		.title {
-			font-size: 20px;
+			font-size: 18px;
 		    line-height: 26px;
+			font-weight: lighter;
 			width: 100%;
 			white-space: nowrap;
 			overflow: hidden;
@@ -275,13 +299,32 @@
 		.actions {
 			margin: 10px 0;
 			
-			.enroll-now {
-				margin-right: 10px;
-			}
-			
 			.btn-secondary {
 				color: $blue;
 			}
+		}
+		
+		.info {
+			margin-top: 10px;
+			
+			.enrolled {
+				font-size: 14px;
+				padding-top: 8px;
+				display: inline-block;	
+			}
+			
+			.price {
+				float: right;
+				font-size: 22px;
+				color: $dark-grey;
+				font-weight: bold;
+			}
+		}
+	}
+	
+	.course {
+		.item-content {
+			margin-bottom: 5px;
 		}
 	}
 	

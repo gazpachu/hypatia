@@ -26,7 +26,7 @@
 			}
 			
 			.btn {
-				margin-top: 2px;
+				margin-top: 4px;
 				margin-left: 10px;
 				float: right;
 			}
@@ -182,9 +182,23 @@
 		}
 	}
 	
+	.block.courses {
+		.code-input {
+			width: 7%;
+		}
+	}
+	
 	.code-input {
 		width: 18%;
 		float: right;
+	}
+	
+	.price-input {
+		width: 11%;
+		float: right;
+		margin-right: 1%;
+		display: none;
+		&.visible { display: inline-block }
 	}
 	
 	.btn-save,
@@ -203,7 +217,8 @@
 		border-top: 1px solid $grey;
 	}
 	
-	.checkbox-label {
+	.checkbox-label,
+	.option-label {
 		margin-right: 10px;
 	}
 	
@@ -267,6 +282,18 @@
 			@media (min-width: 900px) {
 				max-width: 50%;
 			}
+		}
+	}
+	
+	.file-settings-block {
+		width: 70%;
+		float: left;
+		
+		.btn-cancel {
+			display: none;
+			margin-left: 10px;
+			
+			&.visible { display: inline-block }
 		}
 	}
 	

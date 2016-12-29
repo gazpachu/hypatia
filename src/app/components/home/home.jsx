@@ -17,13 +17,15 @@ import Logo from '../../../../static/svg/logo.svg';
 const {isLoaded, isEmpty, dataToJS} = helpers;
 
 @firebase( [
-  	'posts',
+  	'files',
+	'posts',
 	'courses'
 ])
 @connect(
   	({firebase}) => ({
+		files: dataToJS(firebase, 'files'),
     	posts: dataToJS(firebase, 'posts'),
-		courses: dataToJS(firebase, 'courses'),
+		courses: dataToJS(firebase, 'courses')		
   	})
 )
 class Home extends Component {
@@ -58,26 +60,22 @@ class Home extends Component {
 					date = (type === 'courses') ? item.startDate : item.date;
 
 				if (item.status === 'active') {
-					// Load post image from firebase storage
-					let imgRef = this.storageRef.child(type + '/' + item.slug + '.jpg');
-					imgRef.getDownloadURL().then(function(url) {
-						let img = this.refs[className+'-'+key+'-img'];
-						img.src = url;
-						img.style.display = 'block';
-					}.bind(this)).catch(function(error) {
-					  //console.log(error);
-					});
-
 					return <li key={key} ref={`${className}-${key}`} className={className}>
-						<Link to={`/${path}/${item.slug}`}><img className="image" ref={`${className}-${key}-img`} /></Link>
-						<h3 className="title"><Link to={`/${path}/${item.slug}`}>{(type === 'courses') ? <span className="course-icon">{item.code}</span> : ''}{item.title}</Link></h3>
-						<div className="meta">
-							<p><Icon glyph={Calendar} />{(type === 'courses') ? 'Starts on ' : ''}<span className="date">{moment(date).format('D/M/YYYY')}</span></p>
-						</div>
-						<div className="content" dangerouslySetInnerHTML={{__html: this.converter.makeHtml(item.content1)}}></div>
-						<div className="actions">
-							{(type === 'courses') ? <button className="btn btn-xs btn-primary enroll-now">Enroll now</button> : ''}
-							<button className="btn btn-xs btn-secondary"><Link to={`/${path}/${item.slug}`}>Read more</Link></button>
+						{item.featuredImage ? <Link to={`/${path}/${item.slug}`}><div className="thumb image" style={{backgroundImage: 'url(' + this.props.files[item.featuredImage].url + ')'}}></div></Link> : <div className="thumb"><span>{item.code}</span></div>}
+						<div className="item-content clearfix">
+							<h3 className="title"><Link to={`/${path}/${item.slug}`}>{item.title}</Link></h3>
+							<div className="meta">
+								<p><Icon glyph={Calendar} />{(type === 'courses') ? 'Starts on ' : ''}<span className="date">{moment(date).format('D/M/YYYY')}</span></p>
+							</div>
+							<div className="content" dangerouslySetInnerHTML={{__html: this.converter.makeHtml(item.content1)}}></div>
+							{(type === 'posts') ? 
+								<div className="actions">
+									<button className="btn btn-xs btn-secondary float-right"><Link to={`/${path}/${item.slug}`}>Read more</Link></button>
+								</div>
+							: <div className="info">
+									<span className="enrolled">1.5K enrolled</span>
+									<span className="price">{item.price}€</span>
+							</div>}
 						</div>
 					</li>;
 				}
