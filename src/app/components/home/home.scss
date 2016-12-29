@@ -19,6 +19,12 @@
 			top: 100px;
 			right: 130px;
 			width: 400px;
+			
+			@include mobile() {
+				margin: 0 auto;
+				left: -70px;
+				right: 0;
+			}
 		}
 		
 		.elevator-pitch {
@@ -28,6 +34,12 @@
 			right: 130px;
     		width: 300px;
 			color: $white;
+			
+			@include mobile() {
+				margin: 0 auto;
+				left: 0;
+				right: 0;
+			}
 			
 			p {
 				font-size: 14px;
@@ -73,61 +85,69 @@
 		}
 		
 		.circle {
-			display: none;
-			position: absolute;
-			color: rgba(255,255,255,.8);
-			text-align: center;
-			font-size: 13px;
-    		padding-top: 6px;
-			width: 30px;
-			height: 30px;
-			border-radius: 25px;
-			cursor: pointer;
-			transition: all .5s;
-			
-			&.active, &:hover {
-				background-color: rgba(255,255,255,.3);
-				color: $darker-grey;
-				
-				.spinner {	
-					border-style: solid;
-				}
-			}
-			
-			.spinner {
+			@include desktop() {
+				display: none;
 				position: absolute;
-				left: 0;
-    			top: 0;
-				border: 1px dashed rgba(255,255,255,.8);
-				border-radius: 25px;
+				color: rgba(255,255,255,.8);
+				text-align: center;
+				font-size: 13px;
+				padding-top: 6px;
 				width: 30px;
 				height: 30px;
-				animation: spinner linear 3s forwards infinite;
+				border-radius: 25px;
+				cursor: pointer;
+				transition: all .5s;
+
+				&.active, &:hover {
+					background-color: rgba(255,255,255,.3);
+					color: $darker-grey;
+
+					.spinner {	
+						border-style: solid;
+					}
+				}
+
+				.spinner {
+					position: absolute;
+					left: 0;
+					top: 0;
+					border: 1px dashed rgba(255,255,255,.8);
+					border-radius: 25px;
+					width: 30px;
+					height: 30px;
+					animation: spinner linear 3s forwards infinite;
+				}
+
+				@keyframes spinner {
+					0% { transform: rotate(0deg) }
+					100% { transform: rotate(360deg) }
+				}
+
+				&.usa { top: 160px; left: 140px; }
+				&.brazil { top: 310px; left: 370px; animation-delay: .2s; @media (max-width: 850px) { display: none !important } }
+				&.argentina { top: 390px; left: 340px; animation-delay: .4s; }
+				&.spain { top: 157px; left: 480px; animation-delay: .6s; @media (max-width: 970px) { display: none !important } }
+				&.uk { top: 100px; left: 480px; animation-delay: .8s; @media (max-width: 970px) { display: none !important } }
+				&.france { top: 120px; left: 504px; animation-delay: 1s; @media (max-width: 970px) { display: none !important } }
+				&.usa2 { top: 170px; left: 264px; animation-delay: 1.2s; }
+				&.colombia { top: 300px; left: 270px; animation-delay: 1.4s; }
+				&.africa1 { top: 400px; left: 550px; animation-delay: 1.6s; @media (max-width: 1000px) { display: none !important } }
+				&.africa2 { top: 260px; left: 494px; animation-delay: 1.8s; @media (max-width: 970px) { display: none !important } }
+				&.russia1 { top: 100px; left: 624px; animation-delay: 2s; @media (max-width: 1100px) { display: none !important } }
+				&.arabia { top: 190px; left: 604px; animation-delay: 2.2s; @media (max-width: 1100px) { display: none !important } }
+				&.india { top: 237px; left: 704px; animation-delay: 2.4s; @media (max-width: 1180px) { display: none !important } }
+				&.china { top: 160px; left: 734px; animation-delay: 2.6s; @media (max-width: 1200px) { display: none !important } }
+				&.japan { top: 150px; left: 884px; animation-delay: 2.8s; @media (max-width: 1350px) { display: none !important } }
+				&.thailand { top: 230px; left: 774px; animation-delay: 3s; @media (max-width: 1250px) { display: none !important } }
+				&.philippines { top: 240px; left: 834px; animation-delay: 3.2s; @media (max-width: 1300px) { display: none !important } }
+				&.indonesia { top: 310px; left: 794px; animation-delay: 3.4s; @media (max-width: 1250px) { display: none !important } }
 			}
-			
-			@keyframes spinner {
-				0% { transform: rotate(0deg) }
-				100% { transform: rotate(360deg) }
+		}
+		
+		.tooltip {
+			@include mobile() {
+				display: none !important;
 			}
-			
-			&.usa { top: 160px; left: 140px }
-			&.brazil { top: 310px; left: 370px; animation-delay: .2s; }
-			&.argentina { top: 390px; left: 340px; animation-delay: .4s; }
-			&.spain { top: 157px; left: 480px; animation-delay: .6s; }
-			&.uk { top: 100px; left: 480px; animation-delay: .8s; }
-			&.france { top: 120px; left: 504px; animation-delay: 1s; }
-			&.usa2 { top: 170px; left: 264px; animation-delay: 1.2s; }
-			&.colombia { top: 300px; left: 270px; animation-delay: 1.4s; }
-			&.africa1 { top: 400px; left: 550px; animation-delay: 1.6s; }
-			&.africa2 { top: 260px; left: 494px; animation-delay: 1.8s; }
-			&.russia1 { top: 100px; left: 624px; animation-delay: 2s; }
-			&.arabia { top: 190px; left: 604px; animation-delay: 2.2s; }
-			&.india { top: 237px; left: 704px; animation-delay: 2.4s; }
-			&.china { top: 160px; left: 734px; animation-delay: 2.6s; }
-			&.japan { top: 150px; left: 884px; animation-delay: 2.8s; }
-			&.thailand { top: 230px; left: 774px; animation-delay: 3s; }
-			&.philippines { top: 240px; left: 834px; animation-delay: 3.2s; }
-			&.indonesia { top: 310px; left: 794px; animation-delay: 3.4s; }
 		}
 		
 		.line{
@@ -206,7 +226,10 @@
 		background-color: white;
 		text-align: left;
 		margin: 10px;
-		@include scale-anim(1.05);
+		
+		@include desktop() {
+			@include scale-anim(1.05);
+		}
 		
 		@include mobile() {
 			width: 100%;

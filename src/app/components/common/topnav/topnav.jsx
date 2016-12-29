@@ -252,10 +252,10 @@ class TopNav extends Component {
 					:
 						<div className="user-controls">
 							<div className="lang">EN</div>
-							<button onClick={() => {this.changePanel('chat') }}>{this.props.panel === 'chat' ? <Icon glyph={Close} className="icon close-chat" /> : <Icon glyph={Chat} className="icon chat" />}</button>
+							<button className="chat-icon" onClick={() => {this.changePanel('chat') }}>{this.props.panel === 'chat' ? <Icon glyph={Close} className="icon close-chat" /> : <Icon glyph={Chat} className="icon chat" />}</button>
 							
 							<div className="user-controls-cta account-cta">
-								{(this.props.user) ? <Link to="/dashboard">{(this.props.user.email) ? <img className="photo" src={`https://www.gravatar.com/avatar/${md5(this.props.user.email)}.jpg?s=20`} /> : <Icon glyph={Avatar} />} {this.props.user.displayName}</Link> : ''}
+								{(this.props.user) ? <Link to="/dashboard">{(this.props.user.email) ? <img className="photo" src={`https://www.gravatar.com/avatar/${md5(this.props.user.email)}.jpg?s=20`} /> : <Icon glyph={Avatar} />} <span>{this.props.user.displayName}</span></Link> : ''}
 								<button onClick={() => { firebase.auth().signOut(); this.props.setUser(null);}}><Icon glyph={Logout} className="icon sign-out" /></button>
 							</div>
 						</div>

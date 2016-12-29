@@ -48,6 +48,7 @@
 		text-align: center;
 		color: $white;
 		text-decoration: none;
+		@include scale-anim();
 		
 		@include mobile() {
 			width: 40px;
@@ -294,6 +295,12 @@
 			}
 		}
 		
+		.chat-icon {
+			@include mobile() {
+				display: none;
+			}
+		}
+		
 		.icon {
 			fill: white;
 			stroke: $white;
@@ -303,6 +310,11 @@
 				margin-right: 0;
 				margin-left: 3px;
 				height: 15px;
+				@include scale-anim();
+				
+				@include mobile() {
+					display: none;
+				}
 			}
 			
 			&.chat, &.close-chat {
