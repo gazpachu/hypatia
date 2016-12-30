@@ -207,7 +207,7 @@ class Settings extends Component {
 						<div className="loader-small js-info-loader"></div>
 					</div>
 				: ''}
-           		<Sidebar active="settings" />
+				{/*<Sidebar active="settings" />*/}
             </section>
 		)
 	}

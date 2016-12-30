@@ -6,9 +6,8 @@
 	}
 	
 	.column {
-		border-right: 1px solid $border-dark;
+		border-right: 1px solid rgba(0,0,0,.1);
 		min-width: 33.3%;
-	    background-color: $white;
 	}
 	
 	.update-photo {

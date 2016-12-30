@@ -59,9 +59,13 @@
 		}
 		
 		.search-input {
-			width: 75%;
+			width: 62%;
 			margin-bottom: 20px;
 			border-color: $black;
+			
+			@media (min-width: 1200px) {
+				width: 75%;
+			}
 			
 			@include mobile() {
 				margin-top: 20px;

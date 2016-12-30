@@ -1,10 +1,20 @@
 .detail-page {
 	
 	.columns {
-		padding: 20px;
+		padding: 10px 20px;
 	}
 	
 	.column {
 		background-color: $white;
+		padding: 20px 30px;
+	}
+	
+	.page-content {
+		max-width: 750px;
+		text-align: justify;
+	}
+	
+	.page-sidebar {
+		margin-left: 20px;
 	}
 }

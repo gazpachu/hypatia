@@ -3,9 +3,14 @@
 		position: fixed;
 		height: 100%;
 	}
+	.breadcrumbs {
+		display: none;
+	}
 }
 
 .admin {
+	padding-top: 50px;
+	
 	.column {
 	    padding-top: 0;
 	}

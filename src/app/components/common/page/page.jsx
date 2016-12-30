@@ -66,7 +66,7 @@ class Page extends Component {
             			<h1 className="title">{title}</h1>
            				<div className="content" dangerouslySetInnerHTML={{__html: this.converter.makeHtml(content)}}></div>
             		</div>
-            		<div className="column">
+            		<div className="column page-sidebar">
             			<div className="content" dangerouslySetInnerHTML={{__html: this.converter.makeHtml(secondaryContent)}}></div>
 					</div>
             	</div>
