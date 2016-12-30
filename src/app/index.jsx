@@ -18,6 +18,7 @@ import AccountRecord from './components/home/home';
 import ListingPage from './components/home/home';
 import Page from './components/common/page/page';
 import Post from './components/common/post/post';
+import Course from './components/common/course/course';
 import NotFound from './components/notFound/notFound';
 import Admin from './components/admin/admin';
 
@@ -65,6 +66,7 @@ ReactDOM.render(
 					<Route path="/account/notifications" component={AccountNotifications} onEnter={requireAuth} />
 					<Route path="/account/record" component={AccountRecord} onEnter={requireAuth} />
 				<Route path="/courses" component={ListingPage} />
+					<Route path="/courses/:id" component={Course} />
 				<Route path="/modules" component={ListingPage} />
 				<Route path="/subjects" component={ListingPage} />
 				<Route path="/news" component={ListingPage} />

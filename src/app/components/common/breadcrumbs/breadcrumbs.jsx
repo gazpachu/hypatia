@@ -26,7 +26,6 @@ class Breadcrumbs extends Component {
 				for (let i=0; i<newTrail.length; i++) {
 					newTrail[i] = newTrail[i].charAt(0).toUpperCase() + newTrail[i].slice(1);
 					newTrail[i] = newTrail[i].replace(/-/g, ' ');
-					console.log(newTrail[i]);
 				}
 			}
 			
