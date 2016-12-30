@@ -25,9 +25,12 @@ class Breadcrumbs extends Component {
 				newTrail = location.pathname.substring(1, location.pathname.lenght).split('/');
 				for (let i=0; i<newTrail.length; i++) {
 					newTrail[i] = newTrail[i].charAt(0).toUpperCase() + newTrail[i].slice(1);
+					newTrail[i] = newTrail[i].replace(/-/g, ' ');
+					console.log(newTrail[i]);
 				}
 			}
-				
+			
+			newTrail.reverse();
 			this.props.setBreadcrumbs(newTrail);
 		});
 	}

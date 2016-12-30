@@ -18,23 +18,20 @@ const propTypes = {
 
 const {isLoaded, isEmpty, dataToJS} = helpers;
 
-@firebase( [
-  	'files',
-	'pages'
-])
+@firebase(
+  	props => ([
+    	`pages#orderByChild=slug&equalTo=${window.location.href.substr(window.location.href.lastIndexOf('/') + 1)}`
+  	])
+)
 @connect(
-  	({firebase}) => ({
-		files: dataToJS(firebase, 'files'),
-    	pages: dataToJS(firebase, 'pages')		
+  	(state, props) => ({
+    	page: dataToJS(state.firebase, 'pages')
   	})
 )
 class Page extends Component {
     
 	constructor(props) {
 		super(props);
-		
-		let path = this.props.location.pathname.split('/');
-		this.slug = path[path.length-1];
 		this.converter = new showdown.Converter();
 	}
 	
@@ -44,32 +41,30 @@ class Page extends Component {
 	}
 	
 	render() {
-		let title = '',
-			content = '',
-			secondaryContent = '';
+		let page = null;
 			
-		if (isLoaded(this.props.pages) && !isEmpty(this.props.pages)) {
-			Object.keys(this.props.pages).map(function(key) {
-				let item = this.props.pages[key];
-				if (item.slug === this.slug) {
-					title = item.title;
-					content = item.content1;
-					secondaryContent = item.content2;
-				}
+		if (isLoaded(this.props.page) && !isEmpty(this.props.page)) {	
+			Object.keys(this.props.page).map(function(key) {
+				page = this.props.page[key];
 			}.bind(this));
 		}
 		
 		return (
-            <section className="detail-page page">
-            	<div className="columns">
-            		<div className="column page-content">
-            			<h1 className="title">{title}</h1>
-           				<div className="content" dangerouslySetInnerHTML={{__html: this.converter.makeHtml(content)}}></div>
-            		</div>
-            		<div className="column page-sidebar">
-            			<div className="content" dangerouslySetInnerHTML={{__html: this.converter.makeHtml(secondaryContent)}}></div>
+            <section className="page static-page"> 
+            	{page ? <div className="page-wrapper">
+					<h1 className="title">{page.title}</h1>
+					<div className={classNames('columns', {'single-column': (!page.content2 && !page.content3)})}>
+						<div className="column page-content">
+							<div className="content" dangerouslySetInnerHTML={{__html: this.converter.makeHtml(page.content1)}}></div>
+						</div>
+						{page.content2 ? <div className="column page-sidebar">
+							<div className="content" dangerouslySetInnerHTML={{__html: this.converter.makeHtml(page.content2)}}></div>
+						</div> : ''}
+						{page.content3 ? <div className="column page-sidebar">
+							<div className="content" dangerouslySetInnerHTML={{__html: this.converter.makeHtml(page.content3)}}></div>
+						</div> : ''}
 					</div>
-            	</div>
+          		</div> : <div className="loader-small"></div>}
             </section>
 		)
 	}

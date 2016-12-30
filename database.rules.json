@@ -1,6 +1,12 @@
 {
   "rules": {
     ".read": "true",
-    ".write": "auth != null"
+    ".write": "auth != null",
+    "pages": {
+      ".indexOn": ["slug"]
+    },
+    "posts": {
+      ".indexOn": ["slug"]
+    }
   }
 }

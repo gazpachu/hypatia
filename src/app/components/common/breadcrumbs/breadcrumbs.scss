@@ -1,7 +1,7 @@
 .breadcrumbs {
 	height: 30px;
 	width: 100%;
-	padding-top: 8px;
+	padding-top: 2px;
 	
 	.breadcrumbs-items {
 		padding: 0;
@@ -21,7 +21,6 @@
 	.item {
 		display: inline-block;
 		margin-right: 5px;
-		text-transform: capitalize;
 		
 		&:after {
 			content: '>';

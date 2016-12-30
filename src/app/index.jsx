@@ -12,12 +12,12 @@ import { ADMIN_LEVEL } from './constants/constants';
 import App from './components/app';
 import Home from './components/home/home';
 import Dashboard from './components/dashboard/dashboard';
-import Notifications from './components/account/notifications';
-import Settings from './components/account/settings';
-import AccountNotifications from './components/home/home';
+import AccountSettings from './components/account/settings';
+import AccountNotifications from './components/account/notifications';
 import AccountRecord from './components/home/home';
 import ListingPage from './components/home/home';
 import Page from './components/common/page/page';
+import Post from './components/common/post/post';
 import NotFound from './components/notFound/notFound';
 import Admin from './components/admin/admin';
 
@@ -61,17 +61,17 @@ ReactDOM.render(
 			<Route path="/" component={App}>
 				<IndexRoute component={Home} />
 				<Route path="/dashboard" component={Dashboard} onEnter={requireAuth} />
-				<Route path="/account" component={Settings} onEnter={requireAuth} />
+				<Route path="/account" component={AccountSettings} onEnter={requireAuth} />
 					<Route path="/account/notifications" component={AccountNotifications} onEnter={requireAuth} />
 					<Route path="/account/record" component={AccountRecord} onEnter={requireAuth} />
 				<Route path="/courses" component={ListingPage} />
 				<Route path="/modules" component={ListingPage} />
 				<Route path="/subjects" component={ListingPage} />
 				<Route path="/news" component={ListingPage} />
-					<Route path="/news/:id" component={Page} />
+					<Route path="/news/:id" component={Post} />
 				<Route path="/about" component={Page} />
 					<Route path="/about/research" component={Page} />
-					<Route path="/about/people" component={ListingPage} />
+					<Route path="/about/people" component={Page} />
 					<Route path="/about/contact" component={Page} />
 				<Route path="/admin" component={Admin} level={ADMIN_LEVEL} onEnter={requireAuth} />
 				<Route path="*" component={NotFound} />

@@ -1,6 +1,6 @@
-.static-page {
+.post {
 
-	.page-wrapper {
+	.post-wrapper {
 		background-color: $white;
 		margin: 0 20px 20px 20px;
 		min-height: calc(100vh - 150px);
@@ -16,6 +16,12 @@
 		font-weight: lighter;
 	}
 	
+	.date  {
+		text-align: center;
+		font-size: 13px;
+    	color: $grey;
+	}
+	
 	.loader-small {
 		display: block;
 		margin: 20px;
@@ -29,7 +35,7 @@
 		}
 		
 		&.single-column {
-			.page-content {
+			.post-content {
 				@include desktop() {
 					width: 85%;
 				}
@@ -49,7 +55,7 @@
 		}
 	}
 	
-	.page-content {
+	.post-content {
 		margin: 0 auto;
 		text-align: justify;
 		
@@ -58,7 +64,7 @@
 		}
 	}
 	
-	.page-sidebar {
+	.post-sidebar {
 		
 		@include mobile() {
 			width: 100%;
