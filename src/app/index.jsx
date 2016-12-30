@@ -17,7 +17,7 @@ import Settings from './components/account/settings';
 import AccountNotifications from './components/home/home';
 import AccountRecord from './components/home/home';
 import ListingPage from './components/home/home';
-import DetailPage from './components/home/home';
+import Page from './components/common/page/page';
 import NotFound from './components/notFound/notFound';
 import Admin from './components/admin/admin';
 
@@ -68,10 +68,11 @@ ReactDOM.render(
 				<Route path="/modules" component={ListingPage} />
 				<Route path="/subjects" component={ListingPage} />
 				<Route path="/news" component={ListingPage} />
-				<Route path="/about" component={DetailPage} />
-					<Route path="/about/research" component={DetailPage} />
+					<Route path="/news/:id" component={Page} />
+				<Route path="/about" component={Page} />
+					<Route path="/about/research" component={Page} />
 					<Route path="/about/people" component={ListingPage} />
-					<Route path="/about/contact" component={DetailPage} />
+					<Route path="/about/contact" component={Page} />
 				<Route path="/admin" component={Admin} level={ADMIN_LEVEL} onEnter={requireAuth} />
 				<Route path="*" component={NotFound} />
 			</Route>

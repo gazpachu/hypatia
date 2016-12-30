@@ -50,6 +50,7 @@ a, a:hover, a:active, a:visited, a:focus {
 
 .main-background {
 	position: absolute;
+	top: 0;
 	width: 100%;
 	height: 70px;
 	overflow: hidden;
@@ -86,7 +87,7 @@ a, a:hover, a:active, a:visited, a:focus {
 }
 
 .page {
-	min-height: 100vh;
+	min-height: calc(100vh - 60px);
 	padding-top: 70px;
 	width: 100%;
 }
