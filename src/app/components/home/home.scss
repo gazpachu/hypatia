@@ -217,8 +217,8 @@
 		margin-bottom: 30px;
 	}
 	
-	.course,
-	.post {
+	.course-card,
+	.post-card {
 		display: inline-block;
 		width: 20%;
 		flex-grow: 1;
@@ -350,7 +350,7 @@
 		}
 	}
 	
-	.course {
+	.course-card {
 		.item-content {
 			margin-bottom: 10px;
 		}

@@ -52,7 +52,7 @@ class Home extends Component {
 	
 	renderItems(type) {
 		let newList = [],
-			className = type.substring(0, type.length-1),
+			className = type.substring(0, type.length-1) + '-card',
 			path = (type === 'posts') ? 'news' : 'courses';
 		
 		if (isLoaded(this.props[type]) && !isEmpty(this.props[type])) {
