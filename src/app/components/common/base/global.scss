@@ -44,6 +44,7 @@ a, a:hover, a:active, a:visited, a:focus {
 	&.has-hero {
 		.main-background {
 			height: 450px;
+			background: linear-gradient(150deg, #53f 15%, #05d5ff 70%, #a6ffcb 94%);
 		}
 	}
 }
@@ -56,7 +57,7 @@ a, a:hover, a:active, a:visited, a:focus {
 	overflow: hidden;
 //    transform: skewY(-8deg);
 //    transform-origin: 0;
-    background: linear-gradient(150deg, #53f 15%, #05d5ff 70%, #a6ffcb 94%);
+    background: linear-gradient(150deg, #53f 15%, #05d5ff 70%, #5897fb 94%);
 	
 	&:before {
 		content: '';

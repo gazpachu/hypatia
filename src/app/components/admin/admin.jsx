@@ -12,6 +12,7 @@ import 'react-select2-wrapper/css/select2.css';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import ModalBox from '../common/modalbox/modalbox';
+import AdminUsers from './adminUsers';
 import Helpers from '../common/helpers';
 import Icon from '../common/lib/icon/icon';
 import Calendar from '../../../../static/svg/calendar.svg';
@@ -152,8 +153,8 @@ class Admin extends Component {
 			path = (this.state.action === 'new') ? this.state.type : this.state.type + '/' + this.state.selectedId,
 			uploadFile = false;
 		
-		if (item && item.title) {
-			if (this.state.type !== 'files')
+		if (item && (item.title || this.state.type === 'users')) {
+			if (this.state.type !== 'files' && this.state.type !== 'users')
 				item.slug = Helpers.slugify(item.title);
 			else {
 				if (this.tempFile) {
@@ -403,7 +404,7 @@ class Admin extends Component {
 		const startDate = (this.state.selectedItem && this.state.selectedItem.startDate) ? moment(this.state.selectedItem.startDate) : null;
 		const endDate = (this.state.selectedItem && this.state.selectedItem.endDate) ? moment(this.state.selectedItem.endDate) : null;
 		const gradeDate = (this.state.selectedItem && this.state.selectedItem.gradeDate) ? moment(this.state.selectedItem.gradeDate) : null;
-		const status = (this.state.selectedItem && this.state.selectedItem.status && this.state.selectedItem.status === 'inactive') ? false : true;;
+		const status = (this.state.selectedItem && this.state.selectedItem.status && this.state.selectedItem.status === 'inactive') ? false : true;
 		const fileContentType = (this.state.fileMetadata) ? this.state.fileMetadata.contentType : '';
 		let fileSize = (this.state.fileMetadata) ? Math.round(this.state.fileMetadata.size/1000) : 0;
 		fileSize = (fileSize < 1000) ? Math.round(fileSize)+'KB' : (fileSize < 1000000) ? Math.round(fileSize/1000)+'MB' : (fileSize < 1000000000) ? Math.round(fileSize/1000000)+'GB' : Math.round(fileSize/1000000000)+'TB'; 
@@ -418,7 +419,6 @@ class Admin extends Component {
 							<div className="clearfix">
 								<Icon glyph={User} />
 								<Select2 className="select-items" style={{width: '50%'}} ref="users-select" data={users} defaultValue={this.state.selectedId} options={{placeholder: 'Users', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'users')} />
-								<button className="btn btn-primary btn-xs" onClick={() => this.new('users')}>new</button>
 							</div>
 							
 							<div className="clearfix">
@@ -473,6 +473,8 @@ class Admin extends Component {
 					<div className={classNames('item-content column', {hidden: this.state.action === ''})}>
 						<div className={`block clearfix ${this.state.type}`}>
 							<h3 className="block-title">{iconHeading}{(this.state.action === 'new') ? <span>You are adding a new {(this.state.type === 'activities') ? 'activity' : this.state.type.slice(0, -1)}...</span> : <span>You are editing {(this.state.type === 'activities') ? 'an activity' : 'a ' + this.state.type.slice(0, -1)}...</span>}<button className="btn btn-primary btn-xs float-right btn-save" ref="saveTop" onClick={() => this.save()}>save in {this.state.type}</button><button className="btn btn-outline btn-xs float-right" ref="cancelTop" onClick={() => this.cancel()}>cancel</button><div className="loader-small" ref="loaderTop"></div></h3>
+							
+							{(this.state.type === 'users') ? <AdminUsers user={this.state.selectedItem} updateItem={this.updateItem.bind(this)} /> : ''}
 							
 							<input type="text" className={classNames('input-field title-input', {hidden: (this.state.type === 'users')})} ref="title-input" placeholder={(this.state.type === 'activities') ? 'Activity title' : this.state.type.slice(0, -1).capitalize() + ' title'} value={title} onChange={(event) => this.updateInput(event, 'title')} />
 							<input type="text" className={classNames('input-field code-input', {hidden: (this.state.type === 'users' || this.state.type === 'posts' || this.state.type === 'pages' || this.state.type === 'files')})} ref="code-input" placeholder="Code" value={code} onChange={(event) => this.updateInput(event, 'code')} />

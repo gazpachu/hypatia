@@ -162,7 +162,6 @@ class TopNav extends Component {
       		firstName: firstname,
 			lastName1: lastname,
 			email: email,
-			status: 'active',
 			displayName: firstname + ' ' + lastname
     	}).then(function() {
 			user.sendEmailVerification();

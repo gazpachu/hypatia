@@ -46,7 +46,7 @@ function requireAuth(nextState, replace, callback) {
 			})
 			if (requiresLevel > 0) {
 				firebase.database().ref('/users/' + user.uid).once('value').then(function(snapshot) {
-					if (!snapshot.val().info.level || snapshot.val().info.level < requiresLevel) history.push('/');
+					if (!snapshot.val() || !snapshot.val().info.level || (snapshot.val().info.level < requiresLevel)) history.push('/');
 					else callback();
 				});
 			}
