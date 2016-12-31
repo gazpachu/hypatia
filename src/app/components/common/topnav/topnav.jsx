@@ -145,7 +145,7 @@ class TopNav extends Component {
 			const email = String(this.emailSignup.value);
 			
 			firebase.auth().createUserWithEmailAndPassword(email, this.pwSignup.value).then(function(user) {
-				this.saveUser(user);
+				this.saveUser(user, this.firstName.value, this.lastName.value, email);
 			}.bind(this)).catch(function(error) {
 				$('.js-btn-signup').show();
 				$('.js-signup-loader').hide();
@@ -157,9 +157,12 @@ class TopNav extends Component {
 		}
 	}
 	
-	saveUser(user) {
+	saveUser(user, firstname, lastname, email) {
 		return firebase.database().ref(`users/${user.uid}/info`).set({
-      		uid: user.uid
+      		firstName: firstname,
+			lastName1: lastname,
+			email: email,
+			displayName: firstname + ' ' + lastname
     	}).then(function() {
 			user.sendEmailVerification();
 			$('.js-btn-signup').show();
@@ -232,6 +235,8 @@ class TopNav extends Component {
 							<div className="user-controls-cta sign-up-cta">
 								<span onClick={this.showForm}>Sign up</span>
 								<form className="user-form sign-up" onSubmit={this.handleSignup}>
+									<input type="text" className="input-field" ref={(firstName) => this.firstName = firstName} placeholder="First name" />
+									<input type="text" className="input-field" ref={(lastName) => this.lastName = lastName} placeholder="Last name" />
 									<input type="text" className="input-field" ref={(emailSignup) => this.emailSignup = emailSignup} placeholder="Email" />
 									<input type="password" className="input-field" placeholder="Password" ref={(pwSignup) => this.pwSignup = pwSignup} />
 									<input type="password" className="input-field" placeholder="Repeat password" ref={(pw2) => this.pw2 = pw2} />
@@ -255,7 +260,7 @@ class TopNav extends Component {
 							<button className="chat-icon" onClick={() => {this.changePanel('chat') }}>{this.props.panel === 'chat' ? <Icon glyph={Close} className="icon close-chat" /> : <Icon glyph={Chat} className="icon chat" />}</button>
 							
 							<div className="user-controls-cta account-cta">
-								{(this.props.user) ? <Link to="/dashboard">{(this.props.user.email) ? <img className="photo" src={`https://www.gravatar.com/avatar/${md5(this.props.user.email)}.jpg?s=20`} /> : <Icon glyph={Avatar} />} <span>{this.props.user.displayName}</span></Link> : ''}
+								{(this.props.user) ? <Link to="/dashboard">{(this.props.user.email) ? <img className="photo" src={`https://www.gravatar.com/avatar/${md5(this.props.user.email)}.jpg?s=20`} /> : <Icon glyph={Avatar} />} <span>{this.props.userInfo ? this.props.userInfo.displayName : ''}</span></Link> : ''}
 								<button onClick={() => { firebase.auth().signOut(); this.props.setUser(null);}}><Icon glyph={Logout} className="icon sign-out" /></button>
 							</div>
 						</div>
@@ -268,7 +273,7 @@ class TopNav extends Component {
 	}
 }
 
-const mapStateToProps = ({ mainReducer: { user, panel } }) => ({ user, panel });
+const mapStateToProps = ({ mainReducer: { user, panel, userInfo } }) => ({ user, panel, userInfo });
 
 const mapDispatchToProps = {
 	setUser,

@@ -58,7 +58,6 @@ class App extends Component {
 					}.bind(this));
 				}
 				else {
-					user.sendEmailVerification();
 					this.props.setNotification({message: USER_CONFIRM_EMAIL, type: 'info'});
 				}
 			}

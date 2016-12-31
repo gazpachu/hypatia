@@ -15,7 +15,7 @@ import ModalBox from '../common/modalbox/modalbox';
 import Helpers from '../common/helpers';
 import Icon from '../common/lib/icon/icon';
 import Calendar from '../../../../static/svg/calendar.svg';
-import User from '../../../../static/svg/avatar.svg';
+import User from '../../../../static/svg/users.svg';
 import Group from '../../../../static/svg/group.svg';
 import Course from '../../../../static/svg/course.svg';
 import Subject from '../../../../static/svg/subject.svg';

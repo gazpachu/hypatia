@@ -1,14 +1,4 @@
 .static-page {
-
-	.page-wrapper {
-		background-color: $white;
-		margin: 0 20px 20px 20px;
-		min-height: calc(100vh - 150px);
-		
-		@include mobile() {
-			margin: 0;
-		}
-	}
 	
 	.title {
 		text-align: center;

@@ -19,6 +19,7 @@ export const PASSWORD_CHANGED = 'Password changed successfully!';
 export const PASSWORD_MATCH_ERROR = 'Passwords don\'t match';
 export const PASSWORD_MIN_LENGTH_ERROR = 'Password min. length is 6 characters';
 export const USER_INFO_CHANGED = 'User details changed successfully!';
+export const USER_INFO_EMPTY = 'Display name, first name and last name cannot be empty';
 export const ITEM_SAVED = 'Item saved!';
 export const ITEM_REMOVED = 'Item removed!';
 export const CONFIRM_DELETE = 'Are you sure you want to delete';

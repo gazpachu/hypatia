@@ -90,6 +90,16 @@ a, a:hover, a:active, a:visited, a:focus {
 	min-height: calc(100vh - 80px);
 	padding-top: 70px;
 	width: 100%;
+	
+	.page-wrapper {
+		background-color: $white;
+		margin: 0 20px 20px 20px;
+		min-height: calc(100vh - 150px);
+		
+		@include mobile() {
+			margin: 0;
+		}
+	}
 }
 
 .flyout {
