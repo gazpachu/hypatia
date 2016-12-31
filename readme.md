@@ -14,17 +14,17 @@ Project's website: [https://theonapps.github.io/hypatia/](https://theonapps.gith
 
 Slack group (invitation only): [https://hypatialms.slack.com](https://hypatialms.slack.com) To request for an invitation, contact me at hello [@] joanmira {.} com
 
-![Home module](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/screenshots%2Fhome.png?alt=media&token=07e2df57-71cf-4b50-99cb-c25ad83fa13c)
+![Home](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/screenshots%2Fhome.jpg?alt=media&token=1421d0c1-97ad-486c-b040-695e128a9e4a)
 
-![Chat module](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/screenshots%2Fchat.png?alt=media&token=4479e9db-aff7-48a6-8e02-0b5fe4326cf5)
+![Page](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/screenshots%2Fpage.jpg?alt=media&token=4aa59160-68d2-46b0-a2f0-35740ecde21d)
 
-![Account module](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/screenshots%2Faccount.png?alt=media&token=6a035c52-84df-4acc-a56d-c15e352f34da)
-
-![Admin module](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/screenshots%2Fadmin.png?alt=media&token=8ebbf715-8d70-491a-8e40-b4f148193c7d)
-
-![Calendar module](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/screenshots%2Fcalendar.png?alt=media&token=17ab3011-9c46-4afd-adf5-124797422217)
+![Admin](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/screenshots%2Fadmin.jpg?alt=media&token=6911a15b-d0ca-4bc0-8fd0-619d92c97706)
 
 ## Getting Started
+
+## WARNING
+
+This documentation is not stable. Don't test it yet!
 
 - Install Node.js >= 4.5.0 [https://nodejs.org/](https://nodejs.org/)
 
