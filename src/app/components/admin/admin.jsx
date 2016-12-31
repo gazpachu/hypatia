@@ -474,8 +474,8 @@ class Admin extends Component {
 						<div className={`block clearfix ${this.state.type}`}>
 							<h3 className="block-title">{iconHeading}{(this.state.action === 'new') ? <span>You are adding a new {(this.state.type === 'activities') ? 'activity' : this.state.type.slice(0, -1)}...</span> : <span>You are editing {(this.state.type === 'activities') ? 'an activity' : 'a ' + this.state.type.slice(0, -1)}...</span>}<button className="btn btn-primary btn-xs float-right btn-save" ref="saveTop" onClick={() => this.save()}>save in {this.state.type}</button><button className="btn btn-outline btn-xs float-right" ref="cancelTop" onClick={() => this.cancel()}>cancel</button><div className="loader-small" ref="loaderTop"></div></h3>
 							
-							<input type="text" className="input-field title-input" ref="title-input" placeholder={(this.state.type === 'activities') ? 'Activity title' : this.state.type.slice(0, -1).capitalize() + ' title'} value={title} onChange={(event) => this.updateInput(event, 'title')} />
-							<input type="text" className={classNames('input-field code-input', {hidden: (this.state.type === 'posts' || this.state.type === 'pages' || this.state.type === 'files')})} ref="code-input" placeholder="Code" value={code} onChange={(event) => this.updateInput(event, 'code')} />
+							<input type="text" className={classNames('input-field title-input', {hidden: (this.state.type === 'users')})} ref="title-input" placeholder={(this.state.type === 'activities') ? 'Activity title' : this.state.type.slice(0, -1).capitalize() + ' title'} value={title} onChange={(event) => this.updateInput(event, 'title')} />
+							<input type="text" className={classNames('input-field code-input', {hidden: (this.state.type === 'users' || this.state.type === 'posts' || this.state.type === 'pages' || this.state.type === 'files')})} ref="code-input" placeholder="Code" value={code} onChange={(event) => this.updateInput(event, 'code')} />
 							<input type="text" className={classNames('input-field price-input', {visible: (this.state.type === 'courses')})} ref="price-input" placeholder="Price" value={price} onChange={(event) => this.updateInput(event, 'price')} />
 							<div className={classNames('float-right', {hidden: (this.state.type !== 'posts')})}>
 								<Icon glyph={Calendar} className="icon calendar" /><DatePicker className="input-field date-input" selected={date} date={date} placeholderText="Date" isClearable={true} onChange={(date) => this.updateDate(date, 'date')} dateFormat="YYYY-MM-DD" popoverAttachment="bottom right" popoverTargetAttachment="bottom right" popoverTargetOffset="0px 0px" />
@@ -535,14 +535,14 @@ class Admin extends Component {
 								</div>
 							</div>
 							
-							<div className={classNames({hidden: (this.state.type === 'files')})}>
+							<div className={classNames({hidden: (this.state.type === 'users' || this.state.type === 'files')})}>
 								<h4 className="heading active" ref="editor1-heading" onClick={() => (this.toggleElement('editor1-heading'), this.toggleElement('editor1-wrapper'))}>Primary content block<Icon glyph={Forward} /></h4>
 								<div className="editor-wrapper active" ref="editor1-wrapper">
 									<SimpleMDE ref="editor1" value={(this.state.selectedItem && this.state.selectedItem.content1) ? this.state.selectedItem.content1 : ''} onChange={(event) => this.updateItem(event, 'content1')} />
 								</div>
 							</div>
 							
-							<div className={classNames({hidden: (this.state.type === 'posts' || this.state.type === 'files')})}>
+							<div className={classNames({hidden: (this.state.type === 'users' || this.state.type === 'posts' || this.state.type === 'files')})}>
 								<h4 className="heading" ref="editor2-heading" onClick={() => (this.toggleElement('editor2-heading'), this.toggleElement('editor2-wrapper'))}>Secondary content block<Icon glyph={Forward} /></h4>
 								<div className="editor-wrapper" ref="editor2-wrapper">
 									<SimpleMDE ref="editor2" value={(this.state.selectedItem && this.state.selectedItem.content2) ? this.state.selectedItem.content2 : ''} onChange={(event) => this.updateItem(event, 'content2')} />

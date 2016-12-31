@@ -1,11 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { history } from '../../store';
-import { setLoading, setNotification, setUserInfo } from '../../actions/actions';
+import { setLoading, setUser, setNotification, setUserInfo } from '../../actions/actions';
 import * as CONSTANTS from '../../constants/constants';
 import {connect} from 'react-redux';
 import md5 from 'md5';
 import $ from 'jquery';
-import Sidebar from './sidebar';
 import firebase from 'firebase';
 
 import Icon from '../common/lib/icon/icon';
@@ -27,6 +26,9 @@ class Settings extends Component {
 		super(props);
 		
 		this.state = {
+			email: '',
+			password: '',
+			password2: '',
 			firstName: '',
 			lastName1: '',
 			lastName2: '',
@@ -68,6 +70,7 @@ class Settings extends Component {
 		if (newProps.user) {
 			firebase.database().ref('/users/' + newProps.user.uid).once('value').then(function(snapshot) {
 				if (snapshot.val()) this.setState({
+					email: newProps.user.email,
 					firstName: snapshot.val().info.firstName,
 					lastName1: snapshot.val().info.lastName1,
 					lastName2: snapshot.val().info.lastName2,
@@ -112,24 +115,6 @@ class Settings extends Component {
 		}
 	}
 	
-	updateEmail() {
-		if (this.props.user.email !== CONSTANTS.DEMO_EMAIL) {
-			$('.js-btn-email').hide();
-			$('.js-email-loader').show();
-
-			this.props.user.updateEmail(this.refs.email.value).then(function() {
-				$('.js-btn-email').show();
-				$('.js-email-loader').hide();
-				this.props.setNotification({message: CONSTANTS.EMAIL_CHANGED, type: 'success'});
-				this.props.user.sendEmailVerification();
-			}.bind(this), function(error) {
-				$('.js-btn-email').show();
-				$('.js-email-loader').hide();
-				this.props.setNotification({message: String(error), type: 'error'});
-			}.bind(this));
-		}
-	}
-	
 	updateUserInfo(user) {
 		if (this.props.user.email !== CONSTANTS.DEMO_EMAIL) {
 			if (this.state.displayName === '' || this.state.firstName === '' || this.state.lastName1 === '') {
@@ -145,6 +130,7 @@ class Settings extends Component {
 				lastName1: this.state.lastName1,
 				lastName2: this.state.lastName2 || '',
 				displayName: this.state.displayName,
+				email: this.state.email,
 				photoURL: 'https://www.gravatar.com/avatar/' + md5(this.props.user.email) + '.jpg?s=150',
 				address: this.state.address || '',
 				address2: this.state.address2 || '',
@@ -158,6 +144,18 @@ class Settings extends Component {
 				$('.js-btn-info').show();
 				$('.js-info-loader').hide();
 				this.props.setNotification({message: CONSTANTS.USER_INFO_CHANGED, type: 'success'});
+				
+				if (this.props.user.email !== this.state.email) {
+					this.props.user.updateEmail(this.state.email).then(function() {
+						this.props.user.sendEmailVerification();
+						firebase.auth().signOut();
+						this.props.setUser(null);
+					}.bind(this), function(error) {
+						$('.js-btn-email').show();
+						$('.js-email-loader').hide();
+						this.props.setNotification({message: String(error), type: 'error'});
+					}.bind(this));
+				}
 			}.bind(this), function(error) {
 				$('.js-btn-info').show();
 				$('.js-info-loader').hide();
@@ -175,21 +173,19 @@ class Settings extends Component {
             <section className="account account-settings page">
             	<div className="page-wrapper">
             		<div className="columns">
-					{(this.props.user) ?
+					{(this.props.user && this.props.userInfo) ?
 						<div className="account-details column">
 							<div className="profile-image">
 								{(this.props.user.email) ? <img className="photo" src={`https://www.gravatar.com/avatar/${md5(this.props.user.email)}.jpg?s=150`} /> : <Icon glyph={Avatar} className="icon avatar" />}
 							</div>
 							<a className="update-photo" href="https://www.gravatar.com/" target="_blank">Update photo</a>
-							<input type="text" ref="display-name" className="display-name" placeholder="Display name" value={this.state.displayName} onChange={(event) => this.handleChange(event, 'displayName')} />
-
-							<input type="password" ref="password" className="password" placeholder="New password" />
-							<input type="password" ref="password2" placeholder="Repeat password" />
+							<input type="text" name="displayName" className="display-name" placeholder="Display name" value={this.state.displayName} onChange={this.handleChange} />
+							<input type="email" name="email" ref="email" placeholder="Email" value={this.state.email} onChange={this.handleChange} />
+							
+							<input type="password" ref="password" name="password" className="password" placeholder="New password" value={this.state.password} onChange={this.handleChange} />
+							<input type="password" ref="password2" name="password2" placeholder="Repeat password" value={this.state.password2} onChange={this.handleChange} />
 							<button className="btn btn-primary btn-xs js-btn-password" onClick={() => this.updatePassword()}>Update password</button>
 							<div className="loader-small js-password-loader"></div>
-							<input type="email" ref="email" placeholder="Email" defaultValue={this.props.user.email} />
-							<button className="btn btn-primary btn-xs js-btn-email" onClick={() => this.updateEmail()}>Update email</button>
-							<div className="loader-small js-email-loader"></div>
 						</div>
 					: ''}
 					{(this.props.userInfo) ?
@@ -209,7 +205,6 @@ class Settings extends Component {
 							<div className="loader-small js-info-loader"></div>
 						</div>
 					: ''}
-					{/*<Sidebar active="settings" />*/}
 					</div>
 				</div>
             </section>
@@ -220,6 +215,7 @@ class Settings extends Component {
 const mapDispatchToProps = {
 	setLoading,
 	setNotification,
+	setUser,
 	setUserInfo
 }
 
