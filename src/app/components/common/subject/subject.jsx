@@ -3,11 +3,11 @@ import { setLoading } from '../../../actions/actions';
 import {connect} from 'react-redux';
 import { firebase, helpers } from 'redux-react-firebase';
 import classNames from 'classnames';
-import showdown from 'showdown';
+import { converter } from '../../../constants/constants';
 import moment from 'moment';
 import $ from 'jquery';
 import Icon from '../lib/icon/icon';
-import Level from '../../../../../static/svg/course.svg';
+import Professor from '../../../../../static/svg/professor.svg';
 
 const defaultProps = {
 	
@@ -21,23 +21,22 @@ const {isLoaded, isEmpty, dataToJS} = helpers;
 
 @firebase(
   	props => ([
-    	`courses#orderByChild=slug&equalTo=${window.location.href.substr(window.location.href.lastIndexOf('/') + 1)}`,
-		'levels',
-		'files'
+    	`subjects#orderByChild=slug&equalTo=${window.location.href.substr(window.location.href.lastIndexOf('/') + 1)}`,
+		'files',
+		'users'
   	])
 )
 @connect(
   	(state, props) => ({
-    	course: dataToJS(state.firebase, 'courses'),
-		levels: dataToJS(state.firebase, 'levels'),
+    	subject: dataToJS(state.firebase, 'subjects'),
 		files: dataToJS(state.firebase, 'files'),
+		users: dataToJS(state.firebase, 'users')
   	})
 )
 class Subject extends Component {
     
 	constructor(props) {
 		super(props);
-		this.converter = new showdown.Converter();
 	}
 	
 	componentDidMount() {
@@ -46,36 +45,43 @@ class Subject extends Component {
 	}
 	
 	render() {
-		let course = null,
-			featuredImage = null;
+		let subject = null,
+			featuredImage = null,
+			teachers = '';
 		
-		if (isLoaded(this.props.course) && isLoaded(this.props.files) && !isEmpty(this.props.course) && !isEmpty(this.props.files)) {	
-			Object.keys(this.props.course).map(function(key) {
-				course = this.props.course[key];
-				if (course.featuredImage) {
+		if (isLoaded(this.props.subject) && isLoaded(this.props.files) && isLoaded(this.props.users) && !isEmpty(this.props.subject) && !isEmpty(this.props.files) && !isEmpty(this.props.users)) {	
+			Object.keys(this.props.subject).map(function(key) {
+				subject = this.props.subject[key];
+				if (subject.featuredImage) {
 					Object.keys(this.props.files).map(function(fileKey) {
-						if (fileKey === course.featuredImage) featuredImage = this.props.files[fileKey];
+						if (fileKey === subject.featuredImage) featuredImage = this.props.files[fileKey];
 					}.bind(this));
+				}
+				if (subject.teachers) {
+					for (let i=0; i<subject.teachers.length; i++) {
+						let teacher = this.props.users[subject.teachers[i]];
+						teachers += teacher.info.firstName + ' ' + teacher.info.lastName1;
+						if (i < subject.teachers.length -1) teachers += ', ';
+					}
 				}
 			}.bind(this));
 		}
 		
 		return (
             <section className="page subject"> 
-            	{course ? <div className="page-wrapper">
-					<h1 className="title">{course.title}</h1>
-					<div className="level"><Icon glyph={Level} />{this.props.levels[course.level].title} ({this.props.levels[course.level].code}) ({course.credits} Credits)</div>
-					<div className="date">From {moment(course.startDate).format('D MMMM YYYY')} until {moment(course.endDate).format('D MMMM YYYY')}</div>
-					<div className={classNames('columns', {'single-column': (!course.content2 && !course.content2)})}>
+            	{subject ? <div className="page-wrapper">
+					<h1 className="title">{subject.title}</h1>
+					{teachers ? <div className="teacher"><Icon glyph={Professor} />{teachers}</div> : ''}
+					<div className={classNames('columns', {'single-column': (!subject.content2 && !subject.content2)})}>
 						<div className="column page-content">
 							{featuredImage ? <img className="featured-image" src={featuredImage.url} /> : ''}
-							<div className="content" dangerouslySetInnerHTML={{__html: this.converter.makeHtml(course.content1)}}></div>
+							<div className="content" dangerouslySetInnerHTML={{__html: converter.makeHtml(subject.content1)}}></div>
 						</div>
-						{course.content2 ? <div className="column page-sidebar">
-							<div className="content" dangerouslySetInnerHTML={{__html: this.converter.makeHtml(course.content2)}}></div>
+						{subject.content2 ? <div className="column page-sidebar">
+							<div className="content" dangerouslySetInnerHTML={{__html: converter.makeHtml(subject.content2)}}></div>
 						</div> : ''}
-						{course.content3 ? <div className="column page-sidebar">
-							<div className="content" dangerouslySetInnerHTML={{__html: this.converter.makeHtml(course.content3)}}></div>
+						{subject.content3 ? <div className="column page-sidebar">
+							<div className="content" dangerouslySetInnerHTML={{__html: converter.makeHtml(subject.content3)}}></div>
 						</div> : ''}
 					</div>
           		</div> : <div className="loader-small"></div>}

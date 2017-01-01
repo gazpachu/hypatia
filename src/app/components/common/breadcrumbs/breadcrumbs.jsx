@@ -39,10 +39,25 @@ class Breadcrumbs extends Component {
 	}
 	
 	render() {
+		let links = null;
+		
+		if (this.props.breadcrumbs) {
+			links = this.props.breadcrumbs.map(function(item, i) {
+				let url = '';
+				
+				for (let j=0; j<i+1; j++) {
+					url += '/' + Helpers.slugify(this.props.breadcrumbs[j]);
+				}
+ 
+				return <li className="item" key={i}><Link to={url}>{item}</Link></li>;
+			}.bind(this));
+		}
+		
 		return (
 			<div className="breadcrumbs">
 				<ul className="breadcrumbs-items">
-					{this.props.breadcrumbs ? this.props.breadcrumbs.map((item, i) => <li className="item" key={i}>{item}</li>) : ''}
+					<li className="item"><Link to="/">Home</Link></li>
+					{links}
 				</ul>
 			</div>
 		)

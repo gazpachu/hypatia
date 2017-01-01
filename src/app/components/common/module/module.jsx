@@ -47,7 +47,7 @@ class Module extends Component {
 	render() {
 		let module = null,
 			featuredImage = null,
-			authors = null;
+			authors = '';
 		
 		if (isLoaded(this.props.module) && isLoaded(this.props.files) && isLoaded(this.props.users) && !isEmpty(this.props.module) && !isEmpty(this.props.files) && !isEmpty(this.props.users)) {	
 			Object.keys(this.props.module).map(function(key) {
@@ -60,7 +60,8 @@ class Module extends Component {
 				if (module.authors) {
 					for (let i=0; i<module.authors.length; i++) {
 						let author = this.props.users[module.authors[i]];
-						authors += author.firstName + ' ' + author.lastName1;
+						authors += author.info.firstName + ' ' + author.info.lastName1;
+						if (i < module.authors.length -1) authors += ', ';
 					}
 				}
 			}.bind(this));
