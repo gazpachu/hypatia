@@ -23,12 +23,14 @@ const {isLoaded, isEmpty, dataToJS} = helpers;
 @firebase(
   	props => ([
     	`courses#orderByChild=slug&equalTo=${window.location.href.substr(window.location.href.lastIndexOf('/') + 1)}`,
+		'levels',
 		'files'
   	])
 )
 @connect(
   	(state, props) => ({
     	course: dataToJS(state.firebase, 'courses'),
+		levels: dataToJS(state.firebase, 'levels'),
 		files: dataToJS(state.firebase, 'files'),
   	})
 )
@@ -63,7 +65,7 @@ class Course extends Component {
             <section className="page course"> 
             	{course ? <div className="course-wrapper">
 					<h1 className="title">{course.title}</h1>
-					<div className="level"><Icon glyph={Level} />{course.level} ({course.credits} Credits)</div>
+					<div className="level"><Icon glyph={Level} />{this.props.levels[course.level].title} ({course.credits} Credits)</div>
 					<div className="date">From {moment(course.startDate).format('D MMMM YYYY')} until {moment(course.endDate).format('D MMMM YYYY')}</div>
 					<div className={classNames('columns', {'single-column': (!course.content2 && !course.content2)})}>
 						<div className="column course-content">
