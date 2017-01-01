@@ -21,6 +21,7 @@ import User from '../../../../../static/svg/avatar.svg';
 import Course from '../../../../../static/svg/course.svg';
 import Subject from '../../../../../static/svg/subject.svg';
 import Module from '../../../../../static/svg/module.svg';
+import Activity from '../../../../../static/svg/activity.svg';
 import Post from '../../../../../static/svg/post.svg';
 import Admin from '../../../../../static/svg/cog.svg';
 import Dashboard from '../../../../../static/svg/dashboard.svg';
@@ -72,6 +73,12 @@ const defaultProps = {
 		title: 'Modules',
 		icon: Module,
 		link: '/modules'
+	},
+	{
+		id: 3,
+		title: 'Activities',
+		icon: Activity,
+		link: '/activities'
 	},
 	{
 		id: 1,

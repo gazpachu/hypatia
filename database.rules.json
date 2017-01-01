@@ -16,6 +16,9 @@
     },
     "modules": {
       ".indexOn": ["slug"]
+    },
+    "activities": {
+      ".indexOn": ["slug"]
     }
   }
 }

@@ -20,6 +20,7 @@ const {isLoaded, isEmpty, dataToJS} = helpers;
     	'courses',
 		'subjects',
 		'modules',
+		'activities',
 		'posts',
 		'levels',
 		'files'
@@ -30,6 +31,7 @@ const {isLoaded, isEmpty, dataToJS} = helpers;
     	courses: dataToJS(state.firebase, 'courses'),
 		subjects: dataToJS(state.firebase, 'subjects'),
 		modules: dataToJS(state.firebase, 'modules'),
+		activities: dataToJS(state.firebase, 'activities'),
 		posts: dataToJS(state.firebase, 'posts'),
 		levels: dataToJS(state.firebase, 'levels'),
 		files: dataToJS(state.firebase, 'files')
@@ -61,7 +63,7 @@ class Listing extends Component {
 		return (
             <section className="page listing-page"> 
             	<div className="cards">
-					<h1 className="cards-heading">{type}</h1>
+					<h1 className="cards-heading">{path}</h1>
 					{items}
           		</div>
             </section>

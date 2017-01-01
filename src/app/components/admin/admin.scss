@@ -11,6 +11,10 @@
 .admin {
 	padding-top: 50px;
 	
+	.columns {
+		padding: 0;
+	}
+	
 	.column {
 	    padding-top: 0;
 	}
@@ -152,7 +156,7 @@
 		width: 80px;
 	}
 	
-	.dates-wrapper {
+	.block:not(.activities) .dates-wrapper {
 		float: left;
 		width: 75%;
 	}
