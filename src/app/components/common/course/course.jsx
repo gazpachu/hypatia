@@ -2,12 +2,14 @@ import React, { Component, PropTypes } from 'react';
 import { setLoading } from '../../../actions/actions';
 import {connect} from 'react-redux';
 import { firebase, helpers } from 'redux-react-firebase';
+import { Link } from 'react-router';
 import classNames from 'classnames';
 import showdown from 'showdown';
 import moment from 'moment';
 import $ from 'jquery';
 import Icon from '../lib/icon/icon';
 import Level from '../../../../../static/svg/course.svg';
+import Calendar from '../../../../../static/svg/calendar2.svg';
 
 const defaultProps = {
 	
@@ -64,8 +66,18 @@ class Course extends Component {
             <section className="page course"> 
             	{course ? <div className="page-wrapper">
 					<h1 className="title">{course.title}</h1>
-					<div className="level"><Icon glyph={Level} />{this.props.levels[course.level].title} ({this.props.levels[course.level].code}) ({course.credits} Credits)</div>
-					<div className="date">From {moment(course.startDate).format('D MMMM YYYY')} until {moment(course.endDate).format('D MMMM YYYY')}</div>
+					<div className="meta">
+						<Icon glyph={Level} />{this.props.levels[course.level].title} ({this.props.levels[course.level].code}) ({course.credits} Credits) <Icon glyph={Calendar} /><span className="date">From {moment(course.startDate).format('D MMMM YYYY')} until {moment(course.endDate).format('D MMMM YYYY')}</span>
+					</div>
+					<Link className="btn-enroll" to={`/courses/${course.slug}/register`}><button className="btn btn-primary">Enroll now!</button></Link>
+					<ul className="course-nav">
+						<li className="course-nav-item"><Link to={`/courses/${course.slug}`}>Summary</Link></li>
+						<li className="course-nav-item"><Link to={`/courses/${course.slug}/subjects`}>Subjects</Link></li>
+						<li className="course-nav-item"><Link to={`/courses/${course.slug}/fees`}>Fees</Link></li>
+						<li className="course-nav-item"><Link to={`/courses/${course.slug}/requirements`}>Requirements</Link></li>
+						<li className="course-nav-item"><Link to={`/courses/${course.slug}/careers`}>Careers</Link></li>
+						<li className="course-nav-item"><Link to={`/courses/${course.slug}/news`}>News</Link></li>
+					</ul>
 					<div className={classNames('columns', {'single-column': (!course.content2 && !course.content2)})}>
 						<div className="column page-content">
 							{featuredImage ? <img className="featured-image" src={featuredImage.url} /> : ''}

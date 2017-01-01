@@ -1,13 +1,32 @@
 .course {
 	
-	.date, .level  {
+	.meta  {
 		text-align: center;
 		font-size: 13px;
     	color: $grey;
+		
+		.icon { margin: 0 5px }
 	}
 	
-	.level {
-		margin-bottom: 10px;
-		.icon { margin-right: 5px }
+	.btn-enroll {
+		margin: 20px auto;
+		display: block;
+		text-align: center;
+	}
+	
+	.course-nav {
+		list-style-type: none;
+		width: fit-content;
+		margin: 20px auto 0 auto;
+		padding: 0;
+		
+		.course-nav-item {
+			display: inline-block;
+			padding: 0 10px;
+			
+			&:hover {
+				text-decoration: underline;
+			}
+		}
 	}
 }

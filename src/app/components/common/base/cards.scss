@@ -23,7 +23,6 @@
 	list-style-type: none;
 	width: fit-content;
 	padding: 0 20px;
-	flex-wrap: wrap;
 
 	@include mobile() {
 		padding: 0;
