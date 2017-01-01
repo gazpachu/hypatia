@@ -30,8 +30,10 @@
 	
 	.columns {
 		padding: 10px 20px 20px 20px;
+		display: flex;
 		
 		@include mobile() {
+			display: block;
 			padding: 10px 0 0 0;
 		}
 		
@@ -49,6 +51,11 @@
 	
 	.column {
 		width: 50%;
+		padding: 20px;
+	
+		@include mobile() {
+			width: 100%;
+		}
 	}
 	
 	.page-content {
@@ -66,9 +73,13 @@
 	}
 	
 	.page-sidebar {
-		
 		@include mobile() {
 			width: 100%;
+		}
+		
+		img {
+			width: 100%;
+			margin-bottom: 20px;
 		}
 	}
 }

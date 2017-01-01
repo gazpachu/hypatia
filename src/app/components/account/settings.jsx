@@ -5,7 +5,7 @@ import * as CONSTANTS from '../../constants/constants';
 import {connect} from 'react-redux';
 import md5 from 'md5';
 import $ from 'jquery';
-import firebase from 'firebase';
+import { firebase, helpers } from 'redux-react-firebase';
 import Icon from '../common/lib/icon/icon';
 import Avatar from '../../../../static/svg/avatar.svg';
 
@@ -19,6 +19,18 @@ const propTypes = {
 	userData: PropTypes.object.isRequired
 };
 
+const {isLoaded, isEmpty, dataToJS} = helpers;
+
+@firebase(
+  	props => ([
+    	
+  	])
+)
+@connect(
+  	(state, props) => ({
+    	
+  	})
+)
 class Settings extends Component {
     
 	constructor(props) {
@@ -34,32 +46,13 @@ class Settings extends Component {
 	componentDidMount() {
 		this.props.setLoading(false);  // Move this to API callback when implemented (if ever)
 		$('.js-main').removeClass().addClass('main js-main account-settings-page');
-	
-		this.unlisten = history.listen( location => {
-			if (location.pathname === '/account') {
-				this.fetchUserData();
-			}
-		});
-	}
-	
-	componentWillUnmount() {
-		this.unlisten();
+		
+		if (isEmpty(this.state.info) && isLoaded(this.props.userData)) this.setState({ info: this.props.userData.info });
 	}
 	
 	componentWillReceiveProps(newProps) {
-		if (newProps.user !== this.props.user)
-			this.fetchUserData(newProps);
-	}
-	
-	fetchUserData(newProps) {
-		newProps = newProps || this.props;
-		if (newProps.user) {
-			firebase.database().ref('/users/' + newProps.user.uid).once('value').then(function(snapshot) {
-				if (snapshot.val()) {
-					this.setState({ info: snapshot.val().info });
-				}
-			}.bind(this));
-		}
+		if ((newProps.userData !== this.props.userData) || isEmpty(this.state.info))
+			this.setState({ info: newProps.userData.info });
 	}
 	
 	updatePassword() {
@@ -89,7 +82,7 @@ class Settings extends Component {
 		}
 	}
 	
-	updateUserInfo(user) {
+	updateUserInfo() {
 		if (this.props.user.email !== CONSTANTS.DEMO_EMAIL) {
 			if (this.state.info.displayName === '' || this.state.info.firstName === '' || this.state.info.lastName1 === '') {
 				this.props.setNotification({message: CONSTANTS.USER_INFO_EMPTY, type: 'error'});
@@ -99,28 +92,28 @@ class Settings extends Component {
 			$('.js-btn-info').hide();
 			$('.js-info-loader').show();
 
-			firebase.database().ref(`users/${this.props.user.uid}`).set({ info: this.state.info })
-			.then(function(response) {
-				$('.js-btn-info').show();
-				$('.js-info-loader').hide();
-				this.props.setNotification({message: CONSTANTS.USER_INFO_CHANGED, type: 'success'});
+			this.props.firebase.set(`users/${this.props.user.uid}/info`, this.state.info)
+				.then(function(response) {
+					$('.js-btn-info').show();
+					$('.js-info-loader').hide();
+					this.props.setNotification({message: CONSTANTS.USER_INFO_CHANGED, type: 'success'});
 
-				if (this.props.user.email !== this.state.info.email) {
-					this.props.user.updateEmail(this.state.info.email).then(function() {
-						this.props.user.sendEmailVerification();
-						firebase.auth().signOut();
-						this.props.setUser(null);
-					}.bind(this), function(error) {
-						$('.js-btn-email').show();
-						$('.js-email-loader').hide();
-						this.props.setNotification({message: String(error), type: 'error'});
-					}.bind(this));
-				}
-			}.bind(this), function(error) {
-				$('.js-btn-info').show();
-				$('.js-info-loader').hide();
-				this.props.setNotification({message: String(error), type: 'error'});
-			}.bind(this));
+					if (this.props.user.email !== this.state.info.email) {
+						this.props.user.updateEmail(this.state.info.email).then(function() {
+							this.props.user.sendEmailVerification();
+							this.props.firebase.logout();
+							this.props.setUser(null);
+						}.bind(this), function(error) {
+							$('.js-btn-email').show();
+							$('.js-email-loader').hide();
+							this.props.setNotification({message: String(error), type: 'error'});
+						}.bind(this));
+					}
+				}.bind(this), function(error) {
+					$('.js-btn-info').show();
+					$('.js-info-loader').hide();
+					this.props.setNotification({message: String(error), type: 'error'});
+				}.bind(this));
 		}
 	}
 	
@@ -132,7 +125,7 @@ class Settings extends Component {
 	render() {
 		return (
             <section className="account account-settings page">
-            	{(this.props.user && this.props.userData) ? <div className="page-wrapper">
+            	{(this.props.user && this.props.userData && this.state.info) ? <div className="page-wrapper">
             		<div className="columns">
 						<div className="account-details column">
 							<div className="profile-image">
@@ -144,8 +137,8 @@ class Settings extends Component {
 							
 							<input type="password" ref="password" name="password" className="password" placeholder="New password" value={this.state.password} onChange={this.handleChange} />
 							<input type="password" ref="password2" name="password2" placeholder="Repeat password" value={this.state.password2} onChange={this.handleChange} />
-							<button className="btn btn-primary btn-xs js-btn-password" onClick={() => this.updatePassword()}>Update password</button>
-							<div className="loader-small js-password-loader"></div>
+							<button className="btn btn-primary btn-xs js-btn-password float-right" onClick={() => this.updatePassword()}>Update password</button>
+							<div className="loader-small float-right js-password-loader"></div>
 						</div>
 						<div className="personal-details column">
 							<input type="text" placeholder="First names" name="firstName" value={this.state.info.firstName} onChange={this.handleChange} />
@@ -159,8 +152,11 @@ class Settings extends Component {
 							<input type="text" placeholder="country" name="country" value={this.state.info.country} onChange={this.handleChange} />
 							<input type="text" placeholder="Language" name="language" value={this.state.info.language} onChange={this.handleChange} />
 
-							<button className="btn btn-primary btn-xs js-btn-info" onClick={() => this.updateUserInfo()}>Update details</button>
-							<div className="loader-small js-info-loader"></div>
+							<button className="btn btn-primary btn-xs js-btn-info float-right" onClick={() => this.updateUserInfo()}>Update details</button>
+							<div className="loader-small float-right js-info-loader"></div>
+						</div>
+						<div className="other-details column">
+							
 						</div>
 					</div>
 				</div> : <div className="loader-small"></div>}

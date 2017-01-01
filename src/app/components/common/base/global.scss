@@ -37,22 +37,6 @@ body {
 	}
 }
 
-.columns {
-	display: flex;
-
-	@include mobile() {
-		display: block;
-	}
-}
-
-.column {
-	padding: 20px;
-	
-	@include mobile() {
-		width: 100%;
-	}
-}
-
 .flyout {
 	width: 100%;
 	min-height: 100vh;
