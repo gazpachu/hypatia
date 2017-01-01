@@ -146,7 +146,7 @@ class Navigation extends Component {
 		let itemActive = (this.props.location.pathname === item.link) ? 'active' : '',
 			hasChildren = (item.children) ? 'has-children' : '';
 		
-		return (!item.level || (item.level && item.level <= this.props.userInfo.level)) ? <li key={i} className={`nav-item ${hasChildren}`}>
+		return (!item.level || (item.level && item.level <= this.props.userData.level)) ? <li key={i} className={`nav-item ${hasChildren}`}>
 			{(item.icon) ? <Icon glyph={item.icon} className="icon item-icon" /> : ''}
 			{(item.children) ? <span className="title" onClick={this.clickItem}>{item.title}<Icon glyph={Forward} className="icon arrow"/></span> : <Link to={item.link} className="title" onClick={this.props.toggleNav}>{item.title}</Link>}
 			{(item.children) ? <ul className="nav-children">
@@ -187,6 +187,6 @@ class Navigation extends Component {
 Navigation.propTypes = propTypes;
 Navigation.defaultProps = defaultProps;
 
-const mapStateToProps = ({ mainReducer: { user, userInfo } }) => ({ user, userInfo });
+const mapStateToProps = ({ mainReducer: { user, userData } }) => ({ user, userData });
 
 export default connect(mapStateToProps)(Navigation);

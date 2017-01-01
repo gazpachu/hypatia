@@ -21,7 +21,7 @@ class Footer extends Component {
 	render() {
 		return (
             <section className="footer">
-				<span>Hypatia <Icon glyph={Logo} /> LMS 2016 - 2017. Licensed under GPLv2. More info at <a href="theonapps.github.io/hypatia/">theonapps.github.io/hypatia/</a></span>
+				<span>Hypatia <Icon glyph={Logo} /> LMS 2016 - 2017. Licensed under GPLv2. More info at <a href="http://theonapps.github.io/hypatia/">theonapps.github.io/hypatia/</a></span>
             </section>
 		)
 	}

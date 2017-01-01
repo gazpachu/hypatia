@@ -10,7 +10,7 @@ export const SET_BREADCRUMBS = 'SET_BREADCRUMBS';
 export const SET_DESKTOP = 'SET_DESKTOP';
 export const SET_PANEL = 'SET_PANEL';
 export const SET_NOTIFICATION = 'SET_NOTIFICATION';
-export const SET_USER_INFO = 'SET_USER_INFO';
+export const SET_USER_DATA = 'SET_USER_DATA';
 
 // Demo details
 export const DEMO_EMAIL = 'demo@hypatialms.com';
@@ -30,6 +30,7 @@ export const ITEM_REMOVED = 'Item removed!';
 export const CONFIRM_DELETE = 'Are you sure you want to delete';
 export const NEED_TITLE = 'You need at least a title';
 export const WAIT_FINISH_OPERATION = 'Please wait until the current operation ends';
+export const ENROLLED_COURSE = 'You are now enrolled in this course!';
 
 // User level
 export const ADMIN_LEVEL = 5;

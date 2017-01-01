@@ -260,7 +260,7 @@ class TopNav extends Component {
 							<button className="chat-icon" onClick={() => {this.changePanel('chat') }}>{this.props.panel === 'chat' ? <Icon glyph={Close} className="icon close-chat" /> : <Icon glyph={Chat} className="icon chat" />}</button>
 							
 							<div className="user-controls-cta account-cta">
-								{(this.props.user) ? <Link to="/dashboard">{(this.props.user.email) ? <img className="photo" src={`https://www.gravatar.com/avatar/${md5(this.props.user.email)}.jpg?s=20`} /> : <Icon glyph={Avatar} />} <span>{this.props.userInfo ? this.props.userInfo.displayName : ''}</span></Link> : ''}
+								{(this.props.user) ? <Link to="/dashboard">{(this.props.user.email) ? <img className="photo" src={`https://www.gravatar.com/avatar/${md5(this.props.user.email)}.jpg?s=20`} /> : <Icon glyph={Avatar} />} <span>{this.props.userData ? this.props.userData.displayName : ''}</span></Link> : ''}
 								<button onClick={() => { firebase.auth().signOut(); this.props.setUser(null);}}><Icon glyph={Logout} className="icon sign-out" /></button>
 							</div>
 						</div>
@@ -273,7 +273,7 @@ class TopNav extends Component {
 	}
 }
 
-const mapStateToProps = ({ mainReducer: { user, panel, userInfo } }) => ({ user, panel, userInfo });
+const mapStateToProps = ({ mainReducer: { user, panel, userData } }) => ({ user, panel, userData });
 
 const mapDispatchToProps = {
 	setUser,

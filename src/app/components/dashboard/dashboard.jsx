@@ -1,10 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import { setLoading, setFilters } from '../../actions/actions';
+import { setLoading  } from '../../actions/actions';
 import {connect} from 'react-redux';
 import { Link } from 'react-router';
 import $ from 'jquery';
 import moment from 'moment';
-import showdown from 'showdown';
 import Icon from '../common/lib/icon/icon';
 
 class Dashboard extends Component {
@@ -21,21 +20,9 @@ class Dashboard extends Component {
 	render() {
 		return (
             <section className="dashboard page">
-				<div className="coming-up column">
-					<h2 className="courses-heading">To-do and coming up</h2>
-				</div>
-				<div className="latest-messages column">
-					<h2 className="new-courses-heading">Latest messages</h2>
-					<ul className="courses-list">
-						<li className="course-item"><span className="course-title">Multimedia</span>, 4 slots available. Starts in 1 days</li>
-						<li className="course-item"><span className="course-title">Journalism</span>, 4 slots available. Starts in 1 days</li>
-						<li className="course-item"><span className="course-title">Climate change</span>, 4 slots available. Starts in 1 days</li>
-						<li className="course-item"><span className="course-title">Economics</span>, 4 slots available. Starts in 1 days</li>
-						<li className="course-item"><span className="course-title">Art History</span>, 4 slots available. Starts in 1 days</li>
-						<li className="course-item"><span className="course-title">Multimedia</span>, 4 slots available. Starts in 1 days</li>
-						<li className="course-item"><span className="course-title">Multimedia</span>, 4 slots available. Starts in 1 days</li>
-					</ul>
-				</div>
+				{(this.props.user && this.props.userData) ? <div className="page-wrapper">
+           
+           		</div> : <div className="loader-small"></div>}
             </section>
 		)
 	}

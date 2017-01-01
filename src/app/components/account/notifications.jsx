@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { setLoading, setFilters } from '../../actions/actions';
+import { setLoading } from '../../actions/actions';
 import {connect} from 'react-redux';
 import { Link } from 'react-router';
 import $ from 'jquery';

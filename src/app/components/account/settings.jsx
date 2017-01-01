@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { history } from '../../store';
-import { setLoading, setUser, setNotification, setUserInfo } from '../../actions/actions';
+import { setLoading, setUser, setNotification, setUserData } from '../../actions/actions';
 import * as CONSTANTS from '../../constants/constants';
 import {connect} from 'react-redux';
 import md5 from 'md5';
@@ -16,7 +16,7 @@ const defaultProps = {
 const propTypes = {
 	isDesktop: PropTypes.bool,
 	user: PropTypes.object.isRequired,
-	userInfo: PropTypes.object.isRequired
+	userData: PropTypes.object.isRequired
 };
 
 class Settings extends Component {
@@ -132,7 +132,7 @@ class Settings extends Component {
 	render() {
 		return (
             <section className="account account-settings page">
-            	{(this.props.user && this.props.userInfo) ? <div className="page-wrapper">
+            	{(this.props.user && this.props.userData) ? <div className="page-wrapper">
             		<div className="columns">
 						<div className="account-details column">
 							<div className="profile-image">
@@ -173,9 +173,9 @@ const mapDispatchToProps = {
 	setLoading,
 	setNotification,
 	setUser,
-	setUserInfo
+	setUserData
 }
 
-const mapStateToProps = ({ mainReducer: { isDesktop, user, userInfo } }) => ({ isDesktop, user, userInfo });
+const mapStateToProps = ({ mainReducer: { isDesktop, user, userData } }) => ({ isDesktop, user, userData });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

@@ -42,9 +42,9 @@ export function setNotification(state) {
 	}
 }
 
-export function setUserInfo(state) {
+export function setUserData(state) {
 	return {
-		type: 'SET_USER_INFO',
+		type: 'SET_USER_DATA',
 		payload: state
 	}
 }

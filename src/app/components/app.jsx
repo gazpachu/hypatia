@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { history } from '../store';
-import { setUser, changeViewport, setPanel, setNotification, setUserInfo } from '../actions/actions';
+import { setUser, changeViewport, setPanel, setNotification, setUserData } from '../actions/actions';
 import { USER_CONFIRM_EMAIL, ADMIN_LEVEL } from '../constants/constants';
 import firebase from 'firebase';
 //import { auth } from '../constants/firebase';
@@ -30,7 +30,7 @@ const propTypes = {
 	isDesktop: PropTypes.bool,
 	changeViewport: PropTypes.func,
 	user: PropTypes.object,
-	userInfo: PropTypes.object,
+	userData: PropTypes.object,
 	breadcrumbs: PropTypes.array
 };
 
@@ -54,7 +54,7 @@ class App extends Component {
 				if (user.emailVerified) {
 					this.props.setUser(user);
 					firebase.database().ref('/users/' + user.uid).once('value').then(function(snapshot) {
-						if (snapshot.val()) this.props.setUserInfo(snapshot.val().info);
+						if (snapshot.val()) this.props.setUserData(snapshot.val());
 					}.bind(this));
 				}
 				else {
@@ -108,14 +108,14 @@ class App extends Component {
 App.propTypes = propTypes;
 App.defaultProps = defaultProps;
 
-const mapStateToProps = ({ mainReducer: { isDesktop, breadcrumbs, user, userInfo, panel } }) => ({ isDesktop, breadcrumbs, user, userInfo, panel });
+const mapStateToProps = ({ mainReducer: { isDesktop, breadcrumbs, user, userData, panel } }) => ({ isDesktop, breadcrumbs, user, userData, panel });
 
 const mapDispatchToProps = {
 	changeViewport,
 	setUser,
 	setPanel,
 	setNotification,
-	setUserInfo
+	setUserData
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
