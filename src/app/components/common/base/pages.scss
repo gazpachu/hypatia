@@ -3,6 +3,10 @@
 	padding-top: 70px;
 	width: 100%;
 	
+	&.listing-page {
+		min-height: calc(100vh - 110px);
+	}
+	
 	.page-wrapper {
 		background-color: $white;
 		margin: 0 20px 20px 20px;
@@ -40,11 +44,6 @@
 	
 	.column {
 		width: 50%;
-		
-		img {
-			width: 100%;
-			margin-bottom: 20px;
-		}
 	}
 	
 	.page-content {
@@ -53,6 +52,11 @@
 		
 		@include mobile() {
 			width: 100%;
+		}
+		
+		img {
+			width: 100%;
+			margin-bottom: 20px;
 		}
 	}
 	

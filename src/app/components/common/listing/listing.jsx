@@ -13,7 +13,7 @@ const propTypes = {
 	
 };
 
-const {dataToJS} = helpers;
+const {isLoaded, isEmpty, dataToJS} = helpers;
 
 @firebase(
   	props => ([
@@ -47,16 +47,22 @@ class Listing extends Component {
 	}
 	
 	render() {
-		const type = this.props.location.pathname.slice(1),
-			items = Helpers.renderCards.call(this, type);
+		let type = this.props.location.pathname.slice(1),
+		 	items = null,
+			path = type;
+		
+		if (path === 'news') type = 'posts';
+		
+		if (isLoaded(this.props[type]) && !isEmpty(this.props[type]) && isLoaded(this.props.files) && !isEmpty(this.props.files))
+			items = <ul className="cards-list">{Helpers.renderCards.call(this, path)}</ul>;
+		else
+			items = <div className="loader-small"></div>;
 		
 		return (
             <section className="page listing-page"> 
             	<div className="cards">
-					<h1 className="section-heading">{type}</h1>
-					<ul className="cards-list">
-						{items}
-					</ul>
+					<h1 className="cards-heading">{type}</h1>
+					{items}
           		</div>
             </section>
 		)

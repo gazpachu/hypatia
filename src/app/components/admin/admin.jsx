@@ -384,7 +384,7 @@ class Admin extends Component {
 		if (isLoaded(this.props[type]) && !isEmpty(this.props[type])) {
 			newList = Object.keys(this.props[type]).map(function(key) {
 					let item = this.props[type][key];
-					return (type === 'users') ? {text: item.info.firstName + ' ' + item.info.lastName1 + ' ' + item.info.lastName2, id: key} : (type === 'files') ? {text: (item.type) ? '[' + item.type + '] ' + item.title : item.title, id: key} : {text: item.title, id: key};
+					return (type === 'users') ? {text: item.info.firstName + ' ' + item.info.lastName1, id: key} : (type === 'files') ? {text: (item.type) ? '[' + item.type + '] ' + item.title : item.title, id: key} : {text: item.title, id: key};
 			}.bind(this));
 		}
 		return newList;
@@ -500,6 +500,14 @@ class Admin extends Component {
 							<div className={classNames({hidden: (this.state.type !== 'groups')})}>
 								<Select2 style={{width: '100%'}} multiple data={users} value={(this.state.selectedItem && this.state.selectedItem.users) ? this.state.selectedItem.users : []} options={{placeholder: 'Users in this group...', allowClear: true}} onChange={(event) => this.updateMultiSelect(event.currentTarget, 'users')} />
 								<Select2 style={{width: '100%'}} data={courses} value={(this.state.selectedItem && this.state.selectedItem.course) ? this.state.selectedItem.course : ''} options={{placeholder: 'Select a course...', allowClear: true}} onChange={(event) => this.updateSelect(event.currentTarget, 'course')} />
+							</div>
+							
+							<div className={classNames({hidden: (this.state.type !== 'subjects')})}>
+								<Select2 style={{width: '100%'}} multiple data={users} value={(this.state.selectedItem && this.state.selectedItem.teachers) ? this.state.selectedItem.teachers : []} options={{placeholder: 'Teacher(s)...', allowClear: true}} onChange={(event) => this.updateMultiSelect(event.currentTarget, 'teachers')} />
+							</div>
+							
+							<div className={classNames({hidden: (this.state.type !== 'modules')})}>
+								<Select2 style={{width: '100%'}} multiple data={users} value={(this.state.selectedItem && this.state.selectedItem.authors) ? this.state.selectedItem.authors : []} options={{placeholder: 'Author(s)...', allowClear: true}} onChange={(event) => this.updateMultiSelect(event.currentTarget, 'authors')} />
 							</div>
 							
 							<div className="clearfix">

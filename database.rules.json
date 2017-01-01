@@ -10,6 +10,12 @@
     },
     "courses": {
       ".indexOn": ["slug"]
+    },
+    "subjects": {
+      ".indexOn": ["slug"]
+    },
+    "modules": {
+      ".indexOn": ["slug"]
     }
   }
 }

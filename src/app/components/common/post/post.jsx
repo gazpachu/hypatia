@@ -59,18 +59,18 @@ class Post extends Component {
 		
 		return (
             <section className="page post"> 
-            	{post ? <div className="post-wrapper">
+            	{post ? <div className="page-wrapper">
 					<h1 className="title">{post.title}</h1>
 					<div className="date">{moment(post.date).format('Do MMMM YYYY, h:mm a')}</div>
 					<div className={classNames('columns', {'single-column': (!post.content2 && !post.content2)})}>
-						<div className="column post-content">
+						<div className="column page-content">
 							{featuredImage ? <img className="featured-image" src={featuredImage.url} /> : ''}
 							<div className="content" dangerouslySetInnerHTML={{__html: this.converter.makeHtml(post.content1)}}></div>
 						</div>
-						{post.content2 ? <div className="column post-sidebar">
+						{post.content2 ? <div className="column page-sidebar">
 							<div className="content" dangerouslySetInnerHTML={{__html: this.converter.makeHtml(post.content2)}}></div>
 						</div> : ''}
-						{post.content3 ? <div className="column post-sidebar">
+						{post.content3 ? <div className="column page-sidebar">
 							<div className="content" dangerouslySetInnerHTML={{__html: this.converter.makeHtml(post.content3)}}></div>
 						</div> : ''}
 					</div>

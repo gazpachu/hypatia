@@ -11,7 +11,7 @@ import Forward from '../../../../static/svg/forward.svg';
 import World from '../../../../static/svg/world.svg';
 import Logo from '../../../../static/svg/logo.svg';
 
-const {dataToJS} = helpers;
+const {isLoaded, isEmpty, dataToJS} = helpers;
 
 @firebase( [
   	'files',
@@ -46,8 +46,18 @@ class Home extends Component {
 	}
 	
 	render() {
-		const postsList = Helpers.renderCards.call(this, 'news');
-		const coursesList = Helpers.renderCards.call(this, 'courses');
+		let postsList = null;
+		let coursesList = null;
+		
+		if (isLoaded(this.props.courses) && !isEmpty(this.props.courses) && isLoaded(this.props.files) && !isEmpty(this.props.files))
+			postsList = <ul className="cards-list courses-list">{Helpers.renderCards.call(this, 'news')}</ul>;
+		else
+			postsList = <div className="loader-small"></div>;
+		
+		if (isLoaded(this.props.posts) && !isEmpty(this.props.posts) && isLoaded(this.props.files) && !isEmpty(this.props.files) && isLoaded(this.props.levels) && !isEmpty(this.props.levels))
+			coursesList = <ul className="cards-list posts-list">{Helpers.renderCards.call(this, 'courses')}</ul>;
+		else
+			coursesList = <div className="loader-small"></div>;
 		
 		return (
             <section className="home page">
@@ -90,16 +100,12 @@ class Home extends Component {
 					<div className="line teacher-l4"></div>
 				</div>
 				<div className="cards courses">
-					<h2 className="section-heading">Most popular courses</h2>
-					<ul className="cards-list courses-list">
-						{coursesList}
-					</ul>
+					<h2 className="cards-heading">Most popular courses</h2>
+					{coursesList}
 				</div>
            		<div className="cards posts">
-					<h2 className="section-heading">Latest news</h2>
-					<ul className="cards-list posts-list">
-						{postsList}
-					</ul>
+					<h2 className="cards-heading">Latest news</h2>
+					{postsList}
 				</div>
             </section>
 		)
