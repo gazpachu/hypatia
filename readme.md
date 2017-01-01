@@ -12,7 +12,7 @@ You need to sign up with a valid email address to access some pages.
 
 Project's website: [https://theonapps.github.io/hypatia/](https://theonapps.github.io/hypatia/)
 
-Slack group (invitation only): [https://hypatialms.slack.com](https://hypatialms.slack.com) To request for an invitation, contact me at hello [@] joanmira {.} com
+Slack group (invitation only): [https://hypatialms.slack.com](https://hypatialms.slack.com) To request for an invitation, please contact hello [@] theon {.} io
 
 ![Home](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/screenshots%2Fhome.jpg?alt=media&token=1421d0c1-97ad-486c-b040-695e128a9e4a)
 
@@ -144,6 +144,10 @@ Deploy to Firebase
 ````
 firebase deploy
 ````
+
+## Credits
+
+Icons from Flaticon.com (Freepik and Madebyoliver), triangles background by rvika from Fotolia and photos from Google Creative Commons search results
 
 ## Copyright & License
 

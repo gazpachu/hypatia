@@ -25,24 +25,29 @@
 		}
 		
 		.block {
-			.icon {
-				vertical-align: top;
-				margin-top: 4px;
-			}
-			
-			.btn {
-				margin-top: 4px;
-				margin-left: 10px;
-				float: right;
-			}
-		}
-		
-		.select2 {
-			@media (min-width: 1150px) {
-				width: 70% !important;
-			}
-			@include mobile() {
-				width: 70% !important;
+			.item-type-list {
+				display: flex;
+				
+				.icon {
+					vertical-align: top;
+					margin-top: 4px;
+				}
+
+				.btn-new-item {
+					float: right;
+					margin-top: 2px;
+					height: 26px;
+
+					.icon {
+						@include scale-anim();
+						fill: $green;
+						margin: 0;
+						
+						&.disabled {
+							opacity: .3;
+						}
+					}
+				}
 			}
 		}
 	}

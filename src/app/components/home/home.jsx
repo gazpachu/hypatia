@@ -112,24 +112,24 @@ class Home extends Component {
 						<p>Hypatia is a <strong>FREE</strong>, Open Source LMS (Learning Management System) focussed in UX and remote coworking. You can use it to build your online school, academy or university.</p>
 						<p><button className="btn btn-primary">Start quick tour</button></p>
 					</div>
-					<div className="circle tooltip usa">JF<div className="spinner"></div><span className="tooltip-text">Jeff Francis<span>San Francisco, USA</span></span></div>
-					<div className="circle tooltip brazil">MC<div className="spinner"></div><span className="tooltip-text">Maria Castro<span>Rio de Janeiro, Brazil</span></span></div>
-					<div className="circle tooltip argentina">LU<div className="spinner"></div><span className="tooltip-text">Leonardo Ugarte<span>Buenos Aires, Argentina</span></span></div>
-					<div className="circle tooltip spain">JM<div className="spinner"></div><span className="tooltip-text">Joan Mira<span>Alicante, Spain</span></span></div>
-					<div className="circle tooltip uk">TG<div className="spinner"></div><span className="tooltip-text">Tina Goldfinger<span>London, UK</span></span></div>
-					<div className="circle tooltip france">FT<div className="spinner"></div><span className="tooltip-text">Fiona Toulouse<span>Paris, France</span></span></div>
-					<div className="circle tooltip active usa2">JL<div className="spinner"></div><span className="tooltip-text">Jennifer Lawrence<span>Maths teacher</span><span>New York, USA</span></span></div>
-					<div className="circle tooltip colombia">FL<div className="spinner"></div><span className="tooltip-text">Fernando Lopez<span>Bogota, Colombia</span></span></div>
-					<div className="circle tooltip africa1">DS<div className="spinner"></div><span className="tooltip-text">Daniel Da Silva<span>Johannesburg, South Africa</span></span></div>
-					<div className="circle tooltip africa2">EI<div className="spinner"></div><span className="tooltip-text">Eniola Iquo<span>Lagos, Nigeria</span></span></div>
-					<div className="circle tooltip russia1">AB<div className="spinner"></div><span className="tooltip-text">Alexei Borislav<span>Moscow, Russia</span></span></div>
-					<div className="circle tooltip arabia">AR<div className="spinner"></div><span className="tooltip-text">Amira Raheem<span>Baghdad, Iraq</span></span></div>
-					<div className="circle tooltip india">AH<div className="spinner"></div><span className="tooltip-text">Ankit Harish<span>New Delhi, India</span></span></div>
-					<div className="circle tooltip china">HM<div className="spinner"></div><span className="tooltip-text">Huan Mei<span>Xian, China</span></span></div>
-					<div className="circle tooltip japan">WM<div className="spinner"></div><span className="tooltip-text">Watanabe Miyazaki<span>Tokyo, Japan</span></span></div>
-					<div className="circle tooltip thailand">LK<div className="spinner"></div><span className="tooltip-text">Lawan Kanda<span>Bangkok, Thailand</span></span></div>
-					<div className="circle tooltip philippines">SG<div className="spinner"></div><span className="tooltip-text">Sonia Gutierrez<span>Manila, Philippines</span></span></div>
-					<div className="circle tooltip indonesia">SW<div className="spinner"></div><span className="tooltip-text">Sari Wati<span>Kuala Lumpur, Indonesia</span></span></div>
+					<div className="circle tooltip usa">JF<div className="spinner"></div><span className="tooltip-text top">Jeff Francis<span>San Francisco, USA</span></span></div>
+					<div className="circle tooltip brazil">MC<div className="spinner"></div><span className="tooltip-text top">Maria Castro<span>Rio de Janeiro, Brazil</span></span></div>
+					<div className="circle tooltip argentina">LU<div className="spinner"></div><span className="tooltip-text top">Leonardo Ugarte<span>Buenos Aires, Argentina</span></span></div>
+					<div className="circle tooltip spain">JM<div className="spinner"></div><span className="tooltip-text top">Joan Mira<span>Alicante, Spain</span></span></div>
+					<div className="circle tooltip uk">TG<div className="spinner"></div><span className="tooltip-text top">Tina Goldfinger<span>London, UK</span></span></div>
+					<div className="circle tooltip france">FT<div className="spinner"></div><span className="tooltip-text top">Fiona Toulouse<span>Paris, France</span></span></div>
+					<div className="circle tooltip active usa2">JL<div className="spinner"></div><span className="tooltip-text top">Jennifer Lawrence<span>Maths teacher</span><span>New York, USA</span></span></div>
+					<div className="circle tooltip colombia">FL<div className="spinner"></div><span className="tooltip-text top">Fernando Lopez<span>Bogota, Colombia</span></span></div>
+					<div className="circle tooltip africa1">DS<div className="spinner"></div><span className="tooltip-text top">Daniel Da Silva<span>Johannesburg, South Africa</span></span></div>
+					<div className="circle tooltip africa2">EI<div className="spinner"></div><span className="tooltip-text top">Eniola Iquo<span>Lagos, Nigeria</span></span></div>
+					<div className="circle tooltip russia1">AB<div className="spinner"></div><span className="tooltip-text top">Alexei Borislav<span>Moscow, Russia</span></span></div>
+					<div className="circle tooltip arabia">AR<div className="spinner"></div><span className="tooltip-text top">Amira Raheem<span>Baghdad, Iraq</span></span></div>
+					<div className="circle tooltip india">AH<div className="spinner"></div><span className="tooltip-text top">Ankit Harish<span>New Delhi, India</span></span></div>
+					<div className="circle tooltip china">HM<div className="spinner"></div><span className="tooltip-text top">Huan Mei<span>Xian, China</span></span></div>
+					<div className="circle tooltip japan">WM<div className="spinner"></div><span className="tooltip-text top">Watanabe Miyazaki<span>Tokyo, Japan</span></span></div>
+					<div className="circle tooltip thailand">LK<div className="spinner"></div><span className="tooltip-text top">Lawan Kanda<span>Bangkok, Thailand</span></span></div>
+					<div className="circle tooltip philippines">SG<div className="spinner"></div><span className="tooltip-text top">Sonia Gutierrez<span>Manila, Philippines</span></span></div>
+					<div className="circle tooltip indonesia">SW<div className="spinner"></div><span className="tooltip-text top">Sari Wati<span>Kuala Lumpur, Indonesia</span></span></div>
 					
 					<div className="line teacher-l1"></div>
 					<div className="line teacher-l2"></div>

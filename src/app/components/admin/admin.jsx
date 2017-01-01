@@ -15,8 +15,10 @@ import ModalBox from '../common/modalbox/modalbox';
 import AdminUsers from './adminUsers';
 import Helpers from '../common/helpers';
 import Icon from '../common/lib/icon/icon';
+import Add from '../../../../static/svg/add.svg';
 import Calendar from '../../../../static/svg/calendar.svg';
 import User from '../../../../static/svg/users.svg';
+import Level from '../../../../static/svg/level.svg';
 import Group from '../../../../static/svg/group.svg';
 import Course from '../../../../static/svg/course.svg';
 import Subject from '../../../../static/svg/subject.svg';
@@ -386,6 +388,7 @@ class Admin extends Component {
 	
 	render () {
 		const users = this.createList('users');
+		const levels = this.createList('levels');
 		const groups = this.createList('groups');
 		const courses = this.createList('courses');
 		const subjects = this.createList('subjects');
@@ -416,57 +419,64 @@ class Admin extends Component {
 				<div className="columns">
 					<div className="nav column">
 						<div className="block clearfix">
-							<div className="clearfix">
+							<div className="item-type-list">
 								<Icon glyph={User} />
-								<Select2 className="select-items" style={{width: '50%'}} ref="users-select" data={users} defaultValue={this.state.selectedId} options={{placeholder: 'Users', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'users')} />
+								<Select2 className="select-items" style={{width: '100%'}} ref="users-select" data={users} defaultValue={this.state.selectedId} options={{placeholder: 'Users', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'users')} />
+								<button className="btn-new-item tooltip"><Icon glyph={Add} className="icon disabled" /><span className="tooltip-text inverted right">To add a new user, follow the sign-up process</span></button>
 							</div>
 							
-							<div className="clearfix">
+							<div className="item-type-list">
+								<Icon glyph={Level} />
+								<Select2 className="select-items" style={{width: '100%'}} ref="levels-select" data={levels} defaultValue={this.state.selectedId} options={{placeholder: 'Levels', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'levels')} />
+								<button className="btn-new-item" onClick={() => this.new('levels')}><Icon glyph={Add} /></button>
+							</div>
+							
+							<div className="item-type-list">
 								<Icon glyph={Group} />
-								<Select2 className="select-items" style={{width: '50%'}} ref="groups-select" data={groups} defaultValue={this.state.selectedId} options={{placeholder: 'Groups', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'groups')} />
-								<button className="btn btn-primary btn-xs" onClick={() => this.new('groups')}>new</button>
+								<Select2 className="select-items" style={{width: '100%'}} ref="groups-select" data={groups} defaultValue={this.state.selectedId} options={{placeholder: 'Groups', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'groups')} />
+								<button className="btn-new-item" onClick={() => this.new('groups')}><Icon glyph={Add} /></button>
 							</div>
 							
-							<div className="clearfix">
+							<div className="item-type-list">
 								<Icon glyph={Course} />
-								<Select2 className="select-items" style={{width: '50%'}} ref="courses-select" data={courses} defaultValue={this.state.selectedId} options={{placeholder: 'Courses', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'courses')} />
-								<button className="btn btn-primary btn-xs" onClick={() => this.new('courses')}>new</button>
+								<Select2 className="select-items" style={{width: '100%'}} ref="courses-select" data={courses} defaultValue={this.state.selectedId} options={{placeholder: 'Courses', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'courses')} />
+								<button className="btn-new-item" onClick={() => this.new('courses')}><Icon glyph={Add} /></button>
 							</div>
 	
-							<div className="clearfix">
+							<div className="item-type-list">
 								<Icon glyph={Subject} />
-								<Select2 className="select-items" style={{width: '50%'}} ref="subjects-select" data={subjects} defaultValue={this.state.selectedId} options={{placeholder: 'Subjects', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'subjects')} />
-								<button className="btn btn-primary btn-xs" onClick={() => this.new('subjects')}>new</button>
+								<Select2 className="select-items" style={{width: '100%'}} ref="subjects-select" data={subjects} defaultValue={this.state.selectedId} options={{placeholder: 'Subjects', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'subjects')} />
+								<button className="btn-new-item" onClick={() => this.new('subjects')}><Icon glyph={Add} /></button>
 							</div>
 		
-							<div className="clearfix">
+							<div className="item-type-list">
 								<Icon glyph={Module} />
-								<Select2 className="select-items" style={{width: '50%'}} ref="modules-select" data={modules} defaultValue={this.state.selectedId} options={{placeholder: 'Modules', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'modules')} />
-								<button className="btn btn-primary btn-xs" onClick={() => this.new('modules')}>new</button>
+								<Select2 className="select-items" style={{width: '100%'}} ref="modules-select" data={modules} defaultValue={this.state.selectedId} options={{placeholder: 'Modules', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'modules')} />
+								<button className="btn-new-item" onClick={() => this.new('modules')}><Icon glyph={Add} /></button>
 							</div>
 		
-							<div className="clearfix">
+							<div className="item-type-list">
 								<Icon glyph={Activity} />
-								<Select2 className="select-items" style={{width: '50%'}} ref="activities-select" data={activities} defaultValue={this.state.selectedId} options={{placeholder: 'Activities', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'activities')} />
-								<button className="btn btn-primary btn-xs" onClick={() => this.new('activities')}>new</button>
+								<Select2 className="select-items" style={{width: '100%'}} ref="activities-select" data={activities} defaultValue={this.state.selectedId} options={{placeholder: 'Activities', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'activities')} />
+								<button className="btn-new-item" onClick={() => this.new('activities')}><Icon glyph={Add} /></button>
 							</div>
 							
-							<div className="clearfix">
+							<div className="item-type-list">
 								<Icon glyph={Post} />
-								<Select2 className="select-items" style={{width: '50%'}} ref="posts-select" data={posts} defaultValue={this.state.selectedId} options={{placeholder: 'Posts', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'posts')} />
-								<button className="btn btn-primary btn-xs" onClick={() => this.new('posts')}>new</button>
+								<Select2 className="select-items" style={{width: '100%'}} ref="posts-select" data={posts} defaultValue={this.state.selectedId} options={{placeholder: 'Posts', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'posts')} />
+								<button className="btn-new-item" onClick={() => this.new('posts')}><Icon glyph={Add} /></button>
 							</div>
 							
-							<div className="clearfix">
+							<div className="item-type-list">
 								<Icon glyph={Post} />
-								<Select2 className="select-items" style={{width: '50%'}} ref="pages-select" data={pages} defaultValue={this.state.selectedId} options={{placeholder: 'Pages', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'pages')} />
-								<button className="btn btn-primary btn-xs" onClick={() => this.new('pages')}>new</button>
+								<Select2 className="select-items" style={{width: '100%'}} ref="pages-select" data={pages} defaultValue={this.state.selectedId} options={{placeholder: 'Pages', allowClear: true}} onChange={(event) => this.handleSelect(event, 'edit', 'pages')} />
+								<button className="btn-new-item" onClick={() => this.new('pages')}><Icon glyph={Add} /></button>
 							</div>
 							
-							<div className="clearfix">
+							<div className="item-type-list">
 								<Icon glyph={File} />
-								<Select2 className="select-items" style={{width: '50%'}} ref="files-select" data={files} defaultValue={this.state.selectedId} options={{placeholder: 'Files', allowClear: true, templateResult: this.formatFileType, templateSelection: this.formatFileType}} onChange={(event) => this.handleSelect(event, 'edit', 'files')} />
-								<button className="btn btn-primary btn-xs" onClick={() => this.new('files')}>new</button>
+								<Select2 className="select-items" style={{width: '100%'}} ref="files-select" data={files} defaultValue={this.state.selectedId} options={{placeholder: 'Files', allowClear: true, templateResult: this.formatFileType, templateSelection: this.formatFileType}} onChange={(event) => this.handleSelect(event, 'edit', 'files')} />
+								<button className="btn-new-item" onClick={() => this.new('files')}><Icon glyph={Add} /></button>
 							</div>
 						</div>
 					</div>

@@ -237,19 +237,82 @@ a, a:hover, a:active, a:visited, a:focus {
 	}
 	
 	.tooltip-text {
-		visibility: hidden;
 		width: 120px;
+		visibility: hidden;
 		background-color: rgba(255,255,255,.7);
 		color: $dark-grey;
+		font-size: 13px;
 		text-align: center;
 		border-radius: 6px;
 		padding: 5px 3px;
 		position: absolute;
-		bottom: 125%;
-		left: 50%;
-		margin-left: -60px;
 		opacity: 0;
 		transition: opacity 1s;
+		z-index: 9;
+		
+		&.inverted {
+			background-color: rgba(0,0,0,.9);
+			color: $white;
+		}
+		
+		&.right {
+			top: -25px;
+    		left: 105%;
+			&::after {
+				top: 50%;
+				right: 100%; /* To the left of the tooltip */
+    			
+				border-color: transparent rgba(255,255,255,.7) transparent transparent;
+			}
+			
+			&.inverted {
+				&::after { border-color: transparent rgba(0,0,0,.9) transparent transparent; }
+			}
+		}
+		
+		&.left {
+			top: -25px;
+    		right: 105%;
+			&::after {
+				top: 50%;
+    			left: 100%; /* To the right of the tooltip */
+				border-color: rgba(255,255,255,.7) transparent transparent transparent;
+			}
+			
+			&.inverted {
+				&::after { border-color: rgba(0,0,0,.9) transparent transparent transparent; }
+			}
+		}
+		
+		&.top {
+			bottom: 125%;
+			left: 50%;
+			margin-left: -60px;
+			&::after {
+				top: 100%;
+				left: 50%;
+				border-color: rgba(255,255,255,.7) transparent transparent transparent;
+			}
+			
+			&.inverted {
+				&::after { border-color: rgba(0,0,0,.9) transparent transparent transparent; }
+			}
+		}
+		
+		&.bottom {
+			top: 100%;
+			left: 50%; 
+			margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+			&::after {
+				bottom: 100%;
+				left: 50%;
+				border-color: transparent transparent rgba(255,255,255,.7) transparent;
+			}
+			
+			&.inverted {
+				&::after { border-color: transparent transparent rgba(0,0,0,.9) transparent; }
+			}
+		}
 		
 		span {
 			font-size: 11px;
@@ -259,12 +322,9 @@ a, a:hover, a:active, a:visited, a:focus {
 		&::after {
 			content: '';
 			position: absolute;
-			top: 100%;
-			left: 50%;
 			margin-left: -5px;
 			border-width: 5px;
 			border-style: solid;
-			border-color: rgba(255,255,255,.7) transparent transparent transparent;
 		}
 	}
 }
