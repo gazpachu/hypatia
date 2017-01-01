@@ -1,4 +1,14 @@
+import React from 'react';
 import $ from 'jquery';
+import moment from 'moment';
+import classNames from 'classnames';
+import { Link } from 'react-router';
+import { converter } from '../../constants/constants';
+import { helpers } from 'redux-react-firebase';
+import Icon from './lib/icon/icon';
+import Calendar from '../../../../static/svg/calendar2.svg';
+import Course from '../../../../static/svg/course.svg';
+import Users from '../../../../static/svg/users.svg';
 
 // CSS3 animation helper to cleanup classes after animationd ends
 $.fn.extend({
@@ -16,8 +26,53 @@ String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
+const {isLoaded, isEmpty} = helpers;
+
 // Common app methods
 module.exports = {
+	
+	renderCards: function(type) {
+		let newList = [],
+			path = type;
+
+		if (type === 'news') type = 'posts';
+		
+		if (isLoaded(this.props[type]) && !isEmpty(this.props[type])) {
+			newList = Object.keys(this.props[type]).map(function(key) {
+				let item = this.props[type][key],
+					date = (type === 'courses') ? item.startDate : item.date;
+
+				if (item && item.status && item.status !== 'inactive') {
+					return <li key={key} ref={`item-${key}`} className={`card ${type}-card`}>
+						<Link to={`/${path}/${item.slug}`}>{item.featuredImage && isLoaded(this.props.files) && !isEmpty(this.props.files) ? <div className="card-thumb card-image" style={{backgroundImage: 'url(' + this.props.files[item.featuredImage].url + ')'}}></div> : <div className="card-thumb"><span>{item.code}</span></div>}</Link>
+						<div className="card-wrapper clearfix">
+							<h3 className="card-title"><Link to={`/${path}/${item.slug}`}>{item.title}</Link></h3>
+							<div className="card-meta">
+								<p><Icon glyph={Calendar} />{(type === 'courses') ? 'Starts ' : ''}
+									<span className="card-date">{item.startDate || item.date ? moment(date).format('D/M/YYYY') : 'anytime'}</span>
+									{(type === 'courses' && item.level) ? <span><Icon glyph={Course} />{isLoaded(this.props.levels) && !isEmpty(this.props.levels) ? this.props.levels[item.level].code : ''}</span> : ''}
+								</p>
+							</div>
+							<div className="card-content" dangerouslySetInnerHTML={{__html: converter.makeHtml(item.content1)}}></div>
+							{(type === 'posts') ? 
+								<div className="card-actions">
+									<button className="btn btn-xs btn-secondary float-right"><Link to={`/${path}/${item.slug}`}>Read more</Link></button>
+								</div>
+							: (type === 'courses') ? <div className="card-info">
+									<span className="card-enrolled"><Icon glyph={Users} /> 1.5K enrolled</span>
+									{item.price ? <span className="card-price">{item.price}€</span> : ''}
+							</div> : ''}
+						</div>
+					</li>;
+				}
+				else {
+					return '';
+				}
+			}.bind(this));
+		}
+		else return <div className="loader-small"></div>;
+		return newList;
+	},
 	
 	slugify: function(string) {
 		return string.toLowerCase()

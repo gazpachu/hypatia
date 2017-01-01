@@ -33,7 +33,7 @@ const {isLoaded, isEmpty, dataToJS} = helpers;
 		files: dataToJS(state.firebase, 'files'),
   	})
 )
-class Course extends Component {
+class Subject extends Component {
     
 	constructor(props) {
 		super(props);
@@ -42,7 +42,7 @@ class Course extends Component {
 	
 	componentDidMount() {
 		this.props.setLoading(false);
-		$('.js-main').removeClass().addClass('main js-main course-page');
+		$('.js-main').removeClass().addClass('main js-main subject-page');
 	}
 	
 	render() {
@@ -61,7 +61,7 @@ class Course extends Component {
 		}
 		
 		return (
-            <section className="page course"> 
+            <section className="page subject"> 
             	{course ? <div className="page-wrapper">
 					<h1 className="title">{course.title}</h1>
 					<div className="level"><Icon glyph={Level} />{this.props.levels[course.level].title} ({this.props.levels[course.level].code}) ({course.credits} Credits)</div>
@@ -84,8 +84,8 @@ class Course extends Component {
 	}
 }
 
-Course.propTypes = propTypes;
-Course.defaultProps = defaultProps;
+Subject.propTypes = propTypes;
+Subject.defaultProps = defaultProps;
 
 const mapDispatchToProps = {
 	setLoading
@@ -93,4 +93,4 @@ const mapDispatchToProps = {
 
 const mapStateToProps = ({ mainReducer: { isDesktop } }) => ({ isDesktop });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Course);
+export default connect(mapStateToProps, mapDispatchToProps)(Subject);

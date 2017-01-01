@@ -62,19 +62,19 @@ class Course extends Component {
 		
 		return (
             <section className="page course"> 
-            	{course ? <div className="page-wrapper">
+            	{course ? <div className="course-wrapper">
 					<h1 className="title">{course.title}</h1>
 					<div className="level"><Icon glyph={Level} />{this.props.levels[course.level].title} ({this.props.levels[course.level].code}) ({course.credits} Credits)</div>
 					<div className="date">From {moment(course.startDate).format('D MMMM YYYY')} until {moment(course.endDate).format('D MMMM YYYY')}</div>
 					<div className={classNames('columns', {'single-column': (!course.content2 && !course.content2)})}>
-						<div className="column page-content">
+						<div className="column course-content">
 							{featuredImage ? <img className="featured-image" src={featuredImage.url} /> : ''}
 							<div className="content" dangerouslySetInnerHTML={{__html: this.converter.makeHtml(course.content1)}}></div>
 						</div>
-						{course.content2 ? <div className="column page-sidebar">
+						{course.content2 ? <div className="column course-sidebar">
 							<div className="content" dangerouslySetInnerHTML={{__html: this.converter.makeHtml(course.content2)}}></div>
 						</div> : ''}
-						{course.content3 ? <div className="column page-sidebar">
+						{course.content3 ? <div className="column course-sidebar">
 							<div className="content" dangerouslySetInnerHTML={{__html: this.converter.makeHtml(course.content3)}}></div>
 						</div> : ''}
 					</div>

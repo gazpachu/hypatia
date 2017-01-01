@@ -6,7 +6,6 @@ import classNames from 'classnames';
 import showdown from 'showdown';
 import $ from 'jquery';
 import Icon from '../lib/icon/icon';
-import Logo from '../../../../../static/svg/logo.svg';
 
 const defaultProps = {
 	

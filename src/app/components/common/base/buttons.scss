@@ -36,3 +36,22 @@
 		opacity: .3;
 	}
 }
+
+.go-back {
+	position: absolute;
+	left: 5px;
+
+	.icon {
+		fill: $white;
+	}
+}
+
+.close {
+	width: 16px;
+	height: 20px;
+	display: inline-block;
+	position: absolute;
+	right: 15px;
+	top: 15px;
+	z-index: 1;
+}

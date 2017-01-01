@@ -1,3 +1,8 @@
+a, a:hover, a:active, a:visited, a:focus {
+	color: $blue;
+	text-decoration: none;
+}
+
 textarea, input, button {
 	border: none;
     background: none;
@@ -13,4 +18,172 @@ textarea, input, button {
 
 input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
 	-webkit-box-shadow: 0 0 0 1000px white inset !important;
+}
+
+// Date picker
+.react-datepicker__tether-element {
+	@include mobile() {
+		width: 100%;
+		height: 100%;
+		position: fixed !important;
+		margin-top: 0 !important;
+		transform: none !important;
+	}
+}
+
+.react-datepicker__input-container {
+	
+	.react-datepicker__close-icon:after {
+		background-color: transparent;
+		color: $grey;
+		border: 1px solid $grey;
+		right: 0;
+	}
+}
+
+.react-datepicker {
+	border-radius: 0;
+	font-family: inherit;
+	cursor: pointer;
+	
+	@include mobile() {
+		width: 100%;
+		height: 100%;
+		font-size: 16px;
+	}
+	
+	.datepicker__day {
+		@include mobile() {
+			width: 35px;
+			line-height: 35px;
+		}
+	}
+	
+	.datepicker__day--selected,
+	.datepicker__day:hover {
+		border-radius: 0;
+	}
+	
+	.react-datepicker__navigation {
+		z-index: 1;
+		
+		@include mobile() {
+			border-width: 10px;
+		}
+	}
+	
+	.react-datepicker__current-month {
+		@include mobile() {
+			font-size: 18px;
+		}
+	}
+}
+
+// Select2
+.page .select2-container--default.select2-container--focus .select2-selection--multiple {
+	border-color: $grey;
+}
+
+// Tooltip
+.tooltip {
+    position: relative;
+    display: inline-block;
+	
+	&:hover .tooltip-text,
+	&.active .tooltip-text {
+		visibility: visible;
+		opacity: 1;
+	}
+	
+	.tooltip-text {
+		width: 120px;
+		visibility: hidden;
+		background-color: rgba(255,255,255,.7);
+		color: $dark-grey;
+		font-size: 13px;
+		text-align: center;
+		border-radius: 6px;
+		padding: 5px 3px;
+		position: absolute;
+		opacity: 0;
+		transition: opacity 1s;
+		z-index: 9;
+		
+		&.inverted {
+			background-color: rgba(0,0,0,.9);
+			color: $white;
+		}
+		
+		&.right {
+			top: -25px;
+    		left: 105%;
+			&::after {
+				top: 50%;
+				right: 100%; /* To the left of the tooltip */
+    			
+				border-color: transparent rgba(255,255,255,.7) transparent transparent;
+			}
+			
+			&.inverted {
+				&::after { border-color: transparent rgba(0,0,0,.9) transparent transparent; }
+			}
+		}
+		
+		&.left {
+			top: -25px;
+    		right: 105%;
+			&::after {
+				top: 50%;
+    			left: 100%; /* To the right of the tooltip */
+				border-color: rgba(255,255,255,.7) transparent transparent transparent;
+			}
+			
+			&.inverted {
+				&::after { border-color: rgba(0,0,0,.9) transparent transparent transparent; }
+			}
+		}
+		
+		&.top {
+			bottom: 125%;
+			left: 50%;
+			margin-left: -60px;
+			&::after {
+				top: 100%;
+				left: 50%;
+				border-color: rgba(255,255,255,.7) transparent transparent transparent;
+			}
+			
+			&.inverted {
+				&::after { border-color: rgba(0,0,0,.9) transparent transparent transparent; }
+			}
+		}
+		
+		&.bottom {
+			top: 100%;
+			left: 50%; 
+			margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+			&::after {
+				bottom: 100%;
+				left: 50%;
+				border-color: transparent transparent rgba(255,255,255,.7) transparent;
+			}
+			
+			&.inverted {
+				&::after { border-color: transparent transparent rgba(0,0,0,.9) transparent; }
+			}
+		}
+		
+		span {
+			font-size: 11px;
+			display: block;
+		}
+		
+		&::after {
+			content: '';
+			position: absolute;
+			margin-left: -5px;
+			border-width: 5px;
+			border-style: solid;
+		}
+	}
 }

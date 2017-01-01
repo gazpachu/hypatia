@@ -1,3 +1,8 @@
+import showdown from 'showdown';
+
+// Global objects
+export const converter = new showdown.Converter();
+
 // Redux
 export const SET_USER = 'SET_USER';
 export const SET_LOADING = 'SET_LOADING';

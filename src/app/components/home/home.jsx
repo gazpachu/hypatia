@@ -1,41 +1,36 @@
 import React, { Component, PropTypes } from 'react';
-import { setLoading, setFilters } from '../../actions/actions';
+import { setLoading } from '../../actions/actions';
 import {connect} from 'react-redux';
 import { Link } from 'react-router';
 import { firebase, helpers } from 'redux-react-firebase';
+import Helpers from '../common/helpers';
 import $ from 'jquery';
-import moment from 'moment';
-import showdown from 'showdown';
 import Icon from '../common/lib/icon/icon';
 import Back from '../../../../static/svg/back.svg';
-import Calendar from '../../../../static/svg/calendar2.svg';
-import Course from '../../../../static/svg/course.svg';
-import Users from '../../../../static/svg/users.svg';
 import Forward from '../../../../static/svg/forward.svg';
 import World from '../../../../static/svg/world.svg';
 import Logo from '../../../../static/svg/logo.svg';
 
-const {isLoaded, isEmpty, dataToJS} = helpers;
+const {dataToJS} = helpers;
 
 @firebase( [
   	'files',
 	'posts',
-	'courses'
+	'courses',
+	'levels'
 ])
 @connect(
   	({firebase}) => ({
 		files: dataToJS(firebase, 'files'),
     	posts: dataToJS(firebase, 'posts'),
-		courses: dataToJS(firebase, 'courses')		
+		courses: dataToJS(firebase, 'courses'),
+		levels: dataToJS(firebase, 'levels')
   	})
 )
 class Home extends Component {
     
 	constructor(props) {
 		super(props);
-		
-		this.converter = new showdown.Converter();
-		this.storageRef =  this.props.firebase.storage().ref();
 	}
 	
 	componentDidMount() {
@@ -50,51 +45,9 @@ class Home extends Component {
 		});
 	}
 	
-	renderItems(type) {
-		let newList = [],
-			className = type.substring(0, type.length-1) + '-card',
-			path = (type === 'posts') ? 'news' : 'courses';
-		
-		if (isLoaded(this.props[type]) && !isEmpty(this.props[type])) {
-			newList = Object.keys(this.props[type]).map(function(key) {
-				let item = this.props[type][key],
-					date = (type === 'courses') ? item.startDate : item.date;
-
-				if (item.status === 'active') {
-					return <li key={key} ref={`${className}-${key}`} className={className}>
-						{item.featuredImage ? <Link to={`/${path}/${item.slug}`}><div className="thumb image" style={{backgroundImage: 'url(' + this.props.files[item.featuredImage].url + ')'}}></div></Link> : <div className="thumb"><span>{item.code}</span></div>}
-						<div className="item-content clearfix">
-							<h3 className="title"><Link to={`/${path}/${item.slug}`}>{item.title}</Link></h3>
-							<div className="meta">
-								<p><Icon glyph={Calendar} />{(type === 'courses') ? 'Starts ' : ''}
-									<span className="date">{item.startDate || item.date ? moment(date).format('D/M/YYYY') : 'anytime'}</span>
-									{(type === 'courses' && item.level) ? <span><Icon glyph={Course} />{item.level}</span> : ''}
-								</p>
-							</div>
-							<div className="content" dangerouslySetInnerHTML={{__html: this.converter.makeHtml(item.content1)}}></div>
-							{(type === 'posts') ? 
-								<div className="actions">
-									<button className="btn btn-xs btn-secondary float-right"><Link to={`/${path}/${item.slug}`}>Read more</Link></button>
-								</div>
-							: <div className="info">
-									<span className="enrolled"><Icon glyph={Users} /> 1.5K enrolled</span>
-									{item.price ? <span className="price">{item.price}€</span> : ''}
-							</div>}
-						</div>
-					</li>;
-				}
-				else {
-					return '';
-				}
-			}.bind(this));
-		}
-		else return <div className="loader-small"></div>;
-		return newList;
-	}
-	
 	render() {
-		const postsList = this.renderItems('posts');
-		const coursesList = this.renderItems('courses');
+		const postsList = Helpers.renderCards.call(this, 'news');
+		const coursesList = Helpers.renderCards.call(this, 'courses');
 		
 		return (
             <section className="home page">
@@ -136,15 +89,15 @@ class Home extends Component {
 					<div className="line teacher-l3"></div>
 					<div className="line teacher-l4"></div>
 				</div>
-				<div className="courses">
+				<div className="cards courses">
 					<h2 className="section-heading">Most popular courses</h2>
-					<ul className="courses-list">
+					<ul className="cards-list courses-list">
 						{coursesList}
 					</ul>
 				</div>
-           		<div className="posts">
+           		<div className="cards posts">
 					<h2 className="section-heading">Latest news</h2>
-					<ul className="posts-list">
+					<ul className="cards-list posts-list">
 						{postsList}
 					</ul>
 				</div>
