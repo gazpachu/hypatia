@@ -15,13 +15,17 @@
       "code" : "IT",
       "content1" : "Computing and IT skills have become fundamental to the way we live, work, socialise and play. This degree course opens up the world of technology and an array of exciting career opportunities. It will help you to become a confident user and manager of information technologies; to administer and manage network or database systems; and to develop new software solutions to meet specific market or organisational needs.\n\nKey features of the course\n\n* A flexible degree with a choice of routes\n* Focus on computer science, digital technologies, software development, web development, or networking\n* Increase your employability in a wide range of sectors, including finance, government, health, education, the voluntary sector, business, gaming and commerce",
       "content2" : "**Stage 1 (120 credits)**\n\nYou’ll gain an understanding of concepts, techniques and issues encountered in computing and IT; covering topics such as programming, networking and operating systems. You’ll also develop key employability skills and study some mathematics – your choice of module will depend on your confidence and experience. By the end of this stage, you’ll have built a solid foundation for further study.\n\nCompulsory modules (90 credits)\n\n* My digital life\n* My digital life takes you on a journey from the origins of information technology through to the familiar computers of today, and on to tomorrow’s radical technologies.\n\nTechnologies in practice\nStudy three tasters in computing and IT – robotics, networking, and Linux – to develop the skills needed if you are considering future employment in this industry.\n\nOptional module (30 credits)\n\nSelect one of:\n\n* Discovering mathematics\n* Essential mathematics 1\n\n**Stages 2 and 3 (240 credits)**\n\nAt Stages 2 and 3 you’ll deepen your knowledge, understanding and skills in subject areas that suit your needs and interests, choosing from computer science, digital technologies, networking (CCNA), software development, and web development. You’ll conclude your degree with an individual project on a topic of your choice which you’ll research, develop and write up – presenting your findings in a substantial portfolio report that you can show employers.\n\nPlease note: if you choose the networking (CCNA) route you will be required to attend four UK-based day schools to gain hands-on practical experience of configuring networks.",
-      "credits" : "240",
+      "creditFee" : "12",
       "endDate" : "2019-01-25",
       "featuredImage" : "-K_AIizYA9ndMdSQjLbJ",
+      "fees" : "Fees details... Praesent interdum risus quis pellentesque vulputate. Phasellus luctus suscipit lectus. Nam id feugiat turpis. Vestibulum elementum gravida enim sit amet aliquam. Nulla accumsan, sapien ac pretium euismod, mi mi convallis neque, non aliquet nulla felis in nisi. Pellentesque suscipit dui eu gravida fringilla. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam ante tortor, elementum eget magna non, sodales condimentum quam. Suspendisse rutrum augue ut urna vulputate, eu venenatis metus sollicitudin. Nam pellentesque non augue et ullamcorper. Integer pretium, tortor non sodales blandit, felis lacus venenatis quam, eget consequat enim ipsum id justo. Praesent suscipit, tellus ac pulvinar suscipit, purus lectus porttitor tortor, congue vulputate sem ante at ipsum. Phasellus et felis id nisl condimentum eleifend et eu nibh. Nulla maximus libero sed elit efficitur, eget consequat mauris malesuada. Aenean lobortis lectus sed vulputate tincidunt.\n\nCurabitur ac ante vel augue posuere iaculis sit amet in mi. Donec tortor est, venenatis at faucibus id, placerat ut ipsum. Morbi ullamcorper, orci et facilisis feugiat, tellus risus varius ante, non varius tortor mauris a eros. Curabitur eu magna id nibh faucibus volutpat sed vel lectus. Etiam pellentesque magna sapien, sed porta nibh scelerisque vel. Morbi at quam eget orci tempor vehicula. Nunc sit amet magna faucibus, aliquam velit et, suscipit nunc. Ut maximus, tellus non lacinia posuere, velit tellus euismod purus, non malesuada tellus est in quam.",
       "level" : "-K_Oi5JrgyFveu6_fZ8Y",
+      "registrationFee" : "200",
+      "requirements" : "Some requirements text... Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu laoreet dui. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In vel consequat tellus, vitae tempus leo. Donec vestibulum condimentum odio. Nam sed nibh vel lacus iaculis ornare quis vel justo. Aliquam erat ipsum, elementum elementum porta eu, vehicula eu sapien. Nulla convallis lacus at ipsum suscipit, quis condimentum erat aliquam. Fusce vel auctor urna. Etiam eget dui sit amet dui sagittis fringilla ac eget libero. Pellentesque nec malesuada neque, eget mattis dolor. Morbi ipsum erat, euismod aliquet neque et, pretium venenatis justo. Phasellus at nunc et metus rhoncus rutrum vitae a sem. Sed sollicitudin nulla eget nulla faucibus ullamcorper. Morbi id feugiat nisl. Aenean sagittis blandit nulla, sagittis rutrum dui hendrerit ac.\n\nProin fringilla lacus non leo dignissim, finibus egestas augue luctus. In et ullamcorper neque. Sed sodales sapien elit, sed elementum lorem laoreet at. Cras dictum odio non elit pharetra gravida. Sed gravida nisl eget lorem tincidunt, eu lacinia felis mattis. Sed aliquet augue ut magna aliquet porttitor. Ut porttitor tellus non metus malesuada accumsan vitae non nisl. Pellentesque et elit id felis accumsan gravida at lacinia mauris. Vivamus mattis nisl in nibh fringilla, sit amet iaculis nisl facilisis. Vestibulum ut interdum dolor.\n\nProin dapibus vulputate arcu, non volutpat sem. Morbi id tincidunt ligula. Ut turpis lacus, lacinia quis lacus a, aliquet feugiat mauris. Ut fringilla dolor at sem ultricies, in lobortis tortor tristique. Curabitur ac arcu ac ligula finibus consectetur ut in tellus. Proin ac elit risus. Nulla facilisi. Proin sollicitudin sem sapien, eget gravida velit dignissim ac. Sed non condimentum ipsum. Suspendisse mattis ante non orci consequat consectetur. Vestibulum lectus lectus, molestie ac ipsum et, aliquam fermentum nibh.",
       "slug" : "computing-and-it",
-      "startDate" : "2017-02-01",
+      "startDate" : "2017-01-01",
       "status" : "active",
+      "subjects" : [ "-K_PEDBO5Ti-288FI1j2", "-K_PDRnIogzqrzpisaPH", "-K_PENmccPL4eLIw2HIk", "-K_PERFGlB6EDgHucMrH" ],
       "title" : "Computing and IT"
     },
     "-KZzlMVCEQ2wMgzeezuQ" : {
@@ -478,7 +482,6 @@
   "subjects" : {
     "-KYdDowIweDb-Pb-wgOv" : {
       "code" : "MA1",
-      "content" : "HO HO HO!",
       "content1" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula mauris sodales metus sodales, nec pharetra ipsum gravida. Cras malesuada faucibus orci, sit amet sagittis turpis efficitur sed. Aliquam ut dui posuere, vestibulum ex et, posuere diam. Maecenas luctus suscipit turpis id fermentum. Fusce mattis mi erat, nec venenatis ante fringilla id. Aliquam sit amet justo eleifend, varius magna eget, tincidunt velit. Maecenas varius fringilla orci, ut imperdiet odio porta interdum. Aliquam rutrum est id mi pharetra fringilla. Integer vel tempor enim. Maecenas tempus tincidunt neque a eleifend. Suspendisse tempor ante ligula. Maecenas eget ex tortor. Curabitur dapibus dolor eu dapibus ultrices. Curabitur pellentesque massa volutpat, viverra ipsum et, tristique sem. Ut sed ante eu odio iaculis venenatis.\n\nDonec ipsum leo, bibendum eu eros nec, accumsan facilisis velit. Integer cursus sagittis euismod. Nulla quis erat vel neque gravida commodo in at sem. Ut accumsan quam odio, et vehicula velit hendrerit tincidunt. Nunc scelerisque dui vitae enim euismod sagittis. Vivamus nec gravida odio. In lobortis enim non accumsan feugiat.",
       "credits" : "6",
       "slug" : "maths-i",
@@ -555,14 +558,15 @@
     "jXV6ugDA2WOAVIoNOlpnncsmp0C2" : {
       "info" : {
         "address" : "tst",
-        "city" : "Alicante",
+        "city" : "Barcelona",
+        "country" : "Spain",
         "displayName" : "Joan Mira",
         "email" : "joanmira@gmail.com",
-        "firstName" : "Joan",
-        "lastName1" : "Mira",
-        "lastName2" : "Martos",
+        "firstName" : "Jason",
+        "lastName1" : "Bourne",
+        "lastName2" : "",
         "level" : 5,
-        "postcode" : "03008"
+        "postcode" : "28080"
       },
       "status" : "active"
     },

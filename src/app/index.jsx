@@ -69,15 +69,19 @@ ReactDOM.render(
 					<Route path="/account/notifications" component={AccountNotifications} onEnter={requireAuth} />
 					<Route path="/account/record" component={AccountRecord} onEnter={requireAuth} />
 				<Route path="/courses" component={Listing} />
-					<Route path="/courses/:id" component={Course} />
+					<Route path="/courses/:slug" component={Course} />
+						<Route path="/courses/:slug/register" component={Course} />
+						<Route path="/courses/:slug/subjects" component={Course} />
+						<Route path="/courses/:slug/fees" component={Course} />
+						<Route path="/courses/:slug/requirements" component={Course} />
 				<Route path="/subjects" component={Listing} />
-					<Route path="/subjects/:id" component={Subject} />
+					<Route path="/subjects/:slug" component={Subject} />
 				<Route path="/modules" component={Listing} />
-					<Route path="/modules/:id" component={Module} />
+					<Route path="/modules/:slug" component={Module} />
 				<Route path="/activities" component={Listing} />
-					<Route path="/activities/:id" component={Activity} />
+					<Route path="/activities/:slug" component={Activity} />
 				<Route path="/news" component={Listing} />
-					<Route path="/news/:id" component={Post} />
+					<Route path="/news/:slug" component={Post} />
 				<Route path="/about" component={Page} />
 					<Route path="/about/research" component={Page} />
 					<Route path="/about/people" component={Page} />

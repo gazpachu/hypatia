@@ -4,8 +4,10 @@
 		text-align: center;
 		font-size: 13px;
     	color: $grey;
+		padding: 0 20px;
 		
 		.icon { margin: 0 5px }
+		span { font-weight: bold }
 	}
 	
 	.btn-enroll {
@@ -29,8 +31,39 @@
 			display: inline-block;
 			padding: 0 10px;
 			
-			&:hover {
-				text-decoration: underline;
+			&.active {
+				font-weight: bold;
+			}
+		}
+	}
+	
+	.subjects-table {
+		width: 100%;
+		
+		th {
+			background-color: $blue;
+			color: $white;
+		}
+		
+		th, td {
+			border-bottom: 1px solid $light-grey;
+			padding: 5px;
+		}
+		
+		tr:hover { background-color: $very-light-gray }
+		
+		input { margin-right: 5px }
+	}
+	
+	.info {
+		margin-bottom: 20px;
+		
+		span {
+			font-weight: bold;
+			margin-right: 10px;
+			
+			&:last-child {
+				margin-left: 10px;
 			}
 		}
 	}

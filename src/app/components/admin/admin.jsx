@@ -16,7 +16,7 @@ import AdminUsers from './adminUsers';
 import Helpers from '../common/helpers';
 import Icon from '../common/lib/icon/icon';
 import Add from '../../../../static/svg/add.svg';
-import Calendar from '../../../../static/svg/calendar.svg';
+import Calendar from '../../../../static/svg/calendar2.svg';
 import User from '../../../../static/svg/users.svg';
 import Level from '../../../../static/svg/level.svg';
 import Group from '../../../../static/svg/group.svg';
@@ -405,8 +405,8 @@ class Admin extends Component {
 		const title = (this.state.selectedItem && this.state.selectedItem.title) ? this.state.selectedItem.title : '';
 		const iconHeading = (this.state.type === 'courses') ? <Icon glyph={Course} /> : (this.state.type === 'subjects') ? <Icon glyph={Subject} /> : (this.state.type === 'modules') ? <Icon glyph={Module} /> : <Icon glyph={Activity} />;
 		const code = (this.state.selectedItem && this.state.selectedItem.code) ? this.state.selectedItem.code : '';
-		const price = (this.state.selectedItem && this.state.selectedItem.price) ? this.state.selectedItem.price : '';
-		const credits = (this.state.selectedItem && this.state.selectedItem.credits) ? this.state.selectedItem.credits : '';
+		const registrationFee = (this.state.selectedItem && this.state.selectedItem.registrationFee) ? this.state.selectedItem.registrationFee : '';
+		const creditFee = (this.state.selectedItem && this.state.selectedItem.creditFee) ? this.state.selectedItem.creditFee : '';
 		const date = (this.state.selectedItem && this.state.selectedItem.date) ? moment(this.state.selectedItem.date) : null;
 		const startDate = (this.state.selectedItem && this.state.selectedItem.startDate) ? moment(this.state.selectedItem.startDate) : null;
 		const endDate = (this.state.selectedItem && this.state.selectedItem.endDate) ? moment(this.state.selectedItem.endDate) : null;
@@ -492,7 +492,6 @@ class Admin extends Component {
 							
 							<input type="text" className={classNames('input-field title-input', {hidden: (this.state.type === 'users')})} ref="title-input" placeholder={(this.state.type === 'activities') ? 'Activity title' : this.state.type.slice(0, -1).capitalize() + ' title'} value={title} onChange={(event) => this.updateInput(event, 'title')} />
 							<input type="text" className={classNames('input-field code-input', {hidden: (this.state.type === 'users' || this.state.type === 'posts' || this.state.type === 'pages' || this.state.type === 'files')})} ref="code-input" placeholder="Code" value={code} onChange={(event) => this.updateInput(event, 'code')} />
-							<input type="text" className={classNames('input-field price-input', {visible: (this.state.type === 'courses')})} ref="price-input" placeholder="Price" value={price} onChange={(event) => this.updateInput(event, 'price')} />
 							<div className={classNames('float-right', {hidden: (this.state.type !== 'posts')})}>
 								<Icon glyph={Calendar} className="icon calendar" /><DatePicker className="input-field date-input" selected={date} date={date} placeholderText="Date" isClearable={true} onChange={(date) => this.updateDate(date, 'date')} dateFormat="YYYY-MM-DD" popoverAttachment="bottom right" popoverTargetAttachment="bottom right" popoverTargetOffset="0px 0px" />
 							</div>
@@ -512,19 +511,21 @@ class Admin extends Component {
 							
 							<div className="clearfix">
 								<div className={classNames('dates-wrapper', {hidden: (this.state.type !== 'courses') && (this.state.type !== 'activities')})}>
-									<label>From</label><Icon glyph={Calendar} className="icon calendar" /><DatePicker className="input-field date-input" selected={startDate} placeholderText="Date" isClearable={true} selectsStart startDate={startDate} endDate={endDate} onChange={(date) => this.updateDate(date, 'startDate')} dateFormat="YYYY-MM-DD" />
-									<label className="date-label">Until</label><Icon glyph={Calendar} className="icon calendar" /><DatePicker className="input-field date-input" selected={endDate} placeholderText="Date" isClearable={true} selectsEnd startDate={startDate} endDate={endDate} onChange={(date) => this.updateDate(date, 'endDate')} dateFormat="YYYY-MM-DD" />
+									<label>{this.state.type === 'courses' ? 'Enrolment from' : 'From'}</label><Icon glyph={Calendar} className="icon calendar" /><DatePicker className="input-field date-input" selected={startDate} placeholderText="Date" isClearable={true} selectsStart startDate={startDate} endDate={endDate} onChange={(date) => this.updateDate(date, 'startDate')} dateFormat="YYYY-MM-DD" />
+									<label className="date-label">until</label><Icon glyph={Calendar} className="icon calendar" /><DatePicker className="input-field date-input" selected={endDate} placeholderText="Date" isClearable={true} selectsEnd startDate={startDate} endDate={endDate} onChange={(date) => this.updateDate(date, 'endDate')} dateFormat="YYYY-MM-DD" />
 									<div className={classNames('grade-wrapper', {hidden: (this.state.type !== 'activities')})}>
 										<label className="date-label">Grade</label><Icon glyph={Calendar} className="icon calendar" /><DatePicker className="input-field date-input" selected={gradeDate} placeholderText="Date" isClearable={true} onChange={(date) => this.updateDate(date, 'gradeDate')} dateFormat="YYYY-MM-DD" />
 									</div>
 								</div>
-								<div className={classNames('credits-wrapper', {hidden: (this.state.type !== 'courses') && (this.state.type !== 'subjects')})}>
-									<label>Credits</label><input type="text" className="input-field credits-input" ref="credits-input" placeholder="Credits" value={credits} onChange={(event) => this.updateInput(event, 'credits')} />
+								<div className={classNames('fees-wrapper', {hidden: (this.state.type !== 'courses')})}>
+									<label>Reg. fee €</label><input type="number" min="0" className="input-field fee-input" ref="registration-input" value={registrationFee} onChange={(event) => this.updateInput(event, 'registrationFee')} />
+									<label>Credit fee €</label><input type="number" min="0" className="input-field fee-input" ref="credits-input" value={creditFee} onChange={(event) => this.updateInput(event, 'creditFee')} />
 								</div>
 							</div>
 							
 							<div className={classNames({hidden: (this.state.type !== 'courses')})}>
 								<Select2 className="select-items course-level-select" style={{width: '70%'}} data={levels} ref="course-level-select" value={(this.state.selectedItem && this.state.selectedItem.level) ? this.state.selectedItem.level : ''} options={{placeholder: 'Course level', allowClear: false}} onChange={(event) => this.updateSelect(event.currentTarget, 'level')} />
+								<Select2 style={{width: '100%'}} multiple data={subjects} value={(this.state.selectedItem && this.state.selectedItem.subjects) ? this.state.selectedItem.subjects : []} options={{placeholder: 'Subjects...', allowClear: true}} onChange={(event) => this.updateMultiSelect(event.currentTarget, 'subjects')} />
 							</div>
 							
 							<div className={classNames('clearfix', {hidden: (this.state.type === 'levels') || (this.state.type === 'users') || (this.state.type === 'groups') || (this.state.type === 'files')})}>
@@ -558,6 +559,18 @@ class Admin extends Component {
 								</div>
 							</div>
 							
+							<div className={classNames({hidden: (this.state.type !== 'courses')})}>
+								<h4 className="heading" ref="editor-fees-heading" onClick={() => (this.toggleElement('editor-fees-heading'), this.toggleElement('editor-fees-wrapper'))}>Fees<Icon glyph={Forward} /></h4>
+								<div className="editor-wrapper" ref="editor-fees-wrapper">
+									<SimpleMDE ref="editor-fees" value={(this.state.selectedItem && this.state.selectedItem.fees) ? this.state.selectedItem.fees : ''} onChange={(event) => this.updateItem(event, 'fees')} />
+								</div>
+
+								<h4 className="heading" ref="editor-requirements-heading" onClick={() => (this.toggleElement('editor-requirements-heading'), this.toggleElement('editor-requirements-wrapper'))}>Requirements<Icon glyph={Forward} /></h4>
+								<div className="editor-wrapper" ref="editor-requirements-wrapper">
+									<SimpleMDE ref="editor-requirements" value={(this.state.selectedItem && this.state.selectedItem.requirements) ? this.state.selectedItem.requirements : ''} onChange={(event) => this.updateItem(event, 'requirements')} />
+								</div>
+							</div>
+							
 							<div className={classNames({hidden: (this.state.type !== 'files')})}>
 								<div>
 									{(this.state.selectedItem && this.state.selectedItem.url) ? <div>
@@ -584,9 +597,9 @@ class Admin extends Component {
 								</div>
 							</div>
 							
-							<h4 className="heading" ref="editor4-heading" onClick={() => (this.toggleElement('editor4-heading'), this.toggleElement('editor4-wrapper'))}>Private notes<Icon glyph={Forward} /></h4>
-							<div className="editor-wrapper" ref="editor4-wrapper">
-								<SimpleMDE ref="editor4" value={(this.state.selectedItem && this.state.selectedItem.notes) ? this.state.selectedItem.content4 : ''} onChange={(event) => this.updateItem(event, 'content4')} />
+							<h4 className="heading" ref="editor-notes-heading" onClick={() => (this.toggleElement('editor-notes-heading'), this.toggleElement('editor-notes-wrapper'))}>Private notes<Icon glyph={Forward} /></h4>
+							<div className="editor-wrapper" ref="editor-notes-wrapper">
+								<SimpleMDE ref="editor-notes" value={(this.state.selectedItem && this.state.selectedItem.notes) ? this.state.selectedItem.notes : ''} onChange={(event) => this.updateItem(event, 'notes')} />
 							</div>
 							
 							<label className="checkbox-label">Active </label><input type="checkbox" className="status-checkbox" ref="status-checkbox" checked={status} onChange={(event) => this.updateCheckbox(event, 'status')} />

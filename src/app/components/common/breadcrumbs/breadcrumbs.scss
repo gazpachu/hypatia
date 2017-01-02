@@ -22,10 +22,6 @@
 		display: inline-block;
 		margin-right: 5px;
 		
-		&:hover {
-			text-decoration: underline;
-		}
-		
 		&:after {
 			content: '>';
 			float: right;

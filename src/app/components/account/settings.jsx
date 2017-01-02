@@ -135,8 +135,8 @@ class Settings extends Component {
 							<input type="text" name="displayName" className="display-name" placeholder="Display name" value={this.state.info.displayName} onChange={this.handleChange} />
 							<input type="email" name="email" ref="email" placeholder="Email" value={this.state.info.email} onChange={this.handleChange} />
 							
-							<input type="password" ref="password" name="password" className="password" placeholder="New password" value={this.state.password} onChange={this.handleChange} />
-							<input type="password" ref="password2" name="password2" placeholder="Repeat password" value={this.state.password2} onChange={this.handleChange} />
+							<input type="password" ref="password" name="password" className="password" placeholder="New password" value={this.state.password} />
+							<input type="password" ref="password2" name="password2" placeholder="Repeat password" value={this.state.password2} />
 							<button className="btn btn-primary btn-xs js-btn-password float-right" onClick={() => this.updatePassword()}>Update password</button>
 							<div className="loader-small float-right js-password-loader"></div>
 						</div>

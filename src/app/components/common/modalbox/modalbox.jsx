@@ -24,8 +24,8 @@ class ModalBox extends Component {
 			<div className="modal-box-wrapper js-modal-box-wrapper">
 				<div className="modal-box">
 					<h4 className="modal-box-title">{this.props.title}</h4>
-					<button className="btn btn-outline btn-xs" onClick={this.closeModalBox.bind(this)}>cancel</button>
-					<button className="btn btn-primary btn-xs" onClick={this.submitModalBox.bind(this)}>accept</button>
+					<button className="btn btn-outline" onClick={this.closeModalBox.bind(this)}>cancel</button>
+					<button className="btn btn-primary" onClick={this.submitModalBox.bind(this)}>accept</button>
 				</div>
 				<div className="overlay" />
 			</div>

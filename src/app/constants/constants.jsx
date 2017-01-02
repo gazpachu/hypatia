@@ -30,6 +30,7 @@ export const ITEM_REMOVED = 'Item removed!';
 export const CONFIRM_DELETE = 'Are you sure you want to delete';
 export const NEED_TITLE = 'You need at least a title';
 export const WAIT_FINISH_OPERATION = 'Please wait until the current operation ends';
+export const CONFIRM_ENROL = 'Are you sure you want to enrol in the select subjects?';
 export const ENROLLED_COURSE = 'You are now enrolled in this course!';
 
 // User level

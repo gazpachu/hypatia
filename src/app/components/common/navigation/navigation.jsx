@@ -146,7 +146,7 @@ class Navigation extends Component {
 		let itemActive = (this.props.location.pathname === item.link) ? 'active' : '',
 			hasChildren = (item.children) ? 'has-children' : '';
 		
-		return (!item.level || (item.level && item.level <= this.props.userData.level)) ? <li key={i} className={`nav-item ${hasChildren}`}>
+		return (!item.level || (item.level && this.props.userData.info && item.level <= this.props.userData.info.level)) ? <li key={i} className={`nav-item ${hasChildren}`}>
 			{(item.icon) ? <Icon glyph={item.icon} className="icon item-icon" /> : ''}
 			{(item.children) ? <span className="title" onClick={this.clickItem}>{item.title}<Icon glyph={Forward} className="icon arrow"/></span> : <Link to={item.link} className="title" onClick={this.props.toggleNav}>{item.title}</Link>}
 			{(item.children) ? <ul className="nav-children">

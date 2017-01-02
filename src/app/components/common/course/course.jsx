@@ -5,6 +5,7 @@ import { firebase, helpers } from 'redux-react-firebase';
 import { Link } from 'react-router';
 import * as CONSTANTS from '../../../constants/constants';
 import classNames from 'classnames';
+import ModalBox from '../../common/modalbox/modalbox';
 import showdown from 'showdown';
 import moment from 'moment';
 import $ from 'jquery';
@@ -24,8 +25,10 @@ const {isLoaded, isEmpty, dataToJS} = helpers;
 
 @firebase(
   	props => ([
-    	`courses#orderByChild=slug&equalTo=${window.location.href.substr(window.location.href.lastIndexOf('/') + 1)}`,
+    	`courses#orderByChild=slug&equalTo=${props.params.slug}`,
 		'levels',
+		'subjects',
+		'users',
 		'files'
   	])
 )
@@ -33,6 +36,8 @@ const {isLoaded, isEmpty, dataToJS} = helpers;
   	(state, props) => ({
     	course: dataToJS(state.firebase, 'courses'),
 		levels: dataToJS(state.firebase, 'levels'),
+		subjects: dataToJS(state.firebase, 'subjects'),
+		users: dataToJS(state.firebase, 'users'),
 		files: dataToJS(state.firebase, 'files')
   	})
 )
@@ -40,6 +45,11 @@ class Course extends Component {
     
 	constructor(props) {
 		super(props);
+		
+		this.state = {
+			selectedSubjects: [],
+			modalTitle: ''
+		}
 	}
 	
 	componentDidMount() {
@@ -47,31 +57,67 @@ class Course extends Component {
 		$('.js-main').removeClass().addClass('main js-main course-page');
 	}
 	
-	enroll(courseID, enrolled) {
-		if (!enrolled) {
-			let userCourses = this.props.userData.courses || [];
-			userCourses.push(courseID)
+	enrolConfirmation() {
+		this.setState({ modalTitle: CONSTANTS.CONFIRM_ENROL }, function() {
+			$('.js-modal-box-wrapper').show().animateCss('fade-in');
+		});
+	}
+	
+	modalBoxAnswer(answer) {
+		if (answer === 'accept') {
+			let courseID = null;
+			Object.keys(this.props.course).map(function(key) {
+				courseID = key;
+			});
+			
+			let subjectsAdded = 0;
+			const subjectData = {
+				finalGrade: '',
+				status: 'enrolled'
+			}
 
 			$(this.refs['btn-enroll']).hide();
 			$(this.refs['loader-enroll']).show();
-			this.props.firebase.set(`users/${this.props.user.uid}/courses`, userCourses)
-				.then(function(response) {
-					$(this.refs['btn-enroll']).show();
-					$(this.refs['loader-enroll']).hide();
-					this.props.setNotification({message: CONSTANTS.ENROLLED_COURSE, type: 'success'});
-				}.bind(this), function(error) {
-					$(this.refs['btn-enroll']).show();
-					$(this.refs['loader-enroll']).hide();
-					this.props.setNotification({message: String(error), type: 'error'});
-				}.bind(this));
+
+			for (let i=0; i<this.state.selectedSubjects.length; i++) {
+				this.props.firebase.set(`users/${this.props.user.uid}/courses/${courseID}/${this.state.selectedSubjects[i]}`, subjectData)
+					.then(function(response) {
+						subjectsAdded++;
+						if (subjectsAdded === this.state.selectedSubjects.length) {
+							$(this.refs['btn-enroll']).show();
+							$(this.refs['loader-enroll']).hide();
+							this.props.setNotification({message: CONSTANTS.ENROLLED_COURSE, type: 'success'});
+							this.setState({selectedSubjects: []});
+						}
+					}.bind(this), function(error) {
+						$(this.refs['btn-enroll']).show();
+						$(this.refs['loader-enroll']).hide();
+						this.props.setNotification({message: String(error), type: 'error'});
+					}.bind(this));
+			}
 		}
+	}
+	
+	handleChange(event) {
+		let selectedSubjects = this.state.selectedSubjects;
+		
+		if (event.target.checked) selectedSubjects.push(event.target.value);
+		else {
+			let index = -1;
+			for (let i=0; i<selectedSubjects.length; i++) if (selectedSubjects[i] === event.target.value) index = i;
+			if (index >= 0) selectedSubjects.splice(index, 1);
+		}
+		this.setState({ selectedSubjects });
 	}
 	
 	render() {
 		let course = null,
 			featuredImage = null,
-			enrolled = false,
-			courseID = null;
+			enrollmentOpened = false,
+			courseID = null,
+			subjects = null,
+			totalCredits = 0,
+			section = this.props.location.pathname.substr(this.props.location.pathname.lastIndexOf('/') + 1);
 		
 		if (isLoaded(this.props.course) && isLoaded(this.props.files) && isLoaded(this.props.userData) && !isEmpty(this.props.course) && !isEmpty(this.props.files) && !isEmpty(this.props.userData)) {	
 			Object.keys(this.props.course).map(function(key) {
@@ -84,11 +130,29 @@ class Course extends Component {
 					}.bind(this));
 				}
 				
-				if (this.props.userData.courses) {
-					for (let i=0; i<this.props.userData.courses.length; i++) {
-						if (this.props.userData.courses[i] === courseID) enrolled = true;
-					}
+				if (moment().isBetween(moment(course.startDate), moment(course.endDate), 'days', '[]')) enrollmentOpened = true;
+			}.bind(this));
+		}
+		
+		if (course && course.subjects && isLoaded(this.props.subjects) && !isEmpty(this.props.subjects) && isLoaded(this.props.users) && !isEmpty(this.props.users)) {
+			subjects = course.subjects.map(function(item, i) {
+				const subject = this.props.subjects[course.subjects[i]];
+				let teachers = '';
+				totalCredits += parseInt(subject.credits);
+				
+				if (subject.teachers) {
+					teachers = subject.teachers.map(function(teacher, i) {
+						return <div key={teacher}>{this.props.users[teacher].info.displayName}</div>;
+					}.bind(this));  
 				}
+				
+				return <tr key={item}>
+							<td>{subject.code}</td>
+							<td><Link to={`/subjects/${subject.slug}`}>{subject.title}</Link></td>
+							<td>{teachers}</td>
+							<td>{subject.credits}</td>
+							<td>{this.props.userData.courses && this.props.userData.courses[courseID][item] ? this.props.userData.courses[courseID][item].status : subject.status === 'active' && enrollmentOpened ? <span><input type="checkbox" value={item} onChange={(event) => this.handleChange(event)} />Enrol now</span> : 'unavailable'}</td>
+						</tr>
 			}.bind(this));
 		}
 		
@@ -97,19 +161,16 @@ class Course extends Component {
             	{course ? <div className="page-wrapper">
 					<h1 className="title">{course.title}</h1>
 					<div className="meta">
-						<Icon glyph={Level} />{this.props.levels[course.level].title} ({this.props.levels[course.level].code}) ({course.credits} Credits) <Icon glyph={Calendar} /><span className="date">From {moment(course.startDate).format('D MMMM YYYY')} until {moment(course.endDate).format('D MMMM YYYY')}</span>
+						<Icon glyph={Level} />{this.props.levels[course.level].title} ({this.props.levels[course.level].code}) ({totalCredits} Credits) <Icon glyph={Calendar} />Enrollment from <span className="date">{moment(course.startDate).format('D MMMM YYYY')}</span> until <span className="date">{moment(course.endDate).format('D MMMM YYYY')}</span>
 					</div>
-					<button ref="btn-enroll" className={classNames('btn btn-primary btn-enroll', {disabled: enrolled})} onClick={() => this.enroll(courseID, enrolled)}>{enrolled ? 'You are already enrolled to this course' : 'Enrol now!'}</button>
-					<div ref="loader-enroll" className="loader-small loader-enroll"></div>
+					{section !== 'subjects' && enrollmentOpened ? <button className="btn btn-primary btn-enroll"><Link to={`/courses/${course.slug}/subjects`}>Enrol now!</Link></button> : ''}
 					<ul className="course-nav">
-						<li className="course-nav-item"><Link to={`/courses/${course.slug}`}>Summary</Link></li>
-						<li className="course-nav-item"><Link to={`/courses/${course.slug}/subjects`}>Subjects</Link></li>
-						<li className="course-nav-item"><Link to={`/courses/${course.slug}/fees`}>Fees</Link></li>
-						<li className="course-nav-item"><Link to={`/courses/${course.slug}/requirements`}>Requirements</Link></li>
-						<li className="course-nav-item"><Link to={`/courses/${course.slug}/careers`}>Careers</Link></li>
-						<li className="course-nav-item"><Link to={`/courses/${course.slug}/news`}>News</Link></li>
+						<li className={classNames('course-nav-item', {active: section === this.props.params.slug})}><Link to={`/courses/${course.slug}`}>Summary</Link></li>
+						<li className={classNames('course-nav-item', {active: section === 'subjects', hidden: !subjects})}><Link to={`/courses/${course.slug}/subjects`}>Subjects</Link></li>
+						<li className={classNames('course-nav-item', {active: section === 'fees'})}><Link to={`/courses/${course.slug}/fees`}>Fees</Link></li>
+						<li className={classNames('course-nav-item', {active: section === 'requirements'})}><Link to={`/courses/${course.slug}/requirements`}>Requirements</Link></li>
 					</ul>
-					<div className={classNames('columns', {'single-column': (!course.content2 && !course.content2)})}>
+					<div className={classNames('columns', {'single-column': (!course.content2 && !course.content2), hidden: (section !== this.props.params.slug)})}>
 						<div className="column page-content">
 							{featuredImage ? <img className="featured-image" src={featuredImage.url} /> : ''}
 							<div className="content" dangerouslySetInnerHTML={{__html: CONSTANTS.converter.makeHtml(course.content1)}}></div>
@@ -121,7 +182,40 @@ class Course extends Component {
 							<div className="content" dangerouslySetInnerHTML={{__html: CONSTANTS.converter.makeHtml(course.content3)}}></div>
 						</div> : ''}
 					</div>
+         			<div className={classNames('columns single-column', {hidden: (section !== 'subjects')})}>
+         				<div className="column page-content">
+							<table className="subjects-table">
+								<thead><tr>
+									<th>Code</th>
+									<th>Subject</th>
+									<th>Teacher(s)</th>
+									<th>Credits</th>
+									<th>Availability</th>
+								</tr></thead>
+								<tbody>
+									{subjects}
+								</tbody>
+							</table>
+							{enrollmentOpened && this.state.selectedSubjects.length > 0 ? <button ref="btn-enroll" className="btn btn-primary btn-enroll float-right" onClick={() => this.enrolConfirmation()}>Proceed with the registration</button> : ''}
+							<div ref="loader-enroll" className="loader-small loader-enroll"></div>
+						</div>
+         			</div>
+         			<div className={classNames('columns single-column', {hidden: (section !== 'fees')})}>
+         				<div className="column page-content">
+         					<div className="info">
+         						<span>Registration fee: </span>{course.registrationFee}€
+         						<span>Credits fee: </span> {course.creditFee}€
+         					</div>
+							<div className="content" dangerouslySetInnerHTML={{__html: CONSTANTS.converter.makeHtml(course.fees)}}></div>
+         				</div>
+         			</div>
+         			<div className={classNames('columns single-column', {hidden: (section !== 'requirements')})}>
+         				<div className="column page-content">
+							<div className="content" dangerouslySetInnerHTML={{__html: CONSTANTS.converter.makeHtml(course.requirements)}}></div>
+         				</div>
+         			</div>
           		</div> : <div className="loader-small"></div>}
+          		<ModalBox title={this.state.modalTitle} answer={this.modalBoxAnswer.bind(this)} />
             </section>
 		)
 	}

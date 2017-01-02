@@ -57,6 +57,10 @@
 					}
 				}
 			}
+			
+			.select2 {
+				margin-bottom: 20px;
+			}
 		}
 	}
 	
@@ -118,6 +122,11 @@
 		border-radius: 5px;
 		padding: 20px;
 		
+		.loader-small {
+			float: right;
+			display: none;
+		}
+		
 		.icon {
 			margin-right: 10px;
 		}
@@ -134,10 +143,6 @@
 		}
 	}
 	
-	.select2 {
-		margin-bottom: 20px;
-	}
-	
 	.input-field {
 		width: 100%;
 		margin-bottom: 10px;
@@ -151,24 +156,18 @@
 		width: 100px;
 	}
 	
-	.credits-input {
-		margin-left: 10px;
-		width: 80px;
+	.fee-input {
+		margin: 0 10px 0 5px;
+		width: 40px;
+		font-size: 14px;
 	}
 	
-	.block:not(.activities) .dates-wrapper {
-		float: left;
-		width: 75%;
+	.currency {
+		margin-left: 10px;
 	}
 	
 	.grade-wrapper {
 		display: inline-block;
-	}
-	
-	.credits-wrapper {
-		width: 25%;
-		float: right;
-		text-align: right;
 	}
 	
 	.icon.calendar {
@@ -201,12 +200,6 @@
 		}
 	}
 	
-	.block.courses {
-		.code-input {
-			width: 7%;
-		}
-	}
-	
 	.code-input {
 		width: 18%;
 		float: right;
@@ -224,10 +217,6 @@
 	.btn-featured-image,
 	.date-label {
 		margin-left: 10px;
-	}
-	
-	.loader-small {
-		float: right;
 	}
 	
 	.footer-buttons {
@@ -308,6 +297,10 @@
 	.file-settings-block {
 		width: 70%;
 		float: left;
+		
+		.select2 {
+			margin-bottom: 10px;
+		}
 		
 		.btn-cancel {
 			display: none;
