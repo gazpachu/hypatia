@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import { firebase, helpers } from 'redux-react-firebase';
 import classNames from 'classnames';
 import { converter } from '../../../constants/constants';
+import { Link } from 'react-router';
 import moment from 'moment';
 import $ from 'jquery';
 import Icon from '../lib/icon/icon';
@@ -21,16 +22,20 @@ const {isLoaded, isEmpty, dataToJS} = helpers;
 
 @firebase(
   	props => ([
-    	`subjects#orderByChild=slug&equalTo=${window.location.href.substr(window.location.href.lastIndexOf('/') + 1)}`,
+    	`subjects#orderByChild=slug&equalTo=${props.params.slug}`,
 		'files',
-		'users'
+		'users',
+		'activities',
+		'modules'
   	])
 )
 @connect(
   	(state, props) => ({
     	subject: dataToJS(state.firebase, 'subjects'),
 		files: dataToJS(state.firebase, 'files'),
-		users: dataToJS(state.firebase, 'users')
+		users: dataToJS(state.firebase, 'users'),
+		activities: dataToJS(state.firebase, 'activities'),
+		modules: dataToJS(state.firebase, 'modules')
   	})
 )
 class Subject extends Component {
@@ -47,7 +52,10 @@ class Subject extends Component {
 	render() {
 		let subject = null,
 			featuredImage = null,
-			teachers = '';
+			activities = null,
+			modules = null,
+			teachers = '',
+			section = this.props.location.pathname.substr(this.props.location.pathname.lastIndexOf('/') + 1);
 		
 		if (isLoaded(this.props.subject) && isLoaded(this.props.files) && isLoaded(this.props.users) && !isEmpty(this.props.subject) && !isEmpty(this.props.files) && !isEmpty(this.props.users)) {	
 			Object.keys(this.props.subject).map(function(key) {
@@ -67,12 +75,41 @@ class Subject extends Component {
 			}.bind(this));
 		}
 		
+		if (subject && subject.activities && isLoaded(this.props.activities) && !isEmpty(this.props.activities)) {
+			activities = subject.activities.map(function(item, i) {
+				const activity = this.props.activities[subject.activities[i]];
+
+				return <tr key={item}>
+							<td>{activity.code}</td>
+							<td><Link to={`/activities/${activity.slug}`}>{activity.title}</Link></td>
+						</tr>
+			}.bind(this));
+		}
+		
+		if (subject && subject.modules && isLoaded(this.props.modules) && !isEmpty(this.props.modules)) {
+			modules = subject.modules.map(function(item, i) {
+				const module = this.props.modules[subject.modules[i]];
+
+				return <tr key={item}>
+							<td>{module.code}</td>
+							<td><Link to={`/modules/${module.slug}`}>{module.title}</Link></td>
+						</tr>
+			}.bind(this));
+		}
+		
 		return (
             <section className="page subject"> 
             	{subject ? <div className="page-wrapper">
 					<h1 className="title">{subject.title}</h1>
-					{teachers ? <div className="teacher"><Icon glyph={Professor} />{teachers}</div> : ''}
-					<div className={classNames('columns', {'single-column': (!subject.content2 && !subject.content2)})}>
+					<div className="meta">
+						<Icon glyph={Professor} />{teachers}
+					</div>
+					<ul className="horizontal-nav">
+						<li className={classNames('horizontal-nav-item', {active: section === this.props.params.slug})}><Link to={`/subjects/${subject.slug}`}>Summary</Link></li>
+						<li className={classNames('horizontal-nav-item', {active: section === 'modules', hidden: !modules})}><Link to={`/subjects/${subject.slug}/modules`}>Modules</Link></li>
+						<li className={classNames('horizontal-nav-item', {active: section === 'activities', hidden: !activities})}><Link to={`/subjects/${subject.slug}/activities`}>Activities</Link></li>
+					</ul>
+					<div className={classNames('columns', {'single-column': (!subject.content2 && !subject.content2), hidden: (section !== this.props.params.slug)})}>
 						<div className="column page-content">
 							{featuredImage ? <img className="featured-image" src={featuredImage.url} /> : ''}
 							<div className="content" dangerouslySetInnerHTML={{__html: converter.makeHtml(subject.content1)}}></div>
@@ -84,6 +121,32 @@ class Subject extends Component {
 							<div className="content" dangerouslySetInnerHTML={{__html: converter.makeHtml(subject.content3)}}></div>
 						</div> : ''}
 					</div>
+        			<div className={classNames('columns single-column', {hidden: (section !== 'modules')})}>
+         				<div className="column page-content">
+							<table>
+								<thead><tr>
+									<th>Code</th>
+									<th>Module</th>
+								</tr></thead>
+								<tbody>
+									{modules}
+								</tbody>
+							</table>
+						</div>
+         			</div>
+         			<div className={classNames('columns single-column', {hidden: (section !== 'activities')})}>
+         				<div className="column page-content">
+							<table>
+								<thead><tr>
+									<th>Code</th>
+									<th>Activity</th>
+								</tr></thead>
+								<tbody>
+									{activities}
+								</tbody>
+							</table>
+						</div>
+         			</div>
           		</div> : <div className="loader-small"></div>}
             </section>
 		)

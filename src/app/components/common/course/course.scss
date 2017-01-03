@@ -1,15 +1,5 @@
 .course {
 	
-	.meta  {
-		text-align: center;
-		font-size: 13px;
-    	color: $grey;
-		padding: 0 20px;
-		
-		.icon { margin: 0 5px }
-		span { font-weight: bold }
-	}
-	
 	.btn-enroll {
 		margin: 20px auto;
 		display: block;
@@ -19,40 +9,6 @@
 	.loader-enroll {
 		display: none;
 		margin: 20px auto;
-	}
-	
-	.course-nav {
-		list-style-type: none;
-		width: fit-content;
-		margin: 20px auto 0 auto;
-		padding: 0;
-		
-		.course-nav-item {
-			display: inline-block;
-			padding: 0 10px;
-			
-			&.active {
-				font-weight: bold;
-			}
-		}
-	}
-	
-	.subjects-table {
-		width: 100%;
-		
-		th {
-			background-color: $blue;
-			color: $white;
-		}
-		
-		th, td {
-			border-bottom: 1px solid $light-grey;
-			padding: 5px;
-		}
-		
-		tr:hover { background-color: $very-light-gray }
-		
-		input { margin-right: 5px }
 	}
 	
 	.info {

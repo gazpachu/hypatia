@@ -74,7 +74,7 @@ class Activity extends Component {
 					<h1 className="title">{activity.title}</h1>
 					{authors ? <div className="author"><Icon glyph={Professor} />{authors}</div> : ''}
 					<div className="meta">
-						<Icon glyph={Calendar} /><span className="date">From {moment(activity.startDate).format('D MMMM YYYY')} until {moment(activity.endDate).format('D MMMM YYYY')}</span>
+						<Icon glyph={Calendar} />From <span className="date">{moment(activity.startDate).format('D MMMM YYYY')}</span> until <span className="date">{moment(activity.endDate).format('D MMMM YYYY')}</span>
 					</div>
 					<div className={classNames('columns', {'single-column': (!activity.content2 && !activity.content2)})}>
 						<div className="column page-content">

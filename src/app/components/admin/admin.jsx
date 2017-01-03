@@ -503,6 +503,8 @@ class Admin extends Component {
 							
 							<div className={classNames({hidden: (this.state.type !== 'subjects')})}>
 								<Select2 style={{width: '100%'}} multiple data={users} value={(this.state.selectedItem && this.state.selectedItem.teachers) ? this.state.selectedItem.teachers : []} options={{placeholder: 'Teacher(s)...', allowClear: true}} onChange={(event) => this.updateMultiSelect(event.currentTarget, 'teachers')} />
+								<Select2 style={{width: '100%'}} multiple data={modules} value={(this.state.selectedItem && this.state.selectedItem.modules) ? this.state.selectedItem.modules : []} options={{placeholder: 'Modules...', allowClear: true}} onChange={(event) => this.updateMultiSelect(event.currentTarget, 'modules')} />
+								<Select2 style={{width: '100%'}} multiple data={activities} value={(this.state.selectedItem && this.state.selectedItem.activities) ? this.state.selectedItem.activities : []} options={{placeholder: 'Activities...', allowClear: true}} onChange={(event) => this.updateMultiSelect(event.currentTarget, 'activities')} />
 							</div>
 							
 							<div className={classNames({hidden: (this.state.type !== 'modules')})}>

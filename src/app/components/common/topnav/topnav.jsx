@@ -15,7 +15,7 @@ import LogoWording from '../../../../../static/svg/logo-wording.svg';
 import Avatar from '../../../../../static/svg/avatar.svg';
 import Trophy from '../../../../../static/svg/trophy.svg';
 import Calendar from '../../../../../static/svg/calendar.svg';
-import Info from '../../../../../static/svg/info.svg';
+import Help from '../../../../../static/svg/question.svg';
 import Search from '../../../../../static/svg/search.svg';
 import Close from '../../../../../static/svg/x.svg';
 import SortPassive from '../../../../../static/svg/sort-passive.svg';
@@ -222,7 +222,7 @@ class TopNav extends Component {
 					
 					{(this.props.user) ? <div className="top-nav-item" onClick={() => {this.changePanel('grades') }}>{this.props.panel === 'grades' ? <Icon glyph={Close} /> : <Icon glyph={Trophy} className="icon trophy" />}</div> : ''}
 					
-					{(this.props.user) ? <div className="top-nav-item" onClick={() => {this.changePanel('help') }}>{this.props.panel === 'help' ? <Icon glyph={Close} /> : <Icon glyph={Info} className="icon info" />}</div> : ''}
+					{(this.props.user) ? <div className="top-nav-item" onClick={() => {this.changePanel('help') }}>{this.props.panel === 'help' ? <Icon glyph={Close} /> : <Icon glyph={Help} className="icon info" />}</div> : ''}
 					
 					<Link to="/" className="logo">
 						<Icon glyph={Logo} />

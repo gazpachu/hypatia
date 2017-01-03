@@ -76,6 +76,8 @@ ReactDOM.render(
 						<Route path="/courses/:slug/requirements" component={Course} />
 				<Route path="/subjects" component={Listing} />
 					<Route path="/subjects/:slug" component={Subject} />
+						<Route path="/subjects/:slug/modules" component={Subject} />
+						<Route path="/subjects/:slug/activities" component={Subject} />
 				<Route path="/modules" component={Listing} />
 					<Route path="/modules/:slug" component={Module} />
 				<Route path="/activities" component={Listing} />
@@ -87,6 +89,8 @@ ReactDOM.render(
 					<Route path="/about/people" component={Page} />
 					<Route path="/about/contact" component={Page} />
 				<Route path="/admin" component={Admin} level={ADMIN_LEVEL} onEnter={requireAuth} />
+					<Route path="/admin/:section/new" component={Admin} level={ADMIN_LEVEL} onEnter={requireAuth} />
+					<Route path="/admin/:section/edit/:slug" component={Admin} level={ADMIN_LEVEL} onEnter={requireAuth} />
 				<Route path="*" component={NotFound} />
 			</Route>
 		</Router>

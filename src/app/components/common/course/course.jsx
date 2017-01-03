@@ -177,11 +177,11 @@ class Course extends Component {
 						<Icon glyph={Level} />{this.props.levels[course.level].title} ({this.props.levels[course.level].code}) ({totalCredits} Credits) <Icon glyph={Calendar} />Enrollment from <span className="date">{moment(course.startDate).format('D MMMM YYYY')}</span> until <span className="date">{moment(course.endDate).format('D MMMM YYYY')}</span>
 					</div>
 					{section !== 'subjects' && enrollmentOpened ? <button className="btn btn-primary btn-enroll"><Link to={`/courses/${course.slug}/subjects`}>Enrol now!</Link></button> : ''}
-					<ul className="course-nav">
-						<li className={classNames('course-nav-item', {active: section === this.props.params.slug})}><Link to={`/courses/${course.slug}`}>Summary</Link></li>
-						<li className={classNames('course-nav-item', {active: section === 'subjects', hidden: !subjects})}><Link to={`/courses/${course.slug}/subjects`}>Subjects</Link></li>
-						<li className={classNames('course-nav-item', {active: section === 'fees'})}><Link to={`/courses/${course.slug}/fees`}>Fees</Link></li>
-						<li className={classNames('course-nav-item', {active: section === 'requirements'})}><Link to={`/courses/${course.slug}/requirements`}>Requirements</Link></li>
+					<ul className="horizontal-nav">
+						<li className={classNames('horizontal-nav-item', {active: section === this.props.params.slug})}><Link to={`/courses/${course.slug}`}>Summary</Link></li>
+						<li className={classNames('horizontal-nav-item', {active: section === 'subjects', hidden: !subjects})}><Link to={`/courses/${course.slug}/subjects`}>Subjects</Link></li>
+						<li className={classNames('horizontal-nav-item', {active: section === 'fees'})}><Link to={`/courses/${course.slug}/fees`}>Fees</Link></li>
+						<li className={classNames('horizontal-nav-item', {active: section === 'requirements'})}><Link to={`/courses/${course.slug}/requirements`}>Requirements</Link></li>
 					</ul>
 					<div className={classNames('columns', {'single-column': (!course.content2 && !course.content2), hidden: (section !== this.props.params.slug)})}>
 						<div className="column page-content">
@@ -197,7 +197,7 @@ class Course extends Component {
 					</div>
          			<div className={classNames('columns single-column', {hidden: (section !== 'subjects')})}>
          				<div className="column page-content">
-							<table className="subjects-table">
+							<table>
 								<thead><tr>
 									<th>Code</th>
 									<th>Subject</th>
