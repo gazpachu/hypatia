@@ -32,6 +32,7 @@ export const NEED_TITLE = 'You need at least a title';
 export const WAIT_FINISH_OPERATION = 'Please wait until the current operation ends';
 export const CONFIRM_ENROL = 'Are you sure you want to enrol in the select subjects?';
 export const ENROLLED_COURSE = 'You are now enrolled in this course!';
+export const ADMIN_REQUIRED = 'Sorry, this operation requires admin rights';
 
 // User level
 export const ADMIN_LEVEL = 5;

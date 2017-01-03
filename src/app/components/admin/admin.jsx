@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
+import { history } from '../../store';
 import { setLoading, setNotification } from '../../actions/actions';
 import * as CONSTANTS from '../../constants/constants';
 import { firebase, helpers } from 'redux-react-firebase';
@@ -86,7 +87,8 @@ class Admin extends Component {
 			selectedId: '',
 			selectedItem: null,
 			modalTitle: '',
-			fileMetadata: null
+			fileMetadata: null,
+			loadedPath: null
 		}
 		
 		this.storageRef =  this.props.firebase.storage().ref();
@@ -101,6 +103,34 @@ class Admin extends Component {
 		$('.js-main').removeClass().addClass('main js-main admin-page');
 	}
 	
+	componentWillReceiveProps(newProps) {
+		if (newProps.location.pathname !== this.state.loadedPath) {
+			if (newProps.params.type && newProps.params.action) {
+				if (isLoaded(newProps[newProps.params.type]) && !isEmpty(newProps[newProps.params.type])) {
+					if (newProps.params.action === 'new')
+						this.setState({ loadedPath: newProps.location.pathname }, function() {
+							this.new(newProps.params.type, true);
+						});
+					else if (newProps.params.action === 'edit' && newProps.params.slug) {
+						let id = null;
+						Object.keys(newProps[newProps.params.type]).map(function(key) {
+							if (newProps.params.type === 'users' && key === newProps.params.slug) id = key;
+							else if (newProps[newProps.params.type][key].slug === newProps.params.slug) id = key;
+						}.bind(this));
+						if (id) {
+							this.setState({ loadedPath: newProps.location.pathname }, function() {
+								this.loadItem(id, newProps.params.action, newProps.params.type);
+							});
+						}
+					}
+				}
+			}
+			else this.setState({ loadedPath: newProps.location.pathname }, function() {
+				this.cancel(true);
+			});
+		}
+	}
+	
 	handleSelect(event, action, type) {
 		if (this.uploadStatus === '') {
 			const index = event.target.selectedIndex;
@@ -111,10 +141,15 @@ class Admin extends Component {
 	}
 	
 	loadItem(id, action, type) {
-		if (isLoaded(type) && !isEmpty(type) && id !== '') {
+		if (id !== '') {
 			let selectedItem = this.props[type][id];
 
 			this.setState({ action, type, selectedId: id, selectedItem }, function() {
+				if (type !== 'users')
+					history.push('/admin/' + type + '/edit/' + selectedItem.slug);
+				else
+					history.push('/admin/' + type + '/edit/' + id);
+				
 				if (type === 'files') {
 					// Load file meta data
 					var fileRef = this.storageRef.child('files/'+this.state.selectedItem.file);
@@ -128,16 +163,24 @@ class Admin extends Component {
 		}
 	}
 	
-	new(type) {
+	new(type, skipUpdateHistory) {
 		if (this.uploadStatus === '') {
-			this.cancel();
-			this.setState({ action: 'new', type });
+			this.setState({ action: 'new', type }, function() {
+				if (!skipUpdateHistory) {
+					this.cancel(true);
+					history.push('/admin/' + type + '/new');
+				}
+			});
 		}
 	}
 	
-	cancel() {
-		this.setState({ action: '', type: '', selectedId: '', selectedItem: null });
-		this.reset();
+	cancel(skipUpdateHistory) {
+		this.setState({ action: '', type: '', selectedId: '', selectedItem: null }, function() {
+			if (!skipUpdateHistory) {
+				this.reset();
+				history.push('/admin');
+			}
+		});
 	}
 	
 	reset() {
@@ -154,46 +197,51 @@ class Admin extends Component {
 	}
 	
 	save() {
-		let item = this.state.selectedItem,
-			method = (this.state.action === 'new') ? 'push' : 'set',
-			path = (this.state.action === 'new') ? this.state.type : this.state.type + '/' + this.state.selectedId,
-			uploadFile = false;
-		
-		if (item && (item.title || this.state.type === 'users')) {
-			if (this.state.type !== 'files' && this.state.type !== 'users')
-				item.slug = Helpers.slugify(item.title);
-			else {
-				if (this.tempFile) {
-					item.file = this.tempFile.name;
-					uploadFile = true;
-					this.uploadFile(this.tempFile);
+		if (this.props.userData.info.level === CONSTANTS.ADMIN_LEVEL) {
+			let item = this.state.selectedItem,
+				method = (this.state.action === 'new') ? 'push' : 'set',
+				path = (this.state.action === 'new') ? this.state.type : this.state.type + '/' + this.state.selectedId,
+				uploadFile = false;
+
+			if (item && (item.title || this.state.type === 'users')) {
+				if (this.state.type !== 'files' && this.state.type !== 'users')
+					item.slug = Helpers.slugify(item.title);
+				else {
+					if (this.tempFile) {
+						item.file = this.tempFile.name;
+						uploadFile = true;
+						this.uploadFile(this.tempFile);
+					}
+				}
+
+				if (item.date) item.date = moment(item.date).format('YYYY-MM-DD');
+				if (item.startDate) item.startDate = moment(item.startDate).format('YYYY-MM-DD');
+				if (item.endDate) item.endDate = moment(item.endDate).format('YYYY-MM-DD');
+				if (item.gradeDate) item.gradeDate = moment(item.gradeDate).format('YYYY-MM-DD');
+
+				item.status = this.refs['status-checkbox'].checked ? 'active' : 'inactive';
+
+				this.toggleButtons(false);
+
+				if (!uploadFile) {
+					this.props.firebase[method](path, item).then(function(snap) {
+						this.toggleButtons(true);
+						this.props.setNotification({message: CONSTANTS.ITEM_SAVED, type: 'success'});
+
+						if (snap) {
+							this.setState({ selectedId: snap.key }, function() {
+								this.loadItem(snap.key, 'edit', this.state.type);
+							}.bind(this));
+						}
+					}.bind(this));
 				}
 			}
-
-			if (item.date) item.date = moment(item.date).format('YYYY-MM-DD');
-			if (item.startDate) item.startDate = moment(item.startDate).format('YYYY-MM-DD');
-			if (item.endDate) item.endDate = moment(item.endDate).format('YYYY-MM-DD');
-			if (item.gradeDate) item.gradeDate = moment(item.gradeDate).format('YYYY-MM-DD');
-			
-			item.status = this.refs['status-checkbox'].checked ? 'active' : 'inactive';
-
-			this.toggleButtons(false);
-			
-			if (!uploadFile) {
-				this.props.firebase[method](path, item).then(function(snap) {
-					this.toggleButtons(true);
-					this.props.setNotification({message: CONSTANTS.ITEM_SAVED, type: 'success'});
-
-					if (snap) {
-						this.setState({ selectedId: snap.key }, function() {
-							this.loadItem(snap.key, 'edit', this.state.type);
-						}.bind(this));
-					}
-				}.bind(this));
+			else {
+				this.props.setNotification({message: CONSTANTS.NEED_TITLE, type: 'error'});
 			}
 		}
 		else {
-			this.props.setNotification({message: CONSTANTS.NEED_TITLE, type: 'error'});
+			this.props.setNotification({message: CONSTANTS.ADMIN_REQUIRED, type: 'error'});
 		}
 	}
 	
@@ -419,7 +467,8 @@ class Admin extends Component {
 		const fileUpdatedOn = (this.state.fileMetadata) ? moment(this.state.fileMetadata.updated).format('YYYY-MM-DD HH:MM:SS') : '';
 		
 		return (
-			<section className="admin page container-fluid">
+			 <section className="admin page container-fluid">
+			 	{(!isEmpty(users) && !isEmpty(levels) && !isEmpty(groups) && !isEmpty(courses) && !isEmpty(subjects) && !isEmpty(modules) && !isEmpty(activities) && !isEmpty(posts) && !isEmpty(pages) && !isEmpty(files)) ?
 				<div className="columns">
 					<div className="nav column">
 						<div className="block clearfix">
@@ -615,7 +664,8 @@ class Admin extends Component {
 						</div>
 					</div>
 				</div>
-				<ModalBox title={this.state.modalTitle} answer={this.modalBoxAnswer.bind(this)} />
+			: <div className="loader-small inverted"></div>}
+			<ModalBox title={this.state.modalTitle} answer={this.modalBoxAnswer.bind(this)} />
 			</section>
 		)
 	}
@@ -624,11 +674,11 @@ class Admin extends Component {
 Admin.propTypes = propTypes;
 Admin.defaultProps = defaultProps;
 
-const mapStateToProps = null;
-
 const mapDispatchToProps = {
 	setLoading,
 	setNotification
 };
+
+const mapStateToProps = ({ mainReducer: { userData } }) => ({ userData });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Admin);

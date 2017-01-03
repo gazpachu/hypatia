@@ -176,7 +176,7 @@ class Course extends Component {
 					<div className="meta">
 						<Icon glyph={Level} />{this.props.levels[course.level].title} ({this.props.levels[course.level].code}) ({totalCredits} Credits) <Icon glyph={Calendar} />Enrollment from <span className="date">{moment(course.startDate).format('D MMMM YYYY')}</span> until <span className="date">{moment(course.endDate).format('D MMMM YYYY')}</span>
 					</div>
-					{section !== 'subjects' && enrollmentOpened ? <button className="btn btn-primary btn-enroll"><Link to={`/courses/${course.slug}/subjects`}>Enrol now!</Link></button> : ''}
+					{section !== 'subjects' && subjects && enrollmentOpened ? <button className="btn btn-primary btn-enroll"><Link to={`/courses/${course.slug}/subjects`}>Enrol now!</Link></button> : ''}
 					<ul className="horizontal-nav">
 						<li className={classNames('horizontal-nav-item', {active: section === this.props.params.slug})}><Link to={`/courses/${course.slug}`}>Summary</Link></li>
 						<li className={classNames('horizontal-nav-item', {active: section === 'subjects', hidden: !subjects})}><Link to={`/courses/${course.slug}/subjects`}>Subjects</Link></li>

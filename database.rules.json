@@ -2,6 +2,16 @@
   "rules": {
     ".read": "true",
     ".write": "auth != null",
+    "users": {
+      "$id": {
+      	"info": {
+          "level": {
+            ".read": "true",
+    		".write": "false",
+          }
+        }
+      }
+    },
     "pages": {
       ".indexOn": ["slug"]
     },

@@ -89,8 +89,8 @@ ReactDOM.render(
 					<Route path="/about/people" component={Page} />
 					<Route path="/about/contact" component={Page} />
 				<Route path="/admin" component={Admin} level={ADMIN_LEVEL} onEnter={requireAuth} />
-					<Route path="/admin/:section/new" component={Admin} level={ADMIN_LEVEL} onEnter={requireAuth} />
-					<Route path="/admin/:section/edit/:slug" component={Admin} level={ADMIN_LEVEL} onEnter={requireAuth} />
+					<Route path="/admin/:type/:action" component={Admin} level={ADMIN_LEVEL} onEnter={requireAuth} />
+					<Route path="/admin/:type/:action/:slug" component={Admin} level={ADMIN_LEVEL} onEnter={requireAuth} />
 				<Route path="*" component={NotFound} />
 			</Route>
 		</Router>
