@@ -102,5 +102,15 @@ module.exports = {
 		}
 
 		document.body.removeChild(textArea);
+	},
+	
+	getAppVersion: function(element) {
+		$.ajax('/static/version.json').done(function(response) {
+			var date = new Date(response.version.buildDate);
+			var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+			$(element).html('v' + response.version.version + ' (Built on ' + date.getDate() + ' ' + monthNames[date.getMonth()] + ' ' + date.getFullYear() + ')');
+		}).fail(function(error) {
+			console.log(error);
+		});
 	}
 }
