@@ -6,11 +6,6 @@
 	padding: 3px 13px;
 	@include scale-anim();
 	
-	a {
-		color: $white;
-		text-decoration: none;
-	}
-	
     &:focus {
         outline: none !important;
     }	
@@ -25,6 +20,11 @@
 	&.btn-primary {
 		background-color: $green;
     	border-color: $green;	
+		
+		a {
+			color: $white;
+			text-decoration: none;
+		}
 	}
 	
 	&.btn-cancel {

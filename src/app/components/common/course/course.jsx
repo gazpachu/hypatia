@@ -23,23 +23,30 @@ const propTypes = {
 
 const {isLoaded, isEmpty, dataToJS} = helpers;
 
-@firebase(
-  	props => ([
-    	`courses#orderByChild=slug&equalTo=${props.params.slug}`,
-		'levels',
-		'subjects',
-		'users',
-		'files'
-  	])
-)
 @connect(
   	(state, props) => ({
     	course: dataToJS(state.firebase, 'courses'),
 		levels: dataToJS(state.firebase, 'levels'),
 		subjects: dataToJS(state.firebase, 'subjects'),
 		users: dataToJS(state.firebase, 'users'),
-		files: dataToJS(state.firebase, 'files')
+		files: dataToJS(state.firebase, 'files'),
+		userID: state.mainReducer.user ? state.mainReducer.user.uid : '',
+		//featuredImage: state.course.featuredImage ? state.course.featuredImage : '',
+		courseID: props.course ? props.course[Object.keys(props.course)[0]].code : '',
+		userData: dataToJS(state.firebase, `users/${state.mainReducer.user ? state.mainReducer.user.uid : ''}`),
   	})
+)
+@firebase(
+  	props => ([
+    	`courses#orderByChild=slug&equalTo=${props.params.slug}`,
+		'levels',
+		'subjects',
+		//`subjects#orderByKey&equalTo=${props.course ? props.course[Object.keys(props.course)[0]].subjects : ''}`,
+		'users',
+		'files',
+		//`files#orderByChild=featuredImage&equalTo=${props.featuredImage}`
+		`users/${props.userID}`
+  	])
 )
 class Course extends Component {
     
@@ -56,6 +63,12 @@ class Course extends Component {
 		this.props.setLoading(false);
 		$('.js-main').removeClass().addClass('main js-main course-page');
 	}
+	
+//	componentWillReceiveProps(newProps) {
+//		if (newProps.course) {
+//			console.log(Object.keys(newProps.course)[0]);
+//		}
+//	}
 	
 	enrolConfirmation() {
 		this.setState({ modalTitle: CONSTANTS.CONFIRM_ENROL }, function() {
@@ -134,7 +147,7 @@ class Course extends Component {
 			}.bind(this));
 		}
 		
-		if (course && course.subjects && isLoaded(this.props.subjects) && !isEmpty(this.props.subjects) && isLoaded(this.props.users) && !isEmpty(this.props.users)) {
+		if (course && course.subjects && isLoaded(this.props.subjects) && !isEmpty(this.props.subjects) && isLoaded(this.props.users) && !isEmpty(this.props.users) && isLoaded(this.props.userData) && !isEmpty(this.props.userData)) {
 			subjects = course.subjects.map(function(item, i) {
 				const subject = this.props.subjects[course.subjects[i]];
 				let teachers = '';
@@ -228,6 +241,6 @@ const mapDispatchToProps = {
 	setLoading
 }
 
-const mapStateToProps = ({ mainReducer: { isDesktop, userData } }) => ({ isDesktop, userData });
+const mapStateToProps = ({ mainReducer: { isDesktop } }) => ({ isDesktop });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Course);

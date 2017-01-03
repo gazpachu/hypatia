@@ -1,5 +1,12 @@
 import * as CONSTANTS from '../constants/constants';
 
+export function action(state, type) {
+	return {
+		type: type,
+		payload: state
+	}
+}
+
 export function setUser(state) {
 	return {
 		type: 'SET_USER',
