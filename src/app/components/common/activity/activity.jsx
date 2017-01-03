@@ -3,9 +3,10 @@ import { setLoading } from '../../../actions/actions';
 import {connect} from 'react-redux';
 import { firebase, helpers } from 'redux-react-firebase';
 import classNames from 'classnames';
-import { converter } from '../../../constants/constants';
+import * as CONSTANTS from '../../../constants/constants';
 import moment from 'moment';
 import $ from 'jquery';
+import Edit from '../lib/edit/edit';
 import Icon from '../lib/icon/icon';
 import Professor from '../../../../../static/svg/professor.svg';
 import Calendar from '../../../../../static/svg/calendar2.svg';
@@ -20,19 +21,22 @@ const propTypes = {
 
 const {isLoaded, isEmpty, dataToJS} = helpers;
 
-@firebase(
-  	props => ([
-    	`activities#orderByChild=slug&equalTo=${window.location.href.substr(window.location.href.lastIndexOf('/') + 1)}`,
-		'files',
-		'users'
-  	])
-)
 @connect(
   	(state, props) => ({
     	activity: dataToJS(state.firebase, 'activities'),
 		files: dataToJS(state.firebase, 'files'),
-		users: dataToJS(state.firebase, 'users')
+		users: dataToJS(state.firebase, 'users'),
+		userID: state.mainReducer.user ? state.mainReducer.user.uid : '',
+		userData: dataToJS(state.firebase, `users/${state.mainReducer.user ? state.mainReducer.user.uid : ''}`),
   	})
+)
+@firebase(
+  	props => ([
+    	`activities#orderByChild=slug&equalTo=${window.location.href.substr(window.location.href.lastIndexOf('/') + 1)}`,
+		'files',
+		'users',
+		`users/${props.userID}`
+  	])
 )
 class Activity extends Component {
     
@@ -72,20 +76,21 @@ class Activity extends Component {
             <section className="page activity"> 
             	{activity ? <div className="page-wrapper">
 					<h1 className="title">{activity.title}</h1>
-					{authors ? <div className="author"><Icon glyph={Professor} />{authors}</div> : ''}
 					<div className="meta">
+						{authors ? <div className="author"><Icon glyph={Professor} />{authors}</div> : ''}
 						<Icon glyph={Calendar} />From <span className="date">{moment(activity.startDate).format('D MMMM YYYY')}</span> until <span className="date">{moment(activity.endDate).format('D MMMM YYYY')}</span>
+						{isLoaded(this.props.userData) && !isEmpty(this.props.userData) && this.props.userData.info.level >= CONSTANTS.ADMIN_LEVEL ? <Edit editLink={`/admin/activities/edit/${activity.slug}`} newLink="/admin/activities/new" /> : ''}
 					</div>
 					<div className={classNames('columns', {'single-column': (!activity.content2 && !activity.content2)})}>
 						<div className="column page-content">
 							{featuredImage ? <img className="featured-image" src={featuredImage.url} /> : ''}
-							<div className="content" dangerouslySetInnerHTML={{__html: converter.makeHtml(activity.content1)}}></div>
+							<div className="content" dangerouslySetInnerHTML={{__html: CONSTANTS.converter.makeHtml(activity.content1)}}></div>
 						</div>
 						{activity.content2 ? <div className="column page-sidebar">
-							<div className="content" dangerouslySetInnerHTML={{__html: converter.makeHtml(activity.content2)}}></div>
+							<div className="content" dangerouslySetInnerHTML={{__html: CONSTANTS.converter.makeHtml(activity.content2)}}></div>
 						</div> : ''}
 						{activity.content3 ? <div className="column page-sidebar">
-							<div className="content" dangerouslySetInnerHTML={{__html: converter.makeHtml(activity.content3)}}></div>
+							<div className="content" dangerouslySetInnerHTML={{__html: CONSTANTS.converter.makeHtml(activity.content3)}}></div>
 						</div> : ''}
 					</div>
           		</div> : <div className="loader-small"></div>}

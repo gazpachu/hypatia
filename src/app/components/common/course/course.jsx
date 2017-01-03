@@ -9,8 +9,10 @@ import ModalBox from '../../common/modalbox/modalbox';
 import showdown from 'showdown';
 import moment from 'moment';
 import $ from 'jquery';
+import Edit from '../lib/edit/edit';
 import Icon from '../lib/icon/icon';
 import Level from '../../../../../static/svg/course.svg';
+import Info from '../../../../../static/svg/info.svg';
 import Calendar from '../../../../../static/svg/calendar2.svg';
 
 const defaultProps = {
@@ -132,7 +134,7 @@ class Course extends Component {
 			totalCredits = 0,
 			section = this.props.location.pathname.substr(this.props.location.pathname.lastIndexOf('/') + 1);
 		
-		if (isLoaded(this.props.course) && isLoaded(this.props.files) && isLoaded(this.props.userData) && !isEmpty(this.props.course) && !isEmpty(this.props.files) && !isEmpty(this.props.userData)) {	
+		if (isLoaded(this.props.course) && isLoaded(this.props.files) && !isEmpty(this.props.course) && !isEmpty(this.props.files)) {	
 			Object.keys(this.props.course).map(function(key) {
 				courseID = key;
 				course = this.props.course[key];
@@ -147,7 +149,7 @@ class Course extends Component {
 			}.bind(this));
 		}
 		
-		if (course && course.subjects && isLoaded(this.props.subjects) && !isEmpty(this.props.subjects) && isLoaded(this.props.users) && !isEmpty(this.props.users) && isLoaded(this.props.userData) && !isEmpty(this.props.userData)) {
+		if (course && course.subjects && isLoaded(this.props.subjects) && !isEmpty(this.props.subjects) && isLoaded(this.props.users) && !isEmpty(this.props.users)) {
 			subjects = course.subjects.map(function(item, i) {
 				const subject = this.props.subjects[course.subjects[i]];
 				let teachers = '';
@@ -164,7 +166,7 @@ class Course extends Component {
 							<td><Link to={`/subjects/${subject.slug}`}>{subject.title}</Link></td>
 							<td>{teachers}</td>
 							<td>{subject.credits}</td>
-							<td>{this.props.userData.courses && this.props.userData.courses[courseID][item] ? this.props.userData.courses[courseID][item].status : subject.status === 'active' && enrollmentOpened ? <span><input type="checkbox" value={item} onChange={(event) => this.handleChange(event)} />Enrol now</span> : 'unavailable'}</td>
+							{isLoaded(this.props.userData) && !isEmpty(this.props.userData) ? <td>{this.props.userData.courses && this.props.userData.courses[courseID][item] ? this.props.userData.courses[courseID][item].status : subject.status === 'active' && enrollmentOpened ? <span><input type="checkbox" value={item} onChange={(event) => this.handleChange(event)} />Enrol now</span> : 'unavailable'}</td> : null}
 						</tr>
 			}.bind(this));
 		}
@@ -175,6 +177,7 @@ class Course extends Component {
 					<h1 className="title">{course.title}</h1>
 					<div className="meta">
 						<Icon glyph={Level} />{this.props.levels[course.level].title} ({this.props.levels[course.level].code}) ({totalCredits} Credits) <Icon glyph={Calendar} />Enrollment from <span className="date">{moment(course.startDate).format('D MMMM YYYY')}</span> until <span className="date">{moment(course.endDate).format('D MMMM YYYY')}</span>
+						{isLoaded(this.props.userData) && !isEmpty(this.props.userData) && this.props.userData.info.level >= CONSTANTS.ADMIN_LEVEL ? <Edit editLink={`/admin/courses/edit/${course.slug}`} newLink="/admin/courses/new" /> : ''}
 					</div>
 					{section !== 'subjects' && subjects && enrollmentOpened ? <button className="btn btn-primary btn-enroll"><Link to={`/courses/${course.slug}/subjects`}>Enrol now!</Link></button> : ''}
 					<ul className="horizontal-nav">
@@ -197,13 +200,14 @@ class Course extends Component {
 					</div>
          			<div className={classNames('columns single-column', {hidden: (section !== 'subjects')})}>
          				<div className="column page-content">
+         					{!isLoaded(this.props.userData) || isEmpty(this.props.userData) ? <p><Icon glyph={Info} className="icon info-icon" />Sign in to enrol in this course</p> : null}
 							<table>
 								<thead><tr>
 									<th>Code</th>
 									<th>Subject</th>
 									<th>Teacher(s)</th>
 									<th>Credits</th>
-									<th>Availability</th>
+									{isLoaded(this.props.userData) && !isEmpty(this.props.userData) ? <th>Availability</th> : null}
 								</tr></thead>
 								<tbody>
 									{subjects}

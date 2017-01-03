@@ -556,7 +556,7 @@ class Admin extends Component {
 								<Select2 style={{width: '100%'}} multiple data={activities} value={(this.state.selectedItem && this.state.selectedItem.activities) ? this.state.selectedItem.activities : []} options={{placeholder: 'Activities...', allowClear: true}} onChange={(event) => this.updateMultiSelect(event.currentTarget, 'activities')} />
 							</div>
 							
-							<div className={classNames({hidden: (this.state.type !== 'modules')})}>
+							<div className={classNames({hidden: (this.state.type !== 'modules' && this.state.type !== 'activities')})}>
 								<Select2 style={{width: '100%'}} multiple data={users} value={(this.state.selectedItem && this.state.selectedItem.authors) ? this.state.selectedItem.authors : []} options={{placeholder: 'Author(s)...', allowClear: true}} onChange={(event) => this.updateMultiSelect(event.currentTarget, 'authors')} />
 							</div>
 							
@@ -594,31 +594,31 @@ class Admin extends Component {
 							<div className={classNames({hidden: (this.state.type === 'users' || this.state.type === 'files')})}>
 								<h4 className="heading active" ref="editor1-heading" onClick={() => (this.toggleElement('editor1-heading'), this.toggleElement('editor1-wrapper'))}>Primary content block<Icon glyph={Forward} /></h4>
 								<div className="editor-wrapper active" ref="editor1-wrapper">
-									<SimpleMDE ref="editor1" value={(this.state.selectedItem && this.state.selectedItem.content1) ? this.state.selectedItem.content1 : ''} onChange={(event) => this.updateItem(event, 'content1')} />
+									<SimpleMDE options={{ spellChecker: false }} ref="editor1" value={(this.state.selectedItem && this.state.selectedItem.content1) ? this.state.selectedItem.content1 : ''} onChange={(event) => this.updateItem(event, 'content1')} />
 								</div>
 							</div>
 							
 							<div className={classNames({hidden: (this.state.type === 'levels' || this.state.type === 'users' || this.state.type === 'posts' || this.state.type === 'files')})}>
 								<h4 className="heading" ref="editor2-heading" onClick={() => (this.toggleElement('editor2-heading'), this.toggleElement('editor2-wrapper'))}>Secondary content block<Icon glyph={Forward} /></h4>
 								<div className="editor-wrapper" ref="editor2-wrapper">
-									<SimpleMDE ref="editor2" value={(this.state.selectedItem && this.state.selectedItem.content2) ? this.state.selectedItem.content2 : ''} onChange={(event) => this.updateItem(event, 'content2')} />
+									<SimpleMDE options={{ spellChecker: false }} ref="editor2" value={(this.state.selectedItem && this.state.selectedItem.content2) ? this.state.selectedItem.content2 : ''} onChange={(event) => this.updateItem(event, 'content2')} />
 								</div>
 
 								<h4 className="heading" ref="editor3-heading" onClick={() => (this.toggleElement('editor3-heading'), this.toggleElement('editor3-wrapper'))}>Tertiary content block<Icon glyph={Forward} /></h4>
 								<div className="editor-wrapper" ref="editor3-wrapper">
-									<SimpleMDE ref="editor3" value={(this.state.selectedItem && this.state.selectedItem.content3) ? this.state.selectedItem.content3 : ''} onChange={(event) => this.updateItem(event, 'content3')} />
+									<SimpleMDE options={{ spellChecker: false }} ref="editor3" value={(this.state.selectedItem && this.state.selectedItem.content3) ? this.state.selectedItem.content3 : ''} onChange={(event) => this.updateItem(event, 'content3')} />
 								</div>
 							</div>
 							
 							<div className={classNames({hidden: (this.state.type !== 'courses')})}>
 								<h4 className="heading" ref="editor-fees-heading" onClick={() => (this.toggleElement('editor-fees-heading'), this.toggleElement('editor-fees-wrapper'))}>Fees<Icon glyph={Forward} /></h4>
 								<div className="editor-wrapper" ref="editor-fees-wrapper">
-									<SimpleMDE ref="editor-fees" value={(this.state.selectedItem && this.state.selectedItem.fees) ? this.state.selectedItem.fees : ''} onChange={(event) => this.updateItem(event, 'fees')} />
+									<SimpleMDE options={{ spellChecker: false }} ref="editor-fees" value={(this.state.selectedItem && this.state.selectedItem.fees) ? this.state.selectedItem.fees : ''} onChange={(event) => this.updateItem(event, 'fees')} />
 								</div>
 
 								<h4 className="heading" ref="editor-requirements-heading" onClick={() => (this.toggleElement('editor-requirements-heading'), this.toggleElement('editor-requirements-wrapper'))}>Requirements<Icon glyph={Forward} /></h4>
 								<div className="editor-wrapper" ref="editor-requirements-wrapper">
-									<SimpleMDE ref="editor-requirements" value={(this.state.selectedItem && this.state.selectedItem.requirements) ? this.state.selectedItem.requirements : ''} onChange={(event) => this.updateItem(event, 'requirements')} />
+									<SimpleMDE options={{ spellChecker: false }} ref="editor-requirements" value={(this.state.selectedItem && this.state.selectedItem.requirements) ? this.state.selectedItem.requirements : ''} onChange={(event) => this.updateItem(event, 'requirements')} />
 								</div>
 							</div>
 							
@@ -650,7 +650,7 @@ class Admin extends Component {
 							
 							<h4 className="heading" ref="editor-notes-heading" onClick={() => (this.toggleElement('editor-notes-heading'), this.toggleElement('editor-notes-wrapper'))}>Private notes<Icon glyph={Forward} /></h4>
 							<div className="editor-wrapper" ref="editor-notes-wrapper">
-								<SimpleMDE ref="editor-notes" value={(this.state.selectedItem && this.state.selectedItem.notes) ? this.state.selectedItem.notes : ''} onChange={(event) => this.updateItem(event, 'notes')} />
+								<SimpleMDE options={{ spellChecker: false }} ref="editor-notes" value={(this.state.selectedItem && this.state.selectedItem.notes) ? this.state.selectedItem.notes : ''} onChange={(event) => this.updateItem(event, 'notes')} />
 							</div>
 							
 							<label className="checkbox-label">Active </label><input type="checkbox" className="status-checkbox" ref="status-checkbox" checked={status} onChange={(event) => this.updateCheckbox(event, 'status')} />

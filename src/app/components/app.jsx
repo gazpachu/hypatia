@@ -61,7 +61,6 @@ class App extends Component {
 					this.props.setNotification({message: USER_CONFIRM_EMAIL, type: 'info'});
 				}
 			}
-			else history.push('/');
       	});
 	}
 																

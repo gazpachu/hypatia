@@ -3,9 +3,10 @@ import { setLoading } from '../../../actions/actions';
 import {connect} from 'react-redux';
 import { firebase, helpers } from 'redux-react-firebase';
 import classNames from 'classnames';
-import { converter } from '../../../constants/constants';
+import * as CONSTANTS from '../../../constants/constants';
 import moment from 'moment';
 import $ from 'jquery';
+import Edit from '../lib/edit/edit';
 import Icon from '../lib/icon/icon';
 import Professor from '../../../../../static/svg/professor.svg';
 
@@ -19,19 +20,22 @@ const propTypes = {
 
 const {isLoaded, isEmpty, dataToJS} = helpers;
 
-@firebase(
-  	props => ([
-    	`modules#orderByChild=slug&equalTo=${window.location.href.substr(window.location.href.lastIndexOf('/') + 1)}`,
-		'files',
-		'users'
-  	])
-)
 @connect(
   	(state, props) => ({
     	module: dataToJS(state.firebase, 'modules'),
 		files: dataToJS(state.firebase, 'files'),
-		users: dataToJS(state.firebase, 'users')
+		users: dataToJS(state.firebase, 'users'),
+		userID: state.mainReducer.user ? state.mainReducer.user.uid : '',
+		userData: dataToJS(state.firebase, `users/${state.mainReducer.user ? state.mainReducer.user.uid : ''}`),
   	})
+)
+@firebase(
+  	props => ([
+    	`modules#orderByChild=slug&equalTo=${window.location.href.substr(window.location.href.lastIndexOf('/') + 1)}`,
+		'files',
+		'users',
+		`users/${props.userID}`
+  	])
 )
 class Module extends Component {
     
@@ -71,17 +75,20 @@ class Module extends Component {
             <section className="page module"> 
             	{module ? <div className="page-wrapper">
 					<h1 className="title">{module.title}</h1>
-					{authors ? <div className="author"><Icon glyph={Professor} />{authors}</div> : ''}
+					<div className="meta">
+						{authors ? <div className="author"><Icon glyph={Professor} />{authors}</div> : ''}
+						{isLoaded(this.props.userData) && !isEmpty(this.props.userData) && this.props.userData.info.level >= CONSTANTS.ADMIN_LEVEL ? <Edit editLink={`/admin/modules/edit/${module.slug}`} newLink="/admin/modules/new" /> : ''}
+					</div>
 					<div className={classNames('columns', {'single-column': (!module.content2 && !module.content2)})}>
 						<div className="column page-content">
 							{featuredImage ? <img className="featured-image" src={featuredImage.url} /> : ''}
-							<div className="content" dangerouslySetInnerHTML={{__html: converter.makeHtml(module.content1)}}></div>
+							<div className="content" dangerouslySetInnerHTML={{__html: CONSTANTS.converter.makeHtml(module.content1)}}></div>
 						</div>
 						{module.content2 ? <div className="column page-sidebar">
-							<div className="content" dangerouslySetInnerHTML={{__html: converter.makeHtml(module.content2)}}></div>
+							<div className="content" dangerouslySetInnerHTML={{__html: CONSTANTS.converter.makeHtml(module.content2)}}></div>
 						</div> : ''}
 						{module.content3 ? <div className="column page-sidebar">
-							<div className="content" dangerouslySetInnerHTML={{__html: converter.makeHtml(module.content3)}}></div>
+							<div className="content" dangerouslySetInnerHTML={{__html: CONSTANTS.converter.makeHtml(module.content3)}}></div>
 						</div> : ''}
 					</div>
           		</div> : <div className="loader-small"></div>}

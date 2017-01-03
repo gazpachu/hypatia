@@ -3,10 +3,11 @@ import { setLoading } from '../../../actions/actions';
 import {connect} from 'react-redux';
 import { firebase, helpers } from 'redux-react-firebase';
 import classNames from 'classnames';
-import { converter } from '../../../constants/constants';
+import * as CONSTANTS from '../../../constants/constants';
 import { Link } from 'react-router';
 import moment from 'moment';
 import $ from 'jquery';
+import Edit from '../lib/edit/edit';
 import Icon from '../lib/icon/icon';
 import Professor from '../../../../../static/svg/professor.svg';
 
@@ -20,23 +21,26 @@ const propTypes = {
 
 const {isLoaded, isEmpty, dataToJS} = helpers;
 
-@firebase(
-  	props => ([
-    	`subjects#orderByChild=slug&equalTo=${props.params.slug}`,
-		'files',
-		'users',
-		'activities',
-		'modules'
-  	])
-)
 @connect(
   	(state, props) => ({
     	subject: dataToJS(state.firebase, 'subjects'),
 		files: dataToJS(state.firebase, 'files'),
 		users: dataToJS(state.firebase, 'users'),
 		activities: dataToJS(state.firebase, 'activities'),
-		modules: dataToJS(state.firebase, 'modules')
+		modules: dataToJS(state.firebase, 'modules'),
+		userID: state.mainReducer.user ? state.mainReducer.user.uid : '',
+		userData: dataToJS(state.firebase, `users/${state.mainReducer.user ? state.mainReducer.user.uid : ''}`),
   	})
+)
+@firebase(
+  	props => ([
+    	`subjects#orderByChild=slug&equalTo=${props.params.slug}`,
+		'files',
+		'users',
+		'activities',
+		'modules',
+		`users/${props.userID}`
+  	])
 )
 class Subject extends Component {
     
@@ -103,6 +107,7 @@ class Subject extends Component {
 					<h1 className="title">{subject.title}</h1>
 					<div className="meta">
 						<Icon glyph={Professor} />{teachers}
+						{isLoaded(this.props.userData) && !isEmpty(this.props.userData) && this.props.userData.info.level >= CONSTANTS.ADMIN_LEVEL ? <Edit editLink={`/admin/subjects/edit/${subject.slug}`} newLink="/admin/subjects/new" /> : ''}
 					</div>
 					<ul className="horizontal-nav">
 						<li className={classNames('horizontal-nav-item', {active: section === this.props.params.slug})}><Link to={`/subjects/${subject.slug}`}>Summary</Link></li>
@@ -112,13 +117,13 @@ class Subject extends Component {
 					<div className={classNames('columns', {'single-column': (!subject.content2 && !subject.content2), hidden: (section !== this.props.params.slug)})}>
 						<div className="column page-content">
 							{featuredImage ? <img className="featured-image" src={featuredImage.url} /> : ''}
-							<div className="content" dangerouslySetInnerHTML={{__html: converter.makeHtml(subject.content1)}}></div>
+							<div className="content" dangerouslySetInnerHTML={{__html: CONSTANTS.converter.makeHtml(subject.content1)}}></div>
 						</div>
 						{subject.content2 ? <div className="column page-sidebar">
-							<div className="content" dangerouslySetInnerHTML={{__html: converter.makeHtml(subject.content2)}}></div>
+							<div className="content" dangerouslySetInnerHTML={{__html: CONSTANTS.converter.makeHtml(subject.content2)}}></div>
 						</div> : ''}
 						{subject.content3 ? <div className="column page-sidebar">
-							<div className="content" dangerouslySetInnerHTML={{__html: converter.makeHtml(subject.content3)}}></div>
+							<div className="content" dangerouslySetInnerHTML={{__html: CONSTANTS.converter.makeHtml(subject.content3)}}></div>
 						</div> : ''}
 					</div>
         			<div className={classNames('columns single-column', {hidden: (section !== 'modules')})}>
