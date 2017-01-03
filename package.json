@@ -4,7 +4,7 @@
   "description": "Open Realtime Education. Hypatia is a FREE, Open Source LMS (Learning Management System) focussed in UX and remote coworking. You can use it to build your online school, academy or university.",
   "scripts": {
     "dev": "webpack-dev-server --config ./webpack/webpack-dev.config.js --watch --colors",
-    "build": "npm version minor && rm -rf dist && webpack --config ./webpack/webpack-prod.config.js --colors",
+    "build": "npm version patch && rm -rf dist && webpack --config ./webpack/webpack-prod.config.js --colors",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test",
     "test:watch": "npm run test -- --watch",
     "lint": "eslint src test webpack"
