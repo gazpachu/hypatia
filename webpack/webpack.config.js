@@ -4,6 +4,7 @@ const Webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const WebpackVersionFilePlugin = require('webpack-version-file-plugin');
 
 module.exports = (options) => {
   	const ExtractSASS = new ExtractTextPlugin(`/styles/${options.cssFileName}`);
@@ -74,6 +75,11 @@ module.exports = (options) => {
           			warnings: false,
         		},
       		}),
+			new WebpackVersionFilePlugin({
+				packageFile: Path.join(__dirname, '../package.json'),
+				template: Path.join(__dirname, '../version.ejs'),
+				outputFile: Path.join(__dirname, '../static/version.json')
+			}),
       		ExtractSASS
     	);
 
