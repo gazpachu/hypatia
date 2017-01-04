@@ -73,7 +73,7 @@ class Home extends Component {
 					</div>
 					<div className="elevator-pitch">
 						<p>Hypatia is a <strong>FREE</strong>, Open Source LMS (Learning Management System) focussed in UX and remote coworking. You can use it to build your online school, academy or university.</p>
-						<p><button className="btn btn-primary">Start quick tour</button></p>
+						<p><button className="btn btn-primary">This button will trigger a tour</button></p>
 					</div>
 					<div className="circle tooltip usa">JF<div className="spinner"></div><span className="tooltip-text top">Jeff Francis<span>San Francisco, USA</span></span></div>
 					<div className="circle tooltip brazil">MC<div className="spinner"></div><span className="tooltip-text top">Maria Castro<span>Rio de Janeiro, Brazil</span></span></div>

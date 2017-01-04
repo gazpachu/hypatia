@@ -23,8 +23,9 @@ class Help extends Component {
 	
 	render() {
 		return (
-            <section className={`calendar-panel ${this.props.class}`}>
-				<h1>Help</h1>
+            <section className={`help-panel ${this.props.class}`}>
+				<h4 className="panel-heading">Questions & answers</h4>
+           		<p>Sorry, this feature will be available in the following weeks.</p>
             </section>
 		)
 	}

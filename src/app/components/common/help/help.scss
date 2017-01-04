@@ -1,7 +1,8 @@
 .help-panel {
 	display: none;
+	padding: 20px;
 	
 	&.open {
-		display: flex;
+		display: block;
 	}
 }

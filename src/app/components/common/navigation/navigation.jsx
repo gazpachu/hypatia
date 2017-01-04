@@ -44,16 +44,6 @@ const defaultProps = {
 			id: 12,
 			title: 'My account',
 			link: '/account'
-		},
-		{
-			id: 13,
-			title: 'Notifications',
-			link: '/account/notifications'
-		},
-		{
-			id: 14,
-			title: 'Record',
-			link: '/account/record'
 		}]
 	},
 	{

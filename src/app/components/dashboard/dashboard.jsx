@@ -64,10 +64,10 @@ class Dashboard extends Component {
 							return <li key={activity} className="item" style={{borderLeftColor: this.props.colors[c]}}><Link to={`/activities/${this.props.activities[activity].slug}`}>{this.props.activities[activity].title}</Link>
 								<div className="meta">Due in <span className="date">{moment(this.props.activities[activity].endDate).format('D MMMM YYYY')}</span></div>
 								<div className="actions">
-									<Icon glyph={Announcement} />
-									<Icon glyph={Download} />
-									<Icon glyph={Upload} />
-									<Icon glyph={Chat} />
+									<Link to="/dashboard#demo-not-yet-linked"><Icon glyph={Announcement} /></Link>
+									<Link to="/dashboard#demo-not-yet-linked"><Icon glyph={Download} /></Link>
+									<Link to="/dashboard#demo-not-yet-linked"><Icon glyph={Upload} /></Link>
+									<Link to="/dashboard#demo-not-yet-linked"><Icon glyph={Chat} /></Link>
 								</div>
 							</li>;
 						}.bind(this));
@@ -95,7 +95,7 @@ class Dashboard extends Component {
 				{(subjects && activities) ? <div className="page-wrapper">
          			<div className="announcement">
 						<Icon glyph={Info} />
-						From August 15th 23:00pm until August 16th 8am, the website will be offline due to maintenance works. Apologies for the trouble.
+						From August 15th 23:00pm until August 16th 8am, the website will be offline due to maintenance works. Apologies for the trouble. (Hardcoded)
 					</div>
           			<div className="columns">
           				<div className="column">
@@ -111,7 +111,7 @@ class Dashboard extends Component {
 							</ul>
 						</div>
          				<div className="column">
-							<h1 className="dashboard-title">My direct messages</h1>
+							<h1 className="dashboard-title">My direct messages (Hardcoded)</h1>
 							<ul className="items-list">
 								<li className="item">
 									<div>John Smith</div>
