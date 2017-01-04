@@ -1,68 +1,101 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
-    <meta charset="UTF-8">
-    <title>Hypatia LMS</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-  </head>
-  <body>
-    <section class="page-header">
-      <h1 class="project-name">Hypatia</h1>
-      <h2 class="project-tagline">An open source LMS based on Facebook's React and Node.js</h2>
-      <a href="https://github.com/gazpachu/hypatia" class="btn">View on GitHub</a>
-      <!--a href="https://github.com/gazpachu/hypatia/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/gazpachu/hypatia/tarball/master" class="btn">Download .tar.gz</a-->
-    </section>
+  	<head>
+		<meta charset="UTF-8">
+		<title>Hypatia LMS: Open realtime education</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+		<link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  	</head>
+  	<body>
+    	<section class="page-header">
+			<h1 class="project-name">Hypatia</h1>
+			<h2 class="project-tagline">Hypatia is a FREE, Open Source LMS (Learning Management System) focussed in UX and remote coworking</h2>
+			<a href="https://github.com/theonapps/hypatia" class="btn">View on GitHub</a>
+			<a href="https://github.com/theonapps/hypatia/zipball/master" class="btn">Download .zip</a>
+			<a href="https://github.com/theonapps/hypatia/tarball/master" class="btn">Download .tar.gz</a>
+    	</section>
 
-    <section class="main-content">
-      <h3>
-<a id="what-is-hypatia" class="anchor" href="#what-is-hypatia" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What is Hypatia?</h3>
+    	<section class="main-content">
+      		<h3><a id="what-is-hypatia" class="anchor" href="#what-is-hypatia" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What is Hypatia?</h3>
 
-<p>Hypatia is a FREE open-source modern Learning Management System based on the powerful an popular Facebook's React framework and Node.js. Hypatia aims at solving the issues that current LMS have, like bad UX, very old and cluttered design or not working properly on mobile devices.</p>
+			<p>The target of this project (Hypatia) is to build an open source, real-time Learning Management System for the web based on the powerful and popular Facebook's React framework and Google’s Firebase cloud platform.</p>
+			<p>Hypatia aims at solving the issues that current LMSs have, like bad and slow UX, old and cluttered designs and unresponsive layouts. The way these issues will be solved is by using the most advanced web technologies, like the shadow DOM for fast rendering, web sockets for real-time communication, JSON for standardised and formatted data, integration with 3rd party APIs and the latest HTML5, CSS3 and JavaScript features to build a functional and beautiful UI following the best practices.</p>
+			<p>Hypatia is designed with universities and academies in mind. There's no size limit. It can be used for small academies (5 - 100 students) and for big universities (1K - 100K). The system will be scalable, allowing modules to be enabled/disabled based on the requirements of the organisation.</p>
+			<p>The project will be monetised by offering a freemium scheme. The premium version will include a maintenance fee to implement upgrades and custom/premium plugins.</p>
+			<p>The ultimate target of this project is to offer a solution to the open source community that feels as the Wordpress of the LMS world. Flexible enough to suit the needs of the majority of educational projects by being scalable, easy to use/learn and opened to be used, modified and improved.</p>
+			<p>Hopefully, Hypatia will enable people around the world to make education more accessible and enjoyable, especially for those who live in developing countries.</p>
+			
+			<h3><a id="who-can-use-it" class="anchor" href="#who-can-use-it" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Context and project justification</h3>
 
-<h3>
-<a id="who-can-use-it" class="anchor" href="#who-can-use-it" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Who can use it?</h3>
+			<p>The reason why I chose to build a Learning Management System is because I keep seeing how things could be done better in many e-learning related websites. I particularly have a lot of things to say regarding the way students interact with each other and with the teacher. The current systems do not provide an agile communication. The interactive experience feels slow, with server related errors appearing often, annoying popup windows, cluttered UI with non-relevant data...</p>
 
-<p>Hypatia is open-source software and can be used by anyone willing to start an educational project online. It's philosophy is to help people to bring education for everyone in the world. For that reason, it's completely FREE, without any hidden cost or license. It is designed with universities and academies in mind, which means you will find features that are usually required for these kind of projects. There's no size limit, Hypatia is flexible and scalable. It can be used for small academies (5 - 100 students) and for big universities (1K - 100K).</p>
+			<p>This problem is highly relevant, as online education is becoming more and more popular, especially in developed countries, where society is used to interact with computers in a daily basis. Not having an updated and well taken care of e-learning ecosystem, makes people’s lives more difficult, as they have to balance a highly productive job and personal environments with slow and unpleasant online learning experiences.</p>
 
-<h3>
-<a id="when-will-it-be-ready" class="anchor" href="#when-will-it-be-ready" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>When will it be ready?</h3>
+			<p>Having e-learning websites that don’t keep up with the rest of the web evolutions, makes the educational experience less enjoyable, which, in some cases, can make students give up their courses or entrepreneurs fail with their ventures.</p>
 
-<p>Hypatia was born as a university final project. At the moment, it is in the planning stage. Development will start mid September 2016 and the first alpha version will be realeased in late January 2017. Beta version will be launched in April 2017 and the first RC version (production ready) should be available by June-July 2017.</p>
+			<p>To fix this situation, we need to improve the offer out there. Make the e-learning software community vibrant and competitive. That’s the reason I want to build a platform inspired on successful and modern real-time products, like Slack, Trello or Google Docs and integrate them in a rich, full-flavored and exciting e-learning platform.</p>
 
-<h3>
-<a id="initial-requirements" class="anchor" href="#initial-requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Initial requirements</h3>
+			<p>There are other LMS already in the market with APIs and modern stacks, like Moodle (23% of market share), Canvas LMS, Blackboard (41% of market share), Matrix, D2L, Kaanu, etc. Unfortunately, they don’t offer good UX or they don’t make it easy for individuals to gain access to their software and/or modify it to offer a more customised experience for their students.</p>
 
-<ul>
-	<li>Offer something to the community that feels as the Wordpress of the LMS</li>
-	<li>Flexible enough to suit the needs of the majority of educational projects by being very opened and easy to extend / scale</li>
-	<li>Tech stack includes: <a href="https://www.reactstarterkit.com/">React Starter Kit</a>, ES2015, Isomorphic/Universal, <a href="http://material-ui.com/">Material UI</a>, Babel.js, (Redux or GraphQL), Webpack, Node.js, (Express, Loopback or Meteor)</li>
-	<li>The UX and responsive plain design have to be spot-on</li>
-	<li>The homepage will display a list of available courses, the same way Udemy or Egghead does it</li>
-	<li>Implement agile IM communication like Slack. No more forums, emails or other slow and cluttered systems to talk to each other</li>
-	<li>Include real-time multi-player quizzes, something similar QuizUp</li>
-	<li>Integrate easily with Google Docs, Trello, Dropbox and other external tools. Use the Internet as a CMS!</li>
-	<li>Open API, so users could create their own front-ends</li>
-	<li>It has to be social and implement learning analytics</li>
-</ul>
+			<h3><a id="objectives" class="anchor" href="#objectives" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Objectives</h3><h3>
+			
+			<ul>
+				<li>The most important goal is to offer a full-stack application to the open source community that enables developers and entrepreneurs to create their own e-learning sites</li>
 
-<h3>
-<a id="contribute-or-contact" class="anchor" href="#contribute-or-contact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contribute or Contact</h3>
+				<li>The back-end will be driven by Google’s Firebase platform, which will simplify the infrastructure maintenance and scalability, making it easy for developers to start and deploy their apps</li>
 
-<p>The initial part of the project (until the alpha version) is closed, as it's a university projects that needs to be developed individually and then reviewed by the university board. After that, the project will be opened to contributions and fully shared with the open-source community. If you have any question please open an issue in the github repository.</p>
+				<li>The front-end will be initially built using Facebook’s React framework, although in a future, it can be ported to React Native to take advantage of the native Android and iOS features</li>
 
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/gazpachu/hypatia">Hypatia</a> is maintained by <a href="https://github.com/gazpachu">gazpachu</a>.</span>
+				<li>The second most important goal is to create a very polished UX by creating a well curated information architecture, easy to follow journeys and have as many user testing revisions as possible</li>
 
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-      </footer>
+				<li>The simplicity of the navigation and the prioritisation of content is key. Only the most relevant content for a given section will be displayed. This will ensure that the UI remains uncluttered</li>
 
-    </section>
+				<li>The application will implement as many real time features as possible, allowing users to be notified and to communicate with other users in an agile manner. No more old style forums, emails or other slow and cluttered systems to talk to each other or get updates from the system</li>
 
+				<li>Include multi-language support, social user authentication and analytics</li>
 
-  </body>
+				<li>Allow users to create themes for the UI. This will help other users with less web development experience to take advantage of the community to improve the look & feel of their e-learning sites</li>
+
+				<li>Implement a basic admin area to allow teachers/admins edit the courses/subjects’ contents, calendars, users, payments, etc</li>
+
+				<li>The essential journey should allow a user to signup/login, read about the available courses/subjects, join a course/subject (with or without paying), read/download the resources, interact with the classmates and teacher, read/download the assignments and watch the calendar</li>
+
+				<li>Phase II: create a set of templates and guidelines to allow developers create plugins to enhance the functionality of the platform. These plugins could be new features, like the ability to solve quizzes or integrations of 3rd party services like Paypal, Stripe, Google Docs, Flickr, Dropbox, Slack, Trello, etc</li>
+			</ul>
+			
+			<a id="when-will-it-be-ready" class="anchor" href="#when-will-it-be-ready" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>When will it be ready?</h3>
+
+			<p>Hypatia was born as a university final project. At the moment, it is in the planning stage. Development will start mid September 2016 and the first alpha version will be realeased in late January 2017. Beta version will be launched in April 2017 and the first RC version (production ready) should be available by June-July 2017.</p>
+
+			<h3>
+			<a id="initial-requirements" class="anchor" href="#initial-requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Initial requirements</h3>
+
+			<ul>
+				<li>Offer something to the community that feels as the Wordpress of the LMS</li>
+				<li>Flexible enough to suit the needs of the majority of educational projects by being very opened and easy to extend / scale</li>
+				<li>Tech stack includes: <a href="https://www.reactstarterkit.com/">React Starter Kit</a>, ES2015, Isomorphic/Universal, <a href="http://material-ui.com/">Material UI</a>, Babel.js, (Redux or GraphQL), Webpack, Node.js, (Express, Loopback or Meteor)</li>
+				<li>The UX and responsive plain design have to be spot-on</li>
+				<li>The homepage will display a list of available courses, the same way Udemy or Egghead does it</li>
+				<li>Implement agile IM communication like Slack. No more forums, emails or other slow and cluttered systems to talk to each other</li>
+				<li>Include real-time multi-player quizzes, something similar QuizUp</li>
+				<li>Integrate easily with Google Docs, Trello, Dropbox and other external tools. Use the Internet as a CMS!</li>
+				<li>Open API, so users could create their own front-ends</li>
+				<li>It has to be social and implement learning analytics</li>
+			</ul>
+
+			<h3>
+			<a id="contribute-or-contact" class="anchor" href="#contribute-or-contact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contribute or Contact</h3>
+
+			<p>The initial part of the project (until the alpha version) is closed, as it's a university projects that needs to be developed individually and then reviewed by the university board. After that, the project will be opened to contributions and fully shared with the open-source community. If you have any question please open an issue in the github repository.</p>
+
+			<footer class="site-footer">
+				<span class="site-footer-owner"><a href="https://github.com/theonapps/hypatia">Hypatia</a> is maintained by <a href="https://theon.io">Theon.io</a>.</span>
+
+				<span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+			</footer>
+    	</section>
+  	</body>
 </html>
