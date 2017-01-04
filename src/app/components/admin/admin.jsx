@@ -423,7 +423,7 @@ class Admin extends Component {
 	formatFileType(state) {
 		if (!state.id) { return state.text; }
 		let contentType = state.text.substring(state.text.indexOf('[')+1, state.text.indexOf(']'));
-		var $state = $('<span><img src="//www.stdicon.com/crystal/' + contentType + '?size=24" class="select2-img" />' + state.text.substring(state.text.indexOf(']')+1, state.text.length) + '</span>');
+		var $state = $('<span><img src="http://www.stdicon.com/crystal/' + contentType + '?size=24" class="select2-img" />' + state.text.substring(state.text.indexOf(']')+1, state.text.length) + '</span>');
 		return $state;
 	}
 	
