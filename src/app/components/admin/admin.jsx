@@ -630,7 +630,7 @@ class Admin extends Component {
 											<a href={this.state.selectedItem.url} target="_blank">View/download file</a>
 										</div>
 										<div className="file-metadata">
-											<img src={`//www.stdicon.com/crystal/${fileContentType}?size=24`} /><span>File metadata</span>
+											<img src={`http://www.stdicon.com/crystal/${fileContentType}?size=24`} /><span>File metadata</span>
 											<ul>
 												<li><span>Original file name:</span>{this.state.selectedItem.file}</li>
 												<li><span>Content type:</span>{fileContentType}</li>
