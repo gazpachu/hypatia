@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "4.5.0"
+  - "4.5"
 
 branches:
   only:
@@ -8,6 +8,7 @@ branches:
 
 before_script:
   - npm install -g firebase-tools
+  - npm version patch
 
 script:
   - npm run build
