@@ -8,9 +8,7 @@ The project is currently under development, with continuous changes and some bit
 
 ## More info
 
-Demo: [https://hypatia-8d923.firebaseapp.com](https://hypatia-8d923.firebaseapp.com)
-
-You need to sign up with a valid email address to access some pages.
+Demo: [https://hypatia-8d923.firebaseapp.com](https://hypatia-8d923.firebaseapp.com) (You need to sign up with a valid email address to access some pages)
 
 Project's website: [https://theonapps.github.io/hypatia/](https://theonapps.github.io/hypatia/)
 
