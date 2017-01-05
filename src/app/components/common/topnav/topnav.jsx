@@ -7,8 +7,7 @@ import Navigation from '../navigation/navigation';
 import md5 from 'md5';
 import { USER_CONFIRM_EMAIL } from '../../../constants/constants';
 import { setUser, setPanel, setNotification } from '../../../actions/actions';
-import firebase from 'firebase';
-
+import { firebase, helpers } from 'redux-react-firebase';
 import Icon from '../lib/icon/icon';
 import Logo from '../../../../../static/svg/logo.svg';
 import LogoWording from '../../../../../static/svg/logo-wording.svg';
@@ -24,6 +23,19 @@ import SortActiveDown from '../../../../../static/svg/sort-active-down.svg';
 import Logout from '../../../../../static/svg/logout.svg';
 import Chat from '../../../../../static/svg/chat.svg';
 
+const {isLoaded, isEmpty, dataToJS} = helpers;
+
+@connect(
+  	(state, props) => ({
+    	userID: state.mainReducer.user ? state.mainReducer.user.uid : null,
+		userData: dataToJS(state.firebase, `users/${state.mainReducer.user ? state.mainReducer.user.uid : null}`),
+  	})
+)
+@firebase(
+  	props => ([
+		`users/${props.userID}`
+  	])
+)
 class TopNav extends Component {
     
 	constructor(props) {
@@ -144,7 +156,7 @@ class TopNav extends Component {
 			
 			const email = String(this.emailSignup.value);
 			
-			firebase.auth().createUserWithEmailAndPassword(email, this.pwSignup.value).then(function(user) {
+			this.props.firebase.auth().createUserWithEmailAndPassword(email, this.pwSignup.value).then(function(user) {
 				this.saveUser(user, this.firstName.value, this.lastName.value, email);
 			}.bind(this)).catch(function(error) {
 				$('.js-btn-signup').show();
@@ -158,7 +170,7 @@ class TopNav extends Component {
 	}
 	
 	saveUser(user, firstname, lastname, email) {
-		return firebase.database().ref(`users/${user.uid}/info`).set({
+		return this.props.firebase.database().ref(`users/${user.uid}/info`).set({
       		firstName: firstname,
 			lastName1: lastname,
 			email: email,
@@ -185,7 +197,7 @@ class TopNav extends Component {
 		$('.js-signin-loader').show();
 		
 		const email = String(this.email.value);
-		firebase.auth().signInWithEmailAndPassword(email, this.pw.value).then(function() {
+		this.props.firebase.auth().signInWithEmailAndPassword(email, this.pw.value).then(function() {
 			$('.js-btn-signin').show();
 			$('.js-signin-loader').hide();
 			$('.js-overlay').animateCss('fade-out', function() {
@@ -260,8 +272,8 @@ class TopNav extends Component {
 							<button className="chat-icon" onClick={() => {this.changePanel('chat') }}>{this.props.panel === 'chat' ? <Icon glyph={Close} className="icon close-chat" /> : <Icon glyph={Chat} className="icon chat" />}</button>
 							
 							<div className="user-controls-cta account-cta">
-								{(this.props.user) ? <Link to="/dashboard">{(this.props.user.email) ? <img className="photo" src={`https://www.gravatar.com/avatar/${md5(this.props.user.email)}.jpg?s=20`} /> : <Icon glyph={Avatar} />} <span>{this.props.userData.info ? this.props.userData.info.displayName : ''}</span></Link> : ''}
-								<button onClick={() => { firebase.auth().signOut(); this.props.setUser(null);}}><Icon glyph={Logout} className="icon sign-out" /></button>
+								{(this.props.user) ? <Link to="/dashboard">{(this.props.user.email) ? <img className="photo" src={`https://www.gravatar.com/avatar/${md5(this.props.user.email)}.jpg?s=20`} /> : <Icon glyph={Avatar} />} <span>{this.props.userData && this.props.userData.info ? this.props.userData.info.displayName : ''}</span></Link> : ''}
+								<button onClick={() => { this.props.firebase.auth().signOut(); this.props.setUser(null);}}><Icon glyph={Logout} className="icon sign-out" /></button>
 							</div>
 						</div>
 					}
@@ -273,7 +285,7 @@ class TopNav extends Component {
 	}
 }
 
-const mapStateToProps = ({ mainReducer: { user, panel, userData } }) => ({ user, panel, userData });
+const mapStateToProps = ({ mainReducer: { user, panel } }) => ({ user, panel });
 
 const mapDispatchToProps = {
 	setUser,

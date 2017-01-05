@@ -2,10 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { history } from '../store';
-import { setUser, changeViewport, setPanel, setNotification, setUserData } from '../actions/actions';
+import { setUser, changeViewport, setPanel, setNotification } from '../actions/actions';
 import { USER_CONFIRM_EMAIL, ADMIN_LEVEL } from '../constants/constants';
 import firebase from 'firebase';
-//import { auth } from '../constants/firebase';
 import _ from "lodash";
 import $ from 'jquery';
 import ReactGA from 'react-ga';
@@ -54,7 +53,7 @@ class App extends Component {
 				if (user.emailVerified) {
 					this.props.setUser(user);
 					firebase.database().ref('/users/' + user.uid).once('value').then(function(snapshot) {
-						if (snapshot.val()) this.props.setUserData(snapshot.val());
+						//if (snapshot.val()) this.props.setUserData(snapshot.val());
 					}.bind(this));
 				}
 				else {
@@ -108,14 +107,13 @@ class App extends Component {
 App.propTypes = propTypes;
 App.defaultProps = defaultProps;
 
-const mapStateToProps = ({ mainReducer: { isDesktop, breadcrumbs, user, userData, panel } }) => ({ isDesktop, breadcrumbs, user, userData, panel });
+const mapStateToProps = ({ mainReducer: { isDesktop, breadcrumbs, user, panel } }) => ({ isDesktop, breadcrumbs, user, panel });
 
 const mapDispatchToProps = {
 	changeViewport,
 	setUser,
 	setPanel,
-	setNotification,
-	setUserData
+	setNotification
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

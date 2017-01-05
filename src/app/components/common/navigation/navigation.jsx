@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import Breadcrumbs from '../breadcrumbs/breadcrumbs';
 import { ADMIN_LEVEL } from '../../../constants/constants';
 import Search from '../search/search';
+import { firebase, helpers } from 'redux-react-firebase';
 import Helpers from '../../common/helpers';
 import $ from 'jquery';
 import Icon from '../lib/icon/icon';
@@ -118,6 +119,19 @@ const propTypes = {
 	closeSearch: PropTypes.func.isRequired
 };
 
+const {isLoaded, isEmpty, dataToJS} = helpers;
+
+@connect(
+  	(state, props) => ({
+    	userID: state.mainReducer.user ? state.mainReducer.user.uid : null,
+		userData: dataToJS(state.firebase, `users/${state.mainReducer.user ? state.mainReducer.user.uid : null}`),
+  	})
+)
+@firebase(
+  	props => ([
+		`users/${props.userID}`
+  	])
+)
 class Navigation extends Component {
 
 	constructor(props) {
@@ -136,7 +150,7 @@ class Navigation extends Component {
 		let itemActive = (this.props.location.pathname === item.link) ? 'active' : '',
 			hasChildren = (item.children) ? 'has-children' : '';
 		
-		return (!item.level || (item.level && this.props.userData.info && item.level <= this.props.userData.info.level)) ? <li key={i} className={`nav-item ${hasChildren}`}>
+		return (!item.level || (item.level && this.props.userData && this.props.userData.info && item.level <= this.props.userData.info.level)) ? <li key={i} className={`nav-item ${hasChildren}`}>
 			{(item.icon) ? <Icon glyph={item.icon} className="icon item-icon" /> : ''}
 			{(item.children) ? <span className="title" onClick={this.clickItem}>{item.title}<Icon glyph={Forward} className="icon arrow"/></span> : <Link to={item.link} className="title" onClick={this.props.toggleNav}>{item.title}</Link>}
 			{(item.children) ? <ul className="nav-children">
@@ -177,6 +191,6 @@ class Navigation extends Component {
 Navigation.propTypes = propTypes;
 Navigation.defaultProps = defaultProps;
 
-const mapStateToProps = ({ mainReducer: { user, userData } }) => ({ user, userData });
+const mapStateToProps = ({ mainReducer: { user } }) => ({ user });
 
 export default connect(mapStateToProps)(Navigation);
