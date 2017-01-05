@@ -12,6 +12,7 @@ before_script:
   - npm install -g firebase-tools
 
 script:
+  - npm install
   - npm run build
 
 after_success:
