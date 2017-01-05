@@ -7,8 +7,9 @@ branches:
     - master
 
 before_script:
+  - git config --global user.name "TravisCI"
+  - git config --global user.email "travisCI@theon.io"
   - npm install -g firebase-tools
-  - npm version patch
 
 script:
   - npm run build
