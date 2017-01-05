@@ -84,5 +84,7 @@
     "webpack-version-file-plugin": "^0.2.2",
     "webpack-dev-server": "^1.14.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "dotenv": "^2.0.0"
+  }
 }

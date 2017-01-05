@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { setLoading } from '../../../actions/actions';
 import classNames from 'classnames';
 import {connect} from 'react-redux';
-import { googleConfig } from '../../../constants/google';
 import $ from 'jquery';
 import moment from 'moment';
 import Icon from '../lib/icon/icon'; 
