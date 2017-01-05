@@ -2,7 +2,7 @@
 
 ## WARNING
 
-The project is currently under development, with countinous changes and some bits and bobs not working. Feel free to test it if you like but don't expect it to be production-ready until mid 2017.
+The project is currently under development, with continuous changes and some bits and bobs not working. Feel free to test it if you like but don't expect it to be production-ready until mid 2017.
 
 ## More info
 
