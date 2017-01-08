@@ -73,7 +73,8 @@ module.exports = (options) => {
 			new CopyWebpackPlugin([
 				{ from: 'static', to: 'static' },
 				{ from: 'manifest.json' },
-				{ from: 'browserconfig.xml' }
+				{ from: 'browserconfig.xml' },
+				{ from: 'presentation.html' }
 			]),
       		new Webpack.optimize.UglifyJsPlugin({
         		compressor: {
