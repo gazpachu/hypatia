@@ -64,6 +64,7 @@ ReactDOM.render(
 		<Router onUpdate={() => window.scrollTo(0, 0), logPageView} history={history}>
 			<Route path="/" component={App}>
 				<IndexRoute component={Home} />
+				<Route path="/tour" component={Tour} />
 				<Route path="/dashboard" component={Dashboard} onEnter={requireAuth} />
 				<Route path="/account" component={AccountSettings} onEnter={requireAuth} />
 					<Route path="/account/notifications" component={AccountNotifications} onEnter={requireAuth} />
