@@ -31,25 +31,28 @@ class Tour extends Component {
 					<p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
 				</div>
 				<div id="impress">
-					<div id="bored" className="step slide" data-x="-1000" data-y="-1500">
-						<q>Aren’t you just <b>bored</b> with all those slides-based presentations?</q>
+					<div id="start" className="step quote" data-x="-1000" data-y="-1500">
+						<blockquote>
+							<p>Education is the most powerful weapon which you can use to change the world.</p>
+							<footer>— Nelson Mandela</footer>
+						</blockquote>
 					</div>
 					
-					<div className="step slide" data-x="0" data-y="-1500">
-						<q>Don’t you think that presentations given <strong>in modern browsers</strong> shouldn’t <strong>copy the limits</strong> of ‘classNameic’ slide decks?</q>
+					<div className="step" data-x="0" data-y="-1500">
+						<q>And using more and more social media and the Internet</q>
 					</div>
 
-					<div className="step slide" data-x="1000" data-y="-1500">
-						<q>Would you like to <strong>impress your audience</strong> with <strong>stunning visualization</strong> of your talk?</q>
+					<div className="step" data-x="1000" data-y="-1500">
+						<q>Online education is growing very fast</q>
 					</div>
 					
-					<div id="title" className="step" data-x="0" data-y="0" data-scale="4">
-						<span className="try">then you should try</span>
-						<h1>impress.js<sup>*</sup></h1>
-						<span className="footnote"><sup>*</sup> no rhyme intended</span>
+					<div className="step title" data-x="0" data-y="0" data-scale="4">
+						<span className="try">Developing countries</span>
+						<h1>are hungry</h1>
+						<span className="footnote">for knowledge</span>
 					</div>
 					
-					<div id="its" className="step" data-x="850" data-y="3000" data-rotate="90" data-scale="5">
+					<div className="step" data-x="850" data-y="3000" data-rotate="90" data-scale="5">
 						<p>It’s a <strong>presentation tool</strong> <br/>
 						inspired by the idea behind <a href="http://prezi.com">prezi.com</a> <br/>
 						and based on the <strong>power of CSS3 transforms and transitions</strong> in modern browsers.</p>
@@ -86,9 +89,10 @@ class Tour extends Component {
 					</div>
 					
 					<div id="overview" className="step" data-x="3000" data-y="1500" data-scale="10"></div>
-				</div>
-				<div className="hint">
-					<p>Use a spacebar or arrow keys to navigate</p>
+					
+					<div className="hint">
+						<p>Use the spacebar or arrow keys to navigate</p>
+					</div>
 				</div>
 			</section>
 		)
