@@ -122,11 +122,7 @@ body {
 		*/
 		#ing b {
 			display: inline-block;
-			-webkit-transition: 0.5s;
-			-moz-transition:    0.5s;
-			-ms-transition:     0.5s;
-			-o-transition:      0.5s;
-			transition:         0.5s;
+			transition: 0.5s;
 		}
 
 		/*
@@ -134,45 +130,23 @@ body {
 			`present` class ...
 		*/
 		#ing.present .positioning {
-			-webkit-transform: translateY(-10px);
-			-moz-transform:    translateY(-10px);
-			-ms-transform:     translateY(-10px);
-			-o-transform:      translateY(-10px);
-			transform:         translateY(-10px);
+			transform: translateY(-10px);
 		}
 
 		/*
 			... 'rotating' to rotate a quarter of a second later ...
 		*/
 		#ing.present .rotating {
-			-webkit-transform: rotate(-10deg);
-			-moz-transform:    rotate(-10deg);
-			-ms-transform:     rotate(-10deg);
-			-o-transform:      rotate(-10deg);
-			transform:         rotate(-10deg);
-
-			-webkit-transition-delay: 0.25s;
-			-moz-transition-delay:    0.25s;
-			-ms-transition-delay:     0.25s;
-			-o-transition-delay:      0.25s;
-			transition-delay:         0.25s;
+			transform: rotate(-10deg);
+			transition-delay: 0.25s;
 		}
 
 		/*
 			... and 'scaling' to scale down after another quarter of a second.
 		*/
 		#ing.present .scaling {
-			-webkit-transform: scale(0.7);
-			-moz-transform:    scale(0.7);
-			-ms-transform:     scale(0.7);
-			-o-transform:      scale(0.7);
-			transform:         scale(0.7);
-
-			-webkit-transition-delay: 0.5s;
-			-moz-transition-delay:    0.5s;
-			-ms-transition-delay:     0.5s;
-			-o-transition-delay:      0.5s;
-			transition-delay:         0.5s;
+			transform: scale(0.7);
+			transition-delay: 0.5s;
 		}
 
 		/*
@@ -220,11 +194,7 @@ body {
 			which behaviour is correct as 3D transforms spec is not very clear about it.
 		*/
 		#its-in-3d p {
-			-webkit-transform-style: preserve-3d;
-			-moz-transform-style:    preserve-3d; /* Y U need this Firefox?! */
-			-ms-transform-style:     preserve-3d;
-			-o-transform-style:      preserve-3d;
-			transform-style:         preserve-3d;
+			transform-style: preserve-3d;
 		}
 
 		/*
@@ -236,76 +206,38 @@ body {
 		#its-in-3d span,
 		#its-in-3d b {
 			display: inline-block;
-			-webkit-transform: translateZ(40px);
-			-moz-transform:    translateZ(40px);
-			-ms-transform:     translateZ(40px);
-			-o-transform:      translateZ(40px);
-			 transform:        translateZ(40px);
-
-			-webkit-transition: 0.5s;
-			-moz-transition:    0.5s;
-			-ms-transition:     0.5s;
-			-o-transition:      0.5s;
-			transition:         0.5s;
+			transform: translateZ(40px);
+			transition: 0.5s;
 		}
 
 		#its-in-3d .have {
-			-webkit-transform: translateZ(-40px);
-			-moz-transform:    translateZ(-40px);
-			-ms-transform:     translateZ(-40px);
-			-o-transform:      translateZ(-40px);
-			transform:         translateZ(-40px);
+			transform: translateZ(-40px);
 		}
 
 		#its-in-3d .you {
-			-webkit-transform: translateZ(20px);
-			-moz-transform:    translateZ(20px);
-			-ms-transform:     translateZ(20px);
-			-o-transform:      translateZ(20px);
-			transform:         translateZ(20px);
+			transform: translateZ(20px);
 		}
 
 		#its-in-3d .noticed {
-			-webkit-transform: translateZ(-40px);
-			-moz-transform:    translateZ(-40px);
-			-ms-transform:     translateZ(-40px);
-			-o-transform:      translateZ(-40px);
-			transform:         translateZ(-40px);
+			transform: translateZ(-40px);
 		}
 
 		#its-in-3d .its {
-			-webkit-transform: translateZ(60px);
-			-moz-transform:    translateZ(60px);
-			-ms-transform:     translateZ(60px);
-			-o-transform:      translateZ(60px);
-			transform:         translateZ(60px);
+			transform: translateZ(60px);
 		}
 
 		#its-in-3d .in {
-			-webkit-transform: translateZ(-10px);
-			-moz-transform:    translateZ(-10px);
-			-ms-transform:     translateZ(-10px);
-			-o-transform:      translateZ(-10px);
-			transform:         translateZ(-10px);
+			transform: translateZ(-10px);
 		}
 
 		#its-in-3d .footnote {
 			font-size: 32px;
-
-			-webkit-transform: translateZ(-10px);
-			-moz-transform:    translateZ(-10px);
-			-ms-transform:     translateZ(-10px);
-			-o-transform:      translateZ(-10px);
-			transform:         translateZ(-10px);
+			transform: translateZ(-10px);
 		}
 
 		#its-in-3d.present span,
 		#its-in-3d.present b {
-			-webkit-transform: translateZ(0px);
-			-moz-transform:    translateZ(0px);
-			-ms-transform:     translateZ(0px);
-			-o-transform:      translateZ(0px);
-			transform:         translateZ(0px);
+			transform: translateZ(0px);
 		}
 
 		#overview { display: none }

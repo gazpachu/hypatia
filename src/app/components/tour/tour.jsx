@@ -3,25 +3,133 @@ import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { setLoading } from '../../actions/actions';
 import $ from 'jquery';
+import _ from 'lodash';
 import Icon from '../common/lib/icon/icon';
 
 class Tour extends Component {
 	
 	constructor(props) {
 		super(props);
+		//this.impressAPI = null;
+		
+		//this.handleResize = this.handleResize.bind(this);
 	}
 	
 	componentDidMount() {
 		this.props.setLoading(false);
 		$('.js-main').removeClass().addClass('main js-main tour-page full-screen');
 		
-		if ("ontouchstart" in document.documentElement) { 
-			document.querySelector(".hint").innerHTML = "<p>Tap on the left or right to navigate</p>";
-		}
+//		if ("ontouchstart" in document.documentElement) { 
+//			document.querySelector('.hint').innerHTML = "<p>Tap on the left or right to navigate</p>";
+//		}
 		
-		this.impressAPI = impress();
-		this.impressAPI.init();
-	}	
+//		this.impressAPI = impress();
+//		this.impressAPI.init();
+//		
+//		$('#impress').addEventListener( "impress:init", function( event ) {
+//			var api = event.detail.api;
+//
+//			$('.tour-page').addEventListener( "keydown", function( event ) {
+//				if ( event.keyCode === 9 ||
+//				   ( event.keyCode >= 32 && event.keyCode <= 34 ) ||
+//				   ( event.keyCode >= 37 && event.keyCode <= 40 ) ) {
+//					event.preventDefault();
+//				}
+//			}, false );
+//
+//			$('.tour-page').addEventListener( "keyup", function( event ) {
+//
+//				if ( event.shiftKey || event.altKey || event.ctrlKey || event.metaKey ) {
+//					return;
+//				}
+//
+//				if ( event.keyCode === 9 ||
+//				   ( event.keyCode >= 32 && event.keyCode <= 34 ) ||
+//				   ( event.keyCode >= 37 && event.keyCode <= 40 ) ) {
+//					switch ( event.keyCode ) {
+//						case 33: // Page up
+//						case 37: // Left
+//						case 38: // Up
+//								 api.prev();
+//								 break;
+//						case 9:  // Tab
+//						case 32: // Space
+//						case 34: // Page down
+//						case 39: // Right
+//						case 40: // Down
+//								 api.next();
+//								 break;
+//					}
+//
+//					event.preventDefault();
+//				}
+//			}, false );
+//
+//			$('.tour-page').addEventListener( "click", function( event ) {
+//				var target = event.target;
+//				while ( ( target.tagName !== "A" ) &&
+//						( target !== document.documentElement ) ) {
+//					target = target.parentNode;
+//				}
+//
+//				if ( target.tagName === "A" ) {
+//					var href = target.getAttribute( "href" );
+//
+//					if ( href && href[ 0 ] === "#" ) {
+//						target = document.getElementById( href.slice( 1 ) );
+//					}
+//				}
+//
+//				if ( api.goto( target ) ) {
+//					event.stopImmediatePropagation();
+//					event.preventDefault();
+//				}
+//			}, false );
+//
+//			$('.tour-page').addEventListener( "click", function( event ) {
+//				var target = event.target;
+//
+//				while ( !( target.classList.contains( "step" ) &&
+//						  !target.classList.contains( "active" ) ) &&
+//						  ( target !== document.documentElement ) ) {
+//					target = target.parentNode;
+//				}
+//
+//				if ( api.goto( target ) ) {
+//					event.preventDefault();
+//				}
+//			}, false );
+//
+//			$('.tour-page').addEventListener( "touchstart", function( event ) {
+//				if ( event.touches.length === 1 ) {
+//					var x = event.touches[ 0 ].clientX,
+//						width = window.innerWidth * 0.3,
+//						result = null;
+//
+//					if ( x < width ) {
+//						result = api.prev();
+//					} else if ( x > window.innerWidth - width ) {
+//						result = api.next();
+//					}
+//
+//					if ( result ) {
+//						event.preventDefault();
+//					}
+//				}
+//			}, false );
+//
+//			window.addEventListener( "resize", _.throttle(this.handleResize, 250 ), false );
+//
+//		}, false );
+	}
+	
+	componentWillUnmount() {
+		//this.impressAPI = null;
+	}
+	
+//	handleResize() {
+//		api.goto( document.querySelector( ".step.active" ), 500 );
+//	}
 	
 	render () {
 		return (
@@ -33,7 +141,7 @@ class Tour extends Component {
 				<div id="impress">
 					<div id="start" className="step quote" data-x="-1000" data-y="-1500">
 						<blockquote>
-							<p>Education is the most powerful weapon which you can use to change the world.</p>
+							<p>"Education is the most powerful weapon which you can use to change the world"</p>
 							<footer>— Nelson Mandela</footer>
 						</blockquote>
 					</div>
