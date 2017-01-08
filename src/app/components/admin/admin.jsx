@@ -105,7 +105,7 @@ class Admin extends Component {
 	
 	componentDidMount() {
 		this.props.setLoading(false);
-		$('.js-main').removeClass().addClass('main js-main admin-page');
+		$('.js-main').removeClass().addClass('main js-main admin-page full-screen');
 	}
 	
 	componentWillReceiveProps(newProps) {

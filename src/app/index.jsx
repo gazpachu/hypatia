@@ -10,6 +10,7 @@ import firebase from 'firebase';
 import { ADMIN_LEVEL } from './constants/constants';
 import App from './components/app';
 import Home from './components/home/home';
+import Tour from './components/tour/tour';
 import Dashboard from './components/dashboard/dashboard';
 import AccountSettings from './components/account/settings';
 import AccountNotifications from './components/account/notifications';
