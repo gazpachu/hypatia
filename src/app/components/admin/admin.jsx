@@ -50,31 +50,36 @@ const propTypes = {
 	files: PropTypes.object
 };
 
-@firebase( [
-	'users',
-	'levels',
-	'groups',
-	'courses',
-	'subjects',
-	'modules',
-	'activities',
-	'posts',
-	'pages',
-	'files'
-])
 @connect(
-  	({firebase}) => ({
-		users: dataToJS(firebase, 'users'),
-		levels: dataToJS(firebase, 'levels'),
- 		groups: dataToJS(firebase, 'groups'),
-		courses: dataToJS(firebase, 'courses'),
-		subjects: dataToJS(firebase, 'subjects'),
-		modules: dataToJS(firebase, 'modules'),
- 		activities: dataToJS(firebase, 'activities'),
-		posts: dataToJS(firebase, 'posts'),
-		pages: dataToJS(firebase, 'pages'),
-		files: dataToJS(firebase, 'files')
+  	(state, props) => ({
+		users: dataToJS(state.firebase, 'users'),
+		levels: dataToJS(state.firebase, 'levels'),
+ 		groups: dataToJS(state.firebase, 'groups'),
+		courses: dataToJS(state.firebase, 'courses'),
+		subjects: dataToJS(state.firebase, 'subjects'),
+		modules: dataToJS(state.firebase, 'modules'),
+ 		activities: dataToJS(state.firebase, 'activities'),
+		posts: dataToJS(state.firebase, 'posts'),
+		pages: dataToJS(state.firebase, 'pages'),
+		files: dataToJS(state.firebase, 'files'),
+		userID: state.mainReducer.user ? state.mainReducer.user.uid : '',
+		userData: dataToJS(state.firebase, `users/${state.mainReducer.user ? state.mainReducer.user.uid : ''}`)
   	})
+)
+@firebase(
+  	props => ([
+		'users',
+		'levels',
+		'groups',
+		'courses',
+		'subjects',
+		'modules',
+		'activities',
+		'posts',
+		'pages',
+		'files',
+		`users/${props.userID}`
+  	])
 )
 class Admin extends Component {
 	
@@ -429,6 +434,7 @@ class Admin extends Component {
 	
 	createList(type) {
 		let newList = [];
+
 		if (isLoaded(this.props[type]) && !isEmpty(this.props[type])) {
 			newList = Object.keys(this.props[type]).map(function(key) {
 					let item = this.props[type][key];
@@ -460,6 +466,7 @@ class Admin extends Component {
 		const endDate = (this.state.selectedItem && this.state.selectedItem.endDate) ? moment(this.state.selectedItem.endDate) : null;
 		const gradeDate = (this.state.selectedItem && this.state.selectedItem.gradeDate) ? moment(this.state.selectedItem.gradeDate) : null;
 		const status = (this.state.selectedItem && this.state.selectedItem.status && this.state.selectedItem.status === 'inactive') ? false : true;
+		const slackToken = this.state.selectedItem && this.state.selectedItem.slackToken ? this.state.selectedItem.slackToken : '';
 		const fileContentType = (this.state.fileMetadata) ? this.state.fileMetadata.contentType : '';
 		let fileSize = (this.state.fileMetadata) ? Math.round(this.state.fileMetadata.size/1000) : 0;
 		fileSize = (fileSize < 1000) ? Math.round(fileSize)+'KB' : (fileSize < 1000000) ? Math.round(fileSize/1000)+'MB' : (fileSize < 1000000000) ? Math.round(fileSize/1000000)+'GB' : Math.round(fileSize/1000000000)+'TB'; 
@@ -468,7 +475,7 @@ class Admin extends Component {
 		
 		return (
 			 <section className="admin page container-fluid">
-			 	{(!isEmpty(users) && !isEmpty(levels) && !isEmpty(groups) && !isEmpty(courses) && !isEmpty(subjects) && !isEmpty(modules) && !isEmpty(activities) && !isEmpty(posts) && !isEmpty(pages) && !isEmpty(files)) ?
+			 	{(!isEmpty(levels) && !isEmpty(groups) && !isEmpty(courses) && !isEmpty(subjects) && !isEmpty(modules) && !isEmpty(activities) && !isEmpty(posts) && !isEmpty(pages)) ?
 				<div className="columns">
 					<div className="nav column">
 						<div className="block clearfix">
@@ -554,6 +561,7 @@ class Admin extends Component {
 								<Select2 style={{width: '100%'}} multiple data={users} value={(this.state.selectedItem && this.state.selectedItem.teachers) ? this.state.selectedItem.teachers : []} options={{placeholder: 'Teacher(s)...', allowClear: true}} onChange={(event) => this.updateMultiSelect(event.currentTarget, 'teachers')} />
 								<Select2 style={{width: '100%'}} multiple data={modules} value={(this.state.selectedItem && this.state.selectedItem.modules) ? this.state.selectedItem.modules : []} options={{placeholder: 'Modules...', allowClear: true}} onChange={(event) => this.updateMultiSelect(event.currentTarget, 'modules')} />
 								<Select2 style={{width: '100%'}} multiple data={activities} value={(this.state.selectedItem && this.state.selectedItem.activities) ? this.state.selectedItem.activities : []} options={{placeholder: 'Activities...', allowClear: true}} onChange={(event) => this.updateMultiSelect(event.currentTarget, 'activities')} />
+								<input type="text" className="input-field slack-input" ref="slack-input" placeholder="Slack token ID" value={slackToken} onChange={(event) => this.updateInput(event, 'slackToken')} />
 							</div>
 							
 							<div className={classNames({hidden: (this.state.type !== 'modules' && this.state.type !== 'activities')})}>
@@ -679,6 +687,6 @@ const mapDispatchToProps = {
 	setNotification
 };
 
-const mapStateToProps = ({ mainReducer: { userData } }) => ({ userData });
+const mapStateToProps = ({ mainReducer: {  } }) => ({  });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Admin);

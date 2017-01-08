@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { setLoading } from '../../../actions/actions';
 import { DEMO_EMAIL, DEMO_CHAT_WARNING } from '../../../constants/constants';
+import { firebase, helpers } from 'redux-react-firebase';
 import classNames from 'classnames';
 import {connect} from 'react-redux';
 import { rtm, channels, chat } from 'slack';
 import { load as emojiLoader, parse as emojiParser } from 'gh-emoji';
-import { slackGroups } from '../../../constants/slack';
 import $ from 'jquery';
 import moment from 'moment';
 import User from './user';
@@ -19,6 +19,21 @@ const propTypes = {
 	isDesktop: PropTypes.bool
 };
 
+const {isLoaded, isEmpty, dataToJS} = helpers;
+
+@connect(
+  	(state, props) => ({
+    	subjects: dataToJS(state.firebase, 'subjects'),
+		userID: state.mainReducer.user ? state.mainReducer.user.uid : '',
+		userData: dataToJS(state.firebase, `users/${state.mainReducer.user ? state.mainReducer.user.uid : ''}`),
+  	})
+)
+@firebase(
+  	props => ([
+    	'subjects',
+		`users/${props.userID}`
+  	])
+)
 class Chat extends Component {
     
 	constructor(props) {
@@ -29,7 +44,7 @@ class Chat extends Component {
 			users: [],
 			channels: [],
 			currentChannel: {},
-			currentGroup: slackGroups[0],
+			currentGroup: {},
 			messages: [],
 			postMyMessage: ''
 		};
@@ -60,8 +75,16 @@ class Chat extends Component {
 	}
 	
 	componentWillReceiveProps(newProps) {
+		if (newProps.userData && (newProps.userData !== this.props.userData) && (newProps.subjects !== this.props.subjects) && newProps.userData.courses && newProps.userData.courses[Object.keys(newProps.userData.courses)[0]] && isEmpty(this.state.currentGroup)){
+			const firstCourse = newProps.userData.courses[Object.keys(newProps.userData.courses)[0]];
+			let firstSubject = null;
+			Object.keys(firstCourse).map(function(subject, i) {
+				if (i === 0) firstSubject = subject;
+			});
+			this.setState({ currentGroup: newProps.subjects[firstSubject] });
+		}
+		
 		if (newProps.class !== this.props.class) {
-
 			if (newProps.class === 'open') {
 				this.loadGroup();
 			}
@@ -128,7 +151,7 @@ class Chat extends Component {
 				});
 
 				// tell the bot to listen
-				this.bot.listen({ token: this.state.currentGroup.apiToken });
+				this.bot.listen({ token: this.state.currentGroup.slackToken });
 			}
 			catch (err) {
 				return reject(err);
@@ -152,13 +175,15 @@ class Chat extends Component {
 	}
 	
 	getGroup(id) {
-		id = id || this.state.currentGroup.id;
-		let thisGroup = {slug: ''};
+		let subject = null;
 
-		slackGroups.map((group) => {
-			if (group.id === id) thisGroup = group;
-		});
-		return thisGroup;
+		Object.keys(this.props.userData.courses).map(function(key) {
+			let course = this.props.userData.courses[key];
+			return Object.keys(course).map(function(item, i) {
+				 if (id === item) subject = this.props.subjects[item];
+			}.bind(this));
+		}.bind(this));
+		return subject;
 	}
 	
 	getChannel(id) {
@@ -189,7 +214,7 @@ class Chat extends Component {
 		const getMessagesFromSlack = () => {
 			const messagesLength = that.state.messages.length;
 			channels.history({
-				token: this.state.currentGroup.apiToken,
+				token: this.state.currentGroup.slackToken,
 				channel: channelId || this.state.currentChannel.id
 			}, (err, data) => {
 				if (err) {
@@ -251,7 +276,7 @@ class Chat extends Component {
 	postMessage(text) {
 		if (text !== '' && this.props.user.email !== DEMO_EMAIL) {
 			return chat.postMessage({
-				token: this.state.currentGroup.apiToken,
+				token: this.state.currentGroup.slackToken,
 				channel: this.state.currentChannel.id,
 				text,
 				username: this.props.user.email
@@ -302,10 +327,24 @@ class Chat extends Component {
 	
 	render() {
 		const demoUser = (this.props.user && this.props.user.email === DEMO_EMAIL) ? DEMO_CHAT_WARNING : '';
+		let slackGroups = null;
+		
+		if (isLoaded(this.props.subjects) && isLoaded(this.props.userData) && !isEmpty(this.props.subjects) && !isEmpty(this.props.userData)) {
+			if (this.props.userData.courses) {
+				slackGroups = Object.keys(this.props.userData.courses).map(function(key) {
+					let course = this.props.userData.courses[key];
+					return Object.keys(course).map(function(item, i) {
+						const subject = this.props.subjects[item];
+						return <li key={item} ref={item} className={classNames('group', {active: (i === 0)})} onClick={() => this.changeCurrentGroup(item)}>{subject.code}</li>;
+					}.bind(this));
+				}.bind(this));
+			}
+		}
+		
 		return (
             <section className={`chat-panel ${this.props.class}`}>
 				<ul className="groups">
-					{slackGroups.map((group, i) => <li key={i} ref={group.id} className={classNames('group', {active: (i === 0)})} onClick={() => this.changeCurrentGroup(group.id)}>{group.slug}</li>)}
+					{slackGroups}
 				</ul>
 				<div className="sidebar">
 					<h3 className="sidebar-heading">Channels ({this.state.channels.length})</h3>
@@ -319,7 +358,7 @@ class Chat extends Component {
 				</div>
 				
 				<div className="messages-wrapper">
-					<h2 className="channel-title"><span className="group-title">{this.state.currentGroup.name}</span>#{this.state.currentChannel.name}</h2>
+					<h2 className="channel-title"><span className="group-title">{this.state.currentGroup? this.state.currentGroup.title : ''}</span>#{this.state.currentChannel.name}</h2>
 					<ul className="messages">
 						{this.state.messages.map((message, i) => this.formatMessage(message, i))}
 					</ul>

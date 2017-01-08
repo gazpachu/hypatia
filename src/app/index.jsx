@@ -7,7 +7,6 @@ import ReactGA from 'react-ga';
 import rootReducer from './reducers/index';
 import './components/bundle.scss';
 import firebase from 'firebase';
-import { firebaseConfig } from './constants/firebase';
 import { ADMIN_LEVEL } from './constants/constants';
 import App from './components/app';
 import Home from './components/home/home';

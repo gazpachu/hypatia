@@ -24,9 +24,7 @@ Slack group (invitation only): [https://hypatialms.slack.com](https://hypatialms
 
 ## Getting Started
 
-## WARNING
-
-This documentation is not stable. Don't test it yet!
+Warning! This documentation is not super stable. Post an issue if you find any trouble or something is not clear
 
 - Install Node.js >= 4.5.0 [https://nodejs.org/](https://nodejs.org/)
 
@@ -40,56 +38,24 @@ This documentation is not stable. Don't test it yet!
 npm install
 ````
 
-- Create a new project in your Firebase account
+- Create a new project in your [Firebase account](http://firebase.google.com)
 
-- Create a file called `firebase.jsx` in `/app/src/constants/` and add the following code with the details from the project you created:
-
-````
-export const firebaseConfig = {
-  	apiKey: "",
-    authDomain: "",
-    databaseURL: "",
-	storageBucket: "",
-    messagingSenderId: ""
-}
-````
-
-- Import `/data/hypatia-export.json` into your Firebase database
-
-- Set the Firebase database rules to:
+- Create a file called `.env` in the root of your cloned repository and add the following code. Replace the values with the ones from the project you created in Firebase:
 
 ````
-".read": "true",
-".write": "auth != null"
+FIREBASE_API_KEY=your_firebase_api_key
+FIREBASE_AUTH_DOMAIN=your_firebase_project.firebaseapp.com
+FIREBASE_DATABASE_URL=https://your_firebase_project.firebaseio.com
+FIREBASE_STORAGE_BUCKET=your_firebase_project.appspot.com
 ````
 
-- Create a `posts` folder in Firebase storage and upload demo images with the same filename as the posts' slugs (i.e.: /posts/new-virtual-campus.jpg)
+- If you want some demo data, import `/data/demo-data.json` into your Firebase database
 
-- Set the Firebase storage rules to:
+- If you are going to use Firebase storage, you should give read access to everyone, otherwise only the authenticated users will be able to download images or files. In your [Firebase console](https://console.firebase.google.com), replace the rules with these ones:
 
 ````
 allow read: if true;
 allow write: if request.auth != null;
-````
-
-- Create as many groups (teams) in Slack.com as you want and add a custom integration (BOT) to each one of them
-
-- Create a file called `slack.jsx` in `/app/src/constants/` with the following structure. Enter the apiToken for each BOT you created and enter the details that make more sense to your groups
-
-````
-export const slackGroups = [{
-		name: 'Maths',
-		id: 'maths',
-		slug: 'MA',
-		apiToken: ""
-	},
-	{
-		name: 'English',
-		id: 'english',
-		slug: 'EL',
-		apiToken: ""
-	}						
-]
 ````
 
 ### Start development server with hot reloading
