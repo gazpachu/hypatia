@@ -29,7 +29,6 @@ const propTypes = {
 	isDesktop: PropTypes.bool,
 	changeViewport: PropTypes.func,
 	user: PropTypes.object,
-	userData: PropTypes.object,
 	breadcrumbs: PropTypes.array
 };
 
@@ -51,10 +50,10 @@ class App extends Component {
 		this.removeListener = firebase.auth().onAuthStateChanged((user) => {
       		if (user) {
 				if (user.emailVerified) {
-					this.props.setUser(user);
-					firebase.database().ref('/users/' + user.uid).once('value').then(function(snapshot) {
-						//if (snapshot.val()) this.props.setUserData(snapshot.val());
-					}.bind(this));
+					//this.props.setUser(user);
+//					firebase.database().ref('/users/' + user.uid).once('value').then(function(snapshot) {
+//						if (snapshot.val()) this.props.setUserData(snapshot.val());
+//					}.bind(this));
 				}
 				else {
 					this.props.setNotification({message: USER_CONFIRM_EMAIL, type: 'info'});

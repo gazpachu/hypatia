@@ -15,20 +15,15 @@ const defaultProps = {
 
 const propTypes = {
 	isDesktop: PropTypes.bool,
-	user: PropTypes.object.isRequired,
-	userData: PropTypes.object.isRequired
 };
 
-const {isLoaded, isEmpty, dataToJS} = helpers;
+const {isLoaded, isEmpty, dataToJS, pathToJS, toJS} = helpers;
 
-@firebase(
-  	props => ([
-    	
-  	])
-)
+@firebase()
 @connect(
   	(state, props) => ({
-    	
+		user: pathToJS(state.firebase, 'auth'),
+		profile: pathToJS(state.firebase, 'profile')
   	})
 )
 class Settings extends Component {
@@ -51,7 +46,7 @@ class Settings extends Component {
 	}
 	
 	componentWillReceiveProps(newProps) {
-		if ((newProps.userData !== this.props.userData) || isEmpty(this.state.info))
+		if (newProps.userData && (newProps.userData !== this.props.userData) && isEmpty(this.state.info))
 			this.setState({ info: newProps.userData.info });
 	}
 	
@@ -123,6 +118,8 @@ class Settings extends Component {
     }
 	
 	render() {
+		const {firebase, profile} = this.props;
+		console.log(profile);
 		return (
             <section className="account account-settings page">
             	{(this.props.user && this.props.userData && this.state.info) ? <div className="page-wrapper">
@@ -167,11 +164,9 @@ class Settings extends Component {
 
 const mapDispatchToProps = {
 	setLoading,
-	setNotification,
-	setUser,
-	setUserData
+	setNotification
 }
 
-const mapStateToProps = ({ mainReducer: { isDesktop, user, userData } }) => ({ isDesktop, user, userData });
+const mapStateToProps = ({ mainReducer: { isDesktop } }) => ({ isDesktop });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

@@ -8,6 +8,7 @@ import md5 from 'md5';
 import { USER_CONFIRM_EMAIL } from '../../../constants/constants';
 import { setUser, setPanel, setNotification } from '../../../actions/actions';
 import { firebase, helpers } from 'redux-react-firebase';
+import Signup from '../../common/signup/signup';
 import Icon from '../lib/icon/icon';
 import Logo from '../../../../../static/svg/logo.svg';
 import LogoWording from '../../../../../static/svg/logo-wording.svg';
@@ -23,18 +24,14 @@ import SortActiveDown from '../../../../../static/svg/sort-active-down.svg';
 import Logout from '../../../../../static/svg/logout.svg';
 import Chat from '../../../../../static/svg/chat.svg';
 
-const {isLoaded, isEmpty, dataToJS} = helpers;
+const {isLoaded, isEmpty, dataToJS, pathToJS} = helpers;
 
+@firebase()
 @connect(
   	(state, props) => ({
-    	userID: state.mainReducer.user ? state.mainReducer.user.uid : null,
-		userData: dataToJS(state.firebase, `users/${state.mainReducer.user ? state.mainReducer.user.uid : null}`),
+		user: pathToJS(state.firebase, 'auth'),
+		profile: pathToJS(state.firebase, 'profile')
   	})
-)
-@firebase(
-  	props => ([
-		`users/${props.userID}`
-  	])
 )
 class TopNav extends Component {
     
@@ -218,7 +215,10 @@ class TopNav extends Component {
 		else this.props.setPanel(panel);
 	}
 	
-	render() {			
+	render() {
+		
+		console.log(this.props.profile);
+		
 		return (
             <section className="top-nav js-top-nav">
 				<div className="top-nav-bar">
@@ -241,7 +241,9 @@ class TopNav extends Component {
 						<Icon glyph={LogoWording} className="icon logo-wording" />
 					</Link>
 					
-					{(!this.props.user) ? 
+					<Signup />
+					
+					{(!this.props.user || (this.props.user && !this.props.user.emailVerified)) ? 
 						<div className="user-controls">
 							<div className="lang">EN</div>
 							<div className="user-controls-cta sign-up-cta">

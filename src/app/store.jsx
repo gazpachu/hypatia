@@ -13,7 +13,7 @@ const firebaseConfig = {
 }
 
 const createStoreWithFirebase = compose(
-    reduxReactFirebase(firebaseConfig),
+    reduxReactFirebase(firebaseConfig, {profile: 'users'}),
 	window.devToolsExtension ? window.devToolsExtension() : f => f
 )(createStore);
 
