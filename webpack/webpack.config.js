@@ -74,7 +74,7 @@ module.exports = (options) => {
 				{ from: 'static', to: 'static' },
 				{ from: 'manifest.json' },
 				{ from: 'browserconfig.xml' },
-				{ from: 'presentation.html' }
+				{ from: 'src/presentation.html', to: 'presentation.html' }
 			]),
       		new Webpack.optimize.UglifyJsPlugin({
         		compressor: {
