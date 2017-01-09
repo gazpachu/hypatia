@@ -109,7 +109,7 @@ a {
 
 @media screen and (min-width: 42em) and (max-width: 64em) {
   .page-header {
-    padding: 3rem 4rem; } }
+    padding: 3rem 1rem; } }
 
 @media screen and (max-width: 42em) {
   .page-header {
@@ -236,7 +236,7 @@ a {
     padding: 2rem 1rem;
     font-size: 1rem; }
   .main-background {
-	height: 580px;
+	height: 680px;
   }
 }
 
@@ -250,7 +250,9 @@ a {
   font-weight: bold; }
 
 .site-footer-credits {
-  color: #819198; }
+  color: #819198;
+	font-size: 12px;
+}
 
 @media screen and (min-width: 64em) {
   .site-footer {
