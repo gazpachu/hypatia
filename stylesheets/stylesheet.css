@@ -28,6 +28,11 @@ a {
   .btn + .btn {
     margin-left: 1rem; }
 
+.btn img {
+	display: block;
+	margin: 0 auto 2px;
+}
+
 .btn:hover {
   color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
@@ -231,7 +236,7 @@ a {
     padding: 2rem 1rem;
     font-size: 1rem; }
   .main-background {
-	height: 450px;
+	height: 580px;
   }
 }
 
