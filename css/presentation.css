@@ -84,7 +84,7 @@ table {
 body {
     font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     min-height: 740px;
-	background-image: url('img/triangles.jpg');
+	background-image: url('../img/triangles.jpg');
 	background-repeat: no-repeat;
 	background-size: cover;
 	color: white;
