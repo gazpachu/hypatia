@@ -105,11 +105,11 @@ a {
 }
 @media screen and (min-width: 64em) {
   .page-header {
-    padding: 5rem 6rem; } }
+    padding: 4rem 6rem; } }
 
 @media screen and (min-width: 42em) and (max-width: 64em) {
   .page-header {
-    padding: 3rem 1rem; } }
+    padding: 2rem 1rem; } }
 
 @media screen and (max-width: 42em) {
   .page-header {
@@ -236,7 +236,7 @@ a {
     padding: 2rem 1rem;
     font-size: 1rem; }
   .main-background {
-	height: 680px;
+	height: 770px;
   }
 }
 
