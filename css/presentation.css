@@ -4,7 +4,7 @@ a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
 b, u, i, center,
-dl, dt, dd, 
+dl, dt, dd,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
 article, aside, canvas, details, embed,
@@ -72,9 +72,12 @@ a:hover,
 a:focus {
     background: rgba(255,255,255,1);
     text-shadow: -1px -1px 2px rgba(100,100,100,0.5);
+    color: #5b83f9;
 }
 
 .underline { text-decoration: underline }
+
+.small { font-size: 16px }
 
 .page {
 	width: 100%;
@@ -240,7 +243,10 @@ a:focus {
 }
 
 .introducing,
-.custom {
+.custom,
+.chat,
+.dashboard,
+.admin {
 	text-align: center;
 }
 
@@ -249,7 +255,9 @@ a:focus {
 }
 
 .open .title,
-.ready .title {
+.ready .title,
+.dashboard .title,
+.admin .title  {
 	font-size: 70px;
 }
 
@@ -263,7 +271,7 @@ a:focus {
 	height: 150px;
 }
 
-.open .icons .slack {
+.chat .icons .slack {
 	width: 300px;
 }
 
@@ -271,7 +279,8 @@ a:focus {
 	margin: 0 30px;
 }
 
-.ready q {
+.ready q,
+.managed q {
 	margin: 20px 0;
     display: block;
 }
@@ -279,6 +288,10 @@ a:focus {
 .ready .icon {
 	border: 3px dashed;
     border-radius: 100px;
+}
+
+.managed .icon {
+    height: 280px;
 }
 
 .hint {
