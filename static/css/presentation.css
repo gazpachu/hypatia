@@ -266,6 +266,20 @@ a:focus {
     white-space: nowrap;
 }
 
+.quote p {
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+.quote footer {
+	font-size: 18px;
+}
+
+.percent {
+	font-size: 200px;
+	font-weight: bold;
+}
+
 /*
     And now we start to style each step separately.
 
