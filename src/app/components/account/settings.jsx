@@ -1,55 +1,43 @@
-import React, { Component, PropTypes } from 'react';
-import { history } from '../../store';
+import React, { Component } from 'react';
 import { setLoading, setUser, setNotification, setUserData } from '../../actions/actions';
 import * as CONSTANTS from '../../constants/constants';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import md5 from 'md5';
 import $ from 'jquery';
 import { firebase, helpers } from 'redux-react-firebase';
 import Icon from '../common/lib/icon/icon';
 import Avatar from '../../../../static/svg/avatar.svg';
 
-const defaultProps = {
-
-};
-
-const propTypes = {
-	isDesktop: PropTypes.bool,
-};
-
-const {isLoaded, isEmpty, dataToJS, pathToJS, toJS} = helpers;
+const { isEmpty, isLoaded } = helpers;
 
 @firebase()
-@connect(
-  	(state, props) => ({
-		user: pathToJS(state.firebase, 'auth'),
-		profile: pathToJS(state.firebase, 'profile')
-  	})
-)
 class Settings extends Component {
-    
+
 	constructor(props) {
 		super(props);
-		
+
 		this.state = {
 			info: {}
-		}
-		
+		};
+
 		this.handleChange = this.handleChange.bind(this);
 	}
-	
-	componentDidMount() {
-		this.props.setLoading(false);  // Move this to API callback when implemented (if ever)
+
+	componentWillMount() {
+		this.props.setLoading(false);
 		$('.js-main').removeClass().addClass('main js-main account-settings-page');
-		
-		if (isEmpty(this.state.info) && isLoaded(this.props.userData)) this.setState({ info: this.props.userData.info });
+
+		if (isEmpty(this.state.info) && isLoaded(this.props.userData)) {
+			this.setState({ info: this.props.userData.info });
+		}
 	}
-	
+
 	componentWillReceiveProps(newProps) {
-		if (newProps.userData && (newProps.userData !== this.props.userData) && isEmpty(this.state.info))
+		if (newProps.userData && (newProps.userData !== this.props.userData) && isEmpty(this.state.info)) {
 			this.setState({ info: newProps.userData.info });
+		}
 	}
-	
+
 	updatePassword() {
 		if (this.refs.password.value === this.refs.password2.value) {
 			if (this.refs.password.value.length >= 6) {
@@ -57,81 +45,79 @@ class Settings extends Component {
 					$('.js-btn-password').hide();
 					$('.js-password-loader').show();
 
-					this.props.user.updatePassword(this.refs.password.value).then(function() {
+					this.props.user.updatePassword(this.refs.password.value).then(() => {
 						$('.js-btn-password').show();
 						$('.js-password-loader').hide();
-						this.props.setNotification({message: CONSTANTS.PASSWORD_CHANGED, type: 'success'});
-					}.bind(this), function(error) {
+						this.props.setNotification({ message: CONSTANTS.PASSWORD_CHANGED, type: 'success' });
+					}, (error) => {
 						$('.js-btn-password').show();
 						$('.js-password-loader').hide();
-						this.props.setNotification({message: String(error), type: 'error'});
-					}.bind(this));
+						this.props.setNotification({ message: String(error), type: 'error' });
+					});
 				}
+			} else {
+				this.props.setNotification({ message: CONSTANTS.PASSWORD_MIN_LENGTH_ERROR, type: 'error' });
 			}
-			else {
-				this.props.setNotification({message: CONSTANTS.PASSWORD_MIN_LENGTH_ERROR, type: 'error'});
-			}
-		}
-		else {
-			this.props.setNotification({message: CONSTANTS.PASSWORD_MATCH_ERROR, type: 'error'});
+		} else {
+			this.props.setNotification({ message: CONSTANTS.PASSWORD_MATCH_ERROR, type: 'error' });
 		}
 	}
-	
+
 	updateUserInfo() {
 		if (this.props.user.email !== CONSTANTS.DEMO_EMAIL) {
 			if (this.state.info.displayName === '' || this.state.info.firstName === '' || this.state.info.lastName1 === '') {
-				this.props.setNotification({message: CONSTANTS.USER_INFO_EMPTY, type: 'error'});
+				this.props.setNotification({ message: CONSTANTS.USER_INFO_EMPTY, type: 'error' });
 				return;
 			}
-			
+
 			$('.js-btn-info').hide();
 			$('.js-info-loader').show();
 
 			this.props.firebase.set(`users/${this.props.user.uid}/info`, this.state.info)
-				.then(function(response) {
+				.then(() => {
 					$('.js-btn-info').show();
 					$('.js-info-loader').hide();
-					this.props.setNotification({message: CONSTANTS.USER_INFO_CHANGED, type: 'success'});
+					this.props.setNotification({ message: CONSTANTS.USER_INFO_CHANGED, type: 'success' });
 
 					if (this.props.user.email !== this.state.info.email) {
-						this.props.user.updateEmail(this.state.info.email).then(function() {
+						this.props.user.updateEmail(this.state.info.email).then(() => {
 							this.props.user.sendEmailVerification();
 							this.props.firebase.logout();
 							this.props.setUser(null);
-						}.bind(this), function(error) {
+						}, (error) => {
 							$('.js-btn-email').show();
 							$('.js-email-loader').hide();
-							this.props.setNotification({message: String(error), type: 'error'});
-						}.bind(this));
+							this.props.setNotification({ message: String(error), type: 'error' });
+						});
 					}
-				}.bind(this), function(error) {
+				}, (error) => {
 					$('.js-btn-info').show();
 					$('.js-info-loader').hide();
-					this.props.setNotification({message: String(error), type: 'error'});
-				}.bind(this));
+					this.props.setNotification({ message: String(error), type: 'error' });
+				});
 		}
 	}
-	
+
 	handleChange(event) {
-		let newInfo = Object.assign({}, this.state.info, {[event.target.name]: event.target.value});
+		const newInfo = Object.assign({}, this.state.info, { [event.target.name]: event.target.value });
 		this.setState({ info: newInfo });
-    }
-	
+	}
+
 	render() {
-		const {firebase, profile} = this.props;
-		console.log(profile);
 		return (
-            <section className="account account-settings page">
-            	{(this.props.user && this.props.userData && this.state.info) ? <div className="page-wrapper">
-            		<div className="columns">
+			<section className="account account-settings page">
+				{(this.props.user && this.props.userData && this.state.info) ? <div className="page-wrapper">
+					<div className="columns">
 						<div className="account-details column">
 							<div className="profile-image">
-								{(this.props.user.email) ? <img className="photo" src={`https://www.gravatar.com/avatar/${md5(this.props.user.email)}.jpg?s=150`} /> : <Icon glyph={Avatar} className="icon avatar" />}
+								{(this.props.user.email) ?
+									<img className="photo" role="presentation" src={`https://www.gravatar.com/avatar/${md5(this.props.user.email)}.jpg?s=150`} />
+								: <Icon glyph={Avatar} className="icon avatar" />}
 							</div>
 							<a className="update-photo" href="https://www.gravatar.com/" target="_blank">Update photo</a>
 							<input type="text" name="displayName" className="display-name" placeholder="Display name" value={this.state.info.displayName} onChange={this.handleChange} />
 							<input type="email" name="email" ref="email" placeholder="Email" value={this.state.info.email} onChange={this.handleChange} />
-							
+
 							<input type="password" ref="password" name="password" className="password" placeholder="New password" value={this.state.password} />
 							<input type="password" ref="password2" name="password2" placeholder="Repeat password" value={this.state.password2} />
 							<button className="btn btn-primary btn-xs js-btn-password float-right" onClick={() => this.updatePassword()}>Update password</button>
@@ -152,21 +138,21 @@ class Settings extends Component {
 							<button className="btn btn-primary btn-xs js-btn-info float-right" onClick={() => this.updateUserInfo()}>Update details</button>
 							<div className="loader-small float-right js-info-loader"></div>
 						</div>
-						<div className="other-details column">
-							
-						</div>
+						<div className="other-details column"></div>
 					</div>
 				</div> : <div className="loader-small"></div>}
-            </section>
-		)
+			</section>
+		);
 	}
 }
 
 const mapDispatchToProps = {
 	setLoading,
-	setNotification
-}
+	setNotification,
+	setUser,
+	setUserData
+};
 
-const mapStateToProps = ({ mainReducer: { isDesktop } }) => ({ isDesktop });
+const mapStateToProps = ({ mainReducer: { isDesktop, user, userData } }) => ({ isDesktop, user, userData });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

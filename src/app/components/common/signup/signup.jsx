@@ -1,49 +1,76 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { firebase, helpers } from 'redux-react-firebase';
+import $ from 'jquery';
+import firebase from 'firebase';
+import { setNotification } from '../../../actions/actions';
+import { USER_CONFIRM_EMAIL, PASSWORD_MATCH_ERROR } from '../../../constants/constants';
 
-const {isLoaded, isEmpty, dataToJS, pathToJS} = helpers;
-
-@firebase()
-@connect(
-  	({firebase}) => ({
-    	authError: pathToJS(firebase, 'authError'),
-  	})
-)
 class Signup extends Component {
-  	render(){
-    	const {firebase, authError} = this.props;
 
-    	const handleSignup = () => {
-      		const {email, password, name} = this.refs;
+	handleSignup = (e) => {
+		e.preventDefault();
 
-      		const credentials = {
-        		email: email.value,
-        		password: password.value
-			}
+		const { password, password2, firstname, lastname } = this.refs;
 
+		if (password.value === password2.value) {
+			$('.js-btn-signup').hide();
+			$('.js-signup-loader').show();
 
-			firebase.createUser(credentials, {info: { name: name.value }}).then(function() {
-				var user = firebase.auth().currentUser;
-				console.log(user);
-				user.sendEmailVerification();
-			}.bind(this)).catch(function(error) {
-				console.log(error);
-			}.bind(this))
-    	}
+			const email = String(this.refs.email.value);
 
-    	const error = (authError) ? authError.toString() : '';
+			firebase.auth().createUserWithEmailAndPassword(email, password.value).then((user) => {
+				this.saveUser(user, firstname.value, lastname.value, email);
+			})
+			.catch((error) => {
+				$('.js-btn-signup').show();
+				$('.js-signup-loader').hide();
+				this.props.setNotification({ message: String(error), type: 'error' });
+			});
+		} else {
+			this.props.setNotification({ message: PASSWORD_MATCH_ERROR, type: 'error' });
+		}
+	}
 
-    	return(
-      		<div>
-        		<input type='email' placeholder='Email' ref='email' /><br/>
-        		<input type='password' placeholder='Password' ref='password' /><br/>
-        		<input type='text' placeholder='Name' ref='name' />
-        		<p>{error}</p>
-        		<button onClick={handleSignup}>Signup</button>
-      		</div>
-    	)
-  	}
+	saveUser(user, firstname, lastname, email) {
+		return firebase.database().ref(`users/${user.uid}/info`).set({
+			firstName: firstname,
+			lastName1: lastname,
+			email,
+			displayName: `${firstname} ${lastname}`
+		})
+		.then(() => {
+			user.sendEmailVerification();
+			$('.js-btn-signup').show();
+			$('.js-signup-loader').hide();
+			$('.js-overlay').click();
+			this.props.setNotification({ message: USER_CONFIRM_EMAIL, type: 'success' });
+		})
+		.catch((error) => {
+			$('.js-btn-signup').show();
+			$('.js-signup-loader').hide();
+			this.props.setNotification({ message: String(error), type: 'error' });
+		});
+	}
+
+	render() {
+		return (
+			<form className="user-form sign-up" onSubmit={(e) => this.handleSignup(e)}>
+				<input type="text" className="input-field" placeholder="Fist name" ref="firstname" />
+				<input type="text" className="input-field" placeholder="Last name" ref="lastname" />
+				<input type="email" className="input-field" placeholder="Email" ref="email" />
+				<input type="password" className="input-field" placeholder="Password" ref="password" />
+				<input type="password" className="input-field" placeholder="Repeat password" ref="password2" />
+				<button type="submit" className="btn btn-primary js-btn-signup">Sign up</button>
+				<div className="loader-small js-signup-loader"></div>
+			</form>
+		);
+	}
 }
 
-export default Signup;
+const mapStateToProps = null;
+
+const mapDispatchToProps = {
+	setNotification
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);

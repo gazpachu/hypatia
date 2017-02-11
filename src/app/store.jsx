@@ -1,19 +1,18 @@
 import { syncHistoryWithStore } from 'react-router-redux';
 import { browserHistory } from 'react-router';
-import { createStore, combineReducers, compose } from 'redux';
+import { createStore, compose } from 'redux';
 import rootReducer from './reducers/index';
 import { reduxReactFirebase } from 'redux-react-firebase';
-import { createHistory } from 'history';
 
 const firebaseConfig = {
 	apiKey: process.env.FIREBASE_API_KEY,
 	authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-  	databaseURL: process.env.FIREBASE_DATABASE_URL,
-  	storageBucket: process.env.FIREBASE_STORAGE_BUCKET
-}
+	databaseURL: process.env.FIREBASE_DATABASE_URL,
+	storageBucket: process.env.FIREBASE_STORAGE_BUCKET
+};
 
 const createStoreWithFirebase = compose(
-    reduxReactFirebase(firebaseConfig, {profile: 'users'}),
+  reduxReactFirebase(firebaseConfig),
 	window.devToolsExtension ? window.devToolsExtension() : f => f
 )(createStore);
 
