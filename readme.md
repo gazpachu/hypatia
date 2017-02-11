@@ -1,28 +1,30 @@
-# Hypatia: realtime education
+# Hypatia: open realtime education
+
+[![Build Status](https://travis-ci.org/theonapps/hypatia.svg?branch=master)](https://travis-ci.org/theonapps/hypatia)
+[![Github All Releases](https://img.shields.io/github/downloads/atom/atom/total.svg)]()
+[![npm](https://img.shields.io/npm/l/express.svg)]()
 
 ## WARNING
 
-The project is currently under development, with countinous changes and some bits and bobs not working. Feel free to test it if you like but don't expect it to be production-ready until mid 2017.
+The project is currently under development, with continuous changes and some bits and bobs not working. Feel free to test it if you like but don't expect it to be production-ready until mid 2017.
 
 ## More info
 
-Demo: [https://hypatia-8d923.firebaseapp.com](https://hypatia-8d923.firebaseapp.com)
+Demo: [https://hypatia-8d923.firebaseapp.com](https://hypatia-8d923.firebaseapp.com) (You need to sign up with a valid email address to access some pages)
 
-You can sign up or use the demo account (read-only): demo@hypatialms.com / demouser
+Project's website: [https://theonapps.github.io/hypatia/](https://theonapps.github.io/hypatia/)
 
-Project's website: [https://gazpachu.github.io/hypatia/](https://gazpachu.github.io/hypatia/)
+Slack group (invitation only): [https://hypatialms.slack.com](https://hypatialms.slack.com) To request for an invitation, please contact hello [@] theon {.} io
 
-Slack group (invitation only): [https://hypatialms.slack.com](https://hypatialms.slack.com) To request for an invitation, contact me at hello [@] joanmira {.} com
+![Home](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/screenshots%2Fhome.jpg?alt=media&token=1421d0c1-97ad-486c-b040-695e128a9e4a)
 
-![Home module](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/screenshots%2Fhome.png?alt=media&token=07e2df57-71cf-4b50-99cb-c25ad83fa13c)
+![Page](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/screenshots%2Fpage.jpg?alt=media&token=4aa59160-68d2-46b0-a2f0-35740ecde21d)
 
-![Chat module](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/screenshots%2Fchat.png?alt=media&token=4479e9db-aff7-48a6-8e02-0b5fe4326cf5)
-
-![Account module](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/screenshots%2Faccount.png?alt=media&token=6a035c52-84df-4acc-a56d-c15e352f34da)
-
-![Calendar module](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/screenshots%2Fcalendar.png?alt=media&token=17ab3011-9c46-4afd-adf5-124797422217)
+![Admin](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/screenshots%2Fadmin.jpg?alt=media&token=6911a15b-d0ca-4bc0-8fd0-619d92c97706)
 
 ## Getting Started
+
+Warning! This documentation is not super stable. Post an issue if you find any trouble or something is not clear
 
 - Install Node.js >= 4.5.0 [https://nodejs.org/](https://nodejs.org/)
 
@@ -36,56 +38,24 @@ Slack group (invitation only): [https://hypatialms.slack.com](https://hypatialms
 npm install
 ````
 
-- Create a new project in your Firebase account
+- Create a new project in your [Firebase account](http://firebase.google.com)
 
-- Create a file called `firebase.jsx` in `/app/src/constants/` and add the following code with the details from the project you created:
-
-````
-export const firebaseConfig = {
-  	apiKey: "",
-    authDomain: "",
-    databaseURL: "",
-	storageBucket: "",
-    messagingSenderId: ""
-}
-````
-
-- Import `/data/hypatia-export.json` into your Firebase database
-
-- Set the Firebase database rules to:
+- Create a file called `.env` in the root of your cloned repository and add the following code. Replace the values with the ones from the project you created in Firebase:
 
 ````
-".read": "true",
-".write": "auth != null"
+FIREBASE_API_KEY=your_firebase_api_key
+FIREBASE_AUTH_DOMAIN=your_firebase_project.firebaseapp.com
+FIREBASE_DATABASE_URL=https://your_firebase_project.firebaseio.com
+FIREBASE_STORAGE_BUCKET=your_firebase_project.appspot.com
 ````
 
-- Create a `posts` folder in Firebase storage and upload demo images with the same filename as the posts' slugs (i.e.: /posts/new-virtual-campus.jpg)
+- If you want some demo data, import `/data/demo-data.json` into your Firebase database
 
-- Set the Firebase storage rules to:
+- If you are going to use Firebase storage, you should give read access to everyone, otherwise only the authenticated users will be able to download images or files. In your [Firebase console](https://console.firebase.google.com), replace the rules with these ones:
 
 ````
 allow read: if true;
 allow write: if request.auth != null;
-````
-
-- Create as many groups (teams) in Slack.com as you want and add a custom integration (BOT) to each one of them
-
-- Create a file called `slack.jsx` in `/app/src/constants/` with the following structure. Enter the apiToken for each BOT you created and enter the details that make more sense to your groups
-
-````
-export const slackGroups = [{
-		name: 'Maths',
-		id: 'maths',
-		slug: 'MA',
-		apiToken: ""
-	},
-	{
-		name: 'English',
-		id: 'english',
-		slug: 'EL',
-		apiToken: ""
-	}						
-]
 ````
 
 ### Start development server with hot reloading
@@ -142,3 +112,11 @@ Deploy to Firebase
 ````
 firebase deploy
 ````
+
+## Credits
+
+Icons from Flaticon.com (Freepik and Madebyoliver), triangles background by rvika from Fotolia and photos from Google Creative Commons search results
+
+## Copyright & License
+
+Copyright (c) 2016-2017 Joan Siddharta Mira Martos (Theon.io) - Released under the [GPLv2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html) license.

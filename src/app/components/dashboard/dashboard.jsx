@@ -1,49 +1,152 @@
 import React, { Component, PropTypes } from 'react';
-import { setLoading, setFilters } from '../../actions/actions';
-import {connect} from 'react-redux';
+import { setLoading } from '../../actions/actions';
+import { connect } from 'react-redux';
+import { firebase, helpers } from 'redux-react-firebase';
 import { Link } from 'react-router';
 import $ from 'jquery';
 import moment from 'moment';
-import showdown from 'showdown';
 import Icon from '../common/lib/icon/icon';
+import Info from '../../../../static/svg/info.svg';
+import Announcement from '../../../../static/svg/announcement.svg';
+import Download from '../../../../static/svg/download.svg';
+import Upload from '../../../../static/svg/upload.svg';
+import Teacher from '../../../../static/svg/professor.svg';
+import Chat from '../../../../static/svg/chat.svg';
 
+const defaultProps = {
+	colors: ['#2ecc71', '#e8303f', '#122d59', '#448cd3', '#445f8c', '#ffdd00', '#f0ad4e', '#a83fd0']
+};
+
+const propTypes = {
+	colors: PropTypes.array
+};
+
+const { isLoaded, isEmpty, dataToJS } = helpers;
+
+@connect(
+	(state) => ({
+		users: dataToJS(state.firebase, 'users'),
+		subjects: dataToJS(state.firebase, 'subjects'),
+		activities: dataToJS(state.firebase, 'activities')
+	})
+)
+@firebase(
+	() => ([
+		'subjects',
+		'activities',
+		'users'
+	])
+)
 class Dashboard extends Component {
-    
-	constructor(props) {
-		super(props);
-	}
-	
+
 	componentDidMount() {
-		this.props.setLoading(false);  // Move this to API callback when implemented (if ever)
+		this.props.setLoading(false);
 		$('.js-main').removeClass().addClass('main js-main dashboard-page');
 	}
-	
+
 	render() {
+		let subjects = null;
+		let	activities = [];
+
+		if (isLoaded(this.props.subjects) && !isEmpty(this.props.subjects) &&
+			isLoaded(this.props.activities) && !isEmpty(this.props.activities) &&
+			isLoaded(this.props.users) && !isEmpty(this.props.users)) {
+			subjects = Object.keys(this.props.users[this.props.user.uid].courses).map((key) => {
+				const course = this.props.users[this.props.user.uid].courses[key];
+
+				return Object.keys(course).map((subject, c) => {
+					let teachers = '';
+
+					if (this.props.subjects[subject].activities) {
+						const newActivities = this.props.subjects[subject].activities.map((activity) =>
+							(<li key={activity} className="item" style={{ borderLeftColor: this.props.colors[c] }}>
+								<Link to={`/activities/${this.props.activities[activity].slug}`}>{this.props.activities[activity].title}</Link>
+								<div className="meta">
+									Due in <span className="date">{moment(this.props.activities[activity].endDate).format('D MMMM YYYY')}</span>
+								</div>
+								<div className="actions">
+									<Link to="/dashboard#demo-not-yet-linked"><Icon glyph={Announcement} /></Link>
+									<Link to="/dashboard#demo-not-yet-linked"><Icon glyph={Download} /></Link>
+									<Link to="/dashboard#demo-not-yet-linked"><Icon glyph={Upload} /></Link>
+									<Link to="/dashboard#demo-not-yet-linked"><Icon glyph={Chat} /></Link>
+								</div>
+							</li>)
+						);
+
+						activities.push(newActivities);
+					}
+
+					if (this.props.subjects[subject].teachers) {
+						for (let i = 0; i < this.props.subjects[subject].teachers.length; i += 1) {
+							const teacher = this.props.users[this.props.subjects[subject].teachers[i]];
+							teachers += `${teacher.info.firstName} ${teacher.info.lastName1}`;
+							if (i < this.props.subjects[subject].teachers.length - 1) teachers += ', ';
+						}
+					}
+
+					return (
+						<li key={subject} className="item" style={{ borderLeftColor: this.props.colors[c] }}>
+							<Link to={`/subjects/${this.props.subjects[subject].slug}`}>{this.props.subjects[subject].title}</Link>
+							<div className="teachers"><Icon glyph={Teacher} />{teachers}</div>
+						</li>);
+				});
+			});
+		}
+
 		return (
-            <section className="dashboard page">
-				<div className="coming-up column">
-					<h2 className="courses-heading">To-do and coming up</h2>
-				</div>
-				<div className="latest-messages column">
-					<h2 className="new-courses-heading">Latest messages</h2>
-					<ul className="courses-list">
-						<li className="course-item"><span className="course-title">Multimedia</span>, 4 slots available. Starts in 1 days</li>
-						<li className="course-item"><span className="course-title">Journalism</span>, 4 slots available. Starts in 1 days</li>
-						<li className="course-item"><span className="course-title">Climate change</span>, 4 slots available. Starts in 1 days</li>
-						<li className="course-item"><span className="course-title">Economics</span>, 4 slots available. Starts in 1 days</li>
-						<li className="course-item"><span className="course-title">Art History</span>, 4 slots available. Starts in 1 days</li>
-						<li className="course-item"><span className="course-title">Multimedia</span>, 4 slots available. Starts in 1 days</li>
-						<li className="course-item"><span className="course-title">Multimedia</span>, 4 slots available. Starts in 1 days</li>
-					</ul>
-				</div>
-            </section>
-		)
+			<section className="dashboard page">
+				{(!isLoaded(subjects) && !isLoaded(activities)) ? <div className="loader-small"></div> :
+					<div className="page-wrapper">
+						<div className="announcement">
+							<Icon glyph={Info} />
+							From August 15th 23:00pm until August 16th 8am, the website will be offline due to maintenance works. Apologies for the trouble. (Hardcoded)
+						</div>
+						<div className="columns">
+							<div className="column">
+								<h1 className="dashboard-title">My subjects</h1>
+								<ul className="items-list">
+									{!isEmpty(subjects) ? subjects : 'None'}
+								</ul>
+							</div>
+							<div className="column">
+								<h1 className="dashboard-title">My current activities</h1>
+								<ul className="items-list">
+									{!isEmpty(activities) ? activities : 'None'}
+								</ul>
+							</div>
+							<div className="column">
+								<h1 className="dashboard-title">My direct messages (Hardcoded)</h1>
+								<ul className="items-list">
+									<li className="item">
+										<div>John Smith</div>
+										<div>#maths #test1</div>
+										<div>I’ve uploaded the new formulas. Please let me know when you are available to...</div>
+									</li>
+									<li className="item">
+										<div>Martin Lee</div>
+										<div>#french #assignment1</div>
+										<div>Hi Joan. In the 2nd question, you said ‘trais bien’ but the correct answer is ‘très...</div>
+									</li>
+									<li className="item">
+										<div>Morgan Freeman, John Doe</div>
+										<div>#history #assignment2</div>
+										<div>Hi Joan and John, the result of your assignment is already published. Well done!</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>}
+			</section>
+		);
 	}
 }
+
+Dashboard.propTypes = propTypes;
+Dashboard.defaultProps = defaultProps;
 
 const mapDispatchToProps = {
 	setLoading
-}
+};
 
 const mapStateToProps = ({ mainReducer: { isDesktop } }) => ({ isDesktop });
 

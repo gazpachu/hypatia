@@ -1,0 +1,167 @@
+.cards-heading {
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 22px;
+	font-weight: lighter;
+	letter-spacing: 3px;
+	margin-bottom: 30px;
+}
+
+.cards {
+	text-align: center;
+	margin-bottom: 50px;
+	margin-left: auto;
+	margin-right: auto;
+	
+	.loader-small {
+		display: block;
+		margin: 0 auto;
+	}
+}
+
+.cards-list {
+	list-style-type: none;
+	width: fit-content;
+	padding: 0 20px;
+
+	@include mobile() {
+		padding: 0;
+	}
+}
+
+.card {
+	display: inline-block;
+	min-width: 250px;
+    max-width: 23%;
+	vertical-align: top;
+	background-color: white;
+	text-align: left;
+	margin: 10px;
+
+	@include desktop() {
+		@include scale-anim(1.05);
+	}
+
+	@media (max-width: 600px) {
+		width: 100%;
+		max-width: 100%;
+		margin: 0 0 20px 0;
+	}
+
+	&:last-child {
+		margin-right: 0;
+	}
+
+	.card-thumb {
+		width: 100%;
+		text-align: center;
+		height: 150px;
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
+		margin-bottom: 10px;
+		display: table;
+		font-size: 70px;
+		color: $white;
+		background-color: #6ad0dc;
+		
+		@media (max-width: 600px) {
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
+		}
+
+		span {
+			display: table-cell;
+			vertical-align: middle;
+		}
+
+		&.card-image {
+			background-size: cover;
+			background-repeat: no-repeat;
+		}
+	}
+
+	.card-wrapper {
+		padding: 0 10px;
+		margin-bottom: 15px;
+	}
+
+	.card-title {
+		font-size: 18px;
+		line-height: 26px;
+		font-weight: lighter;
+		width: 100%;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+
+		.course-icon {
+			font-size: 12px;
+			border: 1px solid;
+			border-radius: 5px;
+			vertical-align: middle;
+			margin-right: 5px;
+			width: 24px;
+			line-height: 20px;
+			padding: 2px;
+			display: inline-block;
+			text-align: center;
+			height: 24px;
+		}
+	}
+
+	.card-meta {
+		font-size: 12px;
+
+		.icon {
+			margin-right: 5px;
+			margin-bottom: 5px;
+		}
+
+		.card-date {
+			font-weight: bold;
+			margin-right: 10px;
+		}
+	}
+
+	$font-size: 14px;
+	$line-height: 1.5;
+	$lines-to-show: 5;
+
+	.card-content {
+		display: block; /* Fallback for non-webkit */
+		display: -webkit-box;
+		height: $font-size*$line-height*$lines-to-show; /* Fallback for non-webkit */
+		margin: 0 auto;
+		font-size: $font-size;
+		line-height: $line-height;
+		-webkit-line-clamp: $lines-to-show;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.card-actions {
+		margin: 10px 0;
+
+		.btn-secondary {
+			color: $blue;
+		}
+	}
+
+	.card-info {
+		margin-top: 10px;
+
+		.card-enrolled {
+			font-size: 14px;
+			padding-top: 8px;
+			display: inline-block;	
+		}
+
+		.card-price {
+			float: right;
+			font-size: 22px;
+			color: $dark-grey;
+			font-weight: bold;
+		}
+	}
+}

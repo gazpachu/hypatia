@@ -11,10 +11,9 @@
 	.search-panel {
 		
 		&.flyout {
-			background-color: $blue;
 			padding: 20px;
 			border: none;
-			width: 40%;
+			width: 30%;
 			transition: all 0.2s ease;
 			
 			&.expanded {
@@ -36,7 +35,6 @@
 		}
 		
 		.search-icon, .expand-icon .icon {
-			fill: $white;
 			margin-left: 10px;
 		}
 		
@@ -52,7 +50,6 @@
 			display: none;
 
 			.close {
-				fill: $white;
 			    opacity: 1;
 			}
 
@@ -62,9 +59,13 @@
 		}
 		
 		.search-input {
-			width: 75%;
+			width: 62%;
 			margin-bottom: 20px;
-			color: $white;
+			border-color: $black;
+			
+			@media (min-width: 1200px) {
+				width: 75%;
+			}
 			
 			@include mobile() {
 				margin-top: 20px;
@@ -136,7 +137,6 @@
 			
 			.middle {
 				font-weight: bold;
-				text-decoration: underline;
 			}
 		}
 	}

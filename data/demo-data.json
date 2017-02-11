@@ -1,0 +1,582 @@
+{
+  "activities" : {
+    "-KYdG0x7Yc9xnosECLuv" : {
+      "content" : "Build a spaceship in two days",
+      "content1" : "Description for activity one with a [link](http://google.com)",
+      "endDate" : "2016-12-15",
+      "gradeDate" : "2016-12-21",
+      "slug" : "activity-i",
+      "startDate" : "2016-12-06",
+      "title" : "Activity I"
+    }
+  },
+  "courses" : {
+    "-KYe9erY6vwSQBM_nLxA" : {
+      "code" : "IT",
+      "content1" : "Computing and IT skills have become fundamental to the way we live, work, socialise and play. This degree course opens up the world of technology and an array of exciting career opportunities. It will help you to become a confident user and manager of information technologies; to administer and manage network or database systems; and to develop new software solutions to meet specific market or organisational needs.\n\nKey features of the course\n\n* A flexible degree with a choice of routes\n* Focus on computer science, digital technologies, software development, web development, or networking\n* Increase your employability in a wide range of sectors, including finance, government, health, education, the voluntary sector, business, gaming and commerce",
+      "content2" : "**Stage 1 (120 credits)**\n\nYou’ll gain an understanding of concepts, techniques and issues encountered in computing and IT; covering topics such as programming, networking and operating systems. You’ll also develop key employability skills and study some mathematics – your choice of module will depend on your confidence and experience. By the end of this stage, you’ll have built a solid foundation for further study.\n\nCompulsory modules (90 credits)\n\n* My digital life\n* My digital life takes you on a journey from the origins of information technology through to the familiar computers of today, and on to tomorrow’s radical technologies.\n\nTechnologies in practice\nStudy three tasters in computing and IT – robotics, networking, and Linux – to develop the skills needed if you are considering future employment in this industry.\n\nOptional module (30 credits)\n\nSelect one of:\n\n* Discovering mathematics\n* Essential mathematics 1\n\n**Stages 2 and 3 (240 credits)**\n\nAt Stages 2 and 3 you’ll deepen your knowledge, understanding and skills in subject areas that suit your needs and interests, choosing from computer science, digital technologies, networking (CCNA), software development, and web development. You’ll conclude your degree with an individual project on a topic of your choice which you’ll research, develop and write up – presenting your findings in a substantial portfolio report that you can show employers.\n\nPlease note: if you choose the networking (CCNA) route you will be required to attend four UK-based day schools to gain hands-on practical experience of configuring networks.",
+      "creditFee" : "12",
+      "endDate" : "2019-01-25",
+      "featuredImage" : "-K_AIizYA9ndMdSQjLbJ",
+      "fees" : "Fees details... Praesent interdum risus quis pellentesque vulputate. Phasellus luctus suscipit lectus. Nam id feugiat turpis. Vestibulum elementum gravida enim sit amet aliquam. Nulla accumsan, sapien ac pretium euismod, mi mi convallis neque, non aliquet nulla felis in nisi. Pellentesque suscipit dui eu gravida fringilla. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam ante tortor, elementum eget magna non, sodales condimentum quam. Suspendisse rutrum augue ut urna vulputate, eu venenatis metus sollicitudin. Nam pellentesque non augue et ullamcorper. Integer pretium, tortor non sodales blandit, felis lacus venenatis quam, eget consequat enim ipsum id justo. Praesent suscipit, tellus ac pulvinar suscipit, purus lectus porttitor tortor, congue vulputate sem ante at ipsum. Phasellus et felis id nisl condimentum eleifend et eu nibh. Nulla maximus libero sed elit efficitur, eget consequat mauris malesuada. Aenean lobortis lectus sed vulputate tincidunt.\n\nCurabitur ac ante vel augue posuere iaculis sit amet in mi. Donec tortor est, venenatis at faucibus id, placerat ut ipsum. Morbi ullamcorper, orci et facilisis feugiat, tellus risus varius ante, non varius tortor mauris a eros. Curabitur eu magna id nibh faucibus volutpat sed vel lectus. Etiam pellentesque magna sapien, sed porta nibh scelerisque vel. Morbi at quam eget orci tempor vehicula. Nunc sit amet magna faucibus, aliquam velit et, suscipit nunc. Ut maximus, tellus non lacinia posuere, velit tellus euismod purus, non malesuada tellus est in quam.",
+      "level" : "-K_Oi5JrgyFveu6_fZ8Y",
+      "registrationFee" : "200",
+      "requirements" : "Some requirements text... Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu laoreet dui. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In vel consequat tellus, vitae tempus leo. Donec vestibulum condimentum odio. Nam sed nibh vel lacus iaculis ornare quis vel justo. Aliquam erat ipsum, elementum elementum porta eu, vehicula eu sapien. Nulla convallis lacus at ipsum suscipit, quis condimentum erat aliquam. Fusce vel auctor urna. Etiam eget dui sit amet dui sagittis fringilla ac eget libero. Pellentesque nec malesuada neque, eget mattis dolor. Morbi ipsum erat, euismod aliquet neque et, pretium venenatis justo. Phasellus at nunc et metus rhoncus rutrum vitae a sem. Sed sollicitudin nulla eget nulla faucibus ullamcorper. Morbi id feugiat nisl. Aenean sagittis blandit nulla, sagittis rutrum dui hendrerit ac.\n\nProin fringilla lacus non leo dignissim, finibus egestas augue luctus. In et ullamcorper neque. Sed sodales sapien elit, sed elementum lorem laoreet at. Cras dictum odio non elit pharetra gravida. Sed gravida nisl eget lorem tincidunt, eu lacinia felis mattis. Sed aliquet augue ut magna aliquet porttitor. Ut porttitor tellus non metus malesuada accumsan vitae non nisl. Pellentesque et elit id felis accumsan gravida at lacinia mauris. Vivamus mattis nisl in nibh fringilla, sit amet iaculis nisl facilisis. Vestibulum ut interdum dolor.\n\nProin dapibus vulputate arcu, non volutpat sem. Morbi id tincidunt ligula. Ut turpis lacus, lacinia quis lacus a, aliquet feugiat mauris. Ut fringilla dolor at sem ultricies, in lobortis tortor tristique. Curabitur ac arcu ac ligula finibus consectetur ut in tellus. Proin ac elit risus. Nulla facilisi. Proin sollicitudin sem sapien, eget gravida velit dignissim ac. Sed non condimentum ipsum. Suspendisse mattis ante non orci consequat consectetur. Vestibulum lectus lectus, molestie ac ipsum et, aliquam fermentum nibh.",
+      "slug" : "computing-and-it",
+      "startDate" : "2017-01-01",
+      "status" : "active",
+      "subjects" : [ "-K_PEDBO5Ti-288FI1j2", "-K_PDRnIogzqrzpisaPH", "-K_PENmccPL4eLIw2HIk", "-K_PERFGlB6EDgHucMrH" ],
+      "title" : "Computing and IT"
+    },
+    "-KZzlMVCEQ2wMgzeezuQ" : {
+      "code" : "BM",
+      "content1" : "What roles do accountants play in organisations? What kinds of information do they work with and how does their work and the information they produce influence the daily decisions and activities of an organisation? In this specialist route available in our BA (Honours) Business Management degree, you will develop an interdisciplinary perspective on the management of business organisations and build specialised knowledge and skills in financial and management accounting. You will be equipped with the necessary skills to use and apply accounting techniques and concepts in the workplace, and receive accreditation by professional accounting bodies for some parts of their qualifications.\n\nKey features of the course\n\n* Develops your understanding of business organisations and their key elements\n* Develops your ability to apply and evaluate financial and management accounting techniques and concepts\n* Helps you relate your studies to your own experience\n* Equips you for a wide range of employment opportunities across all sectors",
+      "credits" : "120",
+      "endDate" : "2018-12-23",
+      "featuredImage" : "-K_AI9yPvYyDyjFxHVUU",
+      "level" : "-K_OiSTu2B8q9K1oXskM",
+      "slug" : "business-management-accounting",
+      "startDate" : "2017-01-01",
+      "status" : "active",
+      "title" : "Business Management (Accounting)"
+    },
+    "-KZzlpqW_w6tRh4PECGc" : {
+      "code" : "AH",
+      "content1" : "From poetry to string quartets, and from sculpture to short stories, the extraordinary range of human culture offers rich possibilities for study. This broad and absorbing course develops a deep understanding of the world we live in and how we got here, covering a fascinating variety of perspectives, periods and subjects – including art history, classical studies, creative writing, English language and English literature, history, modern languages, music, philosophy and religious studies.\n\nKey features of the course\n\n* Study a broad range of subjects with the option to specialise in one or two disciplines. \n* Learn how to approach the arts from an academic perspective, construct an argument and communicate your ideas effectively \n* Have the opportunity to develop a project based on independent study ",
+      "credits" : "120",
+      "endDate" : "2018-09-26",
+      "featuredImage" : "-K_AMO4SkDqIvfl37qBc",
+      "level" : "-K_OiFJJ8ZV0WHj0wRJX",
+      "slug" : "arts-and-humanities",
+      "startDate" : "2017-09-20",
+      "status" : "active",
+      "title" : "Arts and Humanities"
+    },
+    "-K_0AjaGuG-yDOGGezkz" : {
+      "code" : "DI",
+      "content1" : "Design and innovation have a huge impact on society well beyond the creative industries – finding solutions to problems that affect every aspect of our lives. This ground-breaking course features online design studios, social networking, and inspiring study materials, and each module has a significant practical component. Alongside design and innovation you will study a complementary subject – choosing from arts, business, engineering or environment – to gain knowledge and skills that will be useful in a wide range of careers.\n\nKey features of the course\n\n* Focus on the process of design, working with and for others, and applying design and innovation in real-world contexts\n* Put your learning into practice as you study\n* Build a highly relevant portfolio of design work",
+      "credits" : "180",
+      "endDate" : "2018-09-20",
+      "featuredImage" : "-K_AMLzXg54PWoSSSS2f",
+      "level" : "-K_Ohy3YQA39iAghjkpq",
+      "slug" : "design-and-innovation",
+      "startDate" : "2017-08-15",
+      "status" : "active",
+      "title" : "Design and Innovation"
+    },
+    "-K_0BFn6MC97Ho5QoiZ-" : {
+      "code" : "EL",
+      "content1" : "If you are interested in reading between the lines, and being challenged by new ideas and ways of seeing, then this course is for you. English literature is a broad, accessible and important subject. On this course you will study a range of texts dating from around 1570 to the present, from poetry to fiction to film, and discover a variety of approaches for reading them. You will develop your skills of analysis and communication, enabling you to take a fresh look at familiar texts, and to encounter new texts and ideas with confidence.\n\nKey features of the course\n\n* Learn how to analyse a wide range of texts including fiction, poetry and drama\n* Explore the work of some famous authors alongside some lesser known - but equally fascinating - writers \n* Choose options in Creative writing or English language \n* Develop advanced skills in analysis, evaluation and communication that are highly valued in the workplace. ",
+      "credits" : "90",
+      "endDate" : "2018-03-07",
+      "featuredImage" : "-K_AV1dSqp6cz2CmxdOu",
+      "level" : "-K_OhsM3TKUDoEyvhkhG",
+      "slug" : "english-literature",
+      "startDate" : "2017-01-11",
+      "status" : "active",
+      "title" : "English Literature"
+    },
+    "-K_0BcZLVozeupoLVjsa" : {
+      "code" : "HS",
+      "content1" : "In today's fast-changing care sector, professionals at all levels need to be proactive and flexible to succeed. This degree provides a sound and critical understanding of health and social care policy, theory and practice, and the skills you need for effective practice in a diverse, multidisciplinary environment. You’ll also understand how ethical, legal, social, economic and political factors influence the provision and development of services; and gain the critical and analytical skills that underpin evidence-based practice.\n\nKey features of the course\n\n* A choice of four routes: Health and wellbeing; Older adults; Mental health; or Work with children, young people and families\n* Helps you to develop as an independent and reflective learner \n* Explores the context and processes of change and new ways of working across agencies and professional boundaries.",
+      "credits" : "180",
+      "endDate" : "2019-02-13",
+      "featuredImage" : "-K_AV3TRPq7cmyvsKCU5",
+      "level" : "-K_OhvSdj3j9PvjChVO8",
+      "slug" : "health-and-social-care",
+      "startDate" : "2017-01-11",
+      "status" : "active",
+      "title" : "Health and Social Care"
+    },
+    "-K_ANXyimKQXxxquu23S" : {
+      "code" : "RR",
+      "content1" : "Mastering React and Redux can get you a position in web development or help you build that personal project you've been dreaming of. It's a skill that will put you more in demand in the modern web development industry, especially with the release of Redux and ReactNative.\n\nThis course will get you up and running quickly, and teach you the core knowledge you need to deeply understand and build React components and structure applications with Redux.\n\nWe'll start by mastering the fundamentals of React, including JSX, “props\", “state\", and eventing. Source code is provided for each lecture, so you will always stay up-to-date with the course pacing. After an introduction to React, we'll dive right in to Redux, covering topics like reducers, actions, and the state tree.",
+      "featuredImage" : "-K_AUydx1--KCnLSkm3l",
+      "level" : "-K_OhZc6mYqUibv5VEBH",
+      "price" : "240",
+      "slug" : "modern-react-with-redux",
+      "status" : "active",
+      "title" : "Modern React with Redux"
+    },
+    "-K_ANodT0HKeFpYmgdTt" : {
+      "code" : "JS",
+      "content1" : "Javascript is the language that modern developers need to know, and know well. Truly knowing Javascript will get you a job, and enable you to build quality web and server applications.\n\nNOTE: This course includes information on ECMAScript 6 (ES6) the next version of Javascript!\n\nIn this course you will gain a deep understanding of Javascript, learn how Javascript works under the hood, and how that knowledge helps you avoid common pitfalls and drastically improve your ability to debug problems. You will find clarity in the parts that others, even experienced coders, may find weird, odd, and at times incomprehensible. You'll learn the beauty and deceptive power of this language that is at the forefront of modern software development today.\n\nThis course will cover such advanced concepts as objects and object literals, function expressions, prototypical inheritance, functional programming, scope chains, function constructors (plus new ES6 features), immediately invoked function expressions (IIFEs), call, apply, bind, and more.\n\nWe'll take a deep dive into the source code of popular frameworks such as jQuery and Underscore to see how you can use your understanding of Javascript to learn (and borrow) from other's good code.\n\nFinally, you'll learn the foundations of how to build your own Javascript framework or library.\n\nWhat you'll learn in this course will make you a better Javascript developer, and improve your abilities in AngularJS, NodeJS, jQuery, React, Ember, MongoDB, and all other Javascript-based technologies!\n\nLearn to love Javascript, and code in it well.\n\nNote: In this course you'll also get downloadable source code. You will often be provided with 'starter' code, giving you the base for you to start writing your code, and 'finished' code to compare your code to.",
+      "featuredImage" : "-K_AVz0qtjTZy-2FazFv",
+      "level" : "-K_OhZc6mYqUibv5VEBH",
+      "price" : "90",
+      "slug" : "javascript-understanding-the-weird-parts",
+      "status" : "active",
+      "title" : "JavaScript: Understanding the Weird Parts"
+    }
+  },
+  "files" : {
+    "-K_6ukQ5TITUoLYXdJ-z" : {
+      "file" : "day-eurostar.jpg",
+      "title" : "day-eurostar.jpg",
+      "type" : "image/jpeg",
+      "url" : "https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/files%2Fday-eurostar.jpg?alt=media&token=3c48bac8-75a8-44a2-8171-231df16385d1"
+    },
+    "-K_91-dpOJW7xjkYnNDa" : {
+      "file" : "PRA2.pdf",
+      "title" : "UOC Practica 2",
+      "type" : "application/pdf",
+      "url" : "https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/files%2FPRA2.pdf?alt=media&token=4ecc14c8-b084-415f-9a71-b47b7628f8a7"
+    },
+    "-K_9_Q1bM3QA5CTecw5L" : {
+      "file" : "day-flowers.jpg",
+      "title" : "day-flowers.jpg",
+      "type" : "image/jpeg",
+      "url" : "https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/files%2Fday-flowers.jpg?alt=media&token=1a9b5f0f-ddb5-4c4c-aa78-f8119dc6789d"
+    },
+    "-K_9c8evT6La0d_R-jiw" : {
+      "file" : "virtual-campus.jpg",
+      "title" : "Virtual campus",
+      "type" : "image/jpeg",
+      "url" : "https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/files%2Fvirtual-campus.jpg?alt=media&token=7b65cf50-0bdd-4f2f-a3d4-880e0001c6a0"
+    },
+    "-K_9gsRm3ILd9mdrmtVt" : {
+      "file" : "hypatia-dev.jpg",
+      "title" : "hypatia-dev.jpg",
+      "type" : "image/jpeg",
+      "url" : "https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/files%2Fhypatia-dev.jpg?alt=media&token=ad2ca7ab-dfe7-414d-b3ac-e612832d3bcb"
+    },
+    "-K_9hl1aVkPGPQm_4Axn" : {
+      "file" : "hypatia-logo-design.jpg",
+      "title" : "hypatia-logo-design.jpg",
+      "type" : "image/jpeg",
+      "url" : "https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/files%2Fhypatia-logo-design.jpg?alt=media&token=602f3f98-00b4-4565-8453-a5a3019701b5"
+    },
+    "-K_AI9yPvYyDyjFxHVUU" : {
+      "file" : "business-management.jpeg",
+      "title" : "business-management.jpeg",
+      "type" : "image/jpeg",
+      "url" : "https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/files%2Fbusiness-management.jpeg?alt=media&token=968ac992-5ea6-4724-87ec-476d5610992e"
+    },
+    "-K_AIizYA9ndMdSQjLbJ" : {
+      "file" : "computing-it.jpg",
+      "title" : "computing-it.jpg",
+      "type" : "image/jpeg",
+      "url" : "https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/files%2Fcomputing-it.jpg?alt=media&token=fc4dbb8b-8154-4980-a288-98a8deaa24cc"
+    },
+    "-K_AMLzXg54PWoSSSS2f" : {
+      "file" : "design-innovation.jpg",
+      "title" : "design-innovation.jpg",
+      "type" : "image/jpeg",
+      "url" : "https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/files%2Fdesign-innovation.jpg?alt=media&token=a4aa0b25-ce78-4279-9f78-a78f31b6d202"
+    },
+    "-K_AMO4SkDqIvfl37qBc" : {
+      "file" : "arts-humanities.jpg",
+      "title" : "arts-humanities.jpg",
+      "type" : "image/jpeg",
+      "url" : "https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/files%2Farts-humanities.jpg?alt=media&token=22ea2556-aa0f-4b03-860b-17f8f96087bf"
+    },
+    "-K_AUydx1--KCnLSkm3l" : {
+      "file" : "react-redux.png",
+      "status" : "active",
+      "title" : "react-redux.png",
+      "type" : "image/png",
+      "url" : "https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/files%2Freact-redux.png?alt=media&token=61d05fa6-0225-4da2-86e9-37c5a820a95b"
+    },
+    "-K_AV1dSqp6cz2CmxdOu" : {
+      "file" : "english-literature.jpg",
+      "status" : "active",
+      "title" : "english-literature.jpg",
+      "type" : "image/jpeg",
+      "url" : "https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/files%2Fenglish-literature.jpg?alt=media&token=286c8709-a202-416f-b4d1-c0075620d191"
+    },
+    "-K_AV3TRPq7cmyvsKCU5" : {
+      "file" : "health-care.jpg",
+      "status" : "active",
+      "title" : "health-care.jpg",
+      "type" : "image/jpeg",
+      "url" : "https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/files%2Fhealth-care.jpg?alt=media&token=20f3bf93-1c92-4004-afa3-0250c054628f"
+    },
+    "-K_AVz0qtjTZy-2FazFv" : {
+      "file" : "javascript.png",
+      "status" : "active",
+      "title" : "javascript.png",
+      "type" : "image/png",
+      "url" : "https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/files%2Fjavascript.png?alt=media&token=243308aa-c718-47c6-b176-951cee9037d0"
+    },
+    "-K_FZVmvjsRPodbw5pML" : {
+      "file" : "research.jpg",
+      "status" : "active",
+      "title" : "research.jpg",
+      "type" : "image/jpeg",
+      "url" : "https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/files%2Fresearch.jpg?alt=media&token=b18e810e-7bb6-4bda-ba8b-3487e185a7d4"
+    },
+    "-K_P_tZXgd498WEOr_Pr" : {
+      "file" : "algebra.jpg",
+      "status" : "active",
+      "title" : "algebra.jpg",
+      "type" : "image/jpeg",
+      "url" : "https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/files%2Falgebra.jpg?alt=media&token=7a801551-b375-4c30-9974-80bb149f2946"
+    },
+    "-K_PcSer-suBP6ZtVv5M" : {
+      "file" : "geometry.jpg",
+      "status" : "active",
+      "title" : "geometry.jpg",
+      "type" : "image/jpeg",
+      "url" : "https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/files%2Fgeometry.jpg?alt=media&token=c9089419-12b5-4190-927d-88a04278b3c8"
+    },
+    "-K_Pcq8bCT0whQHJuXSe" : {
+      "file" : "calculus.jpg",
+      "status" : "active",
+      "title" : "calculus.jpg",
+      "type" : "image/jpeg",
+      "url" : "https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/files%2Fcalculus.jpg?alt=media&token=5ee9fef2-8449-4e85-b078-f850b42df53a"
+    },
+    "-K_PdNnMSL-FSbio828K" : {
+      "file" : "logic.jpg",
+      "status" : "active",
+      "title" : "logic.jpg",
+      "type" : "image/jpeg",
+      "url" : "https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/files%2Flogic.jpg?alt=media&token=4a50419d-0c74-4c2a-9e1e-b3aa04ab393e"
+    },
+    "-K_PdzbYUckX588GeNe-" : {
+      "file" : "math-physics.jpg",
+      "status" : "active",
+      "title" : "math-physics.jpg",
+      "type" : "image/jpeg",
+      "url" : "https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/files%2Fmath-physics.jpg?alt=media&token=e9cac35e-921f-48a4-88b9-3301acb56e54"
+    }
+  },
+  "groups" : {
+    "-KYeuNvDcUX6PNSfNWEv" : {
+      "authors" : [ "jXV6ugDA2WOAVIoNOlpnncsmp0C2", "psHEsoLeHWgUM8ZP2GFgO0kmxgD2" ],
+      "code" : "G-1",
+      "content1" : "This is just a test group",
+      "course" : "-KYe9erY6vwSQBM_nLxA",
+      "slug" : "test-group",
+      "status" : "active",
+      "title" : "Test group",
+      "users" : [ "jXV6ugDA2WOAVIoNOlpnncsmp0C2", "psHEsoLeHWgUM8ZP2GFgO0kmxgD2" ]
+    }
+  },
+  "levels" : {
+    "-K_MXHUbZX7hceUIJ4tR" : {
+      "code" : "MEng",
+      "slug" : "l7-master-of-engineering",
+      "status" : "active",
+      "title" : "L7. Master of engineering"
+    },
+    "-K_OhZc6mYqUibv5VEBH" : {
+      "code" : "Course",
+      "slug" : "online-course",
+      "status" : "active",
+      "title" : "Online course"
+    },
+    "-K_OheInTFJ6iwfzaCuW" : {
+      "code" : "HA",
+      "slug" : "l4-higher-apprenticeship",
+      "status" : "active",
+      "title" : "L4. Higher apprenticeship"
+    },
+    "-K_OhhNGHLjPt3Wt_Ab2" : {
+      "code" : "CHE",
+      "slug" : "l4-certificate-of-higher-education",
+      "status" : "active",
+      "title" : "L4. Certificate of higher education"
+    },
+    "-K_OhmOh17VCeosrRuKP" : {
+      "code" : "HNC",
+      "slug" : "l4-higher-national-certificate",
+      "status" : "active",
+      "title" : "L4. Higher national certificate"
+    },
+    "-K_Ohq0OePkXM78j_IL7" : {
+      "code" : "DHE",
+      "slug" : "l5-diploma-of-higher-education",
+      "status" : "active",
+      "title" : "L5. Diploma of higher education"
+    },
+    "-K_OhsM3TKUDoEyvhkhG" : {
+      "code" : "FD",
+      "slug" : "l5-foundation-degree",
+      "status" : "active",
+      "title" : "L5. Foundation degree"
+    },
+    "-K_OhvSdj3j9PvjChVO8" : {
+      "code" : "HND",
+      "slug" : "l5-higher-national-diploma",
+      "status" : "active",
+      "title" : "L5. Higher national diploma"
+    },
+    "-K_Ohy3YQA39iAghjkpq" : {
+      "code" : "BDHons",
+      "slug" : "l6-bachelor-degree-with-honors",
+      "status" : "active",
+      "title" : "L6. Bachelor degree with honors"
+    },
+    "-K_Oi1T4_pOZu_TXEgMi" : {
+      "code" : "BAHons",
+      "slug" : "l6-bachelor-of-the-arts-with-honors",
+      "status" : "active",
+      "title" : "L6. Bachelor of the arts with honors"
+    },
+    "-K_Oi5JrgyFveu6_fZ8Y" : {
+      "code" : "BSc",
+      "slug" : "l6-bachelor-of-science-with-honors",
+      "status" : "active",
+      "title" : "L6. Bachelor of science with honors"
+    },
+    "-K_Oi85TSdmRPAcYohRG" : {
+      "code" : "GD",
+      "slug" : "l6-graduate-certificate",
+      "status" : "active",
+      "title" : "L6. Graduate certificate"
+    },
+    "-K_OiBUn1TfKaYa82zEH" : {
+      "code" : "GD",
+      "slug" : "l6-graduate-diploma",
+      "status" : "active",
+      "title" : "L6. Graduate diploma"
+    },
+    "-K_OiFJJ8ZV0WHj0wRJX" : {
+      "code" : "MA",
+      "slug" : "l7-master-of-arts",
+      "status" : "active",
+      "title" : "L7. Master of arts"
+    },
+    "-K_OiLRGjNUrcYh1NK9l" : {
+      "code" : "MSc",
+      "slug" : "l7-master-of-science",
+      "status" : "active",
+      "title" : "L7. Master of science"
+    },
+    "-K_OiNruVIrNqpRgSd7G" : {
+      "code" : "MD",
+      "slug" : "l7-masters-degree",
+      "status" : "active",
+      "title" : "L7. Masters degree"
+    },
+    "-K_OiQI9Ah9aKA9IJpgb" : {
+      "code" : "PC",
+      "slug" : "l7-postgraduate-certificate",
+      "status" : "active",
+      "title" : "L7. Postgraduate certificate"
+    },
+    "-K_OiSTu2B8q9K1oXskM" : {
+      "code" : "PD",
+      "slug" : "l7-postgraduate-diploma",
+      "status" : "active",
+      "title" : "L7. Postgraduate diploma"
+    },
+    "-K_OiUXdcs7B6FBXFrQF" : {
+      "code" : "D",
+      "slug" : "l8-doctorate",
+      "status" : "active",
+      "title" : "L8. Doctorate"
+    }
+  },
+  "modules" : {
+    "-KYe7DCVMq8OIShRzj1q" : {
+      "authors" : [ "jXV6ugDA2WOAVIoNOlpnncsmp0C2", "psHEsoLeHWgUM8ZP2GFgO0kmxgD2" ],
+      "code" : "A-1",
+      "content" : "reg werg wr gewr",
+      "content1" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sed lacus nec risus faucibus ornare at a arcu. Aenean magna nisi, lobortis sed semper vitae, semper id ante. Vivamus egestas sit amet magna et feugiat. Aenean nec augue a nisi pretium consequat. Donec ultricies metus purus, id porta velit sagittis eleifend. Ut lectus sapien, vehicula id rutrum in, tincidunt et velit. Duis nec massa lorem. Nunc blandit nisi vel mi posuere, nec vulputate odio consequat. Vestibulum vel dictum mauris, sit amet laoreet tellus. Duis et tempor nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi ac enim interdum, luctus libero sit amet, bibendum ex.\n\nVestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum eu consequat nibh. Integer tincidunt sapien eget nibh viverra aliquam. Donec at varius dui, at laoreet odio. Ut hendrerit enim nec tempor condimentum. Sed iaculis ex ante. Praesent non eros odio. Vivamus dictum lacus ante, et mattis ipsum vestibulum eu. Ut rutrum fermentum sagittis. Integer egestas justo ante, a convallis leo gravida efficitur. Proin tempus augue ut massa placerat, sit amet volutpat massa aliquam.",
+      "featuredImage" : "-K_P_tZXgd498WEOr_Pr",
+      "slug" : "algebra-i",
+      "status" : "active",
+      "title" : "Algebra I"
+    },
+    "-K_PcB7vJ3DJp-VbtmP7" : {
+      "content1" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sed lacus nec risus faucibus ornare at a arcu. Aenean magna nisi, lobortis sed semper vitae, semper id ante. Vivamus egestas sit amet magna et feugiat. Aenean nec augue a nisi pretium consequat. Donec ultricies metus purus, id porta velit sagittis eleifend. Ut lectus sapien, vehicula id rutrum in, tincidunt et velit. Duis nec massa lorem. Nunc blandit nisi vel mi posuere, nec vulputate odio consequat. Vestibulum vel dictum mauris, sit amet laoreet tellus. Duis et tempor nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi ac enim interdum, luctus libero sit amet, bibendum ex.\n\nVestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum eu consequat nibh. Integer tincidunt sapien eget nibh viverra aliquam. Donec at varius dui, at laoreet odio. Ut hendrerit enim nec tempor condimentum. Sed iaculis ex ante. Praesent non eros odio. Vivamus dictum lacus ante, et mattis ipsum vestibulum eu. Ut rutrum fermentum sagittis. Integer egestas justo ante, a convallis leo gravida efficitur. Proin tempus augue ut massa placerat, sit amet volutpat massa aliquam.",
+      "featuredImage" : "-K_PcSer-suBP6ZtVv5M",
+      "slug" : "geometry",
+      "status" : "active",
+      "title" : "Geometry"
+    },
+    "-K_Pcyl-XOiQikgXl709" : {
+      "code" : "CAL",
+      "content1" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eleifend nunc risus, eu convallis libero facilisis vel. Fusce vel pretium nunc. Vestibulum ut dui id quam venenatis tristique vel molestie justo. Donec semper aliquam pharetra. Integer blandit magna id metus commodo, quis luctus lectus feugiat. Nullam magna metus, ultricies nec enim ut, rutrum malesuada magna. Cras sit amet diam eros. Donec condimentum iaculis lectus. Mauris vitae nunc eget dui faucibus cursus. Sed hendrerit, magna nec iaculis hendrerit, arcu tellus ultricies tellus, at vestibulum massa lectus id lectus. Vestibulum tincidunt egestas lectus. Fusce in quam quis nisl vehicula dapibus. Proin rutrum, est eu venenatis sagittis, diam diam porta leo, sit amet tincidunt nibh sem vitae urna.\n\nVestibulum quis velit eleifend, egestas diam vel, mattis massa. Mauris nec quam ut leo tincidunt fringilla. Etiam vitae est sapien. Nunc eros risus, rhoncus nec mauris et, posuere porta lacus. Maecenas tincidunt accumsan tincidunt. Sed at enim eu mi consectetur porta. Nulla nec fringilla sem. Nullam at viverra nulla. Mauris venenatis dui a orci faucibus mattis.\n\nNunc sem purus, dapibus eu ex vel, ultrices pretium magna. Sed ultrices tempus nisi quis dapibus. Nunc elementum est eget facilisis elementum. Vivamus tempus enim ac metus dapibus, ut placerat diam scelerisque. Proin sodales eros in mattis tincidunt. Sed dictum hendrerit dui, consectetur convallis sem consequat a. Suspendisse potenti.",
+      "featuredImage" : "-K_Pcq8bCT0whQHJuXSe",
+      "slug" : "calculus",
+      "status" : "active",
+      "title" : "Calculus"
+    },
+    "-K_PdSQ_F9C4i9ZJSVb3" : {
+      "code" : "LOG",
+      "content1" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eleifend nunc risus, eu convallis libero facilisis vel. Fusce vel pretium nunc. Vestibulum ut dui id quam venenatis tristique vel molestie justo. Donec semper aliquam pharetra. Integer blandit magna id metus commodo, quis luctus lectus feugiat. Nullam magna metus, ultricies nec enim ut, rutrum malesuada magna. Cras sit amet diam eros. Donec condimentum iaculis lectus. Mauris vitae nunc eget dui faucibus cursus. Sed hendrerit, magna nec iaculis hendrerit, arcu tellus ultricies tellus, at vestibulum massa lectus id lectus. Vestibulum tincidunt egestas lectus. Fusce in quam quis nisl vehicula dapibus. Proin rutrum, est eu venenatis sagittis, diam diam porta leo, sit amet tincidunt nibh sem vitae urna.\n\nVestibulum quis velit eleifend, egestas diam vel, mattis massa. Mauris nec quam ut leo tincidunt fringilla. Etiam vitae est sapien. Nunc eros risus, rhoncus nec mauris et, posuere porta lacus. Maecenas tincidunt accumsan tincidunt. Sed at enim eu mi consectetur porta. Nulla nec fringilla sem. Nullam at viverra nulla. Mauris venenatis dui a orci faucibus mattis.\n\nNunc sem purus, dapibus eu ex vel, ultrices pretium magna. Sed ultrices tempus nisi quis dapibus. Nunc elementum est eget facilisis elementum. Vivamus tempus enim ac metus dapibus, ut placerat diam scelerisque. Proin sodales eros in mattis tincidunt. Sed dictum hendrerit dui, consectetur convallis sem consequat a. Suspendisse potenti.",
+      "featuredImage" : "-K_PdNnMSL-FSbio828K",
+      "slug" : "logic",
+      "status" : "active",
+      "title" : "Logic"
+    },
+    "-K_Pe5gWtqUY3crfnsQ2" : {
+      "code" : "MAP",
+      "content1" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eleifend nunc risus, eu convallis libero facilisis vel. Fusce vel pretium nunc. Vestibulum ut dui id quam venenatis tristique vel molestie justo. Donec semper aliquam pharetra. Integer blandit magna id metus commodo, quis luctus lectus feugiat. Nullam magna metus, ultricies nec enim ut, rutrum malesuada magna. Cras sit amet diam eros. Donec condimentum iaculis lectus. Mauris vitae nunc eget dui faucibus cursus. Sed hendrerit, magna nec iaculis hendrerit, arcu tellus ultricies tellus, at vestibulum massa lectus id lectus. Vestibulum tincidunt egestas lectus. Fusce in quam quis nisl vehicula dapibus. Proin rutrum, est eu venenatis sagittis, diam diam porta leo, sit amet tincidunt nibh sem vitae urna.\n\nVestibulum quis velit eleifend, egestas diam vel, mattis massa. Mauris nec quam ut leo tincidunt fringilla. Etiam vitae est sapien. Nunc eros risus, rhoncus nec mauris et, posuere porta lacus. Maecenas tincidunt accumsan tincidunt. Sed at enim eu mi consectetur porta. Nulla nec fringilla sem. Nullam at viverra nulla. Mauris venenatis dui a orci faucibus mattis.\n\nNunc sem purus, dapibus eu ex vel, ultrices pretium magna. Sed ultrices tempus nisi quis dapibus. Nunc elementum est eget facilisis elementum. Vivamus tempus enim ac metus dapibus, ut placerat diam scelerisque. Proin sodales eros in mattis tincidunt. Sed dictum hendrerit dui, consectetur convallis sem consequat a. Suspendisse potenti.",
+      "featuredImage" : "-K_PdzbYUckX588GeNe-",
+      "slug" : "mathematical-physics",
+      "status" : "active",
+      "title" : "Mathematical physics"
+    },
+    "-K_PeJEAVrOFialo_C6_" : {
+      "content1" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eleifend nunc risus, eu convallis libero facilisis vel. Fusce vel pretium nunc. Vestibulum ut dui id quam venenatis tristique vel molestie justo. Donec semper aliquam pharetra. Integer blandit magna id metus commodo, quis luctus lectus feugiat. Nullam magna metus, ultricies nec enim ut, rutrum malesuada magna. Cras sit amet diam eros. Donec condimentum iaculis lectus. Mauris vitae nunc eget dui faucibus cursus. Sed hendrerit, magna nec iaculis hendrerit, arcu tellus ultricies tellus, at vestibulum massa lectus id lectus. Vestibulum tincidunt egestas lectus. Fusce in quam quis nisl vehicula dapibus. Proin rutrum, est eu venenatis sagittis, diam diam porta leo, sit amet tincidunt nibh sem vitae urna.\n\nVestibulum quis velit eleifend, egestas diam vel, mattis massa. Mauris nec quam ut leo tincidunt fringilla. Etiam vitae est sapien. Nunc eros risus, rhoncus nec mauris et, posuere porta lacus. Maecenas tincidunt accumsan tincidunt. Sed at enim eu mi consectetur porta. Nulla nec fringilla sem. Nullam at viverra nulla. Mauris venenatis dui a orci faucibus mattis.\n\nNunc sem purus, dapibus eu ex vel, ultrices pretium magna. Sed ultrices tempus nisi quis dapibus. Nunc elementum est eget facilisis elementum. Vivamus tempus enim ac metus dapibus, ut placerat diam scelerisque. Proin sodales eros in mattis tincidunt. Sed dictum hendrerit dui, consectetur convallis sem consequat a. Suspendisse potenti.",
+      "featuredImage" : "-K_AVz0qtjTZy-2FazFv",
+      "slug" : "javascript-frameworks",
+      "status" : "active",
+      "title" : "Javascript frameworks"
+    }
+  },
+  "pages" : {
+    "-K_0GyONxSTiMuxe8CoC" : {
+      "content1" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempor diam a nisi malesuada, ut pretium orci elementum. Donec finibus orci id rutrum interdum. Suspendisse convallis volutpat magna, eget rhoncus eros vestibulum imperdiet. Morbi at semper ex. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vulputate, ipsum ut convallis varius, nisl augue feugiat nibh, ut tempor risus sem ut sem. Quisque dignissim lectus eros, quis malesuada quam sollicitudin commodo. Mauris euismod elit eu convallis porttitor. Nulla nec felis volutpat, cursus arcu non, maximus mi. Etiam ultrices ligula et feugiat commodo. Proin vel dui a neque tempus pulvinar quis id ligula. Sed fermentum dignissim massa, eget scelerisque magna malesuada eget. In placerat suscipit odio, eu eleifend purus vehicula sed. Donec tempor lorem lectus. Vivamus ut orci quis mauris mattis venenatis nec nec dui.\n\nUt ultricies, metus et viverra pulvinar, arcu ante tristique orci, nec elementum nisi lectus at est. Aliquam lacinia ut quam sed tempor. Nulla porttitor purus purus, sed auctor leo dapibus porta. In commodo nulla at lectus hendrerit mollis. Nunc scelerisque tincidunt quam at suscipit. Suspendisse a ligula mauris. Phasellus rhoncus orci bibendum velit suscipit ornare. Donec quis commodo dolor. Suspendisse nibh nulla, dictum eget tellus ac, porttitor faucibus ipsum. Nunc vitae dictum dolor. Suspendisse feugiat mi sit amet mattis fringilla. Donec arcu erat, elementum elementum egestas eget, sagittis fermentum urna. Duis fermentum, sem quis eleifend convallis, risus nisl sodales ligula, nec pulvinar urna elit id ipsum. Proin blandit consectetur nisi in mollis.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempor diam a nisi malesuada, ut pretium orci elementum. Donec finibus orci id rutrum interdum. Suspendisse convallis volutpat magna, eget rhoncus eros vestibulum imperdiet. Morbi at semper ex. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vulputate, ipsum ut convallis varius, nisl augue feugiat nibh, ut tempor risus sem ut sem. Quisque dignissim lectus eros, quis malesuada quam sollicitudin commodo. Mauris euismod elit eu convallis porttitor. Nulla nec felis volutpat, cursus arcu non, maximus mi. Etiam ultrices ligula et feugiat commodo. Proin vel dui a neque tempus pulvinar quis id ligula. Sed fermentum dignissim massa, eget scelerisque magna malesuada eget. In placerat suscipit odio, eu eleifend purus vehicula sed. Donec tempor lorem lectus. Vivamus ut orci quis mauris mattis venenatis nec nec dui.",
+      "content2" : "This is a page with just two columns",
+      "slug" : "about",
+      "status" : "active",
+      "title" : "About"
+    },
+    "-K_BbRZgWcU-dQ7QJPPA" : {
+      "content1" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempor diam a nisi malesuada, ut pretium orci elementum. Donec finibus orci id rutrum interdum. Suspendisse convallis volutpat magna, eget rhoncus eros vestibulum imperdiet. Morbi at semper ex. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vulputate, ipsum ut convallis varius, nisl augue feugiat nibh, ut tempor risus sem ut sem. Quisque dignissim lectus eros, quis malesuada quam sollicitudin commodo. Mauris euismod elit eu convallis porttitor. Nulla nec felis volutpat, cursus arcu non, maximus mi. Etiam ultrices ligula et feugiat commodo. Proin vel dui a neque tempus pulvinar quis id ligula. Sed fermentum dignissim massa, eget scelerisque magna malesuada eget. In placerat suscipit odio, eu eleifend purus vehicula sed. Donec tempor lorem lectus. Vivamus ut orci quis mauris mattis venenatis nec nec dui.\n\nUt ultricies, metus et viverra pulvinar, arcu ante tristique orci, nec elementum nisi lectus at est. Aliquam lacinia ut quam sed tempor. Nulla porttitor purus purus, sed auctor leo dapibus porta. In commodo nulla at lectus hendrerit mollis. Nunc scelerisque tincidunt quam at suscipit. Suspendisse a ligula mauris. Phasellus rhoncus orci bibendum velit suscipit ornare. Donec quis commodo dolor. Suspendisse nibh nulla, dictum eget tellus ac, porttitor faucibus ipsum. Nunc vitae dictum dolor. Suspendisse feugiat mi sit amet mattis fringilla. Donec arcu erat, elementum elementum egestas eget, sagittis fermentum urna. Duis fermentum, sem quis eleifend convallis, risus nisl sodales ligula, nec pulvinar urna elit id ipsum. Proin blandit consectetur nisi in mollis.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempor diam a nisi malesuada, ut pretium orci elementum. Donec finibus orci id rutrum interdum. Suspendisse convallis volutpat magna, eget rhoncus eros vestibulum imperdiet. Morbi at semper ex. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vulputate, ipsum ut convallis varius, nisl augue feugiat nibh, ut tempor risus sem ut sem. Quisque dignissim lectus eros, quis malesuada quam sollicitudin commodo. Mauris euismod elit eu convallis porttitor. Nulla nec felis volutpat, cursus arcu non, maximus mi. Etiam ultrices ligula et feugiat commodo. Proin vel dui a neque tempus pulvinar quis id ligula. Sed fermentum dignissim massa, eget scelerisque magna malesuada eget. In placerat suscipit odio, eu eleifend purus vehicula sed. Donec tempor lorem lectus. Vivamus ut orci quis mauris mattis venenatis nec nec dui.\n\nUt ultricies, metus et viverra pulvinar, arcu ante tristique orci, nec elementum nisi lectus at est. Aliquam lacinia ut quam sed tempor. Nulla porttitor purus purus, sed auctor leo dapibus porta. In commodo nulla at lectus hendrerit mollis. Nunc scelerisque tincidunt quam at suscipit. Suspendisse a ligula mauris. Phasellus rhoncus orci bibendum velit suscipit ornare. Donec quis commodo dolor. Suspendisse nibh nulla, dictum eget tellus ac, porttitor faucibus ipsum. Nunc vitae dictum dolor. Suspendisse feugiat mi sit amet mattis fringilla. Donec arcu erat, elementum elementum egestas eget, sagittis fermentum urna. Duis fermentum, sem quis eleifend convallis, risus nisl sodales ligula, nec pulvinar urna elit id ipsum. Proin blandit consectetur nisi in mollis.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempor diam a nisi malesuada, ut pretium orci elementum. Donec finibus orci id rutrum interdum. Suspendisse convallis volutpat magna, eget rhoncus eros vestibulum imperdiet. Morbi at semper ex. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vulputate, ipsum ut convallis varius, nisl augue feugiat nibh, ut tempor risus sem ut sem. Quisque dignissim lectus eros, quis malesuada quam sollicitudin commodo. Mauris euismod elit eu convallis porttitor. Nulla nec felis volutpat, cursus arcu non, maximus mi. Etiam ultrices ligula et feugiat commodo. Proin vel dui a neque tempus pulvinar quis id ligula. Sed fermentum dignissim massa, eget scelerisque magna malesuada eget. In placerat suscipit odio, eu eleifend purus vehicula sed. Donec tempor lorem lectus. Vivamus ut orci quis mauris mattis venenatis nec nec dui.\n\nUt ultricies, metus et viverra pulvinar, arcu ante tristique orci, nec elementum nisi lectus at est. Aliquam lacinia ut quam sed tempor. Nulla porttitor purus purus, sed auctor leo dapibus porta. In commodo nulla at lectus hendrerit mollis. Nunc scelerisque tincidunt quam at suscipit. Suspendisse a ligula mauris. Phasellus rhoncus orci bibendum velit suscipit ornare. Donec quis commodo dolor. Suspendisse nibh nulla, dictum eget tellus ac, porttitor faucibus ipsum. Nunc vitae dictum dolor. Suspendisse feugiat mi sit amet mattis fringilla. Donec arcu erat, elementum elementum egestas eget, sagittis fermentum urna. Duis fermentum, sem quis eleifend convallis, risus nisl sodales ligula, nec pulvinar urna elit id ipsum. Proin blandit consectetur nisi in mollis.",
+      "content2" : "![](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/files%2Fresearch.jpg?alt=media&token=b18e810e-7bb6-4bda-ba8b-3487e185a7d4)\nThis is the secondary content block",
+      "content3" : "Other content",
+      "slug" : "research",
+      "status" : "active",
+      "title" : "Research"
+    },
+    "-K_FXJg_oH32LQXmmOGI" : {
+      "content1" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempor diam a nisi malesuada, ut pretium orci elementum. Donec finibus orci id rutrum interdum. Suspendisse convallis volutpat magna, eget rhoncus eros vestibulum imperdiet. Morbi at semper ex. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vulputate, ipsum ut convallis varius, nisl augue feugiat nibh, ut tempor risus sem ut sem. Quisque dignissim lectus eros, quis malesuada quam sollicitudin commodo. Mauris euismod elit eu convallis porttitor. Nulla nec felis volutpat, cursus arcu non, maximus mi. Etiam ultrices ligula et feugiat commodo. Proin vel dui a neque tempus pulvinar quis id ligula. Sed fermentum dignissim massa, eget scelerisque magna malesuada eget. In placerat suscipit odio, eu eleifend purus vehicula sed. Donec tempor lorem lectus. Vivamus ut orci quis mauris mattis venenatis nec nec dui.\n\nUt ultricies, metus et viverra pulvinar, arcu ante tristique orci, nec elementum nisi lectus at est. Aliquam lacinia ut quam sed tempor. Nulla porttitor purus purus, sed auctor leo dapibus porta. In commodo nulla at lectus hendrerit mollis. Nunc scelerisque tincidunt quam at suscipit. Suspendisse a ligula mauris. Phasellus rhoncus orci bibendum velit suscipit ornare. Donec quis commodo dolor. Suspendisse nibh nulla, dictum eget tellus ac, porttitor faucibus ipsum. Nunc vitae dictum dolor. Suspendisse feugiat mi sit amet mattis fringilla. Donec arcu erat, elementum elementum egestas eget, sagittis fermentum urna. Duis fermentum, sem quis eleifend convallis, risus nisl sodales ligula, nec pulvinar urna elit id ipsum. Proin blandit consectetur nisi in mollis.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempor diam a nisi malesuada, ut pretium orci elementum. Donec finibus orci id rutrum interdum. Suspendisse convallis volutpat magna, eget rhoncus eros vestibulum imperdiet. Morbi at semper ex. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vulputate, ipsum ut convallis varius, nisl augue feugiat nibh, ut tempor risus sem ut sem. Quisque dignissim lectus eros, quis malesuada quam sollicitudin commodo. Mauris euismod elit eu convallis porttitor. Nulla nec felis volutpat, cursus arcu non, maximus mi. Etiam ultrices ligula et feugiat commodo. Proin vel dui a neque tempus pulvinar quis id ligula. Sed fermentum dignissim massa, eget scelerisque magna malesuada eget. In placerat suscipit odio, eu eleifend purus vehicula sed. Donec tempor lorem lectus. Vivamus ut orci quis mauris mattis venenatis nec nec dui.",
+      "slug" : "people",
+      "status" : "active",
+      "title" : "People"
+    },
+    "-K_FXLNepGDy28bluYF6" : {
+      "content1" : "Contact page",
+      "slug" : "contact",
+      "status" : "active",
+      "title" : "Contact"
+    }
+  },
+  "posts" : {
+    "-KZzaVbL4D7V6wm5vUyP" : {
+      "content1" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin arcu mauris, varius in sodales ut, dictum ut leo. Nunc turpis nibh, commodo et sem sed, facilisis egestas quam. In eu ante dui. Nunc commodo, neque eget efficitur laoreet, sapien felis rhoncus nisl, non sollicitudin ante massa sit amet metus. Nulla id dictum mauris, id congue risus. Vivamus in eros sollicitudin, varius turpis ac, laoreet lacus. Donec varius et enim sed accumsan. Donec ac nulla vel augue dictum rhoncus. Etiam eu convallis nisl. Phasellus eget tortor quis metus tempor blandit. Aenean viverra sem non nisi eleifend, suscipit pharetra lacus dignissim. Curabitur mattis, velit id commodo accumsan, diam lectus aliquam dui, eu lobortis eros metus a lacus. Vivamus in lectus et justo pellentesque vulputate. Praesent congue enim id nisi aliquam condimentum. Suspendisse iaculis ipsum ac mauris aliquet pretium.\n\nIn ornare urna magna, nec porttitor massa elementum quis. Fusce semper augue vel ex facilisis, et venenatis felis congue. Phasellus pretium, est id gravida auctor, augue ante faucibus turpis, et pulvinar dui tortor ut ligula. Nullam maximus pharetra diam id porttitor. Nullam semper tellus efficitur, pulvinar ante ac, pretium mauris. Nunc turpis dolor, efficitur vitae urna non, tristique euismod nisl. Cras sed metus ultricies ligula accumsan accumsan. Nulla vulputate leo dolor, ut consequat leo auctor et. Nulla mattis fermentum aliquam. Nulla facilisi. Phasellus vel elit congue, ultrices sem at, convallis leo.\n\nMaecenas ac interdum metus, sed blandit metus. Fusce in eros quis tortor semper eleifend vitae eu dui. Praesent non nulla ipsum. Aliquam non tellus ut diam eleifend maximus. Pellentesque facilisis porta turpis quis lobortis. Mauris eleifend purus non ipsum aliquam interdum. Ut pellentesque purus non arcu cursus, venenatis fringilla nunc posuere. Ut lobortis venenatis augue, sit amet faucibus nulla ornare et. Sed in dui sed lorem tincidunt tincidunt. Sed eget ipsum commodo, porttitor est quis, aliquet felis. Duis consequat aliquet dignissim. Aenean nulla lectus, laoreet in dapibus nec, gravida at tellus.",
+      "date" : "2016-11-28",
+      "featuredImage" : "-K_9c8evT6La0d_R-jiw",
+      "slug" : "new-virtual-campus",
+      "status" : "active",
+      "title" : "New virtual campus"
+    },
+    "-KZzyJq_uezqSk2NCFsx" : {
+      "content1" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempor diam a nisi malesuada, ut pretium orci elementum. Donec finibus orci id rutrum interdum. Suspendisse convallis volutpat magna, eget rhoncus eros vestibulum imperdiet. Morbi at semper ex. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vulputate, ipsum ut convallis varius, nisl augue feugiat nibh, ut tempor risus sem ut sem. Quisque dignissim lectus eros, quis malesuada quam sollicitudin commodo. Mauris euismod elit eu convallis porttitor. Nulla nec felis volutpat, cursus arcu non, maximus mi. Etiam ultrices ligula et feugiat commodo. Proin vel dui a neque tempus pulvinar quis id ligula. Sed fermentum dignissim massa, eget scelerisque magna malesuada eget. In placerat suscipit odio, eu eleifend purus vehicula sed. Donec tempor lorem lectus. Vivamus ut orci quis mauris mattis venenatis nec nec dui.\n\nUt ultricies, metus et viverra pulvinar, arcu ante tristique orci, nec elementum nisi lectus at est. Aliquam lacinia ut quam sed tempor. Nulla porttitor purus purus, sed auctor leo dapibus porta. In commodo nulla at lectus hendrerit mollis. Nunc scelerisque tincidunt quam at suscipit. Suspendisse a ligula mauris. Phasellus rhoncus orci bibendum velit suscipit ornare. Donec quis commodo dolor. Suspendisse nibh nulla, dictum eget tellus ac, porttitor faucibus ipsum. Nunc vitae dictum dolor. Suspendisse feugiat mi sit amet mattis fringilla. Donec arcu erat, elementum elementum egestas eget, sagittis fermentum urna. Duis fermentum, sem quis eleifend convallis, risus nisl sodales ligula, nec pulvinar urna elit id ipsum. Proin blandit consectetur nisi in mollis.",
+      "date" : "2016-10-24",
+      "featuredImage" : "-K_9gsRm3ILd9mdrmtVt",
+      "slug" : "a-new-story-has-been-published",
+      "status" : "active",
+      "title" : "A new story has been published!"
+    },
+    "-KZzyafnLnKLWKMLQOF-" : {
+      "content1" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempor diam a nisi malesuada, ut pretium orci elementum. Donec finibus orci id rutrum interdum. Suspendisse convallis volutpat magna, eget rhoncus eros vestibulum imperdiet. Morbi at semper ex. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vulputate, ipsum ut convallis varius, nisl augue feugiat nibh, ut tempor risus sem ut sem. Quisque dignissim lectus eros, quis malesuada quam sollicitudin commodo. Mauris euismod elit eu convallis porttitor. Nulla nec felis volutpat, cursus arcu non, maximus mi. Etiam ultrices ligula et feugiat commodo. Proin vel dui a neque tempus pulvinar quis id ligula. Sed fermentum dignissim massa, eget scelerisque magna malesuada eget. In placerat suscipit odio, eu eleifend purus vehicula sed. Donec tempor lorem lectus. Vivamus ut orci quis mauris mattis venenatis nec nec dui.\n\nUt ultricies, metus et viverra pulvinar, arcu ante tristique orci, nec elementum nisi lectus at est. Aliquam lacinia ut quam sed tempor. Nulla porttitor purus purus, sed auctor leo dapibus porta. In commodo nulla at lectus hendrerit mollis. Nunc scelerisque tincidunt quam at suscipit. Suspendisse a ligula mauris. Phasellus rhoncus orci bibendum velit suscipit ornare. Donec quis commodo dolor. Suspendisse nibh nulla, dictum eget tellus ac, porttitor faucibus ipsum. Nunc vitae dictum dolor. Suspendisse feugiat mi sit amet mattis fringilla. Donec arcu erat, elementum elementum egestas eget, sagittis fermentum urna. Duis fermentum, sem quis eleifend convallis, risus nisl sodales ligula, nec pulvinar urna elit id ipsum. Proin blandit consectetur nisi in mollis.",
+      "date" : "2016-12-15",
+      "featuredImage" : "-K_9hl1aVkPGPQm_4Axn",
+      "slug" : "one-more-story",
+      "status" : "active",
+      "title" : "One more story"
+    },
+    "-K_02Sx9N0rryUv0ipY3" : {
+      "content1" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt ligula id risus vulputate commodo. Maecenas viverra libero ac enim facilisis ullamcorper. Nulla congue hendrerit turpis, a auctor nulla facilisis a. Integer id pharetra felis. Fusce ornare mi et sapien faucibus, id rutrum quam viverra. Donec vel fermentum magna. Nunc malesuada metus eu fringilla porta. Nullam luctus nisi vitae scelerisque gravida. Donec a ligula non diam sagittis consectetur in a odio. Suspendisse potenti. Donec iaculis ligula elit, egestas pretium erat cursus ut. Phasellus nunc turpis, egestas id ullamcorper at, tempus vel ligula.\n\nInterdum et malesuada fames ac ante ipsum primis in faucibus. Nunc quis ex neque. Mauris porta lobortis scelerisque. Nunc cursus viverra diam, ac lobortis eros ultricies eu. Mauris at lectus nec sem vulputate auctor rhoncus quis libero. Vivamus eget molestie sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas quis orci elit. Praesent id purus at justo rutrum rhoncus sit amet ac nisl. Quisque eu neque velit. Aliquam porttitor mattis arcu, non tempus sem venenatis sit amet. Phasellus imperdiet tincidunt ultrices. Praesent pretium purus non felis gravida, ut efficitur nisl luctus. Donec eget velit lacinia, laoreet leo in, finibus orci. Praesent non porttitor ex, consectetur viverra quam.",
+      "slug" : "just-another-story",
+      "title" : "Just another story"
+    }
+  },
+  "subjects" : {
+    "-KYdDowIweDb-Pb-wgOv" : {
+      "code" : "MA1",
+      "content1" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula mauris sodales metus sodales, nec pharetra ipsum gravida. Cras malesuada faucibus orci, sit amet sagittis turpis efficitur sed. Aliquam ut dui posuere, vestibulum ex et, posuere diam. Maecenas luctus suscipit turpis id fermentum. Fusce mattis mi erat, nec venenatis ante fringilla id. Aliquam sit amet justo eleifend, varius magna eget, tincidunt velit. Maecenas varius fringilla orci, ut imperdiet odio porta interdum. Aliquam rutrum est id mi pharetra fringilla. Integer vel tempor enim. Maecenas tempus tincidunt neque a eleifend. Suspendisse tempor ante ligula. Maecenas eget ex tortor. Curabitur dapibus dolor eu dapibus ultrices. Curabitur pellentesque massa volutpat, viverra ipsum et, tristique sem. Ut sed ante eu odio iaculis venenatis.\n\nDonec ipsum leo, bibendum eu eros nec, accumsan facilisis velit. Integer cursus sagittis euismod. Nulla quis erat vel neque gravida commodo in at sem. Ut accumsan quam odio, et vehicula velit hendrerit tincidunt. Nunc scelerisque dui vitae enim euismod sagittis. Vivamus nec gravida odio. In lobortis enim non accumsan feugiat.",
+      "credits" : "6",
+      "slug" : "maths-i",
+      "status" : "active",
+      "title" : "Maths I"
+    },
+    "-K_PDRnIogzqrzpisaPH" : {
+      "code" : "ISE",
+      "content1" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula mauris sodales metus sodales, nec pharetra ipsum gravida. Cras malesuada faucibus orci, sit amet sagittis turpis efficitur sed. Aliquam ut dui posuere, vestibulum ex et, posuere diam. Maecenas luctus suscipit turpis id fermentum. Fusce mattis mi erat, nec venenatis ante fringilla id. Aliquam sit amet justo eleifend, varius magna eget, tincidunt velit. Maecenas varius fringilla orci, ut imperdiet odio porta interdum. Aliquam rutrum est id mi pharetra fringilla. Integer vel tempor enim. Maecenas tempus tincidunt neque a eleifend. Suspendisse tempor ante ligula. Maecenas eget ex tortor. Curabitur dapibus dolor eu dapibus ultrices. Curabitur pellentesque massa volutpat, viverra ipsum et, tristique sem. Ut sed ante eu odio iaculis venenatis.\n\nDonec ipsum leo, bibendum eu eros nec, accumsan facilisis velit. Integer cursus sagittis euismod. Nulla quis erat vel neque gravida commodo in at sem. Ut accumsan quam odio, et vehicula velit hendrerit tincidunt. Nunc scelerisque dui vitae enim euismod sagittis. Vivamus nec gravida odio. In lobortis enim non accumsan feugiat.",
+      "credits" : "6",
+      "slug" : "introduction-to-software-engineering",
+      "status" : "active",
+      "title" : "Introduction to Software Engineering"
+    },
+    "-K_PDWdHQPVbiRmR2zgX" : {
+      "code" : "SRM",
+      "content1" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula mauris sodales metus sodales, nec pharetra ipsum gravida. Cras malesuada faucibus orci, sit amet sagittis turpis efficitur sed. Aliquam ut dui posuere, vestibulum ex et, posuere diam. Maecenas luctus suscipit turpis id fermentum. Fusce mattis mi erat, nec venenatis ante fringilla id. Aliquam sit amet justo eleifend, varius magna eget, tincidunt velit. Maecenas varius fringilla orci, ut imperdiet odio porta interdum. Aliquam rutrum est id mi pharetra fringilla. Integer vel tempor enim. Maecenas tempus tincidunt neque a eleifend. Suspendisse tempor ante ligula. Maecenas eget ex tortor. Curabitur dapibus dolor eu dapibus ultrices. Curabitur pellentesque massa volutpat, viverra ipsum et, tristique sem. Ut sed ante eu odio iaculis venenatis.\n\nDonec ipsum leo, bibendum eu eros nec, accumsan facilisis velit. Integer cursus sagittis euismod. Nulla quis erat vel neque gravida commodo in at sem. Ut accumsan quam odio, et vehicula velit hendrerit tincidunt. Nunc scelerisque dui vitae enim euismod sagittis. Vivamus nec gravida odio. In lobortis enim non accumsan feugiat.",
+      "credits" : "6",
+      "slug" : "software-requirements-modeling",
+      "status" : "active",
+      "title" : "Software Requirements & Modeling"
+    },
+    "-K_PDaYT5ym17IuJQFcp" : {
+      "code" : "DS",
+      "content1" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula mauris sodales metus sodales, nec pharetra ipsum gravida. Cras malesuada faucibus orci, sit amet sagittis turpis efficitur sed. Aliquam ut dui posuere, vestibulum ex et, posuere diam. Maecenas luctus suscipit turpis id fermentum. Fusce mattis mi erat, nec venenatis ante fringilla id. Aliquam sit amet justo eleifend, varius magna eget, tincidunt velit. Maecenas varius fringilla orci, ut imperdiet odio porta interdum. Aliquam rutrum est id mi pharetra fringilla. Integer vel tempor enim. Maecenas tempus tincidunt neque a eleifend. Suspendisse tempor ante ligula. Maecenas eget ex tortor. Curabitur dapibus dolor eu dapibus ultrices. Curabitur pellentesque massa volutpat, viverra ipsum et, tristique sem. Ut sed ante eu odio iaculis venenatis.\n\nDonec ipsum leo, bibendum eu eros nec, accumsan facilisis velit. Integer cursus sagittis euismod. Nulla quis erat vel neque gravida commodo in at sem. Ut accumsan quam odio, et vehicula velit hendrerit tincidunt. Nunc scelerisque dui vitae enim euismod sagittis. Vivamus nec gravida odio. In lobortis enim non accumsan feugiat.",
+      "credits" : "6",
+      "slug" : "data-structures",
+      "status" : "active",
+      "title" : "Data Structures"
+    },
+    "-K_PEDBO5Ti-288FI1j2" : {
+      "code" : "OS",
+      "content1" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula mauris sodales metus sodales, nec pharetra ipsum gravida. Cras malesuada faucibus orci, sit amet sagittis turpis efficitur sed. Aliquam ut dui posuere, vestibulum ex et, posuere diam. Maecenas luctus suscipit turpis id fermentum. Fusce mattis mi erat, nec venenatis ante fringilla id. Aliquam sit amet justo eleifend, varius magna eget, tincidunt velit. Maecenas varius fringilla orci, ut imperdiet odio porta interdum. Aliquam rutrum est id mi pharetra fringilla. Integer vel tempor enim. Maecenas tempus tincidunt neque a eleifend. Suspendisse tempor ante ligula. Maecenas eget ex tortor. Curabitur dapibus dolor eu dapibus ultrices. Curabitur pellentesque massa volutpat, viverra ipsum et, tristique sem. Ut sed ante eu odio iaculis venenatis.\n\nDonec ipsum leo, bibendum eu eros nec, accumsan facilisis velit. Integer cursus sagittis euismod. Nulla quis erat vel neque gravida commodo in at sem. Ut accumsan quam odio, et vehicula velit hendrerit tincidunt. Nunc scelerisque dui vitae enim euismod sagittis. Vivamus nec gravida odio. In lobortis enim non accumsan feugiat.",
+      "credits" : "6",
+      "slug" : "operating-systems",
+      "status" : "active",
+      "teachers" : [ "jXV6ugDA2WOAVIoNOlpnncsmp0C2" ],
+      "title" : "Operating Systems"
+    },
+    "-K_PEGgQQYLHhwtA1axa" : {
+      "code" : "CA",
+      "content1" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula mauris sodales metus sodales, nec pharetra ipsum gravida. Cras malesuada faucibus orci, sit amet sagittis turpis efficitur sed. Aliquam ut dui posuere, vestibulum ex et, posuere diam. Maecenas luctus suscipit turpis id fermentum. Fusce mattis mi erat, nec venenatis ante fringilla id. Aliquam sit amet justo eleifend, varius magna eget, tincidunt velit. Maecenas varius fringilla orci, ut imperdiet odio porta interdum. Aliquam rutrum est id mi pharetra fringilla. Integer vel tempor enim. Maecenas tempus tincidunt neque a eleifend. Suspendisse tempor ante ligula. Maecenas eget ex tortor. Curabitur dapibus dolor eu dapibus ultrices. Curabitur pellentesque massa volutpat, viverra ipsum et, tristique sem. Ut sed ante eu odio iaculis venenatis.\n\nDonec ipsum leo, bibendum eu eros nec, accumsan facilisis velit. Integer cursus sagittis euismod. Nulla quis erat vel neque gravida commodo in at sem. Ut accumsan quam odio, et vehicula velit hendrerit tincidunt. Nunc scelerisque dui vitae enim euismod sagittis. Vivamus nec gravida odio. In lobortis enim non accumsan feugiat.",
+      "credits" : "6",
+      "slug" : "computer-architecture",
+      "status" : "active",
+      "title" : "Computer Architecture"
+    },
+    "-K_PEJsJ5OgwhIAPKryI" : {
+      "code" : "PL",
+      "content1" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula mauris sodales metus sodales, nec pharetra ipsum gravida. Cras malesuada faucibus orci, sit amet sagittis turpis efficitur sed. Aliquam ut dui posuere, vestibulum ex et, posuere diam. Maecenas luctus suscipit turpis id fermentum. Fusce mattis mi erat, nec venenatis ante fringilla id. Aliquam sit amet justo eleifend, varius magna eget, tincidunt velit. Maecenas varius fringilla orci, ut imperdiet odio porta interdum. Aliquam rutrum est id mi pharetra fringilla. Integer vel tempor enim. Maecenas tempus tincidunt neque a eleifend. Suspendisse tempor ante ligula. Maecenas eget ex tortor. Curabitur dapibus dolor eu dapibus ultrices. Curabitur pellentesque massa volutpat, viverra ipsum et, tristique sem. Ut sed ante eu odio iaculis venenatis.\n\nDonec ipsum leo, bibendum eu eros nec, accumsan facilisis velit. Integer cursus sagittis euismod. Nulla quis erat vel neque gravida commodo in at sem. Ut accumsan quam odio, et vehicula velit hendrerit tincidunt. Nunc scelerisque dui vitae enim euismod sagittis. Vivamus nec gravida odio. In lobortis enim non accumsan feugiat.",
+      "credits" : "6",
+      "slug" : "programming-languages",
+      "status" : "active",
+      "title" : "Programming Languages"
+    },
+    "-K_PENmccPL4eLIw2HIk" : {
+      "code" : "HCI",
+      "content1" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula mauris sodales metus sodales, nec pharetra ipsum gravida. Cras malesuada faucibus orci, sit amet sagittis turpis efficitur sed. Aliquam ut dui posuere, vestibulum ex et, posuere diam. Maecenas luctus suscipit turpis id fermentum. Fusce mattis mi erat, nec venenatis ante fringilla id. Aliquam sit amet justo eleifend, varius magna eget, tincidunt velit. Maecenas varius fringilla orci, ut imperdiet odio porta interdum. Aliquam rutrum est id mi pharetra fringilla. Integer vel tempor enim. Maecenas tempus tincidunt neque a eleifend. Suspendisse tempor ante ligula. Maecenas eget ex tortor. Curabitur dapibus dolor eu dapibus ultrices. Curabitur pellentesque massa volutpat, viverra ipsum et, tristique sem. Ut sed ante eu odio iaculis venenatis.\n\nDonec ipsum leo, bibendum eu eros nec, accumsan facilisis velit. Integer cursus sagittis euismod. Nulla quis erat vel neque gravida commodo in at sem. Ut accumsan quam odio, et vehicula velit hendrerit tincidunt. Nunc scelerisque dui vitae enim euismod sagittis. Vivamus nec gravida odio. In lobortis enim non accumsan feugiat.",
+      "credits" : "6",
+      "slug" : "human-computer-interaction",
+      "status" : "active",
+      "title" : "Human - Computer Interaction"
+    },
+    "-K_PERFGlB6EDgHucMrH" : {
+      "code" : "DD",
+      "content1" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula mauris sodales metus sodales, nec pharetra ipsum gravida. Cras malesuada faucibus orci, sit amet sagittis turpis efficitur sed. Aliquam ut dui posuere, vestibulum ex et, posuere diam. Maecenas luctus suscipit turpis id fermentum. Fusce mattis mi erat, nec venenatis ante fringilla id. Aliquam sit amet justo eleifend, varius magna eget, tincidunt velit. Maecenas varius fringilla orci, ut imperdiet odio porta interdum. Aliquam rutrum est id mi pharetra fringilla. Integer vel tempor enim. Maecenas tempus tincidunt neque a eleifend. Suspendisse tempor ante ligula. Maecenas eget ex tortor. Curabitur dapibus dolor eu dapibus ultrices. Curabitur pellentesque massa volutpat, viverra ipsum et, tristique sem. Ut sed ante eu odio iaculis venenatis.\n\nDonec ipsum leo, bibendum eu eros nec, accumsan facilisis velit. Integer cursus sagittis euismod. Nulla quis erat vel neque gravida commodo in at sem. Ut accumsan quam odio, et vehicula velit hendrerit tincidunt. Nunc scelerisque dui vitae enim euismod sagittis. Vivamus nec gravida odio. In lobortis enim non accumsan feugiat.",
+      "credits" : "6",
+      "slug" : "database-designing",
+      "status" : "active",
+      "title" : "Database Designing"
+    }
+  },
+  "users" : {
+    "jXV6ugDA2WOAVIoNOlpnncsmp0C2" : {
+      "info" : {
+        "address" : "tst",
+        "city" : "Barcelona",
+        "country" : "Spain",
+        "displayName" : "Joan Mira",
+        "email" : "joanmira@gmail.com",
+        "firstName" : "Jason",
+        "lastName1" : "Bourne",
+        "lastName2" : "",
+        "level" : 5,
+        "postcode" : "28080"
+      },
+      "status" : "active"
+    },
+    "psHEsoLeHWgUM8ZP2GFgO0kmxgD2" : {
+      "info" : {
+        "displayName" : "Marty McFly",
+        "email" : "hello@theon.io",
+        "firstName" : "Marty",
+        "lastName1" : "McFly"
+      }
+    }
+  }
+}

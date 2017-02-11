@@ -6,6 +6,10 @@
 	
 	.sidenav {
 		height: 100%;
+		
+		@include desktop() {
+			width: 250px;
+		}
 	}
 	
 	.nav-scroll {
@@ -106,9 +110,16 @@
 		font-size: 14px;
 		position: relative;
 		
+		a { text-decoration: none }
+		
+		.item-icon {
+			margin-left: 10px;
+		}
+		
 		.title {
 			color: $grey;
-			display: block;
+			display: inline-block;
+			width: calc(100% - 30px);
 			padding: 15px 10px;
 			@include scale-anim(1.03);
 		}
@@ -117,7 +128,7 @@
 			background-color: $grey-bg;
 		}
 		
-		&.has-children .icon {
+		&.has-children .arrow {
 			transition: all 0.2s ease;
 			display: inline;
 			position: absolute;
@@ -133,7 +144,7 @@
 			}
 		}
 		
-		&.has-children .icon {
+		&.has-children .arrow {
 			transform: rotate(90deg);
 		}
 		
@@ -146,7 +157,7 @@
 				max-height: 1000px;
 			}
 			
-			&.has-children .icon {
+			&.has-children .arrow {
 				transform: rotate(-90deg);
 			}
 		}

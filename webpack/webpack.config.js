@@ -1,9 +1,11 @@
+require('dotenv').config();
 const Path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const WebpackVersionFilePlugin = require('webpack-version-file-plugin');
 
 module.exports = (options) => {
   	const ExtractSASS = new ExtractTextPlugin(`/styles/${options.cssFileName}`);
@@ -31,9 +33,13 @@ module.exports = (options) => {
         		test: /.jsx?$/,
         		include: Path.join(__dirname, '../src/app'),
         		loader: 'babel',
-				},
+			},
 			{
-			test: /\.svg$/,
+				test: /\.css$/,
+				loader: "style-loader!css-loader"
+			},
+			{
+				test: /\.svg$/,
 				loader: 'svg-sprite?' + JSON.stringify({
 					name: '[name]_[hash]',
 					prefixize: true
@@ -47,6 +53,10 @@ module.exports = (options) => {
       		new Webpack.DefinePlugin({
         		'process.env': {
           			NODE_ENV: JSON.stringify(options.isProduction ? 'production' : 'development'),
+					FIREBASE_API_KEY: JSON.stringify(process.env.FIREBASE_API_KEY),
+					FIREBASE_AUTH_DOMAIN: JSON.stringify(process.env.FIREBASE_AUTH_DOMAIN),
+					FIREBASE_DATABASE_URL: JSON.stringify(process.env.FIREBASE_DATABASE_URL),
+					FIREBASE_STORAGE_BUCKET: JSON.stringify(process.env.FIREBASE_STORAGE_BUCKET),
         		},
       		}),
       		new HtmlWebpackPlugin({
@@ -70,6 +80,11 @@ module.exports = (options) => {
           			warnings: false,
         		},
       		}),
+			new WebpackVersionFilePlugin({
+				packageFile: Path.join(__dirname, '../package.json'),
+				template: Path.join(__dirname, '../version.ejs'),
+				outputFile: Path.join(__dirname, '../static/version.json')
+			}),
       		ExtractSASS
     	);
 

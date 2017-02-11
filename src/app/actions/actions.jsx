@@ -1,5 +1,12 @@
 import * as CONSTANTS from '../constants/constants';
 
+export function action(state, type) {
+	return {
+		type: type,
+		payload: state
+	}
+}
+
 export function setUser(state) {
 	return {
 		type: 'SET_USER',
@@ -42,9 +49,9 @@ export function setNotification(state) {
 	}
 }
 
-export function setUserInfo(state) {
+export function setUserData(state) {
 	return {
-		type: 'SET_USER_INFO',
+		type: 'SET_USER_DATA',
 		payload: state
 	}
 }

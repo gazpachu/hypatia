@@ -1,10 +1,9 @@
 .top-nav {
-	background-color: $blue;
     height: 40px;
-	z-index: 2;
-	position: fixed;
+	z-index: 1;
+	position: absolute;
+	top: 0;
 	width: 100%;
-	border-bottom: 1px solid $border-light;
 	
 	.top-nav-bar {
 		padding: 6px 0;
@@ -50,6 +49,7 @@
 		text-align: center;
 		color: $white;
 		text-decoration: none;
+		@include scale-anim();
 		
 		@include mobile() {
 			width: 40px;
@@ -61,11 +61,10 @@
 			stroke: white;
 			fill: white;
 		}
-		span {
-			text-transform: uppercase;
-			font-size: 20px;
-		    vertical-align: text-top;
-			
+		
+		.logo-wording {
+			width: 80px;
+
 			@include mobile() {
 				display: none;
 			}
@@ -288,6 +287,21 @@
 			font-size: 14px;
 		}
 		
+		.lang {
+			display: inline-block;
+			margin-right: 12px;
+			
+			@include mobile() {
+				display: none;
+			}
+		}
+		
+		.chat-icon {
+			@include mobile() {
+				display: none;
+			}
+		}
+		
 		.icon {
 			fill: white;
 			stroke: $white;
@@ -297,6 +311,11 @@
 				margin-right: 0;
 				margin-left: 3px;
 				height: 15px;
+				@include scale-anim();
+				
+				@include mobile() {
+					display: none;
+				}
 			}
 			
 			&.chat, &.close-chat {
@@ -324,6 +343,10 @@
 				border-radius: 25px;
 				margin-right: 5px;
 			}
+			
+			a {
+				text-decoration: none;
+			}
 		}
 		
 		.user-form, .account-nav {
@@ -345,7 +368,7 @@
 				margin-bottom: 10px;
 				display: block;
 				border-color: $grey;
-				color: $blue;
+				color: $dark-grey;
 				min-width: 200px;
 			}
 		}
@@ -356,12 +379,6 @@
 			a {
 				color: $black;
 			}
-		}
-		
-		.loader-small {
-			position: relative;
-			top: initial;
-			margin-top: 10px;
 		}
 	}
 }

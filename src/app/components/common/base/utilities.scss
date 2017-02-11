@@ -1,3 +1,7 @@
+.hidden {
+	display: none !important;
+}
+
 .clearfix:after {
      visibility: hidden;
      display: block;
@@ -13,3 +17,6 @@
 * html .clearfix { height: 1%; }
 .clearfix { display: block; }
 /* close commented backslash hack */
+
+.float-right { float: right }
+.float-left { float: left }

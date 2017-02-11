@@ -86,14 +86,3 @@ $settings: ' 0.3s forwards';
 		100% { transform: translateY(100%) }
 	}		
 }
-
-.waves:hover {
-	.wave {
-		animation: hscroll 5s linear infinite alternate;
-
-		@keyframes hscroll {
-			0% { transform: translateX(0%) }
-			100% { transform: translateX(-100%) }
-		}
-	}
-}

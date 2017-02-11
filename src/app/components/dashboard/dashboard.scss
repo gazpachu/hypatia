@@ -1,78 +1,47 @@
 .dashboard {
-	display: flex;
-	
-	@include mobile() {
-		display: block;
-	}
-	
-	.coming-up {
-		border-right: 1px solid $border-dark;
-		flex-flow: 0;
-		
-		@include desktop() {
-			width: 55%;
-		}
-	}
-	
-	.latest-messages {
-		flex-flow: 1;
-		background-color: $lighter-grey;
-		
-		@include desktop() {
-			width: 45%;
-		}
-	}
-	
-	.courses-nav {
-		float: right;
-	}
-	
-	.courses-list,
-	.new-courses-list {
-		list-style-type: none;
+	.announcement {
 		font-size: 14px;
+		padding: 10px;
+		display: inline-block;
+		border: 1px solid $light-grey;
+		margin: 20px 20px 0 20px;
+		width: calc(100% - 40px);
+		border-radius: 5px;
+		
+		.icon {
+			margin-right: 10px;
+		}
+	}
+	
+	.columns {
 		padding: 0;
 	}
 	
-	.course-item {
-		.course-title {
-			font-weight: bold;
-		}
-	}
-	
-	.courses-heading {
-		font-size: 28px;
-		border-bottom: 1px solid;
-		margin-bottom: 15px;
-	}
-	
-	.new-courses-heading {
-		margin-top: 50px;
+	.dashboard-title {
 		font-size: 18px;
-		border-bottom: 1px solid;
-		margin-bottom: 15px;
 	}
 	
-	.new-courses-list {
-		.course-item {
-			float: left;
-			width: 50%;
-		}
-		.course-thumb {
-			width: 80px;
-			height: 60px;
-			border: 1px solid $black;
-			float: left;
-			margin-right: 5px;
-			margin-bottom: 10px;
-		}
-		.course-title {
-			display: block;
-		}
-	}
-	
-	.posts {
+	.items-list {
 		list-style-type: none;
 		padding: 0;
+		
+		.item {
+			padding: 10px 0;
+			border-bottom: 1px solid $light-grey;
+			border-left: 4px solid;
+    		padding-left: 10px;
+		    margin-bottom: 5px;
+		}
+	}
+	
+	.meta {
+		text-align: left;
+		padding: 0;
+	}
+	
+	.actions, .teachers {
+		.icon {
+			margin-right: 10px;
+		}
 	}
 }

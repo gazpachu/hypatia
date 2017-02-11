@@ -5,32 +5,29 @@ import $ from 'jquery';
 class ModalBox extends Component {
 	
 	closeModalBox () {
-		$('.js-modal-box').hide();
-		
-		$('.js-overlay').animateCss('fade-out', function() {
-			$('.js-overlay').hide();
+		$('.js-modal-box-wrapper').animateCss('fade-out', function() {
+			$('.js-modal-box-wrapper').hide();
 		});	
-		
 		this.props.answer('cancel');
 	}
 	
 	submitModalBox () {
-		$('.js-modal-box').hide();
-		
-		$('.js-overlay').animateCss('fade-out', function() {
-			$('.js-overlay').hide();
+		$('.js-modal-box-wrapper').animateCss('fade-out', function() {
+			$('.js-modal-box-wrapper').hide();
 		});
-		
 		this.props.answer('accept');
 	}
 
 
 	render () {		
 		return (
-			<div className="modal-box js-modal-box">
-				<h4 className="modal-box-title">Remove &ldquo;{this.props.title}&rdquo; from <span className="text-capitalize">{this.props.location.pathname ? this.props.location.pathname.substring(1) : ''}</span>?</h4>
-				<button className="btn btn-outline btn-xs" onClick={this.closeModalBox.bind(this)}>cancel</button>
-				<button className="btn btn-primary btn-xs" onClick={this.submitModalBox.bind(this)}>submit</button>
+			<div className="modal-box-wrapper js-modal-box-wrapper">
+				<div className="modal-box">
+					<h4 className="modal-box-title">{this.props.title}</h4>
+					<button className="btn btn-outline" onClick={this.closeModalBox.bind(this)}>cancel</button>
+					<button className="btn btn-primary" onClick={this.submitModalBox.bind(this)}>accept</button>
+				</div>
+				<div className="overlay" />
 			</div>
 		)
 	}

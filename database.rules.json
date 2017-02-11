@@ -1,6 +1,34 @@
 {
   "rules": {
     ".read": "true",
-    ".write": "auth != null"
+    ".write": "auth != null",
+    "users": {
+      "$id": {
+      	"info": {
+          "level": {
+            ".read": "true",
+    		".write": "false"
+          }
+        }
+      }
+    },
+    "pages": {
+      ".indexOn": ["slug"]
+    },
+    "posts": {
+      ".indexOn": ["slug"]
+    },
+    "courses": {
+      ".indexOn": ["slug"]
+    },
+    "subjects": {
+      ".indexOn": ["slug"]
+    },
+    "modules": {
+      ".indexOn": ["slug"]
+    },
+    "activities": {
+      ".indexOn": ["slug"]
+    }
   }
 }

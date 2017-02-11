@@ -1,0 +1,95 @@
+.page {
+	min-height: calc(100vh - 60px);
+	padding-top: 70px;
+	width: 100%;
+	
+	&.listing-page {
+		min-height: calc(100vh - 110px);
+	}
+	
+	.loader-small {
+		display: block;
+		margin: 0 auto;
+	}
+	
+	.page-wrapper {
+		background-color: $white;
+		margin: 0 20px;
+		min-height: calc(100vh - 150px);
+		
+		@include mobile() {
+			margin: 0;
+		}
+	}
+	
+	.title {
+		text-align: center;
+		padding-top: 20px;
+		font-weight: lighter;
+	}
+	
+	.meta  {
+		text-align: center;
+		font-size: 13px;
+    	color: $grey;
+		padding: 0 20px;
+		
+		.icon { margin: 0 5px }
+		span { font-weight: bold }
+	}
+	
+	.columns {
+		padding: 10px 20px 20px 20px;
+		display: flex;
+		
+		@include mobile() {
+			display: block;
+			padding: 10px 0 0 0;
+		}
+		
+		&.single-column {
+			.page-content {
+				@include desktop() {
+					width: 85%;
+				}
+				@media (min-width: 1200px) {
+					width: 60%;
+				}
+			}
+		}
+	}
+	
+	.column {
+		width: 50%;
+		padding: 20px;
+	
+		@include mobile() {
+			width: 100%;
+		}
+	}
+	
+	.page-content {
+		margin: 0 auto;
+		text-align: justify;
+		
+		@include mobile() {
+			width: 100%;
+		}
+		
+		img {
+			width: 100%;
+			margin-bottom: 20px;
+		}
+	}
+	
+	.page-sidebar {
+		@include mobile() {
+			width: 100%;
+		}
+		
+		img {
+			width: 100%;
+			margin-bottom: 20px;
+		}
+	}
+}

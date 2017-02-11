@@ -1,0 +1,18 @@
+.activity {
+	.author {
+		text-align: center;
+		display: inline-block;
+		
+		.icon {
+			margin-right: 10px;
+		}
+	}
+	
+	.meta  {
+		text-align: center;
+		font-size: 13px;
+    	color: $grey;
+		
+		.icon { margin: 0 5px }
+	}
+}

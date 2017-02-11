@@ -2,8 +2,6 @@
 	height: 30px;
 	width: 100%;
 	padding-top: 2px;
-	border-bottom: 1px solid $border-light;
-	background-color: #273a5a;
 	
 	.breadcrumbs-items {
 		padding: 0;
@@ -12,7 +10,6 @@
 		margin-left: 20px;
 		padding-top: 6px;
 		font-size: 10px;
-		color: $white;
 		
 		@include mobile() {
 			white-space: nowrap;
@@ -24,7 +21,6 @@
 	.item {
 		display: inline-block;
 		margin-right: 5px;
-		text-transform: capitalize;
 		
 		&:after {
 			content: '>';

@@ -5,9 +5,6 @@ import { setLoading } from '../../actions/actions';
 import $ from 'jquery';
 import Icon from '../common/lib/icon/icon';
 
-import Icon404 from '../../../../static/svg/404.svg';
-
-
 class NotFound extends Component {
 	
 	constructor(props) {
@@ -16,22 +13,20 @@ class NotFound extends Component {
 	
 	componentDidMount() {
 		this.props.setLoading(false);
+		$('.js-main').removeClass().addClass('main js-main not-found-page');
 	}	
 	
 	render () {
 		return (
-			<section className="notFound page container-fluid">		
-				<div className="col-md-4 col-md-offset-4 col-xs-10 col-xs-offset-1">
-					<Icon glyph={Icon404} className="icon icon-404" />
-					
-					<div className="content-container">
-						<h3>Barnacles!</h3>
-						<p>We're all at sea, dashed on the rocks.</p>
-						<p>We can't ﬁnd what you were looking for.<br/>Because it's dark. Really dark.</p>
-					</div>
-					
-					<div className="btn-container">
-						<Link to="/" className="btn btn-primary btn-xs">dry land</Link>
+			<section className="notFound page static-page">
+				<div className="page-wrapper">		
+					<h1 className="title">Page not found :-(</h1>
+					<div className="columns single-column">
+						<div className="column page-content">
+							<p>Sorry!, Hypatia is still under construction<br />Please check again later. Thanks!</p>
+							<img src="/static/img/404.png" />
+							<Link to="/"><button className="btn btn-primary">Go back to the home page</button></Link>
+						</div>
 					</div>
 				</div>
 			</section>

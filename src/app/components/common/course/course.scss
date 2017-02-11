@@ -1,0 +1,31 @@
+.course {
+	
+	.btn-enroll {
+		margin: 20px auto;
+		display: block;
+		text-align: center;
+	}
+	
+	.loader-enroll {
+		display: none;
+		margin: 20px auto;
+	}
+	
+	.info {
+		margin-bottom: 20px;
+		
+		span {
+			font-weight: bold;
+			margin-right: 10px;
+			
+			&:last-child {
+				margin-left: 10px;
+			}
+		}
+	}
+	
+	.info-icon {
+		fill: $blue;
+		margin-right: 10px;
+	}
+}

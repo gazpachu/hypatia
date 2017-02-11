@@ -1,13 +1,13 @@
 .account-settings {
-	display: flex;
-	
-	@include mobile() {
+	.profile-image {
+		width: 150px;
+		height: 150px;
+		margin: 0 auto 5px auto;
 		display: block;
-	}
-	
-	.column {
-		border-right: 1px solid $border-dark;
-		min-width: 33.3%;
+		border-radius: 100px;
+		border: 2px solid;
+		overflow: hidden;
+	    box-sizing: content-box;
 	}
 	
 	.update-photo {
@@ -24,42 +24,15 @@
 			display: block;
 			width: 100%;
 			border-bottom: 1px solid $border-dark;
-		}
-	}
-	
-	.account-details {
-		.password {
 			margin-bottom: 20px;
 		}
-		.btn {
-			margin: 10px 0 30px 0;
-			float: right;
+		
+		.loader-small {
+			display: none;
 		}
-	}
-	
-	.personal-details {
-		input {
-			margin-bottom: 20px;
+		
+		@include mobile() {
+			padding-bottom: 40px;
 		}
-		.btn {
-			float: right;
-		}
-	}
-	
-	.profile-image {
-		width: 150px;
-		height: 150px;
-		margin: 0 auto 5px auto;
-		display: block;
-		border-radius: 100px;
-		border: 2px solid;
-		overflow: hidden;
-	}
-	
-	.loader-small {
-		position: relative;
-		top: initial;
-		float: right;
-		margin-top: 10px;
 	}
 }

@@ -1,103 +1,192 @@
 .home {
+	padding-top: 480px;
+	
 	.hero {
-		background: url(/static/img/graduation-banner.jpg) no-repeat;
-		background-position: center 60%;
-		background-size: cover;
-		height: 400px;
-		width: 100%;
-		display: block;
-	}
-	
-	.home-columns {
-		display: flex;
+		.world-map {
+			position: absolute;
+			fill: white;
+			opacity: .1;
+			top: -50px;
+			width: 100%;
+			height: 570px;
+			display: none;
+			animation-delay: .5s;
+		}
+		
+		.hero-content {
+			display: none;
+			position: absolute;
+			top: 100px;
+			right: 130px;
+			width: 400px;
+			
+			@include mobile() {
+				margin: 0 auto;
+				left: -70px;
+				right: 0;
+			}
+		}
+		
+		.elevator-pitch {
+			display: none;
+			position: absolute;
+			top: 240px;
+			right: 130px;
+    		width: 300px;
+			color: $white;
+			
+			@include mobile() {
+				margin: 0 auto;
+				left: 0;
+				right: 0;
+			}
+			
+			p {
+				font-size: 14px;
+			}
+		}
+		
+		.logo {
+			float: left;
+    		fill: $white;
+			stroke: $white;
+			height: 100px;
+		}
+		
+		.slogan {
+			color: $white;
+			font-size: 30px;
+			text-transform: uppercase;
+			position: absolute;
+			padding-left: 210px;
+			line-height: 34px;
+			
+			.word {
+				width: 1px;
+				overflow: hidden; /* Ensures the content is not revealed until the animation */
+				border-right: 3px solid transparent; /* The typwriter cursor */
+				white-space: nowrap; /* Keeps the content on a single line */
+				animation: typing 1s steps(40, end) forwards, blink-caret .75s step-end 2;
+				
+				&.word1 { animation-delay: 1s; }
+				&.word2 { animation-delay: 2.5s; }
+				&.word3 { animation-delay: 4s; }
+			}
+		}
+		
+		@keyframes typing {
+			from { width: 0 }
+			to { width: 100% }
+		}
 
-		@include mobile() {
-			display: block;
+		@keyframes blink-caret {
+			from, to { border-color: $white }
+			50% { border-color: $white; }
 		}
-	}
-	
-	.news {
-		border-right: 1px solid $border-dark;
-		flex-flow: 0;
 		
-		@include desktop() {
-			width: 55%;
+		.circle {
+			@include desktop() {
+				display: none;
+				position: absolute;
+				color: rgba(255,255,255,.8);
+				text-align: center;
+				font-size: 13px;
+				padding-top: 6px;
+				width: 30px;
+				height: 30px;
+				border-radius: 25px;
+				cursor: pointer;
+				transition: all .5s;
+
+				&.active, &:hover {
+					background-color: rgba(255,255,255,.3);
+					color: $darker-grey;
+
+					.spinner {	
+						border-style: solid;
+					}
+				}
+
+				.spinner {
+					position: absolute;
+					left: 0;
+					top: 0;
+					border: 1px dashed rgba(255,255,255,.8);
+					border-radius: 25px;
+					width: 30px;
+					height: 30px;
+					animation: spinner linear 3s forwards infinite;
+				}
+
+				@keyframes spinner {
+					0% { transform: rotate(0deg) }
+					100% { transform: rotate(360deg) }
+				}
+
+				&.usa { top: 160px; left: 140px; }
+				&.brazil { top: 310px; left: 370px; animation-delay: .2s; @media (max-width: 850px) { display: none !important } }
+				&.argentina { top: 390px; left: 340px; animation-delay: .4s; }
+				&.spain { top: 157px; left: 480px; animation-delay: .6s; @media (max-width: 970px) { display: none !important } }
+				&.uk { top: 100px; left: 480px; animation-delay: .8s; @media (max-width: 970px) { display: none !important } }
+				&.france { top: 120px; left: 504px; animation-delay: 1s; @media (max-width: 970px) { display: none !important } }
+				&.usa2 { top: 170px; left: 264px; animation-delay: 1.2s; }
+				&.colombia { top: 300px; left: 270px; animation-delay: 1.4s; }
+				&.africa1 { top: 400px; left: 550px; animation-delay: 1.6s; @media (max-width: 1000px) { display: none !important } }
+				&.africa2 { top: 260px; left: 494px; animation-delay: 1.8s; @media (max-width: 970px) { display: none !important } }
+				&.russia1 { top: 100px; left: 624px; animation-delay: 2s; @media (max-width: 1100px) { display: none !important } }
+				&.arabia { top: 190px; left: 604px; animation-delay: 2.2s; @media (max-width: 1100px) { display: none !important } }
+				&.india { top: 237px; left: 704px; animation-delay: 2.4s; @media (max-width: 1180px) { display: none !important } }
+				&.china { top: 160px; left: 734px; animation-delay: 2.6s; @media (max-width: 1200px) { display: none !important } }
+				&.japan { top: 150px; left: 884px; animation-delay: 2.8s; @media (max-width: 1350px) { display: none !important } }
+				&.thailand { top: 230px; left: 774px; animation-delay: 3s; @media (max-width: 1250px) { display: none !important } }
+				&.philippines { top: 240px; left: 834px; animation-delay: 3.2s; @media (max-width: 1300px) { display: none !important } }
+				&.indonesia { top: 310px; left: 794px; animation-delay: 3.4s; @media (max-width: 1250px) { display: none !important } }
+			}
 		}
-	}
-	
-	.courses {
-		flex-flow: 1;
-		background-color: $lighter-grey;
 		
-		@include desktop() {
-			width: 45%;
+		.tooltip {
+			@include mobile() {
+				display: none !important;
+			}
+			
+			.tooltip-text { z-index: auto }
 		}
-	}
-	
-	.courses-nav {
-		float: right;
-	}
-	
-	.courses-list,
-	.new-courses-list {
-		list-style-type: none;
-		font-size: 14px;
-		padding: 0;
-	}
-	
-	.course-item {
-		.course-title {
-			font-weight: bold;
+		
+		.line{
+			display: none;
+			transform-origin: 0 100%;
+			height: 1px;
+			background: $white;
+			position: absolute;
+			opacity: .4;
+			
+			&.teacher-l1 {
+				width: 520px;
+				top: 189px;
+				left: 293px;
+				transform: rotate(15deg);
+			}
+			
+			&.teacher-l2 {
+				width: 520px;
+				top: 189px;
+				left: 293px;
+				transform: rotate(15deg);
+			}
+			
+			&.teacher-l3 {
+				width: 520px;
+				top: 189px;
+				left: 293px;
+				transform: rotate(15deg);
+			}
+			
+			&.teacher-l4 {
+				width: 520px;
+				top: 189px;
+				left: 293px;
+				transform: rotate(15deg);
+			}
 		}
-	}
-	
-	.courses-heading {
-		font-size: 28px;
-		border-bottom: 1px solid;
-		margin-bottom: 15px;
-	}
-	
-	.new-courses-heading {
-		margin-top: 50px;
-		font-size: 18px;
-		border-bottom: 1px solid;
-		margin-bottom: 15px;
-	}
-	
-	.new-courses-list {
-		.course-item {
-			float: left;
-			width: 50%;
-		}
-		.course-thumb {
-			width: 80px;
-			height: 60px;
-			border: 1px solid $black;
-			float: left;
-			margin-right: 5px;
-			margin-bottom: 10px;
-		}
-		.course-title {
-			display: block;
-		}
-	}
-	
-	.posts {
-		list-style-type: none;
-		padding: 0;
-	}
-	
-	.featured-post {
-		.post-title {
-			font-size: 22px;
-		}
-		.post-content {
-			//@include truncate();
-		}
-	}
-	
-	.post-image {
-		width: 100%;
-		border: 1px solid;
 	}
 }
