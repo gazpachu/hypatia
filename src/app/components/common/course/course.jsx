@@ -165,11 +165,12 @@ class Course extends Component {
 				}
 
 				let itemEnrol = 'unavailable';
-
-				if (isLoaded(this.props.userData) && !isEmpty(this.props.userData) &&
-					this.props.userData.courses && !this.props.userData.courses[courseID][item] &&
-					this.props.userData.courses[courseID][item].status && subject.status === 'active' && enrollmentOpened) {
-					itemEnrol = <span><input type="checkbox" value={item} onChange={(event) => this.handleChange(event)} />Enrol now</span>;
+				if (isLoaded(this.props.userData) && !isEmpty(this.props.userData)) {
+					if (this.props.userData.courses && this.props.userData.courses[courseID][item]) {
+						itemEnrol = this.props.userData.courses[courseID][item].status;
+					} else if (subject.status === 'active' && enrollmentOpened) {
+						itemEnrol = <span><input type="checkbox" value={item} onChange={(event) => this.handleChange(event)} />Enrol now</span>;
+					}
 				}
 
 				return (<tr key={item}>

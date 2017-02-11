@@ -1,38 +1,29 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { setLoading } from '../../../actions/actions';
 import { DEMO_EMAIL, DEMO_CHAT_WARNING } from '../../../constants/constants';
 import { firebase, helpers } from 'redux-react-firebase';
 import classNames from 'classnames';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { rtm, channels, chat } from 'slack';
 import { load as emojiLoader, parse as emojiParser } from 'gh-emoji';
 import $ from 'jquery';
 import moment from 'moment';
 import User from './user';
-import Icon from '../lib/icon/icon';
 
-const defaultProps = {
-
-};
-
-const propTypes = {
-	isDesktop: PropTypes.bool
-};
-
-const {isLoaded, isEmpty, dataToJS} = helpers;
+const { isLoaded, isEmpty, dataToJS } = helpers;
 
 @connect(
-  	(state, props) => ({
-    	subjects: dataToJS(state.firebase, 'subjects'),
+	(state) => ({
+		subjects: dataToJS(state.firebase, 'subjects'),
 		userID: state.mainReducer.user ? state.mainReducer.user.uid : '',
-		userData: dataToJS(state.firebase, `users/${state.mainReducer.user ? state.mainReducer.user.uid : ''}`),
-  	})
+		userData: dataToJS(state.firebase, `users/${state.mainReducer.user ? state.mainReducer.user.uid : ''}`)
+	})
 )
 @firebase(
-  	props => ([
-    	'subjects',
+	props => ([
+		'subjects',
 		`users/${props.userID}`
-  	])
+	])
 )
 class Chat extends Component {
 
@@ -42,7 +33,7 @@ class Chat extends Component {
 		this.state = {
 			failed: false,
 			users: [],
-			channels: [],
+			channelList: [],
 			currentChannel: {},
 			currentGroup: {},
 			messages: [],
@@ -55,7 +46,7 @@ class Chat extends Component {
 		this.refreshTime = 5000;
 		this.activeChannelInterval = null;
 		this.messageFormatter = {
-		  	emoji: false // default
+			emoji: false // default
 		};
 
 		this.loadMessages = this.loadMessages.bind(this);
@@ -68,57 +59,86 @@ class Chat extends Component {
 		// Initiate Emoji Library
 		emojiLoader().then(() => { this.messageFormatter = { emoji: true }; })
 			.catch((err) => this.debugLog(`Cant initiate emoji library ${err}`));
+	}
 
-		// We've got authorization from the user. Request a token
-		if (this.props.location.query.code && this.props.location.query.state === 'hypatia-slack') {
-			console.log(this.props.location.query.code);
-
-			$.ajax({
-			  	crossOrigin: true,
-			  	url: 'https://slack.com/api/oauth.access',
-				data: {
-					client_id: this.state.currentGroup.client_id,
-					client_secret: this.state.currentGroup.client_secret,
-					code: this.props.location.query.code
-				},
-			  	success: function(data) {
-					sessionStorage.setItem('access_token_' + this.state.currentGroup.client_id, data.access_token);
-					this.loadGroup();
-			  	}.bind(this)
-			});
+	componentWillReceiveProps(newProps) {
+		if (!isEmpty(newProps.userData) && !isEmpty(newProps.subjects)) {
+			if (newProps.userData.courses && newProps.userData.courses[Object.keys(newProps.userData.courses)[0]] && isEmpty(this.state.currentGroup)) {
+				const firstCourse = newProps.userData.courses[Object.keys(newProps.userData.courses)[0]];
+				let firstSubject = null;
+				Object.keys(firstCourse).map((subject, i) => {
+					if (i === 0) firstSubject = subject;
+					return false;
+				});
+				this.setState({ currentGroup: newProps.subjects[firstSubject] }, () => {
+					// Check in the callback for an authorization from the user and then request a token
+					if (this.props.location.query.code && this.props.location.query.state === 'hypatia-slack') {
+						$.ajax({
+							crossOrigin: true,
+							url: 'https://slack.com/api/oauth.access',
+							data: {
+								client_id: this.state.currentGroup.slackClientId,
+								client_secret: this.state.currentGroup.slackClientSecret,
+								code: this.props.location.query.code
+							},
+							success: (data) => {
+								history.push('/');
+								sessionStorage.setItem(`access_token_${this.state.currentGroup.slackClientId}`, data.access_token);
+								this.loadGroup();
+							}
+						});
+					} else if (sessionStorage.getItem(`access_token_${this.state.currentGroup.slackClientId}`)) {
+						this.loadGroup();
+					}
+				});
+			}
 		}
+
+		// if (newProps.class !== this.props.class) {
+		// 	if (newProps.class === 'open') {
+		// 		this.loadGroup();
+		// 	} else {
+		// 		this.resetInterval();
+		// 	}
+		// }
 	}
 
 	componentWillUnmount() {
 		this.resetInterval();
-		this.bot.close();
+		if (this.bot) this.bot.close();
 	}
 
-	componentWillReceiveProps(newProps) {
-		if (newProps.userData && (newProps.userData !== this.props.userData) && (newProps.subjects !== this.props.subjects) && newProps.userData.courses && newProps.userData.courses[Object.keys(newProps.userData.courses)[0]] && isEmpty(this.state.currentGroup)){
-			const firstCourse = newProps.userData.courses[Object.keys(newProps.userData.courses)[0]];
-			let firstSubject = null;
-			Object.keys(firstCourse).map(function(subject, i) {
-				if (i === 0) firstSubject = subject;
+	getGroup(id) {
+		let subject = null;
+
+		Object.keys(this.props.userData.courses).map((key) => {
+			const course = this.props.userData.courses[key];
+			return Object.keys(course).map((item) => {
+				if (id === item) subject = this.props.subjects[item];
+				return false;
 			});
-			this.setState({ currentGroup: newProps.subjects[firstSubject] });
-		}
-
-		if (newProps.class !== this.props.class) {
-			if (newProps.class === 'open') {
-				this.loadGroup();
-			}
-			else {
-				this.resetInterval();
-			}
-		}
+		});
+		return subject;
 	}
 
-	resetInterval() {
-		if (this.activeChannelInterval) {
-			clearInterval(this.activeChannelInterval);
-			this.activeChannelInterval = null;
-		}
+	getChannel(id) {
+		const newId = id || this.state.currentChannel.id;
+		let thisChannel = { name: '' };
+
+		this.state.channelList.map((channel) => {
+			if (channel.id === newId) thisChannel = channel;
+			return false;
+		});
+		return thisChannel;
+	}
+
+	getUser(id) {
+		let thisUser = null;
+		this.state.users.map((user) => {
+			if (user.id === id) thisUser = user;
+			return false;
+		});
+		return thisUser;
 	}
 
 	loadGroup() {
@@ -128,11 +148,11 @@ class Chat extends Component {
 		}
 
 		// Create Slack Bot
-    	this.bot = rtm.client();
+		this.bot = rtm.client();
 
 		this.connectBot(this).then((data) => {
 			this.debugLog('got data', data);
-			this.setState({ users: data.users, channels: data.channels, currentChannel: data.currentChannel }, function() {
+			this.setState({ signedIn: true, users: data.users, channelList: data.channels, currentChannel: data.currentChannel }, () => {
 				this.loadMessages();
 			});
 		})
@@ -150,13 +170,19 @@ class Chat extends Component {
 					this.debugLog(payload);
 
 					const users = [];
-					payload.users.map((user) => !user.is_bot ? users.push(new User(user)) : null);
+					payload.users.map((user) => {
+						if (!user.is_bot) {
+							return users.push(new User(user));
+						}
+						return false;
+					});
 
 					const channels = [];
 					let currentChannel = null;
 					payload.channels.map((channel) => {
 						if (channel.name === 'general') currentChannel = channel;
 						channels.push(channel);
+						return false;
 					});
 
 					return resolve({ channels, users, currentChannel });
@@ -166,23 +192,23 @@ class Chat extends Component {
 					console.log(payload);
 				});
 
-				this.bot.user_typing(function(msg) {
-				  	console.log('several people are coding', msg)
+				this.bot.user_typing((msg) => {
+					console.log('several people are coding', msg);
 				});
 
 				// tell the bot to listen
-				this.bot.listen({ token: sessionStorage.getItem('access_token_' + this.state.currentGroup.client_id) || this.state.currentGroup.apiToken });
-			}
-			catch (err) {
+				this.bot.listen({ token: sessionStorage.getItem(`access_token_${this.state.currentGroup.slackClientId}`) || this.state.currentGroup.apiToken });
+			} catch (err) {
 				return reject(err);
-		  	}
+			}
+			return false;
 		});
 	}
 
 	changeCurrentGroup(groupId) {
 		$('.group').removeClass('active');
 		$(this.refs[groupId]).addClass('active');
-		this.setState({ currentGroup: this.getGroup(groupId) }, function() {
+		this.setState({ currentGroup: this.getGroup(groupId) }, () => {
 			this.loadGroup(groupId);
 		});
 	}
@@ -190,51 +216,25 @@ class Chat extends Component {
 	changeCurrentChannel(channelId) {
 		$('.channel').removeClass('active');
 		$(this.refs[channelId]).addClass('active');
-		this.setState({ currentChannel: this.getChannel(channelId)});
+		this.setState({ currentChannel: this.getChannel(channelId) });
 		this.loadMessages(channelId);
 	}
 
-	getGroup(id) {
-		let subject = null;
-
-		Object.keys(this.props.userData.courses).map(function(key) {
-			let course = this.props.userData.courses[key];
-			return Object.keys(course).map(function(item, i) {
-				 if (id === item) subject = this.props.subjects[item];
-			}.bind(this));
-		}.bind(this));
-		return subject;
-	}
-
-	getChannel(id) {
-		id = id || this.state.currentChannel.id;
-		let thisChannel = {name: ''};
-
-		this.state.channels.map((channel) => {
-			if (channel.id === id) thisChannel = channel;
-		});
-		return thisChannel;
-	}
-
-	getUser(id) {
-		let thisUser = null;
-		this.state.users.map((user) => {
-			if (user.id === id) thisUser = user;
-		});
-		return thisUser;
+	resetInterval() {
+		if (this.activeChannelInterval) {
+			clearInterval(this.activeChannelInterval);
+			this.activeChannelInterval = null;
+		}
 	}
 
 	loadMessages(channelId) {
-		const that = this;
-
-		channelId = channelId || this.state.currentChannel.id;
 		this.resetInterval();
 
 		// define loadMessages function
 		const getMessagesFromSlack = () => {
-			const messagesLength = that.state.messages.length;
+			// const messagesLength = that.state.messages.length;
 			channels.history({
-				token: sessionStorage.getItem('access_token_' + this.state.currentGroup.client_id) || this.state.currentGroup.apiToken,
+				token: sessionStorage.getItem(`access_token_${this.state.currentGroup.slackClientId}`) || this.state.currentGroup.apiToken,
 				channel: channelId || this.state.currentChannel.id
 			}, (err, data) => {
 				if (err) {
@@ -249,13 +249,13 @@ class Chat extends Component {
 				// reverse() mutates the array
 				if (!this.arraysIdentical(this.state.messages, data.messages.reverse())) {
 					// Got new messages
-					return this.setState({ messages: data.messages}, () => {
+					return this.setState({ messages: data.messages }, () => {
 						// if div is already scrolled to bottom, scroll down again just incase a new message has arrived
 						$('.messages').scrollTop($('.messages').height());
 					});
 				}
 
-				return;
+				return false;
 			});
 		};
 
@@ -267,68 +267,59 @@ class Chat extends Component {
 	}
 
 	formatMessage(message, i) {
-		let messageText = message.text,
-			thisUser = this.getUser(message.user) || {real_name: message.username, image: ''},
-			sameUser = (i>1 && ((!message.username && this.state.messages[i-1].user === message.user) || (message.username && (this.state.messages[i-1].username === message.username)))) ? true : false;
+		let messageText = message.text;
+		const thisUser = this.getUser(message.user) || { real_name: message.username, image: '' };
+		const sameUser = (i > 1 && ((!message.username && this.state.messages[i - 1].user === message.user) ||
+			(message.username && (this.state.messages[i - 1].username === message.username))));
 
 		if (this.messageFormatter.emoji && this.hasEmoji(messageText)) {
 			messageText = emojiParser(messageText);
 		}
 
 		if (this.isSystemMessage(message)) {
-			messageText = messageText.replace('<','').replace('>','').substring(messageText.indexOf('|'), messageText.length);
+			messageText = messageText.replace('<', '').replace('>', '').substring(messageText.indexOf('|'), messageText.length);
 		}
 
 		const timestamp = message.ts.substring(0, message.ts.indexOf('.'));
 
-		return <li key={i} className="message clearfix">
+		return (<li key={i} className="message clearfix">
 			<div className="user-image">
 				{(!sameUser) ? <img src={thisUser.image} alt={thisUser.real_name} width="35" height="35" /> : ''}
 			</div>
 			<div className="content">
 				{(!sameUser) ? <span className="user-name">{thisUser.real_name}</span> : ''}
 				{(!sameUser) ? <span className="timestamp">{moment.unix(timestamp).format('D MMM HH:MM')}</span> : ''}
-				<div className="text" dangerouslySetInnerHTML={{__html: messageText}}></div>
+				<div className="text" dangerouslySetInnerHTML={{ __html: messageText }}></div>
 			</div>
-		</li>;
+		</li>);
 	}
 
 	postMessage(text) {
-		if (text !== '' && this.props.user.email !== DEMO_EMAIL) {
-			if (this.state.signedIn) {
-				this.bot.message({
-					type: 'message',
-					channel: this.state.currentChannel.id,
-					text
+		if (text !== '' && this.state.signedIn) {
+			return chat.postMessage({
+				token: sessionStorage.getItem(`access_token_${this.state.currentGroup.slackClientId}`) || this.state.currentGroup.apiToken,
+				channel: this.state.currentChannel.id,
+				text,
+				username: this.props.user.displayName
+			}, (err, data) => {
+				if (err) {
+					this.debugLog('failed to post', data, 'err:', err);
+					return;
+				}
+
+				this.debugLog('Successfully posted message', text, 'response:', data);
+				this.setState({ postMyMessage: '', sendingLoader: false }, () => {
+					// Adjust scroll height
+					setTimeout(() => {
+						const chatMessages = this.refs.reactSlakChatMessages;
+						chatMessages.scrollTop = chatMessages.scrollHeight;
+					}, this.refreshTime);
 				});
 
-				return this.forceUpdate();
-			}
-			else {
-				return chat.postMessage({
-					token: sessionStorage.getItem('access_token_' + this.state.currentGroup.client_id) || this.state.currentGroup.apiToken,
-					channel: this.state.currentChannel.id,
-					text,
-					username: this.props.user.displayName
-				}, (err, data) => {
-					if (err) {
-						this.debugLog('failed to post', data, 'err:', err);
-						return;
-					}
-
-					this.debugLog('Successfully posted message', text, 'response:', data);
-					this.setState({ postMyMessage: '', sendingLoader: false }, () => {
-	//					// Adjust scroll height
-	//					setTimeout(() => {
-	//						const chatMessages = this.refs.reactSlakChatMessages;
-	//						chatMessages.scrollTop = chatMessages.scrollHeight;
-	//					}, this.refreshTime);
-					});
-
-					return this.forceUpdate();
-				});
-			}
+				this.forceUpdate();
+			});
 		}
+		return false;
 	}
 
 	arraysIdentical(a, b) {
@@ -349,65 +340,68 @@ class Chat extends Component {
 		if (process.env.NODE_ENV !== 'production') {
 			return console.log('[Chat]', ...args);
 		}
+		return false;
 	}
 
 	handleChange(e) {
- 		this.setState({ postMyMessage: e.target.value });
-    	return;
+		this.setState({ postMyMessage: e.target.value });
+		return;
 	}
 
 	render() {
 		const demoUser = (this.props.user && this.props.user.email === DEMO_EMAIL) ? DEMO_CHAT_WARNING : '';
 		let slackGroups = null;
 
-		if (isLoaded(this.props.subjects) && isLoaded(this.props.userData) && !isEmpty(this.props.subjects) && !isEmpty(this.props.userData)) {
+		if (isLoaded(this.props.subjects) && isLoaded(this.props.userData) &&
+		!isEmpty(this.props.subjects) && !isEmpty(this.props.userData)) {
 			if (this.props.userData.courses) {
-				slackGroups = Object.keys(this.props.userData.courses).map(function(key) {
-					let course = this.props.userData.courses[key];
-					return Object.keys(course).map(function(item, i) {
+				slackGroups = Object.keys(this.props.userData.courses).map((key) => {
+					const course = this.props.userData.courses[key];
+					return Object.keys(course).map((item, i) => {
 						const subject = this.props.subjects[item];
-						return <li key={item} ref={item} className={classNames('group', {active: (i === 0)})} onClick={() => this.changeCurrentGroup(item)}>{subject.code}</li>;
-					}.bind(this));
-				}.bind(this));
+						return <li key={item} ref={item} className={classNames('group', { active: (i === 0) })} onClick={() => this.changeCurrentGroup(item)}>{subject.code}</li>;
+					});
+				});
 			}
 		}
 
 		return (
-            <section className={`chat-panel ${this.props.class}`}>
+			<section className={`chat-panel ${this.props.class}`}>
 				<ul className="groups">
 					{slackGroups}
 				</ul>
 				<div className="sidebar">
-					<h3 className="sidebar-heading">Channels ({this.state.channels.length})</h3>
+					<h3 className="sidebar-heading">Channels ({this.state.channelList.length})</h3>
 					<ul className="channels">
-						{this.state.channels.map((channel, i) => <li key={channel.id} ref={channel.id} className={classNames('channel', {active: (channel.name === 'general')})} onClick={() => this.changeCurrentChannel(channel.id)}># {channel.name}</li>)}
+						{this.state.channelList.map((channel) => <li key={channel.id} ref={channel.id} className={classNames('channel', { active: (channel.name === 'general') })} onClick={() => this.changeCurrentChannel(channel.id)}># {channel.name}</li>)}
 					</ul>
 					<h3 className="sidebar-heading">Users ({this.state.users.length})</h3>
 					<ul className="users">
-						{this.state.users.map((user, i) => <li key={user.id} ref={user.id} className={`user ${user.presence}`}>• {user.real_name}</li>)}
+						{this.state.users.map((user) => <li key={user.id} ref={user.id} className={`user ${user.presence}`}>• {user.real_name}</li>)}
 					</ul>
 				</div>
 
 				<div className="messages-wrapper">
 					<h2 className="channel-title"><span className="group-title">{this.state.currentGroup.name}</span>#{this.state.currentChannel.name}</h2>
-					{(!sessionStorage.getItem('access_token_' + this.state.currentGroup.client_id)) ? <a className="slack-button" href={`https://slack.com/oauth/authorize?scope=client&client_id=${this.state.currentGroup.client_id}&state=hypatia-slack`}><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcSet="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a> : ''}
+					{(!sessionStorage.getItem(`access_token_${this.state.currentGroup.slackClientId}`)) ?
+						<a className="slack-button" href={`https://slack.com/oauth/authorize?scope=client&client_id=${this.state.currentGroup.slackClientId}&state=hypatia-slack`}>
+							<img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcSet="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" />
+						</a>
+					: ''}
 					<ul className="messages">
 						{this.state.messages.map((message, i) => this.formatMessage(message, i))}
 					</ul>
 					<input type="text" className="new-message" placeholder={`Message #${this.state.currentChannel.name} ${demoUser}`} value={this.state.postMyMessage} onKeyPress={(e) => e.key === 'Enter' ? this.postMessage(this.state.postMyMessage) : null} onChange={ (e) => this.handleChange(e) } />
 				</div>
-            </section>
-		)
+			</section>
+		);
 	}
 }
 
-Chat.propTypes = propTypes;
-Chat.defaultProps = defaultProps;
-
 const mapDispatchToProps = {
 	setLoading
-}
+};
 
-const mapStateToProps = ({ mainReducer: { isDesktop, user } }) => ({ isDesktop, user });
+const mapStateToProps = ({ mainReducer: { isDesktop, user, userData } }) => ({ isDesktop, user, userData });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);
