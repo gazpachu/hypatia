@@ -1,25 +1,25 @@
 .chat-panel {
 	display: none;
-	
+
 	&.open {
 		display: flex;
 	}
-	
+
 	.sidebar, .groups {
 		border-right: 1px solid $light-grey;
 	}
-	
+
 	.groups {
 		font-size: 28px;
 		background-color: $grey;
 		padding: 10px;
-		
+
 		.sidebar-heading {
 			padding: 0;
 			padding-bottom: 10px;
 		}
 	}
-	
+
 	.group {
 		background-color: rgba(255,255,255,.6);
 		border-radius: 15px;
@@ -29,15 +29,15 @@
 		margin-bottom: 10px;
 		text-align: center;
 		cursor: pointer;
-		
+
 		&:hover {
 			background-color: $white;
 		}
-		
+
 		&.active {
 			background-color: $white;
 			position: relative;
-			
+
 			&:before {
 				content: '';
 				height: 12px;
@@ -51,85 +51,93 @@
 			}
 		}
 	}
-	
+
 	.channel {
 		margin: 3px 0;
 		padding: 2px 10px;
 		cursor: pointer;
-		
+
 		&:hover {
 			background-color: rgba(255,255,255,.6);
 		}
-		
+
 		&.active {
 			font-weight: bold;
 			background-color: rgba(255,255,255,.6);
 		}
 	}
-	
+
 	.user {
 		margin: 3px 0;
 		padding: 2px 10px;
 		opacity: .3;
-		
+
 		&.chatting {
 			font-weight: bold;
 			background-color: rgba(255,255,255,.6);
 		}
-		
+
 		&.active {
 			cursor: pointer;
 			opacity: 1;
-			
+
 			&:hover {
 				background-color: rgba(255,255,255,.6);
 			}
 		}
 	}
-	
+
 	.channel-title {
 		margin-bottom: 0;
 		padding: 5px 10px;
 		font-size: 22px;
 		border-bottom: 1px solid $light-grey;
 	}
-	
+
 	.group-title {
 		border-right: 1px solid $light-grey;
 		padding-right: 10px;
 		margin-right: 10px;
 	}
-	
-	.slack-button {
-		position: absolute;
-		right: 10px;
-		top: 5px;
+
+	.slack-info-wrapper {
+		width: 50%;
+		margin: 100px auto;
 	}
-	
+
+	.slack-button img {
+		width: 100%;
+		height: auto;
+	}
+
+	.slack-info {
+		margin-top: 10px;
+	}
+
 	.sidebar {
 		width: 20%;
 		font-size: 12px;
 		background-color: $lighter-grey;
-		
+
 		ul {
 			list-style-type: none;
 			padding: 0;
 		}
 	}
-	
+
 	.sidebar-heading {
 		font-size: 14px;
 		padding: 10px;
 		margin: 0;
 		text-transform: uppercase;
 	}
-	
+
 	.messages-wrapper {
 		display: block;
 		width: 100%;
 		height: 100vh;
 	}
-	
+
 	.messages {
 		height: calc(100vh - 135px);
 		padding: 10px;
@@ -138,42 +146,42 @@
 		margin: 0;
 	    overflow: scroll;
 	}
-	
+
 	.message {
 		display: flex;
 		margin: 5px 0;
 	}
-	
+
 	.user-name {
 		font-size: 12px;
 		font-weight: bold;
 	}
-	
+
 	.timestamp {
 		font-size: 12px;
 		color: $grey;
 		margin-left: 10px;
 	}
-	
+
 	.user-image {
 		width: 35px;
 		margin: 5px 10px 0px 0;
-		
+
 		img {
 			height: 35px;
 			display: block;
 			border-radius: 5px;
 		}
 	}
-	
+
 	.text {
 		font-size: 14px;
 	}
-	
+
 	.gh-emoji {
 		width: 20px;
 	}
-	
+
 	.new-message {
 		width: 98%;
 		border: 1px solid $light-grey;

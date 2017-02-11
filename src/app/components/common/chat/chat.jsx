@@ -3,6 +3,7 @@ import { setLoading } from '../../../actions/actions';
 import { DEMO_EMAIL, DEMO_CHAT_WARNING } from '../../../constants/constants';
 import { firebase, helpers } from 'redux-react-firebase';
 import classNames from 'classnames';
+import { history } from '../../../store';
 import { connect } from 'react-redux';
 import { rtm, channels, chat } from 'slack';
 import { load as emojiLoader, parse as emojiParser } from 'gh-emoji';
@@ -152,7 +153,7 @@ class Chat extends Component {
 
 		this.connectBot(this).then((data) => {
 			this.debugLog('got data', data);
-			this.setState({ signedIn: true, users: data.users, channelList: data.channels, currentChannel: data.currentChannel }, () => {
+			this.setState({ signedIn: true, self, users: data.users, channelList: data.channels, currentChannel: data.currentChannel }, () => {
 				this.loadMessages();
 			});
 		})
@@ -169,6 +170,7 @@ class Chat extends Component {
 				this.bot.started((payload) => {
 					this.debugLog(payload);
 
+					const self = payload.self;
 					const users = [];
 					payload.users.map((user) => {
 						if (!user.is_bot) {
@@ -185,7 +187,7 @@ class Chat extends Component {
 						return false;
 					});
 
-					return resolve({ channels, users, currentChannel });
+					return resolve({ self, channels, users, currentChannel });
 				});
 
 				this.bot.im_created((payload) => {
@@ -300,7 +302,8 @@ class Chat extends Component {
 				token: sessionStorage.getItem(`access_token_${this.state.currentGroup.slackClientId}`) || this.state.currentGroup.apiToken,
 				channel: this.state.currentChannel.id,
 				text,
-				username: this.props.user.displayName
+				username: this.props.user.displayName,
+				as_user: true
 			}, (err, data) => {
 				if (err) {
 					this.debugLog('failed to post', data, 'err:', err);
@@ -351,6 +354,7 @@ class Chat extends Component {
 	render() {
 		const demoUser = (this.props.user && this.props.user.email === DEMO_EMAIL) ? DEMO_CHAT_WARNING : '';
 		let slackGroups = null;
+		const connected = sessionStorage.getItem(`access_token_${this.state.currentGroup.slackClientId}`);
 
 		if (isLoaded(this.props.subjects) && isLoaded(this.props.userData) &&
 		!isEmpty(this.props.subjects) && !isEmpty(this.props.userData)) {
@@ -383,15 +387,30 @@ class Chat extends Component {
 
 				<div className="messages-wrapper">
 					<h2 className="channel-title"><span className="group-title">{this.state.currentGroup.name}</span>#{this.state.currentChannel.name}</h2>
-					{(!sessionStorage.getItem(`access_token_${this.state.currentGroup.slackClientId}`)) ?
+					{connected ?
+						<ul className="messages">
+							{this.state.messages.map((message, i) => this.formatMessage(message, i))}
+						</ul> : null}
+					{connected ? <input
+						type="text"
+						className="new-message"
+						placeholder={`Message #${this.state.currentChannel.name} ${demoUser}`}
+						value={this.state.postMyMessage}
+						onKeyPress={(e) => { if (e.key === 'Enter') this.postMessage(this.state.postMyMessage); }}
+						onChange={(e) => this.handleChange(e)}
+					/>
+					: <div className="slack-info-wrapper">
 						<a className="slack-button" href={`https://slack.com/oauth/authorize?scope=client&client_id=${this.state.currentGroup.slackClientId}&state=hypatia-slack`}>
-							<img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcSet="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" />
+							<img
+								alt="Connect with Slack"
+								height="40"
+								width="139"
+								src="https://platform.slack-edge.com/img/add_to_slack.png"
+								srcSet="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"
+							/>
 						</a>
-					: ''}
-					<ul className="messages">
-						{this.state.messages.map((message, i) => this.formatMessage(message, i))}
-					</ul>
-					<input type="text" className="new-message" placeholder={`Message #${this.state.currentChannel.name} ${demoUser}`} value={this.state.postMyMessage} onKeyPress={(e) => e.key === 'Enter' ? this.postMessage(this.state.postMyMessage) : null} onChange={ (e) => this.handleChange(e) } />
+						<p className="slack-info">To access this chat group, you teacher has to invite you and you need to login with Slack</p>
+					</div>}
 				</div>
 			</section>
 		);
