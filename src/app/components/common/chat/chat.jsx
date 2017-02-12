@@ -32,7 +32,6 @@ class Chat extends Component {
 		super(props);
 
 		this.state = {
-			failed: false,
 			users: [],
 			channelList: [],
 			currentChannel: {},
@@ -44,7 +43,7 @@ class Chat extends Component {
 
 		// Set class variables
 		this.bot = null;
-		this.refreshTime = 5000;
+		this.refreshTime = 2000;
 		this.activeChannelInterval = null;
 		this.messageFormatter = {
 			emoji: false // default
@@ -71,42 +70,22 @@ class Chat extends Component {
 					if (i === 0) firstSubject = subject;
 					return false;
 				});
-				this.setState({ currentGroup: newProps.subjects[firstSubject] }, () => {
-					// Check in the callback for an authorization from the user and then request a token
-					if (this.props.location.query.code && this.props.location.query.state === 'hypatia-slack') {
-						$.ajax({
-							crossOrigin: true,
-							url: 'https://slack.com/api/oauth.access',
-							data: {
-								client_id: this.state.currentGroup.slackClientId,
-								client_secret: this.state.currentGroup.slackClientSecret,
-								code: this.props.location.query.code
-							},
-							success: (data) => {
-								history.push('/');
-								sessionStorage.setItem(`access_token_${this.state.currentGroup.slackClientId}`, data.access_token);
-								this.loadGroup();
-							}
-						});
-					} else if (sessionStorage.getItem(`access_token_${this.state.currentGroup.slackClientId}`)) {
-						this.loadGroup();
-					}
-				});
+
+				this.setState({ currentGroup: newProps.subjects[firstSubject] });
 			}
 		}
 
-		// if (newProps.class !== this.props.class) {
-		// 	if (newProps.class === 'open') {
-		// 		this.loadGroup();
-		// 	} else {
-		// 		this.resetInterval();
-		// 	}
-		// }
+		if (newProps.class !== this.props.class) {
+			if (newProps.class === 'open') {
+				this.init();
+			} else {
+				this.destroy();
+			}
+		}
 	}
 
 	componentWillUnmount() {
-		this.resetInterval();
-		if (this.bot) this.bot.close();
+		this.destroy();
 	}
 
 	getGroup(id) {
@@ -142,25 +121,51 @@ class Chat extends Component {
 		return thisUser;
 	}
 
-	loadGroup() {
-		if (this.bot) {
-			this.bot.close();
-			this.resetInterval();
+	init() {
+		// Check in the callback for an authorization from the user and then request a token
+		if (this.props.location.query.code && this.props.location.query.state === 'hypatia-slack') {
+			$.ajax({
+				crossOrigin: true,
+				url: 'https://slack.com/api/oauth.access',
+				data: {
+					client_id: this.state.currentGroup.slackClientId,
+					client_secret: this.state.currentGroup.slackClientSecret,
+					code: this.props.location.query.code
+				},
+				success: (data) => {
+					history.push('/');
+					sessionStorage.setItem(`access_token_${this.state.currentGroup.slackClientId}`, data.access_token);
+					this.loadGroup();
+				}
+			});
+		} else if (sessionStorage.getItem(`access_token_${this.state.currentGroup.slackClientId}`)) {
+			this.loadGroup();
 		}
+	}
+
+	destroy() {
+		this.resetInterval();
+		this.setState({ signedIn: false, channelList: [], users: [] });
+		if (this.bot) this.bot.close();
+	}
+
+	loadGroup() {
+		this.destroy();
 
 		// Create Slack Bot
-		this.bot = rtm.client();
+		if (sessionStorage.getItem(`access_token_${this.state.currentGroup.slackClientId}`)) {
+			this.bot = rtm.client();
 
-		this.connectBot(this).then((data) => {
-			this.debugLog('got data', data);
-			this.setState({ signedIn: true, self, users: data.users, channelList: data.channels, currentChannel: data.currentChannel }, () => {
-				this.loadMessages();
+			this.connectBot(this).then((data) => {
+				this.debugLog('got data', data);
+				this.setState({ signedIn: true, self, users: data.users, channelList: data.channelList, currentChannel: data.currentChannel }, () => {
+					this.loadMessages();
+				});
+			})
+			.catch((err) => {
+				this.debugLog('could not intialize slack bot', err);
 			});
-		})
-		.catch((err) => {
-			this.debugLog('could not intialize slack bot', err);
-			this.setState({ failed: true });
-		});
+		}
 	}
 
 	connectBot() {
@@ -179,15 +184,15 @@ class Chat extends Component {
 						return false;
 					});
 
-					const channels = [];
+					const channelList = [];
 					let currentChannel = null;
 					payload.channels.map((channel) => {
 						if (channel.name === 'general') currentChannel = channel;
-						channels.push(channel);
+						channelList.push(channel);
 						return false;
 					});
 
-					return resolve({ self, channels, users, currentChannel });
+					return resolve({ self, channelList, users, currentChannel });
 				});
 
 				this.bot.im_created((payload) => {
@@ -199,7 +204,7 @@ class Chat extends Component {
 				});
 
 				// tell the bot to listen
-				this.bot.listen({ token: sessionStorage.getItem(`access_token_${this.state.currentGroup.slackClientId}`) || this.state.currentGroup.apiToken });
+				this.bot.listen({ token: sessionStorage.getItem(`access_token_${this.state.currentGroup.slackClientId}`) });
 			} catch (err) {
 				return reject(err);
 			}
@@ -236,12 +241,12 @@ class Chat extends Component {
 		const getMessagesFromSlack = () => {
 			// const messagesLength = that.state.messages.length;
 			channels.history({
-				token: sessionStorage.getItem(`access_token_${this.state.currentGroup.slackClientId}`) || this.state.currentGroup.apiToken,
+				token: sessionStorage.getItem(`access_token_${this.state.currentGroup.slackClientId}`),
 				channel: channelId || this.state.currentChannel.id
 			}, (err, data) => {
 				if (err) {
 					this.debugLog(`There was an error loading messages for ${channelId}. ${err}`);
-					return this.setState({ failed: true });
+					return false;
 				}
 
 				// loaded channel history
@@ -253,11 +258,11 @@ class Chat extends Component {
 					// Got new messages
 					return this.setState({ messages: data.messages }, () => {
 						// if div is already scrolled to bottom, scroll down again just incase a new message has arrived
-						$('.messages').scrollTop($('.messages').height());
+						$('.messages').scrollTop($('.messages')[0].scrollHeight);
 					});
 				}
 
-				return false;
+				return true;
 			});
 		};
 
@@ -299,7 +304,7 @@ class Chat extends Component {
 	postMessage(text) {
 		if (text !== '' && this.state.signedIn) {
 			return chat.postMessage({
-				token: sessionStorage.getItem(`access_token_${this.state.currentGroup.slackClientId}`) || this.state.currentGroup.apiToken,
+				token: sessionStorage.getItem(`access_token_${this.state.currentGroup.slackClientId}`),
 				channel: this.state.currentChannel.id,
 				text,
 				username: this.props.user.displayName,
@@ -386,9 +391,9 @@ class Chat extends Component {
 				</div>
 
 				<div className="messages-wrapper">
-					<h2 className="channel-title"><span className="group-title">{this.state.currentGroup.name}</span>#{this.state.currentChannel.name}</h2>
+					<h2 className="channel-title"><span className="group-title">{this.state.currentGroup.title}</span>#{this.state.currentChannel.name}</h2>
 					{connected ?
-						<ul className="messages">
+						<ul className="messages" ref="reactSlakChatMessages">
 							{this.state.messages.map((message, i) => this.formatMessage(message, i))}
 						</ul> : null}
 					{connected ? <input
