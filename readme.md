@@ -1,8 +1,8 @@
 # Hypatia: open realtime education
 
 [![Build Status](https://travis-ci.org/theonapps/hypatia.svg?branch=master)](https://travis-ci.org/theonapps/hypatia)
-[![Github All Releases](https://img.shields.io/github/downloads/atom/atom/total.svg)]()
-[![npm](https://img.shields.io/npm/l/express.svg)]()
+[![Github All Releases](https://img.shields.io/npm/dt/express.svg)]()
+[![npm](https://img.shields.io/aur/license/yaourt.svg)]()
 
 ## WARNING
 

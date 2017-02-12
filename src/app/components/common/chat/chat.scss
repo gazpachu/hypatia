@@ -139,7 +139,7 @@
 	}
 
 	.messages {
-		height: calc(100vh - 135px);
+		height: calc(100vh - 145px);
 		padding: 10px;
 		list-style-type: none;
 		padding: 10px;
@@ -189,6 +189,11 @@
 		margin-top: 10px;
 		height: 40px;
 		padding: 10px;
-		margin: 1%;
+		margin: 1% 1% 3px 1%;
+	}
+
+	.users-writing {
+		font-size: 11px;
+    margin-left: 18px;
 	}
 }

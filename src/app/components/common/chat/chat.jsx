@@ -43,8 +43,6 @@ class Chat extends Component {
 
 		// Set class variables
 		this.bot = null;
-		this.refreshTime = 2000;
-		this.activeChannelInterval = null;
 		this.messageFormatter = {
 			emoji: false // default
 		};
@@ -144,7 +142,6 @@ class Chat extends Component {
 	}
 
 	destroy() {
-		this.resetInterval();
 		this.setState({ channelList: [], users: [] });
 		if (this.bot) this.bot.close();
 	}
@@ -203,8 +200,30 @@ class Chat extends Component {
 					console.log(payload);
 				});
 
-				this.bot.user_typing((msg) => {
-					console.log('several people are coding', msg);
+				this.bot.message((payload) => {
+					const newMessages = this.state.messages;
+					newMessages.push(payload);
+					this.setState({ messages: newMessages }, () => {
+						$('.messages').scrollTop($('.messages')[0].scrollHeight);
+					});
+				});
+
+				this.bot.user_typing((data) => {
+					let users = '';
+					const separator = ', ';
+					let found = 0;
+					let action = ' is';
+
+					for (let i = 0; i < this.state.users.length; i += 1) {
+						if (this.state.users[i].id === data.user) {
+							if (found > 0) users += separator;
+							users += `${this.state.users[i].name}`;
+							found++;
+						}
+					}
+					$('.users-writing-names').text(users);
+					if (found > 1) action = ' are';
+					$('.users-writing-message').text(`${action} writing...`);
 				});
 
 				// tell the bot to listen
@@ -241,50 +260,30 @@ class Chat extends Component {
 		this.loadMessages(channelId);
 	}
 
-	resetInterval() {
-		if (this.activeChannelInterval) {
-			clearInterval(this.activeChannelInterval);
-			this.activeChannelInterval = null;
-		}
-	}
-
 	loadMessages(channelId) {
-		this.resetInterval();
+		channels.history({
+			token: sessionStorage.getItem(`access_token_${this.state.currentGroup.slackClientId}`),
+			channel: channelId || this.state.currentChannel.id
+		}, (err, data) => {
+			if (err) {
+				this.debugLog(`There was an error loading messages for ${channelId}. ${err}`);
+				return false;
+			}
 
-		// define loadMessages function
-		const getMessagesFromSlack = () => {
-			// const messagesLength = that.state.messages.length;
-			channels.history({
-				token: sessionStorage.getItem(`access_token_${this.state.currentGroup.slackClientId}`),
-				channel: channelId || this.state.currentChannel.id
-			}, (err, data) => {
-				if (err) {
-					this.debugLog(`There was an error loading messages for ${channelId}. ${err}`);
-					return false;
-				}
+			// loaded channel history
+			this.debugLog('got data', data);
 
-				// loaded channel history
-				this.debugLog('got data', data);
-
-				// Scroll down only if the stored messages and received messages are not the same
-				// reverse() mutates the array
-				if (!this.arraysIdentical(this.state.messages, data.messages.reverse())) {
-					// Got new messages
-					return this.setState({ messages: data.messages }, () => {
-						// if div is already scrolled to bottom, scroll down again just incase a new message has arrived
-						$('.messages').scrollTop($('.messages')[0].scrollHeight);
-					});
-				}
-
-				return true;
-			});
-		};
-
-		getMessagesFromSlack();
-
-		// Set the function to be called at regular intervals
-		// get the history of channel at regular intevals
-		this.activeChannelInterval = setInterval(getMessagesFromSlack, this.refreshTime);
+			// Scroll down only if the stored messages and received messages are not the same
+			// reverse() mutates the array
+			if (!this.arraysIdentical(this.state.messages, data.messages.reverse())) {
+				// Got new messages
+				return this.setState({ messages: data.messages }, () => {
+					// if div is already scrolled to bottom, scroll down again just incase a new message has arrived
+					$('.messages').scrollTop($('.messages')[0].scrollHeight);
+				});
+			}
+			return true;
+		});
 	}
 
 	formatMessage(message, i) {
@@ -335,7 +334,7 @@ class Chat extends Component {
 					setTimeout(() => {
 						const chatMessages = this.refs.reactSlakChatMessages;
 						chatMessages.scrollTop = chatMessages.scrollHeight;
-					}, this.refreshTime);
+					}, 500);
 				});
 
 				this.forceUpdate();
@@ -410,14 +409,20 @@ class Chat extends Component {
 						<ul className="messages" ref="reactSlakChatMessages">
 							{this.state.messages.map((message, i) => this.formatMessage(message, i))}
 						</ul> : null}
-					{connected ? <input
-						type="text"
-						className="new-message"
-						placeholder={`Message #${this.state.currentChannel.name} ${demoUser}`}
-						value={this.state.postMyMessage}
-						onKeyPress={(e) => { if (e.key === 'Enter') this.postMessage(this.state.postMyMessage); }}
-						onChange={(e) => this.handleChange(e)}
-					/>
+					{connected ? <div>
+						<input
+							type="text"
+							className="new-message"
+							placeholder={`Message #${this.state.currentChannel.name} ${demoUser}`}
+							value={this.state.postMyMessage}
+							onKeyPress={(e) => { if (e.key === 'Enter') this.postMessage(this.state.postMyMessage); }}
+							onChange={(e) => this.handleChange(e)}
+						/>
+						<div className="users-writing">
+							<span className="users-writing-names"></span>
+							<span className="users-writing-message"></span>
+						</div>
+					</div>
 					: <div className="slack-info-wrapper">
 						<a className="slack-button" href={`https://slack.com/oauth/authorize?scope=client&client_id=${this.state.currentGroup.slackClientId}&state=hypatia-slack`}>
 							<img
