@@ -145,7 +145,7 @@ class Chat extends Component {
 
 	destroy() {
 		this.resetInterval();
-		this.setState({ signedIn: false, channelList: [], users: [] });
+		this.setState({ channelList: [], users: [] });
 		if (this.bot) this.bot.close();
 	}
 
@@ -195,6 +195,10 @@ class Chat extends Component {
 					return resolve({ self, channelList, users, currentChannel });
 				});
 
+				this.bot.presence_change((payload) => {
+					this.updateUsers(payload);
+				});
+
 				this.bot.im_created((payload) => {
 					console.log(payload);
 				});
@@ -210,6 +214,16 @@ class Chat extends Component {
 			}
 			return false;
 		});
+	}
+
+	updateUsers(data) {
+		const newUsersList = this.state.users;
+		for (let i = 0; i < newUsersList.length; i += 1) {
+			if (newUsersList[i].id === data.user) {
+				newUsersList[i].presence = data.presence;
+			}
+		}
+		this.setState({ users: newUsersList });
 	}
 
 	changeCurrentGroup(groupId) {
