@@ -1,16 +1,16 @@
 # Hypatia LMS: open realtime education
 
 [![Build Status](https://travis-ci.org/theonapps/hypatia.svg?branch=master)](https://travis-ci.org/theonapps/hypatia)
-[![Github All Releases](https://img.shields.io/npm/dt/express.svg)]()
+[![Github All Releases](https://img.shields.io/github/downloads/atom/atom/total.svg)]()
 [![npm](https://img.shields.io/aur/license/yaourt.svg)]()
 
-Now accepting contributors. If you are interested, please [http://slack.theon.io](join the Slack group).
+Now accepting contributors. If you are interested, please [join the Slack group](http://slack.theon.io).
 
 The project is currently under development, with continuous changes and some bits and bobs not working. Feel free to test it if you like but don't expect it to be production-ready until mid 2017.
 
 Demo: [https://hypatia-8d923.firebaseapp.com](https://hypatia-8d923.firebaseapp.com) (You need to sign up with a valid email address to access some pages)
 
-Project's website: [https://theonapps.github.io/hypatia/](https://theonapps.github.io/hypatia/)
+Provisional project's website: [https://theonapps.github.io/hypatia/](https://theonapps.github.io/hypatia/)
 
 Slack group: [http://slack.theon.io](http://slack.theon.io)
 
