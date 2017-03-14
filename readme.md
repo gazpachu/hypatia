@@ -39,6 +39,8 @@ npm install
 
 - Create a new project in your [Firebase account](http://firebase.google.com)
 
+- Enable at the Email/Password provider in the [Firebase authentication providers](https://console.firebase.google.com/project/bigmomo-647f1/authentication/providers)
+
 - Create a file called `.env` in the root of your cloned repository and add the following code. Replace the values with the ones from the project you created in Firebase:
 
 ````
@@ -47,6 +49,8 @@ FIREBASE_AUTH_DOMAIN=your_firebase_project.firebaseapp.com
 FIREBASE_DATABASE_URL=https://your_firebase_project.firebaseio.com
 FIREBASE_STORAGE_BUCKET=your_firebase_project.appspot.com
 ````
+
+- Update the default project value in `.firebaserc`
 
 - If you want some demo data, import `/data/demo-data.json` into your Firebase database
 
