@@ -61,6 +61,8 @@ allow read: if true;
 allow write: if request.auth != null;
 ````
 
+- To give a user admin rights, you have to add a field called `level` with the value `5` into a user (using the firebase UI). Once you do that, login into Hypatia with that user and you will see the `admin` link in the sidebar navigation
+
 ### Start development server with hot reloading
 
 ````
