@@ -25,13 +25,13 @@ Slack group: [http://slack.theon.io](http://slack.theon.io)
 
 Warning! This documentation is not super stable. Post an issue if you find any trouble or something is not clear
 
-- Install Node.js >= 4.5.0 [https://nodejs.org/](https://nodejs.org/)
+- Install Node.js >= 7.4.0 [https://nodejs.org/](https://nodejs.org/)
 
 - Install a Git client. I recommend SourceTree [https://www.sourcetreeapp.com/](https://www.sourcetreeapp.com/)
 
 - Clone this repository into a folder in your computer [https://help.github.com/articles/which-remote-url-should-i-use/](https://help.github.com/articles/which-remote-url-should-i-use/)
 
-- Install the NPM dependencies:
+- Install the dependencies using NPM or Yarn:
 
 ````
 npm install
