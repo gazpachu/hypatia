@@ -6,7 +6,7 @@ import { setNotification } from '../../../actions/actions';
 
 class Signup extends Component {
 
-  handleSignin = (e) => {
+  handleSignin(e) {
     e.preventDefault();
     $('.js-btn-signin').hide();
     $('.js-signin-loader').show();

@@ -7,7 +7,7 @@ import { USER_CONFIRM_EMAIL, PASSWORD_MATCH_ERROR } from '../../../constants/con
 
 class Signup extends Component {
 
-  handleSignup = (e) => {
+  handleSignup(e) {
     e.preventDefault();
 
     const { password, password2, firstname, lastname } = this.refs;
