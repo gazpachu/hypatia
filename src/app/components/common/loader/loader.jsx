@@ -1,30 +1,30 @@
-import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import $ from 'jquery';
-import Helpers from '../helpers';
-import Icon from '../lib/icon/icon';
 
 class Loader extends Component {
 
-	constructor(props) {
-		super(props);
-	}
-	
-	render() {
-		let isLoading = (this.props.isLoading) ? 'fade-in' : 'fade-out';
-		
-		return (
-			<section className={`loader js-loader ${isLoading}`}>
-				<div className="loader__circle"></div>
-				<div className="loader__line-mask">
-					<div className="loader__line"></div>
-				</div>
-			</section>
-		)
-	}
+  componentDidMount() {}
+
+  render() {
+    const isLoading = (this.props.isLoading)
+      ? 'fade-in'
+      : 'fade-out';
+
+    return (
+      <section className={`loader js-loader ${isLoading}`}>
+        <div className="loader__circle" />
+        <div className="loader__line-mask">
+          <div className="loader__line" />
+        </div>
+      </section>
+    );
+  }
 }
 
-const mapStateToProps = ({ mainReducer: { isLoading } }) => ({ isLoading });
+const mapStateToProps = ({
+  mainReducer: {
+    isLoading
+  }
+}) => ({ isLoading });
 
 export default connect(mapStateToProps)(Loader);

@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import $ from 'jquery';
-import Navigation from '../navigation/navigation';
 import md5 from 'md5';
-import { setUser, setPanel, setNotification } from '../../../actions/actions';
 import { firebase, helpers } from 'redux-react-firebase';
+import { setUser, setPanel, setNotification } from '../../../actions/actions';
+import Navigation from '../navigation/navigation';
 import Signup from '../../common/signup/signup';
 import Signin from '../../common/signin/signin';
 import Icon from '../lib/icon/icon';
@@ -23,232 +23,273 @@ import Chat from '../../../../../static/svg/chat.svg';
 const { pathToJS } = helpers;
 
 @firebase()
-@connect(
-  (state) => ({
-    user: pathToJS(state.firebase, 'auth'),
-    userData: pathToJS(state.firebase, 'userData')
-  })
-)
+@connect(state => ({
+  user: pathToJS(state.firebase, 'auth'),
+  userData: pathToJS(state.firebase, 'userData')
+}))
 class TopNav extends Component {
 
-	constructor(props) {
-		super(props);
+  static toggleView(e) {
+    if ($(e.currentTarget).is(':checked')) {
+      $('.js-page').addClass('list-view');
+    } else {
+      $('.js-page').removeClass('list-view');
+    }
+  }
 
-		this.state = {
-			avatar: '',
-			searching: false,
-			navigating: false
-		};
+  static showForm(event) {
+    $('.user-form').removeClass('active');
+    $(event.target).next().addClass('active');
+    $('.js-overlay').show().animateCss('fade-in');
+  }
 
-		this.toggleNav = this.toggleNav.bind(this);
-		this.openNav = this.openNav.bind(this);
-		this.closeNav = this.closeNav.bind(this);
-		this.toggleSearch = this.toggleSearch.bind(this);
-		this.openSearch = this.openSearch.bind(this);
-		this.closeSearch = this.closeSearch.bind(this);
-		this.toggleView = this.toggleView.bind(this);
-		this.showForm = this.showForm.bind(this);
-		this.closeForm = this.closeForm.bind(this);
-	}
+  static closeForm() {
+    $('.user-form').removeClass('active');
+    $('.js-overlay').animateCss('fade-out', () => $('.js-overlay').hide());
+  }
 
-	componentDidUpdate() {
-		if (this.props.isDesktop === true) {
-			$('#mode').prop('checked', false);
-			$('.js-page').removeClass('list-view');
-		} else if (this.props.isDesktop === false) {
-			$('#mode').prop('checked', true);
-			$('.js-page').addClass('list-view');
-		}
-	}
+  constructor(props) {
+    super(props);
 
-	toggleNav() {
-		if (!$('.js-sidenav').hasClass('opened')) this.openNav();
-		else this.closeNav();
-	}
+    this.state = {
+      avatar: '',
+      searching: false,
+      navigating: false
+    };
 
-	openNav() {
-		if (!$('.js-sidenav').hasClass('opened')) {
-			$('.flyout').removeClass('opened');
-			$('.js-overlay').show().animateCss('fade-in');
-			$('.js-sidenav').addClass('opened').removeClass('closed');
-			$('.js-nav-icon').addClass('opened');
-			$('.js-dropdown-panel').removeClass('open');
-			this.setState({ searching: false, navigating: true });
-		}
-	}
+    this.toggleNav = this.toggleNav.bind(this);
+    this.openNav = this.openNav.bind(this);
+    this.closeNav = this.closeNav.bind(this);
+    this.toggleSearch = this.toggleSearch.bind(this);
+    this.openSearch = this.openSearch.bind(this);
+    this.closeSearch = this.closeSearch.bind(this);
+  }
 
-	closeNav() {
-		if ($('.js-sidenav').hasClass('opened')) {
-			$('.js-sidenav').removeClass('opened').addClass('closed');
-			$('.js-overlay').click();
-			$('.js-nav-icon').removeClass('opened');
-			this.setState({ searching: false, navigating: false });
-		}
-	}
+  componentDidUpdate() {
+    if (this.props.isDesktop === true) {
+      $('#mode').prop('checked', false);
+      $('.js-page').removeClass('list-view');
+    } else if (this.props.isDesktop === false) {
+      $('#mode').prop('checked', true);
+      $('.js-page').addClass('list-view');
+    }
+  }
 
-	toggleSearch() {
-		if (!$('.js-search-panel').hasClass('opened')) this.openSearch();
-		else this.closeSearch();
-	}
+  toggleNav() {
+    if (!$('.js-sidenav').hasClass('opened')) {
+      this.openNav();
+    } else {
+      this.closeNav();
+    }
+  }
 
-	openSearch() {
-		const $searchPanel = $('.js-search-panel');
-		if (!$searchPanel.hasClass('opened')) {
-			$('.flyout').removeClass('opened');
-			$searchPanel.addClass('opened').removeClass('closed');
-			$('.js-nav-icon').removeClass('opened');
-			$('.js-overlay').show().animateCss('fade-in');
-			$('.search-input').focus();
-			$('.js-dropdown-panel').removeClass('open');
-			this.setState({ searching: true, navigating: false });
-		}
-	}
+  openNav() {
+    if (!$('.js-sidenav').hasClass('opened')) {
+      $('.flyout').removeClass('opened');
+      $('.js-overlay').show().animateCss('fade-in');
+      $('.js-sidenav').addClass('opened').removeClass('closed');
+      $('.js-nav-icon').addClass('opened');
+      $('.js-dropdown-panel').removeClass('open');
+      this.setState({ searching: false, navigating: true });
+    }
+  }
 
-	closeSearch() {
-		const $searchPanel = $('.js-search-panel');
-		if ($searchPanel.hasClass('opened')) {
-			$searchPanel.removeClass('opened').addClass('closed');
-			$('.js-overlay').click();
-			this.setState({ searching: false, navigating: false });
-		}
-	}
+  closeNav() {
+    if ($('.js-sidenav').hasClass('opened')) {
+      $('.js-sidenav').removeClass('opened').addClass('closed');
+      $('.js-overlay').click();
+      $('.js-nav-icon').removeClass('opened');
+      this.setState({ searching: false, navigating: false });
+    }
+  }
 
-	toggleView(e) {
-		if ($(e.currentTarget).is(':checked')) {
-			$('.js-page').addClass('list-view');
-		} else $('.js-page').removeClass('list-view');
-	}
+  toggleSearch() {
+    if (!$('.js-search-panel').hasClass('opened')) {
+      this.openSearch();
+    } else {
+      this.closeSearch();
+    }
+  }
 
-	showForm(event) {
-		$('.user-form').removeClass('active');
-		$(event.target).next().addClass('active');
-		$('.js-overlay').show().animateCss('fade-in');
-	}
+  openSearch() {
+    const $searchPanel = $('.js-search-panel');
+    if (!$searchPanel.hasClass('opened')) {
+      $('.flyout').removeClass('opened');
+      $searchPanel.addClass('opened').removeClass('closed');
+      $('.js-nav-icon').removeClass('opened');
+      $('.js-overlay').show().animateCss('fade-in');
+      $('.search-input').focus();
+      $('.js-dropdown-panel').removeClass('open');
+      this.setState({ searching: true, navigating: false });
+    }
+  }
 
-	closeForm() {
-		$('.user-form').removeClass('active');
-		$('.js-overlay').animateCss('fade-out', () => $('.js-overlay').hide());
-	}
+  closeSearch() {
+    const $searchPanel = $('.js-search-panel');
+    if ($searchPanel.hasClass('opened')) {
+      $searchPanel.removeClass('opened').addClass('closed');
+      $('.js-overlay').click();
+      this.setState({ searching: false, navigating: false });
+    }
+  }
 
-	changePanel(panel) {
-		this.closeNav();
-		this.closeSearch();
+  changePanel(panel) {
+    this.closeNav();
+    this.closeSearch();
 
-		if (this.props.panel === panel) this.props.setPanel('');
-		else this.props.setPanel(panel);
-	}
+    if (this.props.panel === panel) {
+      this.props.setPanel('');
+    } else {
+      this.props.setPanel(panel);
+    }
+  }
 
-	render() {
-		return (
-			<section className="top-nav js-top-nav">
-				<div className="top-nav-bar">
-					<div className="top-nav-item nav-icon js-nav-icon" onClick={() => { this.toggleNav(); }}>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-					</div>
-					<button className="top-nav-item" onClick={() => { this.toggleSearch(); }}>
-						{this.state.searching ?
-							<Icon glyph={Close} className="icon close-search" />
-						: <Icon glyph={Search} className="icon search" />}
-					</button>
+  render() {
+    return (
+      <section className="top-nav js-top-nav">
+        <div className="top-nav-bar">
+          <button
+            className="top-nav-item nav-icon js-nav-icon" onClick={() => {
+              this.toggleNav();
+            }}
+          >
+            <span />
+            <span />
+            <span />
+            <span />
+          </button>
+          <button
+            className="top-nav-item" onClick={() => {
+              this.toggleSearch();
+            }}
+          >
+            {this.state.searching
+              ? <Icon glyph={Close} className="icon close-search" />
+              : <Icon glyph={Search} className="icon search" />}
+          </button>
 
-					{(this.props.user) ?
-						<div className="top-nav-item" onClick={() => { this.changePanel('calendar'); }}>
-							{this.props.panel === 'calendar' ?
-								<Icon glyph={Close} />
-							: <Icon glyph={Calendar} className="icon calendar" />}
-						</div>
-					: ''}
+          {(this.props.user)
+            ? <button
+              className="top-nav-item" onClick={() => {
+                this.changePanel('calendar');
+              }}
+            >
+              {this.props.panel === 'calendar'
+                ? <Icon glyph={Close} />
+                : <Icon glyph={Calendar} className="icon calendar" />}
+            </button>
+            : ''}
 
-					{(this.props.user) ?
-						<div className="top-nav-item" onClick={() => { this.changePanel('grades'); }}>
-							{this.props.panel === 'grades' ?
-								<Icon glyph={Close} />
-							: <Icon glyph={Trophy} className="icon trophy" />}
-						</div>
-					: ''}
+          {(this.props.user)
+            ? <button
+              className="top-nav-item" onClick={() => {
+                this.changePanel('grades');
+              }}
+            >
+              {this.props.panel === 'grades'
+                ? <Icon glyph={Close} />
+                : <Icon glyph={Trophy} className="icon trophy" />}
+            </button>
+            : ''}
 
-					{(this.props.user) ?
-						<div className="top-nav-item" onClick={() => { this.changePanel('help'); }}>
-							{this.props.panel === 'help' ?
-								<Icon glyph={Close} />
-							: <Icon glyph={Help} className="icon info" />}
-						</div>
-					: ''}
+          {(this.props.user)
+            ? <button
+              className="top-nav-item" onClick={() => {
+                this.changePanel('help');
+              }}
+            >
+              {this.props.panel === 'help'
+                ? <Icon glyph={Close} />
+                : <Icon glyph={Help} className="icon info" />}
+            </button>
+            : ''}
 
-					<Link to="/" className="logo">
-						<Icon glyph={Logo} />
-						<Icon glyph={LogoWording} className="icon logo-wording" />
-					</Link>
+          <Link to="/" className="logo">
+            <Icon glyph={Logo} />
+            <Icon glyph={LogoWording} className="icon logo-wording" />
+          </Link>
 
-					{(!this.props.user || (this.props.user && !this.props.user.emailVerified)) ?
-						<div className="user-controls">
-							<div className="lang">EN</div>
-							<div className="user-controls-cta sign-up-cta">
-								<span onClick={this.showForm}>Sign up</span>
-								<Signup />
-							</div>
-							<div className="user-controls-cta sign-in-cta">
-								<span onClick={this.showForm}>Sign in</span>
-								<Signin />
-							</div>
-						</div>
-					:
-						<div className="user-controls">
-							<div className="lang">EN</div>
-							<button className="chat-icon" onClick={() => { this.changePanel('chat'); }}>
-								{this.props.panel === 'chat' ?
-									<Icon glyph={Close} className="icon close-chat" />
-								: <Icon glyph={Chat} className="icon chat" />}
-							</button>
+          {(!this.props.user || (this.props.user && !this.props.user.emailVerified))
+            ? <div className="user-controls">
+              <div className="lang">EN</div>
+              <div className="user-controls-cta sign-up-cta">
+                <button onClick={TopNav.showForm}>Sign up</button>
+                <Signup />
+              </div>
+              <div className="user-controls-cta sign-in-cta">
+                <button onClick={TopNav.showForm}>Sign in</button>
+                <Signin />
+              </div>
+            </div>
+          : <div className="user-controls">
+            <div className="lang">EN</div>
+            <button
+              className="chat-icon" onClick={() => {
+                this.changePanel('chat');
+              }}
+            >
+              {this.props.panel === 'chat'
+              ? <Icon glyph={Close} className="icon close-chat" />
+              : <Icon glyph={Chat} className="icon chat" />}
+            </button>
 
-							<div className="user-controls-cta account-cta">
-								{(this.props.user) ?
-									<Link to="/dashboard">
-										{(this.props.user.email) ?
-											<img
-												className="photo"
-												role="presentation"
-												src={`https://www.gravatar.com/avatar/${md5(this.props.user.email)}.jpg?s=20`}
-											/>
-										: <Icon glyph={Avatar} />}
-										<span>{this.props.userData && this.props.userData.info ?
-											this.props.userData.info.displayName
-										: ''}</span>
-									</Link>
-								: ''}
-								<button onClick={() => { this.props.firebase.auth().signOut(); this.props.setUser(null); }}>
-									<Icon glyph={Logout} className="icon sign-out" />
-								</button>
-							</div>
-						</div>
-					}
-				</div>
-				<Navigation
-					location={this.props.location}
-					toggleNav={this.toggleNav}
-					openNav={this.openNav}
-					closeNav={this.closeNav}
-					toggleSearch={this.toggleSearch}
-					openSearch={this.openSearch}
-					closeSearch={this.closeSearch}
-					searching={this.state.searching}
-					navigating={this.state.navigating}
-				/>
-				<div className="overlay js-overlay" onClick={() => { this.closeNav(); this.closeSearch(); this.closeForm(); }}></div>
-			</section>
-		);
-	}
+            <div className="user-controls-cta account-cta">
+              {(this.props.user)
+                ? <Link to="/dashboard">
+                  {(this.props.user.email)
+                    ? <img alt="" className="photo" role="presentation" src={`https://www.gravatar.com/avatar/${md5(this.props.user.email)}.jpg?s=20`} />
+                    : <Icon glyph={Avatar} />}
+                  <span>{this.props.userData && this.props.userData.info
+                      ? this.props.userData.info.displayName
+                      : ''}</span>
+                </Link>
+                : ''}
+              <button
+                onClick={() => {
+                  this.props.firebase.auth().signOut();
+                  this.props.setUser(null);
+                }}
+              >
+                <Icon glyph={Logout} className="icon sign-out" />
+              </button>
+            </div>
+          </div>
+        }
+        </div>
+        <Navigation
+          location={this.props.location}
+          toggleNav={this.toggleNav}
+          openNav={this.openNav}
+          closeNav={this.closeNav}
+          toggleSearch={this.toggleSearch}
+          openSearch={this.openSearch}
+          closeSearch={this.closeSearch}
+          searching={this.state.searching}
+          navigating={this.state.navigating}
+        />
+        <button
+          className="overlay js-overlay" onClick={() => {
+            this.closeNav();
+            this.closeSearch();
+            TopNav.closeForm();
+          }}
+        />
+      </section>
+    );
+  }
 }
 
-const mapStateToProps = ({ mainReducer: { user, panel } }) => ({ user, panel });
+const mapStateToProps = ({
+  mainReducer: {
+    user,
+    panel
+  }
+}) => ({ user, panel });
 
 const mapDispatchToProps = {
-	setUser,
-	setPanel,
-	setNotification
+  setUser,
+  setPanel,
+  setNotification
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TopNav);
