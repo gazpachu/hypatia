@@ -1,57 +1,29 @@
 import * as CONSTANTS from '../constants/constants';
 
-export function action(state, type) {
-	return {
-		type: type,
-		payload: state
-	}
-}
-
 export function setUser(state) {
-	return {
-		type: 'SET_USER',
-		payload: state
-	}
+  return { type: CONSTANTS.SET_USER, payload: state };
 }
 
 export function setPanel(state) {
-	return {
-		type: 'SET_PANEL',
-		payload: state
-	}
+  return { type: CONSTANTS.SET_PANEL, payload: state };
 }
 
 export function setLoading(state) {
-	return {
-		type: 'SET_LOADING',
-		payload: state
-	}
+  return { type: CONSTANTS.SET_LOADING, payload: state };
 }
 
 export function setBreadcrumbs(state) {
-	return {
-		type: 'SET_BREADCRUMBS',
-		payload: state
-	}
+  return { type: CONSTANTS.SET_BREADCRUMBS, payload: state };
 }
 
 export function changeViewport(state) {
-	return {
-		type: 'SET_DESKTOP',
-		payload: state
-	}
+  return { type: CONSTANTS.SET_DESKTOP, payload: state };
 }
 
 export function setNotification(state) {
-	return {
-		type: 'SET_NOTIFICATION',
-		payload: state
-	}
+  return { type: CONSTANTS.SET_NOTIFICATION, payload: state };
 }
 
 export function setUserData(state) {
-	return {
-		type: 'SET_USER_DATA',
-		payload: state
-	}
+  return { type: CONSTANTS.SET_USER_DATA, payload: state };
 }
