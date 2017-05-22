@@ -1,46 +1,30 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { setLoading } from '../../../actions/actions';
-import classNames from 'classnames';
-import {connect} from 'react-redux';
-import $ from 'jquery';
-import moment from 'moment';
-import Icon from '../lib/icon/icon'; 
-
-const defaultProps = {
-	
-};
-
-const propTypes = {
-	isDesktop: PropTypes.bool
-};
 
 class Calendar extends Component {
-    
-	constructor(props) {
-		super(props);
-	}
-	
-	componentDidMount() {
-		
-	}
-	
-	render() {
-		return (
-            <section className={`calendar-panel ${this.props.class}`}>
-				<h4 className="panel-heading">Calendar</h4>
-           		<p>Sorry, this feature will be available in the following weeks.</p>
-            </section>
-		)
-	}
-}
 
-Calendar.propTypes = propTypes;
-Calendar.defaultProps = defaultProps;
+  componentDidMount() {}
+
+  render() {
+    return (
+      <section className={`calendar-panel ${this.props.class}`}>
+        <h4 className="panel-heading">Calendar</h4>
+        <p>Sorry, this feature will be available in the following weeks.</p>
+      </section>
+    );
+  }
+}
 
 const mapDispatchToProps = {
-	setLoading
-}
+  setLoading
+};
 
-const mapStateToProps = ({ mainReducer: { isDesktop, user } }) => ({ isDesktop, user });
+const mapStateToProps = ({
+  mainReducer: {
+    isDesktop,
+    user
+  }
+}) => ({ isDesktop, user });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Calendar);
