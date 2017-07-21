@@ -32,12 +32,12 @@ const defaultProps = {
       icon: Dashboard,
       link: '/dashboard'
     }, {
-      id: 10,
+      id: 12,
       title: 'Account',
       icon: Account,
       children: [
         {
-          id: 12,
+          id: 13,
           title: 'My account',
           link: '/account'
         }
@@ -58,17 +58,17 @@ const defaultProps = {
       icon: Module,
       link: '/modules'
     }, {
-      id: 3,
+      id: 4,
       title: 'Activities',
       icon: Activity,
       link: '/activities'
     }, {
-      id: 1,
+      id: 5,
       title: 'News',
       icon: Post,
       link: '/news'
     }, {
-      id: 4,
+      id: 6,
       title: 'About',
       icon: Team,
       children: [
@@ -77,21 +77,21 @@ const defaultProps = {
           title: 'Summary',
           link: '/about'
         }, {
-          id: 7,
+          id: 8,
           title: 'Research',
           link: '/about/research'
         }, {
-          id: 8,
+          id: 9,
           title: 'People',
           link: '/about/people'
         }, {
-          id: 9,
+          id: 10,
           title: 'Contact',
           link: '/about/contact'
         }
       ]
     }, {
-      id: 1,
+      id: 11,
       title: 'Admin',
       icon: Admin,
       link: '/admin',
