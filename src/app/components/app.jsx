@@ -58,9 +58,9 @@ class App extends Component {
     let title;
 
     if (!this.props.breadcrumbs[0]) {
-      title = 'Hypatia';
+      title = 'Nekomy';
     } else {
-      title = `${this.props.breadcrumbs.reverse().join(' < ')} < Hypatia`;
+      title = `${this.props.breadcrumbs.reverse().join(' < ')} < Nekomy`;
     }
 
     const panelClass = (this.props.panel === '')

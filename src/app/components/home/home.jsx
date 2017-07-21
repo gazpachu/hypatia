@@ -36,13 +36,13 @@ class Home extends Component {
     let coursesList = null;
 
     if (isLoaded(this.props.courses) && !isEmpty(this.props.courses) && isLoaded(this.props.files) && !isEmpty(this.props.files)) {
-      postsList = <ul className="cards-list courses-list">{Helpers.renderCards.call(this, 'news')}</ul>;
+      postsList = <ul className="cards-list courses-list">{Helpers.renderCards('news', this.props)}</ul>;
     } else {
       postsList = <div className="loader-small" />;
     }
 
     if (isLoaded(this.props.posts) && !isEmpty(this.props.posts) && isLoaded(this.props.files) && !isEmpty(this.props.files) && isLoaded(this.props.levels) && !isEmpty(this.props.levels)) {
-      coursesList = <ul className="cards-list posts-list">{Helpers.renderCards.call(this, 'courses')}</ul>;
+      coursesList = <ul className="cards-list posts-list">{Helpers.renderCards('courses', this.props)}</ul>;
     } else {
       coursesList = <div className="loader-small" />;
     }
@@ -60,8 +60,7 @@ class Home extends Component {
             </div>
           </div>
           <div className="elevator-pitch">
-            <p>Hypatia is a
-              <strong>FREE</strong>, Open Source LMS (Learning Management System) focussed in UX and remote coworking. You can use it to build your online school, academy or university.</p>
+            <p>Nekomy is a <strong>FREE</strong>, Open Source Learning Platform for MOOCs and online courses. It has a special focus on UX and productive co-working.</p>
             <p>
               <button className="btn btn-primary">This button will trigger a tour</button>
             </p>

@@ -428,7 +428,7 @@ class Chat extends Component {
           const course = this.props.userData.courses[key];
           return Object.keys(course).map((item, i) => {
             const subject = this.props.subjects[item];
-            return <li
+            return (<li
               key={item}
               ref={item}
               role="button"
@@ -437,7 +437,7 @@ class Chat extends Component {
               })} onClick={() => this.changeCurrentGroup(item)}
             >
               {subject.code}
-            </li>;
+            </li>);
           });
         });
       }

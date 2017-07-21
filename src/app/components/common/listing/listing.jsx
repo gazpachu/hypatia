@@ -43,7 +43,7 @@ class Listing extends Component {
     }
 
     if (isLoaded(this.props[type]) && !isEmpty(this.props[type]) && isLoaded(this.props.files) && !isEmpty(this.props.files)) {
-      items = <ul className="cards-list">{Helpers.renderCards.call(this, path)}</ul>;
+      items = <ul className="cards-list">{Helpers.renderCards(path, this.props)}</ul>;
     } else {
       items = <div className="loader-small" />;
     }

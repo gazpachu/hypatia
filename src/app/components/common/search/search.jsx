@@ -25,12 +25,15 @@ class Search extends Component {
     };
   }
 
-  // handleChange() {
-  //   this.setState({keyword: event.target.value, questions: foundQuestions}, function() {
-  //     if ($('.search-item.match').length === 0 && this.state.keyword !== '') $('.no-results-found').addClass('none');
-  //     else $('.no-results-found').removeClass('none');
-  //    });
-  // }
+  handleChange(event) {
+    this.setState({ keyword: event.target.value }, () => {
+      if ($('.search-item.match').length === 0 && this.state.keyword !== '') {
+        $('.no-results-found').addClass('none');
+      } else {
+        $('.no-results-found').removeClass('none');
+      }
+    });
+  }
 
   renderItem(question, i) {
     const textBefore = question.title.substring(0, question.index);

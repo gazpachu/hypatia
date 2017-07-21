@@ -12,11 +12,9 @@ class Footer extends Component {
   render() {
     return (
       <section className="footer">
-        <span>Hypatia LMS
-          <span className="app-version" />
+        <span>Nekomy Platform <span className="app-version" />
           <Icon glyph={Logo} />
-          2016 - 2017. Licensed under GPLv2. More info at
-          <a href="http://theonapps.github.io/hypatia/">theonapps.github.io/hypatia/</a>
+          2016 - 2017. Licensed under GPLv2. More info at <a href="http://nekomy.github.io/nekomy-platform/">nekomy.github.io/nekomy-platform</a>
         </span>
       </section>
     );

@@ -6,7 +6,7 @@ import _ from 'lodash';
 import classNames from 'classnames';
 import SimpleMDE from 'react-simplemde-editor';
 import Select2 from 'react-select2-wrapper';
-import 'react-select2-wrapper/css/select2.css';
+// import 'react-select2-wrapper/css/select2.css';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import { history } from '../../store';
@@ -65,6 +65,15 @@ firebase(props => ([
 ]));
 class Admin extends Component {
 
+  static formatFileType(state) {
+    if (!state.id) {
+      return state.text;
+    }
+    const contentType = state.text.substring(state.text.indexOf('[') + 1, state.text.indexOf(']'));
+    const $state = $(`<span><img src="http://www.stdicon.com/crystal/${contentType}?size=24" class="select2-img" />${state.text.substring(state.text.indexOf(']') + 1, state.text.length)}</span>`);
+    return $state;
+  }
+
   constructor(props) {
     super(props);
 
@@ -83,6 +92,9 @@ class Admin extends Component {
     this.uploadStatus = '';
     this.uploadTask = null;
     this.selectedImage = null;
+
+    this.updateItem = this.updateItem.bind(this);
+    this.modalBoxAnswer = this.modalBoxAnswer.bind(this);
   }
 
   componentDidMount() {
@@ -271,21 +283,19 @@ class Admin extends Component {
   }
 
   uploadFile(file) {
-    const { firebase } = this.props;
-
     this.uploadTask = this.storageRef.child(`files/${file.name}`).put(file);
     $('.file-input').hide();
     $('.file-upload-wrapper').show();
 
-    this.uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot) => {
+    this.uploadTask.on(this.props.firebase.storage.TaskEvent.STATE_CHANGED, (snapshot) => {
       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
       $('.file-progress').attr('value', progress);
 
       switch (snapshot.state) {
-        case firebase.storage.TaskState.PAUSED:
+        case this.props.firebase.storage.TaskState.PAUSED:
           this.uploadStatus = 'paused';
           break;
-        case firebase.storage.TaskState.RUNNING:
+        case this.props.firebase.storage.TaskState.RUNNING:
           this.uploadStatus = 'uploading';
           break;
         default:
@@ -326,8 +336,9 @@ class Admin extends Component {
       $(this.refs['pause-upload']).html('resume');
       this.uploadTask.pause();
     } else if (status === 'cancelled') {
-      if (this.uploadStatus === 'paused')
+      if (this.uploadStatus === 'paused') {
         this.uploadTask.resume();
+      }
       this.uploadTask.cancel();
     }
   }
@@ -361,10 +372,11 @@ class Admin extends Component {
   }
 
   updateDate(date, prop) {
+    let newDate = date;
     if (prop === 'endDate' && moment(date).isBefore(moment(this.state.selectedItem.startDate))) {
-      date = this.state.selectedItem.endDate;
+      newDate = this.state.selectedItem.endDate;
     }
-    this.updateItem(date, prop);
+    this.updateItem(newDate, prop);
   }
 
   updateSelect(select, prop) {
@@ -466,37 +478,33 @@ class Admin extends Component {
     $(this.refs[ref]).toggleClass('active');
   }
 
-  formatFileType(state) {
-    if (!state.id) {
-      return state.text;
-    }
-    const contentType = state.text.substring(state.text.indexOf('[') + 1, state.text.indexOf(']'));
-    const $state = $(`<span><img src="http://www.stdicon.com/crystal/${contentType}?size=24" class="select2-img" />${state.text.substring(state.text.indexOf(']') + 1, state.text.length)}</span>`);
-    return $state;
-  }
-
   createList(type) {
     let newList = [];
 
     if (isLoaded(this.props[type]) && !isEmpty(this.props[type])) {
       newList = Object.keys(this.props[type]).map((key) => {
-        let item = this.props[type][key];
-        return (type === 'users')
-          ? {
-            text: item.info.firstName + ' ' + item.info.lastName1,
+        const item = this.props[type][key];
+        let response = null;
+
+        if (type === 'users') {
+          response = {
+            text: `${item.info.firstName}  ${item.info.lastName1}`,
             id: key
-          }
-          : (type === 'files')
-            ? {
-              text: (item.type)
-                ? '[' + item.type + '] ' + item.title
-                : item.title,
-              id: key
-            }
-            : {
-              text: item.title,
-              id: key
-            };
+          };
+        } else if (type === 'files') {
+          response = {
+            text: (item.type)
+              ? `[${item.type}] ${item.title}`
+              : item.title,
+            id: key
+          };
+        } else {
+          response = {
+            text: item.title,
+            id: key
+          };
+        }
+        return response;
       });
     }
     return newList;
@@ -517,13 +525,16 @@ class Admin extends Component {
     const title = (this.state.selectedItem && this.state.selectedItem.title)
       ? this.state.selectedItem.title
       : '';
-    const iconHeading = (this.state.type === 'courses')
-      ? <Icon glyph={Course} />
-      : (this.state.type === 'subjects')
-        ? <Icon glyph={Subject} />
-        : (this.state.type === 'modules')
-          ? <Icon glyph={Module} />
-          : <Icon glyph={Activity} />;
+    let iconHeading = null;
+    if (this.state.type === 'courses') {
+      iconHeading = <Icon glyph={Course} />;
+    } else if (this.state.type === 'subjects') {
+      iconHeading = <Icon glyph={Subject} />;
+    } else if (this.state.type === 'modules') {
+      iconHeading = <Icon glyph={Module} />;
+    } else {
+      iconHeading = <Icon glyph={Activity} />;
+    }
     const code = (this.state.selectedItem && this.state.selectedItem.code)
       ? this.state.selectedItem.code
       : '';
@@ -555,13 +566,15 @@ class Admin extends Component {
     let fileSize = (this.state.fileMetadata)
       ? Math.round(this.state.fileMetadata.size / 1000)
       : 0;
-    fileSize = (fileSize < 1000)
-      ? `${Math.round(fileSize)}KB`
-      : (fileSize < 1000000)
-        ? `${Math.round(fileSize / 1000)}MB`
-        : (fileSize < 1000000000)
-          ? `${Math.round(fileSize / 1000000)}GB`
-          : `${Math.round(fileSize / 1000000000)}TB`;
+    if (fileSize < 1000) {
+      fileSize = `${Math.round(fileSize)}KB`;
+    } else if (fileSize < 1000000) {
+      fileSize = `${Math.round(fileSize / 1000)}MB`;
+    } else if (fileSize < 1000000000) {
+      fileSize = `${Math.round(fileSize / 1000000)}GB`;
+    } else {
+      fileSize = `${Math.round(fileSize / 1000000000)}TB`;
+    }
     const fileCreatedOn = (this.state.fileMetadata)
       ? moment(this.state.fileMetadata.timeCreated).format('YYYY-MM-DD HH:MM:SS')
       : '';
@@ -594,108 +607,145 @@ class Admin extends Component {
                   <Icon glyph={Level} />
                   <Select2
                     className="select-items" style={{
-                    width: '77%'
-                  }} ref="levels-select" data={levels} defaultValue={this.state.selectedId} options={{
-                    placeholder: 'Levels',
-                    allowClear: true
-                  }} onChange={(event) => this.handleSelect(event, 'edit', 'levels')}/>
-                  <button className="btn-new-item" onClick={() => this.new('levels')}><Icon glyph={Add}/></button>
+                      width: '77%'
+                    }} ref="levels-select" data={levels} defaultValue={this.state.selectedId} options={{
+                      placeholder: 'Levels',
+                      allowClear: true
+                    }} onChange={event => this.handleSelect(event, 'edit', 'levels')}
+                  />
+                  <button className="btn-new-item" onClick={() => this.new('levels')}>
+                    <Icon glyph={Add} />
+                  </button>
                 </div>
 
                 <div className="item-type-list">
-                  <Icon glyph={Group}/>
-                  <Select2 className="select-items" style={{
-                    width: '77%'
-                  }} ref="groups-select" data={groups} defaultValue={this.state.selectedId} options={{
-                    placeholder: 'Groups',
-                    allowClear: true
-                  }} onChange={(event) => this.handleSelect(event, 'edit', 'groups')}/>
-                  <button className="btn-new-item" onClick={() => this.new('groups')}><Icon glyph={Add}/></button>
+                  <Icon glyph={Group} />
+                  <Select2
+                    className="select-items" style={{
+                      width: '77%'
+                    }} ref="groups-select" data={groups} defaultValue={this.state.selectedId} options={{
+                      placeholder: 'Groups',
+                      allowClear: true
+                    }} onChange={event => this.handleSelect(event, 'edit', 'groups')}
+                  />
+                  <button className="btn-new-item" onClick={() => this.new('groups')}>
+                    <Icon glyph={Add} />
+                  </button>
                 </div>
 
                 <div className="item-type-list">
-                  <Icon glyph={Course}/>
-                  <Select2 className="select-items" style={{
-                    width: '77%'
-                  }} ref="courses-select" data={courses} defaultValue={this.state.selectedId} options={{
-                    placeholder: 'Courses',
-                    allowClear: true
-                  }} onChange={(event) => this.handleSelect(event, 'edit', 'courses')}/>
-                  <button className="btn-new-item" onClick={() => this.new('courses')}><Icon glyph={Add}/></button>
+                  <Icon glyph={Course} />
+                  <Select2
+                    className="select-items" style={{
+                      width: '77%'
+                    }} ref="courses-select" data={courses} defaultValue={this.state.selectedId} options={{
+                      placeholder: 'Courses',
+                      allowClear: true
+                    }} onChange={event => this.handleSelect(event, 'edit', 'courses')}
+                  />
+                  <button className="btn-new-item" onClick={() => this.new('courses')}>
+                    <Icon glyph={Add} />
+                  </button>
                 </div>
 
                 <div className="item-type-list">
-                  <Icon glyph={Subject}/>
-                  <Select2 className="select-items" style={{
-                    width: '77%'
-                  }} ref="subjects-select" data={subjects} defaultValue={this.state.selectedId} options={{
-                    placeholder: 'Subjects',
-                    allowClear: true
-                  }} onChange={(event) => this.handleSelect(event, 'edit', 'subjects')}/>
-                  <button className="btn-new-item" onClick={() => this.new('subjects')}><Icon glyph={Add}/></button>
+                  <Icon glyph={Subject} />
+                  <Select2
+                    className="select-items" style={{
+                      width: '77%'
+                    }} ref="subjects-select" data={subjects} defaultValue={this.state.selectedId} options={{
+                      placeholder: 'Subjects',
+                      allowClear: true
+                    }} onChange={event => this.handleSelect(event, 'edit', 'subjects')}
+                  />
+                  <button className="btn-new-item" onClick={() => this.new('subjects')}>
+                    <Icon glyph={Add} />
+                  </button>
                 </div>
 
                 <div className="item-type-list">
-                  <Icon glyph={Module}/>
-                  <Select2 className="select-items" style={{
-                    width: '77%'
-                  }} ref="modules-select" data={modules} defaultValue={this.state.selectedId} options={{
-                    placeholder: 'Modules',
-                    allowClear: true
-                  }} onChange={(event) => this.handleSelect(event, 'edit', 'modules')}/>
-                  <button className="btn-new-item" onClick={() => this.new('modules')}><Icon glyph={Add}/></button>
+                  <Icon glyph={Module} />
+                  <Select2
+                    className="select-items" style={{
+                      width: '77%'
+                    }} ref="modules-select" data={modules} defaultValue={this.state.selectedId} options={{
+                      placeholder: 'Modules',
+                      allowClear: true
+                    }} onChange={event => this.handleSelect(event, 'edit', 'modules')}
+                  />
+                  <button className="btn-new-item" onClick={() => this.new('modules')}>
+                    <Icon glyph={Add} />
+                  </button>
                 </div>
 
                 <div className="item-type-list">
-                  <Icon glyph={Activity}/>
-                  <Select2 className="select-items" style={{
-                    width: '77%'
-                  }} ref="activities-select" data={activities} defaultValue={this.state.selectedId} options={{
-                    placeholder: 'Activities',
-                    allowClear: true
-                  }} onChange={(event) => this.handleSelect(event, 'edit', 'activities')}/>
-                  <button className="btn-new-item" onClick={() => this.new('activities')}><Icon glyph={Add}/></button>
+                  <Icon glyph={Activity} />
+                  <Select2
+                    className="select-items" style={{
+                      width: '77%'
+                    }} ref="activities-select" data={activities} defaultValue={this.state.selectedId} options={{
+                      placeholder: 'Activities',
+                      allowClear: true
+                    }} onChange={event => this.handleSelect(event, 'edit', 'activities')}
+                  />
+                  <button className="btn-new-item" onClick={() => this.new('activities')}>
+                    <Icon glyph={Add} />
+                  </button>
                 </div>
 
                 <div className="item-type-list">
-                  <Icon glyph={Post}/>
-                  <Select2 className="select-items" style={{
-                    width: '77%'
-                  }} ref="posts-select" data={posts} defaultValue={this.state.selectedId} options={{
-                    placeholder: 'Posts',
-                    allowClear: true
-                  }} onChange={(event) => this.handleSelect(event, 'edit', 'posts')}/>
-                  <button className="btn-new-item" onClick={() => this.new('posts')}><Icon glyph={Add}/></button>
+                  <Icon glyph={Post} />
+                  <Select2
+                    className="select-items" style={{
+                      width: '77%'
+                    }} ref="posts-select" data={posts} defaultValue={this.state.selectedId} options={{
+                      placeholder: 'Posts',
+                      allowClear: true
+                    }} onChange={event => this.handleSelect(event, 'edit', 'posts')}
+                  />
+                  <button className="btn-new-item" onClick={() => this.new('posts')}>
+                    <Icon glyph={Add} />
+                  </button>
                 </div>
 
                 <div className="item-type-list">
-                  <Icon glyph={Post}/>
-                  <Select2 className="select-items" style={{
-                    width: '77%'
-                  }} ref="pages-select" data={pages} defaultValue={this.state.selectedId} options={{
-                    placeholder: 'Pages',
-                    allowClear: true
-                  }} onChange={(event) => this.handleSelect(event, 'edit', 'pages')}/>
-                  <button className="btn-new-item" onClick={() => this.new('pages')}><Icon glyph={Add}/></button>
+                  <Icon glyph={Post} />
+                  <Select2
+                    className="select-items" style={{
+                      width: '77%'
+                    }} ref="pages-select" data={pages} defaultValue={this.state.selectedId} options={{
+                      placeholder: 'Pages',
+                      allowClear: true
+                    }} onChange={event => this.handleSelect(event, 'edit', 'pages')}
+                  />
+                  <button className="btn-new-item" onClick={() => this.new('pages')}>
+                    <Icon glyph={Add} />
+                  </button>
                 </div>
 
                 <div className="item-type-list">
-                  <Icon glyph={File}/>
-                  <Select2 className="select-items" style={{
-                    width: '77%'
-                  }} ref="files-select" data={files} defaultValue={this.state.selectedId} options={{
-                    placeholder: 'Files',
-                    allowClear: true,
-                    templateResult: this.formatFileType,
-                    templateSelection: this.formatFileType
-                  }} onChange={(event) => this.handleSelect(event, 'edit', 'files')}/>
-                  <button className="btn-new-item" onClick={() => this.new('files')}><Icon glyph={Add}/></button>
+                  <Icon glyph={File} />
+                  <Select2
+                    className="select-items" style={{
+                      width: '77%'
+                    }} ref="files-select" data={files} defaultValue={this.state.selectedId} options={{
+                      placeholder: 'Files',
+                      allowClear: true,
+                      templateResult: Admin.formatFileType,
+                      templateSelection: Admin.formatFileType
+                    }} onChange={event => this.handleSelect(event, 'edit', 'files')}
+                  />
+                  <button className="btn-new-item" onClick={() => this.new('files')}>
+                    <Icon glyph={Add} />
+                  </button>
                 </div>
               </div>
             </div>
-            <div className={classNames('item-content column', {
-              hidden: this.state.action === ''
-            })}>
+            <div
+              className={classNames('item-content column', {
+                hidden: this.state.action === ''
+              })}
+            >
               <div className={`block clearfix ${this.state.type}`}>
                 <h3 className="block-title">{iconHeading}{(this.state.action === 'new')
                     ? <span>You are adding a new {(this.state.type === 'activities')
@@ -703,265 +753,411 @@ class Admin extends Component {
                           : this.state.type.slice(0, -1)}...</span>
                     : <span>You are editing {(this.state.type === 'activities')
                         ? 'an activity'
-                        : 'a ' + this.state.type.slice(0, -1)}...</span>}
+                        : `a ${this.state.type.slice(0, -1)}`}...</span>}
                   <button className="btn btn-primary btn-xs float-right btn-save" ref="saveTop" onClick={() => this.save()}>save in {this.state.type}</button>
                   <button className="btn btn-outline btn-xs float-right" ref="cancelTop" onClick={() => this.cancel()}>cancel</button>
-                  <div className="loader-small" ref="loaderTop"></div>
+                  <div className="loader-small" ref="loaderTop" />
                 </h3>
 
                 {(this.state.type === 'users')
-                  ? <AdminUsers user={this.state.selectedItem} updateItem={this.updateItem.bind(this)}/>
+                  ? <AdminUsers user={this.state.selectedItem} updateItem={this.updateItem} />
                   : ''}
 
-                <input type="text" className={classNames('input-field title-input', {
-                  hidden: (this.state.type === 'users')
-                })} ref="title-input" placeholder={(this.state.type === 'activities')
-                  ? 'Activity title'
-                  : this.state.type.slice(0, -1).capitalize() + ' title'} value={title} onChange={(event) => this.updateInput(event, 'title')}/>
-                <input type="text" className={classNames('input-field code-input', {
-                  hidden: (this.state.type === 'users' || this.state.type === 'posts' || this.state.type === 'pages' || this.state.type === 'files')
-                })} ref="code-input" placeholder="Code" value={code} onChange={(event) => this.updateInput(event, 'code')}/>
-                <div className={classNames('float-right', {
-                  hidden: (this.state.type !== 'posts')
-                })}>
-                  <Icon glyph={Calendar} className="icon calendar"/><DatePicker className="input-field date-input" selected={date} date={date} placeholderText="Date" isClearable={true} onChange={(date) => this.updateDate(date, 'date')} dateFormat="YYYY-MM-DD" popoverAttachment="bottom right" popoverTargetAttachment="bottom right" popoverTargetOffset="0px 0px"/>
+                <input
+                  type="text"
+                  className={classNames('input-field title-input', {
+                    hidden: (this.state.type === 'users')
+                  })} ref="title-input" placeholder={(this.state.type === 'activities')
+                    ? 'Activity title'
+                    : `${this.state.type.slice(0, -1).capitalize()} title`} value={title} onChange={event => this.updateInput(event, 'title')}
+                />
+                <input
+                  type="text"
+                  className={classNames('input-field code-input', {
+                    hidden: (this.state.type === 'users' || this.state.type === 'posts' || this.state.type === 'pages' || this.state.type === 'files')
+                  })} ref="code-input" placeholder="Code" value={code} onChange={event => this.updateInput(event, 'code')}
+                />
+                <div
+                  className={classNames('float-right', {
+                    hidden: (this.state.type !== 'posts')
+                  })}
+                >
+                  <Icon glyph={Calendar} className="icon calendar" />
+                  <DatePicker
+                    className="input-field date-input"
+                    selected={date} date={date}
+                    placeholderText="Date"
+                    isClearable
+                    onChange={newDate => this.updateDate(newDate, 'date')}
+                    dateFormat="YYYY-MM-DD"
+                    popoverAttachment="bottom right"
+                    popoverTargetAttachment="bottom right"
+                    popoverTargetOffset="0px 0px"
+                  />
                 </div>
 
-                <div className={classNames({
-                  hidden: (this.state.type !== 'groups')
-                })}>
-                  <Select2 style={{
-                    width: '100%'
-                  }} multiple data={users} value={(this.state.selectedItem && this.state.selectedItem.users)
-                    ? this.state.selectedItem.users
-                    : []} options={{
-                    placeholder: 'Users in this group...',
-                    allowClear: true
-                  }} onChange={(event) => this.updateMultiSelect(event.currentTarget, 'users')}/>
-                  <Select2 style={{
-                    width: '100%'
-                  }} data={courses} value={(this.state.selectedItem && this.state.selectedItem.course)
-                    ? this.state.selectedItem.course
-                    : ''} options={{
-                    placeholder: 'Select a course...',
-                    allowClear: true
-                  }} onChange={(event) => this.updateSelect(event.currentTarget, 'course')}/>
+                <div
+                  className={classNames({
+                    hidden: (this.state.type !== 'groups')
+                  })}
+                >
+                  <Select2
+                    style={{
+                      width: '100%'
+                    }} multiple data={users} value={(this.state.selectedItem && this.state.selectedItem.users)
+                      ? this.state.selectedItem.users
+                      : []} options={{
+                        placeholder: 'Users in this group...',
+                        allowClear: true
+                      }}
+                    onChange={event => this.updateMultiSelect(event.currentTarget, 'users')}
+                  />
+                  <Select2
+                    style={{
+                      width: '100%'
+                    }} data={courses} value={(this.state.selectedItem && this.state.selectedItem.course)
+                      ? this.state.selectedItem.course
+                      : ''} options={{
+                        placeholder: 'Select a course...',
+                        allowClear: true
+                      }}
+                    onChange={event => this.updateSelect(event.currentTarget, 'course')}
+                  />
                 </div>
 
-                <div className={classNames({
-                  hidden: (this.state.type !== 'subjects')
-                })}>
-                  <Select2 style={{
-                    width: '100%'
-                  }} multiple data={users} value={(this.state.selectedItem && this.state.selectedItem.teachers)
-                    ? this.state.selectedItem.teachers
-                    : []} options={{
-                    placeholder: 'Teacher(s)...',
-                    allowClear: true
-                  }} onChange={(event) => this.updateMultiSelect(event.currentTarget, 'teachers')}/>
-                  <Select2 style={{
-                    width: '100%'
-                  }} multiple data={modules} value={(this.state.selectedItem && this.state.selectedItem.modules)
-                    ? this.state.selectedItem.modules
-                    : []} options={{
-                    placeholder: 'Modules...',
-                    allowClear: true
-                  }} onChange={(event) => this.updateMultiSelect(event.currentTarget, 'modules')}/>
-                  <Select2 style={{
-                    width: '100%'
-                  }} multiple data={activities} value={(this.state.selectedItem && this.state.selectedItem.activities)
-                    ? this.state.selectedItem.activities
-                    : []} options={{
-                    placeholder: 'Activities...',
-                    allowClear: true
-                  }} onChange={(event) => this.updateMultiSelect(event.currentTarget, 'activities')}/>
-                  <input type="text" className="input-field slack-input" ref="slack-input" placeholder="Slack token ID" value={slackToken} onChange={(event) => this.updateInput(event, 'slackToken')}/>
+                <div
+                  className={classNames({
+                    hidden: (this.state.type !== 'subjects')
+                  })}
+                >
+                  <Select2
+                    style={{
+                      width: '100%'
+                    }} multiple data={users} value={(this.state.selectedItem && this.state.selectedItem.teachers)
+                      ? this.state.selectedItem.teachers
+                      : []} options={{
+                        placeholder: 'Teacher(s)...',
+                        allowClear: true
+                      }}
+                    onChange={event => this.updateMultiSelect(event.currentTarget, 'teachers')}
+                  />
+                  <Select2
+                    style={{
+                      width: '100%'
+                    }} multiple data={modules} value={(this.state.selectedItem && this.state.selectedItem.modules)
+                      ? this.state.selectedItem.modules
+                      : []} options={{
+                        placeholder: 'Modules...',
+                        allowClear: true
+                      }}
+                    onChange={event => this.updateMultiSelect(event.currentTarget, 'modules')}
+                  />
+                  <Select2
+                    style={{
+                      width: '100%'
+                    }} multiple data={activities} value={(this.state.selectedItem && this.state.selectedItem.activities)
+                      ? this.state.selectedItem.activities
+                      : []} options={{
+                        placeholder: 'Activities...',
+                        allowClear: true
+                      }}
+                    onChange={event => this.updateMultiSelect(event.currentTarget, 'activities')}
+                  />
+                  <input
+                    type="text"
+                    className="input-field slack-input"
+                    ref="slack-input"
+                    placeholder="Slack token ID"
+                    value={slackToken}
+                    onChange={event => this.updateInput(event, 'slackToken')}
+                  />
                 </div>
 
-                <div className={classNames({
-                  hidden: (this.state.type !== 'modules' && this.state.type !== 'activities')
-                })}>
-                  <Select2 style={{
-                    width: '100%'
-                  }} multiple data={users} value={(this.state.selectedItem && this.state.selectedItem.authors)
-                    ? this.state.selectedItem.authors
-                    : []} options={{
-                    placeholder: 'Author(s)...',
-                    allowClear: true
-                  }} onChange={(event) => this.updateMultiSelect(event.currentTarget, 'authors')}/>
+                <div
+                  className={classNames({
+                    hidden: (this.state.type !== 'modules' && this.state.type !== 'activities')
+                  })}
+                >
+                  <Select2
+                    style={{
+                      width: '100%'
+                    }} multiple data={users} value={(this.state.selectedItem && this.state.selectedItem.authors)
+                      ? this.state.selectedItem.authors
+                      : []} options={{
+                        placeholder: 'Author(s)...',
+                        allowClear: true
+                      }}
+                    onChange={event => this.updateMultiSelect(event.currentTarget, 'authors')}
+                  />
                 </div>
 
                 <div className="clearfix">
-                  <div className={classNames('dates-wrapper', {
-                    hidden: (this.state.type !== 'courses') && (this.state.type !== 'activities')
-                  })}>
+                  <div
+                    className={classNames('dates-wrapper', {
+                      hidden: (this.state.type !== 'courses') && (this.state.type !== 'activities')
+                    })}
+                  >
                     <label>{this.state.type === 'courses'
-                        ? 'Enrolment from'
-                        : 'From'}</label><Icon glyph={Calendar} className="icon calendar"/><DatePicker className="input-field date-input" selected={startDate} placeholderText="Date" isClearable={true} selectsStart startDate={startDate} endDate={endDate} onChange={(date) => this.updateDate(date, 'startDate')} dateFormat="YYYY-MM-DD"/>
-                    <label className="date-label">until</label><Icon glyph={Calendar} className="icon calendar"/><DatePicker className="input-field date-input" selected={endDate} placeholderText="Date" isClearable={true} selectsEnd startDate={startDate} endDate={endDate} onChange={(date) => this.updateDate(date, 'endDate')} dateFormat="YYYY-MM-DD"/>
-                    <div className={classNames('grade-wrapper', {
-                      hidden: (this.state.type !== 'activities')
-                    })}>
-                      <label className="date-label">Grade</label><Icon glyph={Calendar} className="icon calendar"/><DatePicker className="input-field date-input" selected={gradeDate} placeholderText="Date" isClearable={true} onChange={(date) => this.updateDate(date, 'gradeDate')} dateFormat="YYYY-MM-DD"/>
+                      ? 'Enrolment from'
+                      : 'From'}
+                    </label>
+                    <Icon glyph={Calendar} className="icon calendar" />
+                    <DatePicker
+                      className="input-field date-input"
+                      selected={startDate}
+                      placeholderText="Date"
+                      isClearable
+                      selectsStart
+                      startDate={startDate}
+                      endDate={endDate}
+                      onChange={newDate => this.updateDate(newDate, 'startDate')}
+                      dateFormat="YYYY-MM-DD"
+                    />
+                    <label className="date-label">until</label>
+                    <Icon glyph={Calendar} className="icon calendar" />
+                    <DatePicker
+                      className="input-field date-input"
+                      selected={endDate}
+                      placeholderText="Date"
+                      isClearable
+                      selectsEnd
+                      startDate={startDate}
+                      endDate={endDate}
+                      onChange={newDate => this.updateDate(newDate, 'endDate')}
+                      dateFormat="YYYY-MM-DD"
+                    />
+                    <div
+                      className={classNames('grade-wrapper', {
+                        hidden: (this.state.type !== 'activities')
+                      })}
+                    >
+                      <label className="date-label">Grade</label>
+                      <Icon glyph={Calendar} className="icon calendar" />
+                      <DatePicker
+                        className="input-field date-input"
+                        selected={gradeDate}
+                        placeholderText="Date"
+                        isClearable
+                        onChange={newDate => this.updateDate(newDate, 'gradeDate')}
+                        dateFormat="YYYY-MM-DD"
+                      />
                     </div>
                   </div>
-                  <div className={classNames('fees-wrapper', {
-                    hidden: (this.state.type !== 'courses')
-                  })}>
-                    <label>Reg. fee €</label><input type="number" min="0" className="input-field fee-input" ref="registration-input" value={registrationFee} onChange={(event) => this.updateInput(event, 'registrationFee')}/>
-                    <label>Credit fee €</label><input type="number" min="0" className="input-field fee-input" ref="credits-input" value={creditFee} onChange={(event) => this.updateInput(event, 'creditFee')}/>
+                  <div
+                    className={classNames('fees-wrapper', {
+                      hidden: (this.state.type !== 'courses')
+                    })}
+                  >
+                    <label>Reg. fee €</label>
+                    <input
+                      type="number"
+                      min="0"
+                      className="input-field fee-input"
+                      ref="registration-input"
+                      value={registrationFee}
+                      onChange={event => this.updateInput(event, 'registrationFee')}
+                    />
+                    <label>Credit fee €</label>
+                    <input
+                      type="number"
+                      min="0"
+                      className="input-field fee-input"
+                      ref="credits-input"
+                      value={creditFee}
+                      onChange={event => this.updateInput(event, 'creditFee')}
+                    />
                   </div>
                 </div>
 
-                <div className={classNames({
-                  hidden: (this.state.type !== 'courses')
-                })}>
-                  <Select2 className="select-items course-level-select" style={{
-                    width: '70%'
-                  }} data={levels} ref="course-level-select" value={(this.state.selectedItem && this.state.selectedItem.level)
-                    ? this.state.selectedItem.level
-                    : ''} options={{
-                    placeholder: 'Course level',
-                    allowClear: false
-                  }} onChange={(event) => this.updateSelect(event.currentTarget, 'level')}/>
-                  <Select2 style={{
-                    width: '100%'
-                  }} multiple data={subjects} value={(this.state.selectedItem && this.state.selectedItem.subjects)
-                    ? this.state.selectedItem.subjects
-                    : []} options={{
-                    placeholder: 'Subjects...',
-                    allowClear: true
-                  }} onChange={(event) => this.updateMultiSelect(event.currentTarget, 'subjects')}/>
+                <div
+                  className={classNames({
+                    hidden: (this.state.type !== 'courses')
+                  })}
+                >
+                  <Select2
+                    className="select-items course-level-select" style={{
+                      width: '70%'
+                    }} data={levels} ref="course-level-select" value={(this.state.selectedItem && this.state.selectedItem.level)
+                      ? this.state.selectedItem.level
+                      : ''} options={{
+                        placeholder: 'Course level',
+                        allowClear: false
+                      }}
+                    onChange={event => this.updateSelect(event.currentTarget, 'level')}
+                  />
+                  <Select2
+                    style={{
+                      width: '100%'
+                    }} multiple data={subjects} value={(this.state.selectedItem && this.state.selectedItem.subjects)
+                      ? this.state.selectedItem.subjects
+                      : []} options={{
+                        placeholder: 'Subjects...',
+                        allowClear: true
+                      }}
+                    onChange={event => this.updateMultiSelect(event.currentTarget, 'subjects')}
+                  />
                 </div>
 
-                <div className={classNames('clearfix', {
-                  hidden: (this.state.type === 'levels') || (this.state.type === 'users') || (this.state.type === 'groups') || (this.state.type === 'files')
-                })}>
+                <div
+                  className={classNames('clearfix', {
+                    hidden: (this.state.type === 'levels') || (this.state.type === 'users') || (this.state.type === 'groups') || (this.state.type === 'files')
+                  })}
+                >
                   <div className="file-settings-block">
-                    <Select2 style={{
-                      width: '100%'
-                    }} data={files} options={{
-                      placeholder: 'Select a file to copy its URL...',
-                      allowClear: true,
-                      templateResult: this.formatFileType,
-                      templateSelection: this.formatFileType
-                    }} onChange={(event) => this.fileSelected(event.currentTarget)}/>
+                    <Select2
+                      style={{
+                        width: '100%'
+                      }}
+                      data={files}
+                      options={{
+                        placeholder: 'Select a file to copy its URL...',
+                        allowClear: true,
+                        templateResult: Admin.formatFileType,
+                        templateSelection: Admin.formatFileType
+                      }}
+                      onChange={event => this.fileSelected(event.currentTarget)}
+                    />
                     <label className="option-label">Featured image</label>
                     <span>{(this.state.selectedItem && this.state.selectedItem.featuredImage)
-                        ? <a href={this.props.files[this.state.selectedItem.featuredImage]
+                        ? <a
+                          href={this.props.files[this.state.selectedItem.featuredImage]
                             ? this.props.files[this.state.selectedItem.featuredImage].url
-                            : ''} target="_blank">{this.props.files[this.state.selectedItem.featuredImage]
-                              ? this.props.files[this.state.selectedItem.featuredImage].file
-                              : ''}</a>
+                            : ''} target="_blank" rel="noopener noreferrer"
+                        >{this.props.files[this.state.selectedItem.featuredImage]
+                          ? this.props.files[this.state.selectedItem.featuredImage].file
+                          : ''}</a>
                         : 'none'}</span>
-                    <button className={classNames('btn btn-cancel btn-xs', {
-                      visible: (this.state.selectedItem && this.state.selectedItem.featuredImage && this.state.selectedItem.featuredImage !== '')
-                    })} onClick={() => this.updateItem('', 'featuredImage')}>unlink</button>
+                    <button
+                      className={classNames('btn btn-cancel btn-xs', {
+                        visible: (this.state.selectedItem && this.state.selectedItem.featuredImage && this.state.selectedItem.featuredImage !== '')
+                      })} onClick={() => this.updateItem('', 'featuredImage')}
+                    >unlink</button>
                   </div>
                   <div className="featured-image-wrapper">
                     {(this.state.selectedItem && this.state.selectedItem.featuredImage)
-                      ? <img className="featured-image" src={this.props.files[this.state.selectedItem.featuredImage]
+                      ? <img
+                        alt=""
+                        className="featured-image" src={this.props.files[this.state.selectedItem.featuredImage]
                           ? this.props.files[this.state.selectedItem.featuredImage].url
-                          : ''}/>
+                          : ''}
+                      />
                       : <button className="btn btn-primary btn-xs btn-featured-image disabled" ref="btn-featured-image" onClick={() => this.updateItem(this.selectedImage, 'featuredImage')}>Set as featured image</button>}
                   </div>
                 </div>
 
-                <div className={classNames({
-                  hidden: (this.state.type === 'users' || this.state.type === 'files')
-                })}>
-                  <h4 className="heading active" ref="editor1-heading" onClick={() => (this.toggleElement('editor1-heading'), this.toggleElement('editor1-wrapper'))}>Primary content block<Icon glyph={Forward}/></h4>
+                <div
+                  className={classNames({
+                    hidden: (this.state.type === 'users' || this.state.type === 'files')
+                  })}
+                >
+                  <h4 className="heading active" ref="editor1-heading" onClick={() => ((this.toggleElement('editor1-heading'), this.toggleElement('editor1-wrapper')))}>Primary content block<Icon glyph={Forward} /></h4>
                   <div className="editor-wrapper active" ref="editor1-wrapper">
-                    <SimpleMDE options={{
-                      spellChecker: false
-                    }} ref="editor1" value={(this.state.selectedItem && this.state.selectedItem.content1)
+                    <SimpleMDE
+                      options={{
+                        spellChecker: false
+                      }} ref="editor1" value={(this.state.selectedItem && this.state.selectedItem.content1)
                       ? this.state.selectedItem.content1
-                      : ''} onChange={(event) => this.updateItem(event, 'content1')}/>
+                      : ''} onChange={event => this.updateItem(event, 'content1')}
+                    />
                   </div>
                 </div>
 
-                <div className={classNames({
-                  hidden: (this.state.type === 'levels' || this.state.type === 'users' || this.state.type === 'posts' || this.state.type === 'files')
-                })}>
-                  <h4 className="heading" ref="editor2-heading" onClick={() => (this.toggleElement('editor2-heading'), this.toggleElement('editor2-wrapper'))}>Secondary content block<Icon glyph={Forward}/></h4>
+                <div
+                  className={classNames({
+                    hidden: (this.state.type === 'levels' || this.state.type === 'users' || this.state.type === 'posts' || this.state.type === 'files')
+                  })}
+                >
+                  <h4 className="heading" ref="editor2-heading" onClick={() => ((this.toggleElement('editor2-heading'), this.toggleElement('editor2-wrapper')))}>Secondary content block<Icon glyph={Forward} /></h4>
                   <div className="editor-wrapper" ref="editor2-wrapper">
-                    <SimpleMDE options={{
-                      spellChecker: false
-                    }} ref="editor2" value={(this.state.selectedItem && this.state.selectedItem.content2)
-                      ? this.state.selectedItem.content2
-                      : ''} onChange={(event) => this.updateItem(event, 'content2')}/>
+                    <SimpleMDE
+                      options={{
+                        spellChecker: false
+                      }} ref="editor2" value={(this.state.selectedItem && this.state.selectedItem.content2)
+                        ? this.state.selectedItem.content2
+                        : ''} onChange={event => this.updateItem(event, 'content2')}
+                    />
                   </div>
 
-                  <h4 className="heading" ref="editor3-heading" onClick={() => (this.toggleElement('editor3-heading'), this.toggleElement('editor3-wrapper'))}>Tertiary content block<Icon glyph={Forward}/></h4>
+                  <h4 className="heading" ref="editor3-heading" onClick={() => ((this.toggleElement('editor3-heading'), this.toggleElement('editor3-wrapper')))}>Tertiary content block<Icon glyph={Forward} /></h4>
                   <div className="editor-wrapper" ref="editor3-wrapper">
-                    <SimpleMDE options={{
-                      spellChecker: false
-                    }} ref="editor3" value={(this.state.selectedItem && this.state.selectedItem.content3)
-                      ? this.state.selectedItem.content3
-                      : ''} onChange={(event) => this.updateItem(event, 'content3')}/>
+                    <SimpleMDE
+                      options={{
+                        spellChecker: false
+                      }} ref="editor3" value={(this.state.selectedItem && this.state.selectedItem.content3)
+                        ? this.state.selectedItem.content3
+                        : ''} onChange={event => this.updateItem(event, 'content3')}
+                    />
                   </div>
                 </div>
 
-                <div className={classNames({
-                  hidden: (this.state.type !== 'courses')
-                })}>
-                  <h4 className="heading" ref="editor-fees-heading" onClick={() => (this.toggleElement('editor-fees-heading'), this.toggleElement('editor-fees-wrapper'))}>Fees<Icon glyph={Forward}/></h4>
+                <div
+                  className={classNames({
+                    hidden: (this.state.type !== 'courses')
+                  })}
+                >
+                  <h4 className="heading" ref="editor-fees-heading" onClick={() => ((this.toggleElement('editor-fees-heading'), this.toggleElement('editor-fees-wrapper')))}>Fees<Icon glyph={Forward} /></h4>
                   <div className="editor-wrapper" ref="editor-fees-wrapper">
-                    <SimpleMDE options={{
-                      spellChecker: false
-                    }} ref="editor-fees" value={(this.state.selectedItem && this.state.selectedItem.fees)
-                      ? this.state.selectedItem.fees
-                      : ''} onChange={(event) => this.updateItem(event, 'fees')}/>
+                    <SimpleMDE
+                      options={{
+                        spellChecker: false
+                      }} ref="editor-fees" value={(this.state.selectedItem && this.state.selectedItem.fees)
+                        ? this.state.selectedItem.fees
+                        : ''} onChange={event => this.updateItem(event, 'fees')}
+                    />
                   </div>
 
-                  <h4 className="heading" ref="editor-requirements-heading" onClick={() => (this.toggleElement('editor-requirements-heading'), this.toggleElement('editor-requirements-wrapper'))}>Requirements<Icon glyph={Forward}/></h4>
+                  <h4 className="heading" ref="editor-requirements-heading" onClick={() => ((this.toggleElement('editor-requirements-heading'), this.toggleElement('editor-requirements-wrapper')))}>Requirements<Icon glyph={Forward} /></h4>
                   <div className="editor-wrapper" ref="editor-requirements-wrapper">
-                    <SimpleMDE options={{
-                      spellChecker: false
-                    }} ref="editor-requirements" value={(this.state.selectedItem && this.state.selectedItem.requirements)
-                      ? this.state.selectedItem.requirements
-                      : ''} onChange={(event) => this.updateItem(event, 'requirements')}/>
+                    <SimpleMDE
+                      options={{
+                        spellChecker: false
+                      }} ref="editor-requirements" value={(this.state.selectedItem && this.state.selectedItem.requirements)
+                        ? this.state.selectedItem.requirements
+                        : ''} onChange={event => this.updateItem(event, 'requirements')}
+                    />
                   </div>
                 </div>
 
-                <div className={classNames({
-                  hidden: (this.state.type !== 'files')
-                })}>
+                <div
+                  className={classNames({
+                    hidden: (this.state.type !== 'files')
+                  })}
+                >
                   <div>
                     {(this.state.selectedItem && this.state.selectedItem.url)
                       ? <div>
-                          <div className="clearfix file-download">
-                            <Icon glyph={LinkIcon}/>
-                            <a href={this.state.selectedItem.url} target="_blank">View/download file</a>
-                          </div>
-                          <div className="file-metadata">
-                            <img src={`http://www.stdicon.com/crystal/${fileContentType}?size=24`}/>
-                            <span>File metadata</span>
-                            <ul>
-                              <li>
-                                <span>Original file name:</span>{this.state.selectedItem.file}</li>
-                              <li>
-                                <span>Content type:</span>{fileContentType}</li>
-                              <li>
-                                <span>File size:</span>{fileSize}</li>
-                              <li>
-                                <span>Created on:</span>{fileCreatedOn}</li>
-                              <li>
-                                <span>Updated on:</span>{fileUpdatedOn}</li>
-                            </ul>
-                          </div>
-                          {(fileContentType.indexOf('image') !== -1)
-                            ? <img className="file-preview" src={this.state.selectedItem.url}/>
-                            : (fileContentType.indexOf('video') !== -1)
-                              ? <video className="file-preview" src={this.state.selectedItem.url} controls></video>
-                              : <object className="file-preview" data={this.state.selectedItem.url} width="50%" height="80%" type={fileContentType}></object>}
+                        <div className="clearfix file-download">
+                          <Icon glyph={LinkIcon} />
+                          <a href={this.state.selectedItem.url} target="_blank" rel="noopener noreferrer">View/download file</a>
                         </div>
+                        <div className="file-metadata">
+                          <img alt="" src={`http://www.stdicon.com/crystal/${fileContentType}?size=24`} />
+                          <span>File metadata</span>
+                          <ul>
+                            <li>
+                              <span>Original file name:</span>{this.state.selectedItem.file}</li>
+                            <li>
+                              <span>Content type:</span>{fileContentType}</li>
+                            <li>
+                              <span>File size:</span>{fileSize}</li>
+                            <li>
+                              <span>Created on:</span>{fileCreatedOn}</li>
+                            <li>
+                              <span>Updated on:</span>{fileUpdatedOn}</li>
+                          </ul>
+                        </div>
+                        {(fileContentType.indexOf('image') !== -1)
+                          ? <img alt="" className="file-preview" src={this.state.selectedItem.url} /> : null}
+                        {(fileContentType.indexOf('video') !== -1)
+                          ? <video className="file-preview" src={this.state.selectedItem.url} controls />
+                          : <object className="file-preview" data={this.state.selectedItem.url} width="50%" height="80%" type={fileContentType} />}
+                      </div>
                       : <div>
-                        <input type="file" className="file-input" ref="file-input" placeholder="Select file" onChange={(event) => this.updateFile(event, 'file')}/>
+                        <input type="file" className="file-input" ref="file-input" placeholder="Select file" onChange={event => this.updateFile(event, 'file')} />
                         <span className="file-upload-wrapper">Uploading {(this.tempFile)
                             ? this.tempFile.name
                             : ''}
-                          <progress className="file-progress" max="100" value="0"></progress>
+                          <progress className="file-progress" max="100" value="0" />
                           <button className="btn btn-outline btn-xs" ref="pause-upload" onClick={() => this.changeUploadStatus('paused')}>pause</button>
                           <button className="btn btn-cancel btn-xs" ref="cancel-upload" onClick={() => this.changeUploadStatus('cancelled')}>cancel</button>
                         </span>
@@ -969,29 +1165,31 @@ class Admin extends Component {
                   </div>
                 </div>
 
-                <h4 className="heading" ref="editor-notes-heading" onClick={() => (this.toggleElement('editor-notes-heading'), this.toggleElement('editor-notes-wrapper'))}>Private notes<Icon glyph={Forward}/></h4>
+                <h4 className="heading" ref="editor-notes-heading" onClick={() => ((this.toggleElement('editor-notes-heading'), this.toggleElement('editor-notes-wrapper')))}>Private notes<Icon glyph={Forward} /></h4>
                 <div className="editor-wrapper" ref="editor-notes-wrapper">
-                  <SimpleMDE options={{
-                    spellChecker: false
-                  }} ref="editor-notes" value={(this.state.selectedItem && this.state.selectedItem.notes)
-                    ? this.state.selectedItem.notes
-                    : ''} onChange={(event) => this.updateItem(event, 'notes')}/>
+                  <SimpleMDE
+                    options={{
+                      spellChecker: false
+                    }} ref="editor-notes" value={(this.state.selectedItem && this.state.selectedItem.notes)
+                      ? this.state.selectedItem.notes
+                      : ''} onChange={event => this.updateItem(event, 'notes')}
+                  />
                 </div>
 
                 <label className="checkbox-label">Active
-                </label><input type="checkbox" className="status-checkbox" ref="status-checkbox" checked={status} onChange={(event) => this.updateCheckbox(event, 'status')}/>
+                </label><input type="checkbox" className="status-checkbox" ref="status-checkbox" checked={status} onChange={event => this.updateCheckbox(event, 'status')} />
 
                 <div className="footer-buttons">
                   <button className="btn btn-cancel btn-xs float-left" ref="remove" onClick={() => this.delete()}>remove from {this.state.type}</button>
                   <button className="btn btn-primary btn-xs float-right btn-save" ref="save" onClick={() => this.save()}>save in {this.state.type}</button>
                   <button className="btn btn-outline btn-xs float-right" ref="cancel" onClick={() => this.cancel()}>cancel</button>
-                  <div className="loader-small" ref="loader"></div>
+                  <div className="loader-small" ref="loader" />
                 </div>
               </div>
             </div>
           </div>
-        : <div className="loader-small inverted"></div>}
-        <ModalBox title={this.state.modalTitle} answer={this.modalBoxAnswer.bind(this)}/>
+        : <div className="loader-small inverted" />}
+        <ModalBox title={this.state.modalTitle} answer={this.modalBoxAnswer} />
       </section>
     );
   }
