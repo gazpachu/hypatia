@@ -1,7 +1,7 @@
 {
-  "name": "hypatia",
-  "version": "0.1.6",
-  "description": "Open Realtime Education. Hypatia is a FREE, Open Source LMS (Learning Management System) focussed in UX and remote coworking. You can use it to build your online school, academy or university.",
+  "name": "nekomy",
+  "version": "0.1.7",
+  "description": "An open source LMS (eLearning platform) for MOOCs and online courses",
   "scripts": {
     "dev": "webpack-dev-server --config ./webpack/webpack-dev.config.js --watch --colors",
     "build": "npm version patch && rm -rf dist && webpack --config ./webpack/webpack-prod.config.js --colors",
@@ -11,15 +11,16 @@
     "education",
     "react",
     "lms",
+    "mooc",
     "realtime",
     "firebase",
     "redux"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/theonapps/hypatia"
+    "url": "git+https://github.com/nekomy/nekomy-platform"
   },
-  "author": "Joan Mira <hello@theon.io> (http://theon.io)",
+  "author": "Nekomy <hello@nekomy.com> (http://nekomy.com)",
   "license": "GPL-2.0",
   "dependencies": {
     "classnames": "^2.2.5",
