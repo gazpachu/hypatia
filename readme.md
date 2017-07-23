@@ -1,7 +1,6 @@
 # Nekomy. An open source LMS (eLearning platform) for MOOCs and online courses
 
 [![Build Status](https://travis-ci.org/nekomy/nekomy-platform.svg?branch=master)](https://travis-ci.org/nekomy/nekomy-platform)
-[![Github All Releases](https://img.shields.io/github/downloads/nekomy/nekomy-platform/total.svg)]()
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 [![Slack Group](http://slack.nekomy.com/badge.svg)](http://slack.nekomy.com)
 
@@ -132,4 +131,4 @@ Icons from Flaticon.com (Freepik and Madebyoliver), triangles background by rvik
 
 ## Copyright & License
 
-Copyright (c) 2016-2017 Joan Siddharta Mira Martos (Theon.io) - Released under the [GPLv2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html) license.
+Copyright (c) 2016-2017 Nekomy - Released under the [GPLv2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html) license.
