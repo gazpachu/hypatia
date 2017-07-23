@@ -6,7 +6,6 @@ import _ from 'lodash';
 import classNames from 'classnames';
 import SimpleMDE from 'react-simplemde-editor';
 import Select2 from 'react-select2-wrapper';
-// import 'react-select2-wrapper/css/select2.css';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import { history } from '../../store';
@@ -32,7 +31,7 @@ import Forward from '../../../../static/svg/forward.svg';
 
 const { isLoaded, isEmpty, dataToJS } = helpers;
 
-connect(state => ({
+@connect(state => ({
   users: dataToJS(state.firebase, 'users'),
   levels: dataToJS(state.firebase, 'levels'),
   groups: dataToJS(state.firebase, 'groups'),
@@ -49,8 +48,8 @@ connect(state => ({
   userData: dataToJS(state.firebase, `users/${state.mainReducer.user
     ? state.mainReducer.user.uid
     : ''}`)
-}));
-firebase(props => ([
+}))
+@firebase(props => ([
   'users',
   'levels',
   'groups',
@@ -62,7 +61,7 @@ firebase(props => ([
   'pages',
   'files',
   `users/${props.userID}`
-]));
+]))
 class Admin extends Component {
 
   static formatFileType(state) {

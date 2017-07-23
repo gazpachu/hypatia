@@ -32,12 +32,12 @@ const propTypes = {
 
 const { isLoaded, isEmpty, dataToJS } = helpers;
 
+@firebase(() => (['subjects', 'activities', 'users']))
 @connect(state => ({
   users: dataToJS(state.firebase, 'users'),
   subjects: dataToJS(state.firebase, 'subjects'),
   activities: dataToJS(state.firebase, 'activities')
 }))
-@firebase(() => (['subjects', 'activities', 'users']))
 class Dashboard extends Component {
 
   componentDidMount() {
@@ -49,7 +49,9 @@ class Dashboard extends Component {
     let subjects = null;
     const activities = [];
 
-    if (isLoaded(this.props.subjects) && !isEmpty(this.props.subjects) && isLoaded(this.props.activities) && !isEmpty(this.props.activities) && isLoaded(this.props.users) && !isEmpty(this.props.users)) {
+    if (isLoaded(this.props.subjects) && !isEmpty(this.props.subjects) &&
+    isLoaded(this.props.activities) && !isEmpty(this.props.activities) &&
+    isLoaded(this.props.users) && !isEmpty(this.props.users)) {
       subjects = Object.keys(this.props.users[this.props.user.uid].courses).map((key) => {
         const course = this.props.users[this.props.user.uid].courses[key];
 
@@ -85,9 +87,11 @@ class Dashboard extends Component {
           if (this.props.subjects[subject].teachers) {
             for (let i = 0; i < this.props.subjects[subject].teachers.length; i += 1) {
               const teacher = this.props.users[this.props.subjects[subject].teachers[i]];
-              teachers += `${teacher.info.firstName} ${teacher.info.lastName1}`;
-              if (i < this.props.subjects[subject].teachers.length - 1) {
-                teachers += ', ';
+              if (teacher) {
+                teachers += `${teacher.info.firstName} ${teacher.info.lastName1}`;
+                if (i < this.props.subjects[subject].teachers.length - 1) {
+                  teachers += ', ';
+                }
               }
             }
           }

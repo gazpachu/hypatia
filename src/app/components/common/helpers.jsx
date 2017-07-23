@@ -22,7 +22,7 @@ $.fn.extend({
 });
 
 // String capitalization
-String.prototype.capitalize = () => this.charAt(0).toUpperCase() + this.slice(1);
+String.prototype.capitalize = () => (this ? this.charAt(0).toUpperCase() + this.slice(1) : null);
 
 // Common app methods
 module.exports = {
