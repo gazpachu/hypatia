@@ -2,16 +2,14 @@
 
 [![Build Status](https://travis-ci.org/nekomy/nekomy-platform.svg?branch=master)](https://travis-ci.org/nekomy/nekomy-platform)
 [![Github All Releases](https://img.shields.io/github/downloads/nekomy/nekomy-platform/total.svg)]()
-[![npm](https://img.shields.io/theonapps/license/nekomy.svg)]()
-[![Slack Group](https://slack.nekomy.com/badge.svg)](http://slack.nekomy.com)
+[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
+[![Slack Group](http://slack.nekomy.com/badge.svg)](http://slack.nekomy.com)
 
-Now accepting contributors. If you are interested, please [join the Slack group](http://slack.nekomy.com).
+The project is currently under development, with continuous changes and some bits and bobs not working. Feel free to test it if you like but don't expect it to be production-ready. If you are interested in contributing, please [join the Slack group](http://slack.nekomy.com) and have a look at the [project backlog](https://github.com/nekomy/nekomy-platform/projects/1) to see if you can pick something up.
 
-The project is currently under development, with continuous changes and some bits and bobs not working. Feel free to test it if you like but don't expect it to be production-ready until mid 2017.
+Demo: [https://hypatia-8d923.firebaseapp.com](https://hypatia-8d923.firebaseapp.com) (Sign up with a valid email is required to access some pages)
 
-Demo: [https://hypatia-8d923.firebaseapp.com](https://hypatia-8d923.firebaseapp.com) (You need to sign up with a valid email address to access some pages)
-
-Provisional project's website: [https://github.com/nekomy/nekomy-platform/](https://github.com/nekomy/nekomy-platform/)
+Provisional project's website: [https://nekomy.github.io/nekomy-platform/](https://nekomy.github.io/nekomy-platform/)
 
 Slack group: [http://slack.nekomy.com](http://slack.nekomy.com)
 

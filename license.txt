@@ -1,4 +1,4 @@
-Hypatia LMS: Realtime Open Education
+Nekomy Platform: Realtime Open Education
 
 Copyright 2016-2017 by the contributors
 
@@ -23,7 +23,7 @@ permission notices:
 
   Copyright 2016-2017 by the contributors
 
-  Hypatia is released under the GPL
+  Nekomy Platform is released under the GPL
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -370,6 +370,6 @@ Public License instead of this License.
 WRITTEN OFFER
 
 The source code for any program binaries or compressed scripts that are
-included with Hypatia can be freely obtained at the following URL:
+included with Nekomy Platform can be freely obtained at the following URL:
 
-	https://github.com/theonapps/hypatia
+	https://github.com/nekomy/nekomy-platform
