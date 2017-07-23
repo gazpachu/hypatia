@@ -1,10 +1,10 @@
 {
   "name": "nekomy",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "An open source LMS (eLearning platform) for MOOCs and online courses",
   "scripts": {
     "dev": "webpack-dev-server --config ./webpack/webpack-dev.config.js --watch --colors",
-    "build": "npm version patch && rm -rf dist && webpack --config ./webpack/webpack-prod.config.js --colors",
+    "build": "rm -rf dist && webpack --config ./webpack/webpack-prod.config.js --colors",
     "lint": "eslint src test webpack"
   },
   "keywords": [
