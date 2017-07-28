@@ -5795,7 +5795,7 @@ redux-promise@^0.5.3:
   dependencies:
     flux-standard-action "^0.6.1"
 
-redux-react-firebase@^2.5.3:
+redux-react-firebase@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/redux-react-firebase/-/redux-react-firebase-2.6.1.tgz#218db13c0e44b7aad6dddd5759c76f76682d64e7"
   dependencies:

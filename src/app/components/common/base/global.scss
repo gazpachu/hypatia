@@ -24,12 +24,12 @@ body {
 //    transform: skewY(-8deg);
 //    transform-origin: 0;
     background: linear-gradient(150deg, #53f 15%, #05d5ff 70%, #5897fb 94%);
-	
+
 	&:before {
 		content: '';
 		position: absolute;
 		z-index: 0;
-		background-image: url('/static/img/triangles.jpg');
+		background-image: url('/app/static/img/triangles.jpg');
 		background-size: cover;
 		width: 100%;
 		height: 100%;
@@ -95,7 +95,7 @@ body {
 		right: 20px;
 		fill: $darkest-grey;
 		cursor: pointer;
-	}		
+	}
 }
 
 .icon {

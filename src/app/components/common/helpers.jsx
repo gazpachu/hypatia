@@ -119,23 +119,25 @@ module.exports = {
   },
 
   getAppVersion: (element) => {
-    $.ajax('/static/version.json').done((response) => {
-      const date = new Date(response.version.buildDate);
-      const monthNames = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December'
-      ];
-      $(element).html(`v${response.version.version} (Built on ${date.getDate()} ${monthNames[date.getMonth()]} ${date.getFullYear()})`);
+    $.ajax('/app/static/version.json').done((response) => {
+      if (response) {
+        const date = new Date(response.version.buildDate);
+        const monthNames = [
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December'
+        ];
+        $(element).html(`v${response.version.version} (Built on ${date.getDate()} ${monthNames[date.getMonth()]} ${date.getFullYear()})`);
+      }
     });
   }
 };

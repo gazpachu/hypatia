@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const WebpackVersionFilePlugin = require('webpack-version-file-plugin');
 
 module.exports = (options) => {
   const appName = 'app';
@@ -63,6 +64,11 @@ module.exports = (options) => {
         }]
     },
     plugins: [
+      new WebpackVersionFilePlugin({
+        packageFile: Path.join(__dirname, '../package.json'),
+        template: Path.join(__dirname, '../version.ejs'),
+        outputFile: Path.join(__dirname, '../static/version.json')
+      }),
       new Webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: JSON.stringify(options.isProduction
