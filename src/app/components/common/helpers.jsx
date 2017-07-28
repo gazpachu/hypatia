@@ -31,7 +31,7 @@ module.exports = {
     let newList = [];
     const path = type;
 
-    if (type === 'news') {
+    if (type === 'blog') {
       type = 'posts';
     }
 

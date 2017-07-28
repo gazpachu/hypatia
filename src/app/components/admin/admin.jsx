@@ -104,7 +104,7 @@ class Admin extends Component {
   componentWillReceiveProps(newProps) {
     if (newProps.location.pathname !== this.state.loadedPath) {
       if (newProps.params.type && newProps.params.action) {
-        if (isLoaded(newProps[newProps.params.type]) && !isEmpty(newProps[newProps.params.type])) {
+        if (isLoaded(newProps[newProps.params.type])) {
           if (newProps.params.action === 'new') {
             this.setState({
               loadedPath: newProps.location.pathname
@@ -555,7 +555,7 @@ class Admin extends Component {
     const gradeDate = (this.state.selectedItem && this.state.selectedItem.gradeDate)
       ? moment(this.state.selectedItem.gradeDate)
       : null;
-    const status = (this.state.selectedItem && this.state.selectedItem.status && this.state.selectedItem.status === 'inactive');
+    const status = (this.state.selectedItem && this.state.selectedItem.status && this.state.selectedItem.status === 'active');
     const slackToken = this.state.selectedItem && this.state.selectedItem.slackToken
       ? this.state.selectedItem.slackToken
       : '';
@@ -583,7 +583,8 @@ class Admin extends Component {
 
     return (
       <section className="admin page container-fluid">
-        {(!isEmpty(levels) && !isEmpty(groups) && !isEmpty(courses) && !isEmpty(subjects) && !isEmpty(modules) && !isEmpty(activities) && !isEmpty(posts) && !isEmpty(pages))
+        {(isLoaded(levels) && isLoaded(groups) && isLoaded(courses) && isLoaded(subjects) &&
+          isLoaded(modules) && isLoaded(activities) && isLoaded(posts) && isLoaded(pages))
           ? <div className="columns">
             <div className="nav column">
               <div className="block clearfix">

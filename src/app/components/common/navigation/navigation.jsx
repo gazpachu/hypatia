@@ -64,9 +64,9 @@ const defaultProps = {
       link: '/activities'
     }, {
       id: 5,
-      title: 'News',
+      title: 'Blog',
       icon: Post,
-      link: '/news'
+      link: '/blog'
     }, {
       id: 6,
       title: 'About',

@@ -91,8 +91,8 @@ ReactDOM.render(
         <Route path="/modules/:slug" component={Module} />
         <Route path="/activities" component={Listing} />
         <Route path="/activities/:slug" component={Activity} />
-        <Route path="/news" component={Listing} />
-        <Route path="/news/:slug" component={Post} />
+        <Route path="/blog" component={Listing} />
+        <Route path="/blog/:slug" component={Post} />
         <Route path="/about" component={Page} />
         <Route path="/about/research" component={Page} />
         <Route path="/about/people" component={Page} />

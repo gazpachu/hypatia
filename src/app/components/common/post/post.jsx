@@ -36,7 +36,7 @@ class Post extends Component {
     let post = null;
     let featuredImage = null;
 
-    if (isLoaded(this.props.post) && isLoaded(this.props.files) && !isEmpty(this.props.post) && !isEmpty(this.props.files)) {
+    if (isLoaded(this.props.post) && isLoaded(this.props.files) && !isEmpty(this.props.post)) {
       Object.keys(this.props.post).map((key) => {
         post = this.props.post[key];
         if (post.featuredImage) {

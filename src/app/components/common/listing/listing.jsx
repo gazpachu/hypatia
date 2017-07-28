@@ -38,11 +38,11 @@ class Listing extends Component {
     let items = null;
     const path = type;
 
-    if (path === 'news') {
+    if (path === 'blog') {
       type = 'posts';
     }
 
-    if (isLoaded(this.props[type]) && !isEmpty(this.props[type]) && isLoaded(this.props.files) && !isEmpty(this.props.files)) {
+    if (isLoaded(this.props[type]) && !isEmpty(this.props[type]) && isLoaded(this.props.files)) {
       items = <ul className="cards-list">{Helpers.renderCards(path, this.props)}</ul>;
     } else {
       items = <div className="loader-small" />;

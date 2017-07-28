@@ -13,7 +13,6 @@ const { isLoaded, isEmpty, dataToJS } = helpers;
 @firebase(['files', 'posts', 'courses', 'levels'])
 @connect(state => ({
   files: dataToJS(state.firebase, 'files'),
-  posts: dataToJS(state.firebase, 'posts'),
   courses: dataToJS(state.firebase, 'courses'),
   levels: dataToJS(state.firebase, 'levels')
 }))
@@ -32,14 +31,7 @@ class Home extends Component {
   }
 
   render() {
-    let postsList = null;
     let coursesList = null;
-
-    if (isLoaded(this.props.posts) && !isEmpty(this.props.posts) && isLoaded(this.props.files) && !isEmpty(this.props.files)) {
-      postsList = <ul className="cards-list courses-list">{Helpers.renderCards('news', this.props)}</ul>;
-    } else {
-      postsList = <div className="loader-small" />;
-    }
 
     if (isLoaded(this.props.courses) && !isEmpty(this.props.courses) && isLoaded(this.props.files) && !isEmpty(this.props.files) && isLoaded(this.props.levels) && !isEmpty(this.props.levels)) {
       coursesList = <ul className="cards-list posts-list">{Helpers.renderCards('courses', this.props)}</ul>;
@@ -147,10 +139,6 @@ class Home extends Component {
         <div className="cards courses">
           <h2 className="cards-heading">Most popular courses</h2>
           {coursesList}
-        </div>
-        <div className="cards posts">
-          <h2 className="cards-heading">Latest news</h2>
-          {postsList}
         </div>
       </section>
     );
