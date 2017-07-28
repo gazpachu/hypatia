@@ -7,8 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebpackVersionFilePlugin = require('webpack-version-file-plugin');
 
 module.exports = (options) => {
-  const appName = 'app';
-  const ExtractSASS = new ExtractTextPlugin(`${appName}/styles/${options.cssFileName}`);
+  const ExtractSASS = new ExtractTextPlugin(`styles/${options.cssFileName}`);
   const VENDOR_LIBS = [
     'history',
     'jquery',
@@ -87,17 +86,17 @@ module.exports = (options) => {
   };
 
   if (options.isProduction) {
-    webpackConfig.output.filename = `${appName}/scripts/[name].[chunkhash].js`;
+    webpackConfig.output.filename = 'scripts/[name].[chunkhash].js';
 
     webpackConfig.plugins.push(new HtmlWebpackPlugin({
       path: process.env.HOSTING_URL
-        ? `${process.env.HOSTING_URL}/${appName}`
-        : `/${appName}`,
+        ? process.env.HOSTING_URL
+        : '/',
       template: Path.resolve(__dirname, '../src/index.html')
     }), new CopyWebpackPlugin([
       {
         from: 'static',
-        to: `${appName}/static`
+        to: 'static'
       }
     ]), ExtractSASS);
 
@@ -114,8 +113,8 @@ module.exports = (options) => {
           query: {
             limit: 40000,
             name: process.env.HOSTING_URL
-              ? `${process.env.HOSTING_URL}/${appName}/static/img/[name].[hash].[ext]`
-              : `${appName}/static/img/[name].[hash].[ext]`
+              ? `${process.env.HOSTING_URL}/static/img/[name].[hash].[ext]`
+              : 'static/img/[name].[hash].[ext]'
           }
         },
         'image-webpack-loader'

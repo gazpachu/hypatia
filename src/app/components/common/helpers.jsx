@@ -119,7 +119,7 @@ module.exports = {
   },
 
   getAppVersion: (element) => {
-    $.ajax('/app/static/version.json').done((response) => {
+    $.ajax('/static/version.json').done((response) => {
       if (response) {
         const date = new Date(response.version.buildDate);
         const monthNames = [
