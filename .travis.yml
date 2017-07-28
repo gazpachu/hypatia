@@ -10,10 +10,11 @@ before_script:
   - git config --global user.name "TravisCI"
   - git config --global user.email "travisCI@nekomy.com"
   - npm install -g firebase-tools
+  - npm install -g yarn
 
 script:
-  - npm install
-  - npm run build
+  - yarn
+  - yarn run build
 
 after_success:
-  - firebase deploy --token=${FIREBASE_API_TOKEN}
+  - firebase deploy --token=${FIREBASE_API_TOKEN} --non-interactive
