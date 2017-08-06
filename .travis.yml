@@ -18,3 +18,6 @@ script:
 
 after_success:
   - firebase deploy --token=${FIREBASE_API_TOKEN} --non-interactive
+
+notifications:
+    slack: nekomy:${SLACK_API_TOKEN}

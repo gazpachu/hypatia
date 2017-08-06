@@ -78,12 +78,8 @@ const defaultProps = {
           link: '/about'
         }, {
           id: 8,
-          title: 'Research',
-          link: '/about/research'
-        }, {
-          id: 9,
-          title: 'People',
-          link: '/about/people'
+          title: 'Jobs',
+          link: '/about/jobs'
         }, {
           id: 10,
           title: 'Contact',

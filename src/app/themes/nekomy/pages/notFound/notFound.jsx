@@ -18,7 +18,7 @@ class NotFound extends Component {
           <h1 className="title">Page not found :-(</h1>
           <div className="columns single-column">
             <div className="column page-content">
-              <p>Sorry!, Hypatia is still under construction<br />Please check again later. Thanks!</p>
+              <p>Sorry!, Nekomy is still under construction<br />Please check again later. Thanks!</p>
               <img alt="" src="/static/img/404.png" />
               <Link to="/">
                 <button className="btn btn-primary">Go back to the home page</button>
