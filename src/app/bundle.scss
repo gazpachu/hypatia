@@ -14,13 +14,6 @@
 @import './themes/nekomy/components/navigation/navigation';
 @import './themes/nekomy/components/breadcrumbs/breadcrumbs';
 @import './themes/nekomy/components/footer/footer';
-@import './themes/nekomy/components/page/page';
-@import './themes/nekomy/components/post/post';
-@import './themes/nekomy/components/listing/listing';
-@import './themes/nekomy/components/course/course';
-@import './themes/nekomy/components/subject/subject';
-@import './themes/nekomy/components/module/module';
-@import './themes/nekomy/components/activity/activity';
 @import './themes/nekomy/components/search/search';
 @import './themes/nekomy/components/loader/loader';
 @import './themes/nekomy/components/chat/chat';
@@ -35,6 +28,13 @@
 @import './themes/nekomy/pages/notFound/notFound';
 @import './themes/nekomy/pages/account/notifications';
 @import './themes/nekomy/pages/account/settings';
+@import './themes/nekomy/pages/page/page';
+@import './themes/nekomy/pages/post/post';
+@import './themes/nekomy/pages/listing/listing';
+@import './themes/nekomy/pages/course/course';
+@import './themes/nekomy/pages/subject/subject';
+@import './themes/nekomy/pages/module/module';
+@import './themes/nekomy/pages/activity/activity';
 
 // Core admin styles
 @import './core/admin/admin';
