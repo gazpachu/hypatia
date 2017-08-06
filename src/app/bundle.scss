@@ -1,0 +1,41 @@
+// Current theme common styles
+@import './themes/nekomy/styles/variables';
+@import './themes/nekomy/styles/mixins';
+@import './themes/nekomy/styles/utilities';
+@import './themes/nekomy/styles/elements';
+@import './themes/nekomy/styles/buttons';
+@import './themes/nekomy/styles/animations';
+@import './themes/nekomy/styles/cards';
+@import './themes/nekomy/styles/pages';
+@import './themes/nekomy/styles/global';
+
+// Current theme common component styles
+@import './themes/nekomy/components/topnav/topnav';
+@import './themes/nekomy/components/navigation/navigation';
+@import './themes/nekomy/components/breadcrumbs/breadcrumbs';
+@import './themes/nekomy/components/footer/footer';
+@import './themes/nekomy/components/page/page';
+@import './themes/nekomy/components/post/post';
+@import './themes/nekomy/components/listing/listing';
+@import './themes/nekomy/components/course/course';
+@import './themes/nekomy/components/subject/subject';
+@import './themes/nekomy/components/module/module';
+@import './themes/nekomy/components/activity/activity';
+@import './themes/nekomy/components/search/search';
+@import './themes/nekomy/components/loader/loader';
+@import './themes/nekomy/components/chat/chat';
+@import './themes/nekomy/components/calendar/calendar';
+@import './themes/nekomy/components/grades/grades';
+@import './themes/nekomy/components/help/help';
+@import './themes/nekomy/components/notification/notification';
+
+// Current theme page styles
+@import './themes/nekomy/pages/home/home';
+@import './themes/nekomy/pages/dashboard/dashboard';
+@import './themes/nekomy/pages/notFound/notFound';
+@import './themes/nekomy/pages/account/notifications';
+@import './themes/nekomy/pages/account/settings';
+
+// Core admin styles
+@import './core/admin/admin';
+@import './core/common/modalbox/modalbox';

@@ -2,7 +2,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import { browserHistory } from 'react-router';
 import { createStore, compose } from 'redux';
 import { reduxReactFirebase } from 'redux-react-firebase';
-import rootReducer from './reducers/index';
+import rootReducer from './core/reducers/index';
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
