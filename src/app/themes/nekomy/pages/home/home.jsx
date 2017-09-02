@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { firebase, helpers } from 'redux-react-firebase';
 import $ from 'jquery';
+import { Link } from 'react-router';
 import Helpers from '../../../../core/common/helpers';
 import { setLoading } from '../../../../core/actions/actions';
 import Icon from '../../../../core/common/lib/icon/icon';
@@ -52,9 +53,9 @@ class Home extends Component {
             </div>
           </div>
           <div className="elevator-pitch">
-            <p>Nekomy is a <strong>FREE</strong>, Open Source Learning Platform for MOOCs and online courses. It has a special focus on UX and realtime co-working.</p>
+            <p>Nekomy is an international learning platform. You can study anytime, anywhere and network with your classmates around the world! You can also earn money by uploading your courses...</p>
             <p>
-              <button className="btn btn-primary">This button will trigger a tour</button>
+              <button className="btn btn-primary">Upload your course now</button>
             </p>
           </div>
           <div className="circle tooltip usa">JF<div className="spinner" />
@@ -78,10 +79,10 @@ class Home extends Component {
             </span>
           </div>
           <div className="circle tooltip france">FT<div className="spinner" />
-            <span className="tooltip-text top">Fiona Toulouse<span>Paris, France</span>
+            <span className="tooltip-text top">Fiona Toulouse<span>Coding Student</span><span>Paris, France</span>
             </span>
           </div>
-          <div className="circle tooltip active usa2">JL<div className="spinner" />
+          <div className="circle tooltip usa2">JL<div className="spinner" />
             <span className="tooltip-text top">Jennifer Lawrence<span>Maths teacher</span>
               <span>New York, USA</span>
             </span>
@@ -137,8 +138,11 @@ class Home extends Component {
           <div className="line teacher-l4" />
         </div>
         <div className="cards courses">
-          <h2 className="cards-heading">Most popular courses</h2>
-          {coursesList}
+          <h2 className="cards-heading">Latest courses</h2>
+          {coursesList.length > 0 ? coursesList :
+          <Link to="/upload">
+            <button className="btn btn-primary">Upload your first course</button>
+          </Link>}
         </div>
       </section>
     );

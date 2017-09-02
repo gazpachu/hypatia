@@ -10,28 +10,28 @@
 
 .admin {
 	padding-top: 50px;
-	
+
 	.columns {
 		padding: 0;
 	}
-	
+
 	.column {
 	    padding-top: 0;
 	}
-	
+
 	.nav {
 		width: 100%;
-		
+
 		@include desktop() {
 			position: absolute;
 			width: 30%;
 			padding-right: 0;
 		}
-		
+
 		.block {
 			.item-type-list {
 				display: flex;
-				
+
 				> .icon {
 					vertical-align: top;
 					margin-top: 4px;
@@ -50,38 +50,38 @@
 						@include scale-anim();
 						fill: $green;
 						margin: 0;
-						
+
 						&.disabled {
 							opacity: .3;
 						}
 					}
 				}
 			}
-			
+
 			.select2 {
 				margin-bottom: 20px;
 			}
 		}
 	}
-	
+
 	.item-content {
 		width: 100%;
-		
+
 		@include desktop() {
 			width: 70%;
 			margin-left: 30%;
 			position: absolute;
 		}
-		
+
 		.heading, label {
 			font-size: 14px;
 			font-weight: bold;
 		}
-		
+
 		.heading {
 			margin-top: 15px;
 			cursor: pointer;
-			
+
 			.icon {
 				transform: rotate(90deg);
 				transition: all .2s;
@@ -89,52 +89,52 @@
 				width: 15px;
 				height: 15px;
 			}
-			
+
 			&.active {
 				.icon {
 					transform: rotate(-90deg);
 				}
 			}
 		}
-		
+
 		.editor-wrapper {
 			max-height: 0;
 			transition: all .5s;
 			overflow: hidden;
-			
+
 			&.active {
-				max-height: 1000px;
+				max-height: 100000px;
 			}
 		}
-		
+
 		.input-field {
 			margin-top: 15px;
 		}
-		
+
 		.select2 {
 			margin-top: 20px;
 		}
 	}
-	
+
 	.block {
 		border: 1px solid $light-grey;
 		background-color: $white;
 		border-radius: 5px;
 		padding: 20px;
-		
+
 		.loader-small {
 			float: right;
 			display: none;
 		}
-		
+
 		.icon {
 			margin-right: 10px;
 		}
 	}
-	
+
 	.block-title {
 	    font-size: 18px;
-		
+
 		.btn {
 			font-weight: lighter;
 			@include mobile() {
@@ -142,42 +142,42 @@
 			}
 		}
 	}
-	
+
 	.input-field {
 		width: 100%;
 		margin-bottom: 10px;
 	}
-	
+
 	.input-field {
 		border-color: $grey;
 	}
-	
+
 	.date-input {
 		width: 100px;
 	}
-	
+
 	.fee-input {
 		margin: 0 10px 0 5px;
 		width: 40px;
 		font-size: 14px;
 	}
-	
+
 	.currency {
 		margin-left: 10px;
 	}
-	
+
 	.grade-wrapper {
 		display: inline-block;
 	}
-	
+
 	.icon.calendar {
 		margin-left: 10px;
 	}
-	
+
 	.block:not(.pages):not(.files) .title-input {
 		width: 75%;
 	}
-	
+
 	.block.files {
 		@include desktop() {
 			position: relative;
@@ -187,9 +187,9 @@
 			.title-input {
 				width: 35%;
 			}
-			
+
 			.editor-wrapper {
-				width: 45%;	
+				width: 45%;
 			}
 
 			.footer-buttons {
@@ -199,12 +199,12 @@
 			}
 		}
 	}
-	
+
 	.code-input {
 		width: 18%;
 		float: right;
 	}
-	
+
 	.price-input {
 		width: 11%;
 		float: right;
@@ -212,57 +212,57 @@
 		display: none;
 		&.visible { display: inline-block }
 	}
-	
+
 	.btn-save,
 	.btn-featured-image,
 	.date-label {
 		margin-left: 10px;
 	}
-	
+
 	.footer-buttons {
 		margin-top: 30px;
 		padding-top: 20px;
 		margin-bottom: 20px;
 		border-top: 1px solid $grey;
 	}
-	
+
 	.checkbox-label,
 	.option-label {
 		margin-right: 10px;
 	}
-	
+
 	.file-upload-wrapper {
 		display: none;
-		
+
 		.btn-cancel {
 			margin-left: 10px;
 		}
 	}
-	
+
 	.file-progress {
 		vertical-align: middle;
     	margin: 0 10px;
 	}
-	
+
 	.file-download {
 	    margin: 10px 0;
 	}
-	
+
 	.file-metadata {
 		margin-top: 20px;
 		max-width: 45%;
-		
+
 		img {
 			margin-right: 5px;
 		}
-		
+
 		ul {
 			margin-top: 10px;
 			padding-left: 25px;
-			
+
 			li {
 				font-size: 14px;
-				
+
 				span {
 					font-weight: bold;
 					margin-right: 5px;
@@ -270,13 +270,13 @@
 			}
 		}
 	}
-	
+
 	.file-preview {
 		@include mobile() {
 			width: 100%;
 			min-height: 500px;
 		}
-		
+
 		@include desktop() {
 			position: absolute;
 			top: 60px;
@@ -293,35 +293,35 @@
 			}
 		}
 	}
-	
+
 	.file-settings-block {
 		width: 70%;
 		float: left;
-		
+
 		.select2 {
 			margin-bottom: 10px;
 		}
-		
+
 		.btn-cancel {
 			display: none;
 			margin-left: 10px;
-			
+
 			&.visible { display: inline-block }
 		}
 	}
-	
+
 	.featured-image-wrapper {
 		float: right;
 		max-width: 20%;
 		margin-top: 20px;
 	}
-	
+
 	.featured-image {
 		max-width: 100%;
 		max-height: 100px;
 		display: block;
 	}
-	
+
 	.CodeMirror {
 		z-index: initial;
 	}

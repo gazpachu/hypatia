@@ -94,8 +94,7 @@ ReactDOM.render(
         <Route path="/blog" component={Listing} />
         <Route path="/blog/:slug" component={Post} />
         <Route path="/about" component={Page} />
-        <Route path="/about/research" component={Page} />
-        <Route path="/about/people" component={Page} />
+        <Route path="/about/jobs" component={Page} />
         <Route path="/about/contact" component={Page} />
         <Route path="/admin" component={Admin} level={ADMIN_LEVEL} onEnter={requireAuth} />
         <Route path="/admin/:type/:action" component={Admin} level={ADMIN_LEVEL} onEnter={requireAuth} />
