@@ -15,6 +15,7 @@ const { isLoaded, isEmpty, dataToJS } = helpers;
 @connect(state => ({
   files: dataToJS(state.firebase, 'files'),
   courses: dataToJS(state.firebase, 'courses'),
+  posts: dataToJS(state.firebase, 'posts'),
   levels: dataToJS(state.firebase, 'levels')
 }))
 class Home extends Component {
@@ -32,12 +33,15 @@ class Home extends Component {
   }
 
   render() {
-    let coursesList = null;
+    let coursesList = <div className="loader-small" />;
+    let postsList = <div className="loader-small" />;
 
     if (isLoaded(this.props.courses) && !isEmpty(this.props.courses) && isLoaded(this.props.files) && !isEmpty(this.props.files) && isLoaded(this.props.levels) && !isEmpty(this.props.levels)) {
       coursesList = <ul className="cards-list posts-list">{Helpers.renderCards('courses', this.props)}</ul>;
-    } else {
-      coursesList = <div className="loader-small" />;
+    }
+
+    if (isLoaded(this.props.posts) && !isEmpty(this.props.posts) && isLoaded(this.props.files) && !isEmpty(this.props.files)) {
+      postsList = <ul className="cards-list posts-list">{Helpers.renderCards('blog', this.props)}</ul>;
     }
 
     return (
@@ -139,9 +143,16 @@ class Home extends Component {
         </div>
         <div className="cards courses">
           <h2 className="cards-heading">Latest courses</h2>
-          {coursesList.length > 0 ? coursesList :
+          {coursesList.type === 'ul' ? coursesList :
           <Link to="/upload">
             <button className="btn btn-primary">Upload your first course</button>
+          </Link>}
+        </div>
+        <div className="cards posts">
+          <h2 className="cards-heading">Latest stories</h2>
+          {postsList.type === 'ul' ? postsList :
+          <Link to="/admin">
+            <button className="btn btn-primary">Write your first post</button>
           </Link>}
         </div>
       </section>

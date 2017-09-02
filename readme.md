@@ -6,11 +6,11 @@
 
 The project is currently under development, with continuous changes and some bits and bobs not working. Feel free to test it if you like but don't expect it to be production-ready. If you are interested in contributing, please [join the Slack group](http://slack.nekomy.com) and have a look at the [project backlog](https://github.com/nekomy/nekomy-platform/projects/1) to see if you can pick something up.
 
-Demo: [https://hypatia-8d923.firebaseapp.com](https://hypatia-8d923.firebaseapp.com) (Sign up with a valid email is required to access some pages)
+New project's website (under construction): [https://nekomy.com](https://nekomy.com)
 
-Provisional project's website: [https://nekomy.github.io/nekomy-platform/](https://nekomy.github.io/nekomy-platform/)
+Old Demo website with content: [https://hypatia-8d923.firebaseapp.com](https://hypatia-8d923.firebaseapp.com) (Sign up with a valid email is required to access some pages)
 
-Slack group: [http://slack.nekomy.com](http://slack.nekomy.com)
+Old project's website: [https://nekomy.github.io/nekomy-platform/](https://nekomy.github.io/nekomy-platform/)
 
 ![Home](https://firebasestorage.googleapis.com/v0/b/hypatia-8d923.appspot.com/o/screenshots%2Fhome.jpg?alt=media&token=1421d0c1-97ad-486c-b040-695e128a9e4a)
 
