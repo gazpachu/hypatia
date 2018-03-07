@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
 import { connect } from 'react-redux';
 import { firebase, helpers } from 'redux-react-firebase';
-import Helpers from '../../../../core/common/helpers';
+import { renderCards } from '../../../../core/common/helpers';
 import { setLoading } from '../../../../core/actions/actions';
 
 const { isLoaded, isEmpty, dataToJS } = helpers;
@@ -28,8 +27,10 @@ const { isLoaded, isEmpty, dataToJS } = helpers;
 class Listing extends Component {
 
   componentDidMount() {
+    const el = document.querySelector('.js-main');
     this.props.setLoading(false);
-    $('.js-main').removeClass().addClass('main js-main listing-page');
+    el.classList = '';
+    el.classList.add('main', 'js-main', 'listing-page');
   }
 
   render() {
@@ -42,7 +43,7 @@ class Listing extends Component {
     }
 
     if (isLoaded(this.props[type]) && !isEmpty(this.props[type]) && isLoaded(this.props.files)) {
-      items = <ul className="cards-list">{Helpers.renderCards(path, this.props)}</ul>;
+      items = <ul className="cards-list">{renderCards(path, this.props)}</ul>;
     } else {
       items = <div className="loader-small" />;
     }

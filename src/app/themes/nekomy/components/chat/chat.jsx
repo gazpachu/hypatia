@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { firebase, helpers } from 'redux-react-firebase';
+import axios from 'axios';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { rtm, channels, chat } from 'slack';
 import { load as emojiLoader, parse as emojiParser } from 'gh-emoji';
-import $ from 'jquery';
 import moment from 'moment';
 import User from './user';
 import { history } from '../../../../store';
@@ -153,20 +153,17 @@ class Chat extends Component {
   init() {
     // Check in the callback for an authorization from the user and then request a token
     if (this.props.location.query.code && this.props.location.query.state === 'hypatia-slack') {
-      $.ajax({
-        crossOrigin: true,
-        url: 'https://slack.com/api/oauth.access',
-        data: {
+      axios
+        .post('https://slack.com/api/oauth.access', {
           client_id: this.state.currentGroup.slackClientId,
           client_secret: this.state.currentGroup.slackClientSecret,
           code: this.props.location.query.code
-        },
-        success: (data) => {
+        })
+        .then((data) => {
           history.push('/');
           sessionStorage.setItem(`access_token_${this.state.currentGroup.slackClientId}`, data.access_token);
           this.loadGroup();
-        }
-      });
+        });
     } else if (sessionStorage.getItem(`access_token_${this.state.currentGroup.slackClientId}`)) {
       this.loadGroup();
     }
@@ -245,7 +242,7 @@ class Chat extends Component {
           this.setState({
             messages: newMessages
           }, () => {
-            $('.messages').scrollTop($('.messages')[0].scrollHeight);
+            document.querySelector('.messages').scrollTop(document.querySelectorAll('.messages')[0].scrollHeight);
           });
         });
 
@@ -264,11 +261,11 @@ class Chat extends Component {
               found += 1;
             }
           }
-          $('.users-writing-names').text(users);
+          document.querySelector('.users-writing-names').textContent = users;
           if (found > 1) {
             action = ' are';
           }
-          $('.users-writing-message').text(`${action} writing...`);
+          document.querySelector('.users-writing-message').textContent = `${action} writing...`;
         });
 
         // tell the bot to listen
@@ -293,8 +290,8 @@ class Chat extends Component {
   }
 
   changeCurrentGroup(groupId) {
-    $('.group').removeClass('active');
-    $(this.refs[groupId]).addClass('active');
+    document.querySelector('.group').classList.remove('active');
+    document.querySelector(this.refs[groupId]).classList.add('active');
     this.setState({
       currentGroup: this.getGroup(groupId)
     }, () => {
@@ -303,8 +300,8 @@ class Chat extends Component {
   }
 
   changeCurrentChannel(channelId) {
-    $('.channel').removeClass('active');
-    $(this.refs[channelId]).addClass('active');
+    document.querySelector('.channel').classList.remove('active');
+    document.querySelector(this.refs[channelId]).classList.add('active');
     this.setState({ currentChannel: this.getChannel(channelId) });
     this.loadMessages(channelId);
   }
@@ -330,7 +327,7 @@ class Chat extends Component {
           messages: data.messages
         }, () => {
           // if div is already scrolled to bottom, scroll down again just incase a new message has arrived
-          $('.messages').scrollTop($('.messages')[0].scrollHeight);
+          document.querySelector('.messages').scrollTop(document.querySelectorAll('.messages')[0].scrollHeight);
         });
       }
       return true;

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import md5 from 'md5';
-import $ from 'jquery';
 import { firebase, helpers } from 'redux-react-firebase';
 import { setLoading, setUser, setNotification, setUserData } from '../../../../core/actions/actions';
 import * as CONSTANTS from '../../../../core/constants/constants';
+import { hideElem, showElem } from '../../../../core/common/helpers';
 import Icon from '../../../../core/common/lib/icon/icon';
 import Avatar from '../../../../../../static/svg/avatar.svg';
 
@@ -24,8 +24,10 @@ class Settings extends Component {
   }
 
   componentWillMount() {
+    const el = document.querySelector('.js-main');
     this.props.setLoading(false);
-    $('.js-main').removeClass().addClass('main js-main account-settings-page');
+    el.classList = '';
+    el.classList.add('main', 'js-main', 'account-settings-page');
 
     if (isEmpty(this.state.info) && isLoaded(this.props.userData)) {
       this.setState({ info: this.props.userData.info });
@@ -42,16 +44,16 @@ class Settings extends Component {
     if (this.refs.password.value === this.refs.password2.value) {
       if (this.refs.password.value.length >= 6) {
         if (this.props.user.email !== CONSTANTS.DEMO_EMAIL) {
-          $('.js-btn-password').hide();
-          $('.js-password-loader').show();
+          hideElem('.js-btn-password');
+          showElem('.js-password-loader');
 
           this.props.user.updatePassword(this.refs.password.value).then(() => {
-            $('.js-btn-password').show();
-            $('.js-password-loader').hide();
+            showElem('.js-btn-password');
+            hideElem('.js-password-loader');
             this.props.setNotification({ message: CONSTANTS.PASSWORD_CHANGED, type: 'success' });
           }, (error) => {
-            $('.js-btn-password').show();
-            $('.js-password-loader').hide();
+            showElem('.js-btn-password');
+            hideElem('.js-password-loader');
             this.props.setNotification({ message: String(error), type: 'error' });
           });
         }
@@ -70,12 +72,12 @@ class Settings extends Component {
         return;
       }
 
-      $('.js-btn-info').hide();
-      $('.js-info-loader').show();
+      hideElem('.js-btn-info');
+      showElem('.js-info-loader');
 
       this.props.firebase.set(`users/${this.props.user.uid}/info`, this.state.info).then(() => {
-        $('.js-btn-info').show();
-        $('.js-info-loader').hide();
+        showElem('.js-btn-info');
+        hideElem('.js-info-loader');
         this.props.setNotification({ message: CONSTANTS.USER_INFO_CHANGED, type: 'success' });
 
         if (this.props.user.email !== this.state.info.email) {
@@ -84,14 +86,14 @@ class Settings extends Component {
             this.props.firebase.logout();
             this.props.setUser(null);
           }, (error) => {
-            $('.js-btn-email').show();
-            $('.js-email-loader').hide();
+            showElem('.js-btn-email');
+            hideElem('.js-email-loader');
             this.props.setNotification({ message: String(error), type: 'error' });
           });
         }
       }, (error) => {
-        $('.js-btn-info').show();
-        $('.js-info-loader').hide();
+        showElem('.js-btn-info');
+        hideElem('.js-info-loader');
         this.props.setNotification({ message: String(error), type: 'error' });
       });
     }

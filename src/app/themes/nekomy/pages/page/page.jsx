@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import $ from 'jquery';
 import { firebase, helpers } from 'redux-react-firebase';
 import classNames from 'classnames';
 import * as CONSTANTS from '../../../../core/constants/constants';
@@ -25,8 +24,10 @@ const { isLoaded, isEmpty, dataToJS } = helpers;
 class Page extends Component {
 
   componentDidMount() {
+    const el = document.querySelector('.js-main');
     this.props.setLoading(false);
-    $('.js-main').removeClass().addClass('main js-main detail-page');
+    el.classList = '';
+    el.classList.add('main', 'js-main', 'detail-page');
   }
 
   render() {

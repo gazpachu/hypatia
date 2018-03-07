@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import $ from 'jquery';
 import classNames from 'classnames';
 import Icon from '../../../../core/common/lib/icon/icon';
 import SearchIcon from '../../../../../../static/svg/search.svg';
@@ -12,7 +11,7 @@ import Expand from '../../../../../../static/svg/expand.svg';
 class Search extends Component {
 
   static expandPanel() {
-    $('.js-search-panel').toggleClass('expanded');
+    document.querySelector('.js-search-panel').classList.toggle('expanded');
   }
 
   constructor(props) {
@@ -27,10 +26,11 @@ class Search extends Component {
 
   handleChange(event) {
     this.setState({ keyword: event.target.value }, () => {
-      if ($('.search-item.match').length === 0 && this.state.keyword !== '') {
-        $('.no-results-found').addClass('none');
+      const el = document.querySelectorAll('.search-item.match');
+      if (el.length === 0 && this.state.keyword !== '') {
+        document.querySelector('.no-results-found').classList.add('none');
       } else {
-        $('.no-results-found').removeClass('none');
+        document.querySelector('.no-results-found').classList.remove('none');
       }
     });
   }

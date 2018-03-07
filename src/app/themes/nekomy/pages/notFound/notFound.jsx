@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import $ from 'jquery';
 import { setLoading } from '../../../../core/actions/actions';
 
 class NotFound extends Component {
 
   componentDidMount() {
+    const el = document.querySelector('.js-main');
     this.props.setLoading(false);
-    $('.js-main').removeClass().addClass('main js-main not-found-page');
+    el.classList = '';
+    el.classList.add('main', 'js-main', 'not-found-page');
   }
 
   render() {

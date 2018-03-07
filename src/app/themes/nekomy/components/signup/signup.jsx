@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import $ from 'jquery';
 import firebase from 'firebase';
 import { setNotification } from '../../../../core/actions/actions';
+import { hideElem, showElem } from '../../../../core/common/helpers';
 import { USER_CONFIRM_EMAIL, PASSWORD_MATCH_ERROR } from '../../../../core/constants/constants';
 
 class Signup extends Component {
@@ -13,16 +13,16 @@ class Signup extends Component {
     const { password, password2, firstname, lastname } = this.refs;
 
     if (password.value === password2.value) {
-      $('.js-btn-signup').hide();
-      $('.js-signup-loader').show();
+      hideElem('.js-btn-signup');
+      showElem('.js-signup-loader');
 
       const email = String(this.refs.email.value);
 
       firebase.auth().createUserWithEmailAndPassword(email, password.value).then((user) => {
         this.saveUser(user, firstname.value, lastname.value, email);
       }).catch((error) => {
-        $('.js-btn-signup').show();
-        $('.js-signup-loader').hide();
+        showElem('.js-btn-signup');
+        hideElem('.js-signup-loader');
         this.props.setNotification({ message: String(error), type: 'error' });
       });
     } else {
@@ -38,14 +38,14 @@ class Signup extends Component {
       displayName: `${firstname} ${lastname}`
     }).then(() => {
       user.sendEmailVerification();
-      $('.js-btn-signup').show();
-      $('.js-signup-loader').hide();
-      $('.js-overlay').click();
+      showElem('.js-btn-signup');
+      hideElem('.js-signup-loader');
+      document.querySelector('.js-overlay').click();
       this.props.setNotification({ message: USER_CONFIRM_EMAIL, type: 'success' });
     })
     .catch((error) => {
-      $('.js-btn-signup').show();
-      $('.js-signup-loader').hide();
+      showElem('.js-btn-signup');
+      hideElem('.js-signup-loader');
       this.props.setNotification({ message: String(error), type: 'error' });
     });
   }

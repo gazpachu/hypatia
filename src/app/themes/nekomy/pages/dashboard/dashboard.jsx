@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { firebase, helpers } from 'redux-react-firebase';
 import { Link } from 'react-router';
-import $ from 'jquery';
 import moment from 'moment';
 import { setLoading } from '../../../../core/actions/actions';
 import Icon from '../../../../core/common/lib/icon/icon';
@@ -41,8 +40,10 @@ const { isLoaded, isEmpty, dataToJS } = helpers;
 class Dashboard extends Component {
 
   componentDidMount() {
+    const el = document.querySelector('.js-main');
     this.props.setLoading(false);
-    $('.js-main').removeClass().addClass('main js-main dashboard-page');
+    el.classList = '';
+    el.classList.add('main', 'js-main', 'dashboard-page');
   }
 
   render() {

@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import $ from 'jquery';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { firebase, helpers } from 'redux-react-firebase';
@@ -118,8 +117,8 @@ const { dataToJS } = helpers;
 class Navigation extends Component {
 
   static clickItem(event) {
-    const $el = $(event.currentTarget).closest('.nav-item');
-    $el.toggleClass('opened');
+    const el = event.currentTarget.closest('.nav-item');
+    el.classList.toggle('opened');
   }
 
   constructor(props) {

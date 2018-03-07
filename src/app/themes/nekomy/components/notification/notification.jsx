@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import $ from 'jquery';
 import { setNotification } from '../../../../core/actions/actions';
+import { animateCss, hideElem, showElem } from '../../../../core/common/helpers';
 import Icon from '../../../../core/common/lib/icon/icon';
 import Tick from '../../../../../../static/svg/tick.svg';
 import Close from '../../../../../../static/svg/close.svg';
@@ -27,15 +27,15 @@ class Notification extends Component {
   }
 
   showNotification() {
-    const $el = $('.js-notification');
+    const el = document.querySelector('.js-notification');
 
     setTimeout(() => {
-      $el.show().animateCss('slideInRight');
+      animateCss(showElem(el), 'slideInRight');
     }, 1000);
 
     setTimeout(() => {
-      $el.animateCss('slideOutRight', () => {
-        $el.hide();
+      animateCss(el, 'slideOutRight', () => {
+        hideElem(el);
         this.props.setNotification(defaultProps.notification);
       });
     }, 7000);

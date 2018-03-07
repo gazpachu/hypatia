@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import $ from 'jquery';
 import { firebase, helpers } from 'redux-react-firebase';
 import { Link } from 'react-router';
 import { setLoading } from '../../../../core/actions/actions';
 import * as CONSTANTS from '../../../../core/constants/constants';
 import ModalBox from '../../../../core/common/modalbox/modalbox';
 import Edit from '../../../../core/common/lib/edit/edit';
+import { animateCss, hideElem, showElem } from '../../../../core/common/helpers';
 import Icon from '../../../../core/common/lib/icon/icon';
 import Level from '../../../../../../static/svg/course.svg';
 import Info from '../../../../../../static/svg/info.svg';
@@ -55,15 +55,17 @@ class Course extends Component {
   }
 
   componentDidMount() {
+    const el = document.querySelector('.js-main');
     this.props.setLoading(false);
-    $('.js-main').removeClass().addClass('main js-main course-page');
+    el.classList = '';
+    el.classList.add('main', 'js-main', 'course-page');
   }
 
   enrolConfirmation() {
     this.setState({
       modalTitle: CONSTANTS.CONFIRM_ENROL
     }, () => {
-      $('.js-modal-box-wrapper').show().animateCss('fade-in');
+      animateCss(showElem('.js-modal-box-wrapper'), 'fade-in');
     });
   }
 
@@ -81,21 +83,21 @@ class Course extends Component {
         status: 'enrolled'
       };
 
-      $(this.refs['btn-enroll']).hide();
-      $(this.refs['loader-enroll']).show();
+      hideElem(this.refs['btn-enroll']);
+      showElem(this.refs['loader-enroll']);
 
       for (let i = 0; i < this.state.selectedSubjects.length; i += 1) {
         this.props.firebase.set(`users/${this.props.user.uid}/courses/${courseID}/${this.state.selectedSubjects[i]}`, subjectData).then(() => {
           subjectsAdded += 1;
           if (subjectsAdded === this.state.selectedSubjects.length) {
-            $(this.refs['btn-enroll']).show();
-            $(this.refs['loader-enroll']).hide();
+            showElem(this.refs['btn-enroll']);
+            hideElem(this.refs['loader-enroll']);
             this.props.setNotification({ message: CONSTANTS.ENROLLED_COURSE, type: 'success' });
             this.setState({ selectedSubjects: [] });
           }
         }, (error) => {
-          $(this.refs['btn-enroll']).show();
-          $(this.refs['loader-enroll']).hide();
+          showElem(this.refs['btn-enroll']);
+          hideElem(this.refs['loader-enroll']);
           this.props.setNotification({ message: String(error), type: 'error' });
         });
       }

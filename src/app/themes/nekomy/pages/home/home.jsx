@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { firebase, helpers } from 'redux-react-firebase';
-import $ from 'jquery';
 import { Link } from 'react-router';
-import Helpers from '../../../../core/common/helpers';
+import { animateCss, showElem, renderCards } from '../../../../core/common/helpers';
 import { setLoading } from '../../../../core/actions/actions';
 import Icon from '../../../../core/common/lib/icon/icon';
 import World from '../../../../../../static/svg/world.svg';
@@ -22,12 +21,14 @@ class Home extends Component {
 
   componentDidMount() {
     this.props.setLoading(false); // Move this to API callback when implemented (if ever)
-    $('.js-main').removeClass().addClass('main js-main home-page has-hero');
+    const el = document.querySelector('.js-main');
+    el.classList = '';
+    el.classList.add('main', 'js-main', 'home-page', 'has-hero');
 
-    $('.hero .world-map').show().animateCss('slideInUp', () => {
-      $('.hero .hero-content').show().animateCss('fadeInUp', () => {
-        $('.hero .elevator-pitch').show().animateCss('fadeInUp');
-        $('.hero .circle').show().animateCss('fadeInUp');
+    animateCss(showElem('.hero .world-map'), 'slideInUp', () => {
+      animateCss(showElem('.hero .hero-content'), 'fadeInUp', () => {
+        animateCss(showElem('.hero .elevator-pitch'), 'fadeInUp');
+        animateCss(showElem('.hero .circle'), 'fadeInUp');
       });
     });
   }
@@ -37,11 +38,11 @@ class Home extends Component {
     let postsList = <div className="loader-small" />;
 
     if (isLoaded(this.props.courses) && !isEmpty(this.props.courses) && isLoaded(this.props.files) && !isEmpty(this.props.files) && isLoaded(this.props.levels) && !isEmpty(this.props.levels)) {
-      coursesList = <ul className="cards-list posts-list">{Helpers.renderCards('courses', this.props)}</ul>;
+      coursesList = <ul className="cards-list posts-list">{renderCards('courses', this.props)}</ul>;
     }
 
     if (isLoaded(this.props.posts) && !isEmpty(this.props.posts) && isLoaded(this.props.files) && !isEmpty(this.props.files)) {
-      postsList = <ul className="cards-list posts-list">{Helpers.renderCards('blog', this.props)}</ul>;
+      postsList = <ul className="cards-list posts-list">{renderCards('blog', this.props)}</ul>;
     }
 
     return (

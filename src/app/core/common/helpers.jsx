@@ -1,5 +1,5 @@
 import React from 'react';
-import $ from 'jquery';
+import axios from 'axios';
 import moment from 'moment';
 import { Link } from 'react-router';
 import { converter } from '../constants/constants';
@@ -7,19 +7,6 @@ import Icon from './lib/icon/icon';
 import Calendar from '../../../../static/svg/calendar2.svg';
 import Course from '../../../../static/svg/course.svg';
 import Users from '../../../../static/svg/users.svg';
-
-// CSS3 animation helper to cleanup classes after animationd ends
-$.fn.extend({
-  animateCss(animationName, callback) {
-    const animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
-    $(this).addClass(`animated ${animationName}`).one(animationEnd, () => {
-      $(this).removeClass(`animated ${animationName}`);
-      if (callback) {
-        callback();
-      }
-    });
-  }
-});
 
 // String capitalization
 String.prototype.capitalize = () => (this ? this.charAt(0).toUpperCase() + this.slice(1) : null);
@@ -119,25 +106,55 @@ module.exports = {
   },
 
   getAppVersion: (element) => {
-    $.ajax('/static/version.json').done((response) => {
-      if (response) {
-        const date = new Date(response.version.buildDate);
-        const monthNames = [
-          'January',
-          'February',
-          'March',
-          'April',
-          'May',
-          'June',
-          'July',
-          'August',
-          'September',
-          'October',
-          'November',
-          'December'
-        ];
-        $(element).html(`v${response.version.version} (Built on ${date.getDate()} ${monthNames[date.getMonth()]} ${date.getFullYear()})`);
+    axios
+      .get('/static/version.json')
+      .then((response) => {
+        if (response.data) {
+          const date = new Date(response.data.version.buildDate);
+          const monthNames = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December'
+          ];
+          document.querySelector(element).innerHTML = `v${response.data.version.version} (Built on ${date.getDate()} ${monthNames[date.getMonth()]} ${date.getFullYear()})`;
+        }
+      });
+  },
+
+  animateCss: (element, animationName, callback) => {
+    element.classList.add('animated', animationName);
+    element.addEventListener('animationend', function handler() {
+      element.classList.remove('animated', animationName);
+      element.removeEventListener('animationend', handler);
+      if (callback) {
+        callback();
       }
     });
+  },
+
+  hideElem: (selector) => {
+    const elem = (typeof (selector) === 'string' || selector instanceof String)
+      ? document.querySelector(selector)
+      : selector;
+    elem.style.display = 'none';
+    return elem;
+  },
+
+  showElem: (selector) => {
+    const elem = (typeof (selector) === 'string' || selector instanceof String)
+      ? document.querySelector(selector)
+      : selector;
+    elem.style.display = 'block';
+    return elem;
   }
+
 };

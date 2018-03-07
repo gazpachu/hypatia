@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { history } from '../../../../store';
-import Helpers from '../../../../core/common/helpers';
+import { slugify } from '../../../../core/common/helpers';
 import { setBreadcrumbs } from '../../../../core/actions/actions';
 
 class Breadcrumbs extends Component {
@@ -43,7 +43,7 @@ class Breadcrumbs extends Component {
         let url = '';
 
         for (let j = 0; j < i + 1; j += 1) {
-          url += `/${Helpers.slugify(this.props.breadcrumbs[j])}`;
+          url += `/${slugify(this.props.breadcrumbs[j])}`;
         }
 
         return (<li className="item" key={item}>
