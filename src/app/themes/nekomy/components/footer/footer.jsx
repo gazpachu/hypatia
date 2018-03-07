@@ -14,7 +14,7 @@ class Footer extends Component {
       <section className="footer">
         <span>Nekomy Platform <span className="app-version" />
           <Icon glyph={Logo} />
-          2016 - 2017. Licensed under GPLv2. More info at <a href="http://nekomy.github.io/nekomy-platform/">nekomy.github.io/nekomy-platform</a>
+          2016 - 2018. Licensed under GPLv2. More info at <a href="http://nekomy.github.io/nekomy-platform/">nekomy.github.io/nekomy-platform</a>
         </span>
       </section>
     );
