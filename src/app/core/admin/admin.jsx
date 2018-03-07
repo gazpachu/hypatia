@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { firebase, helpers } from 'redux-react-firebase';
-import $ from 'jquery';
-import _ from 'lodash';
+import omit from 'lodash.omit';
 import classNames from 'classnames';
 import SimpleMDE from 'react-simplemde-editor';
 import Select2 from 'react-select2-wrapper';
@@ -13,7 +12,7 @@ import { setLoading, setNotification } from '../actions/actions';
 import * as CONSTANTS from '../constants/constants';
 import ModalBox from '../common/modalbox/modalbox';
 import AdminUsers from './adminUsers';
-import Helpers from '../common/helpers';
+import { animateCss, copyTextToClipboard, hideElem, showElem, slugify } from '../common/helpers';
 import Icon from '../common/lib/icon/icon';
 import Add from '../../../../static/svg/add.svg';
 import Calendar from '../../../../static/svg/calendar2.svg';
@@ -69,7 +68,7 @@ class Admin extends Component {
       return state.text;
     }
     const contentType = state.text.substring(state.text.indexOf('[') + 1, state.text.indexOf(']'));
-    const $state = $(`<span><img src="http://www.stdicon.com/crystal/${contentType}?size=24" class="select2-img" />${state.text.substring(state.text.indexOf(']') + 1, state.text.length)}</span>`);
+    const $state = document.createRange().createContextualFragment(`<span><img src="http://www.stdicon.com/crystal/${contentType}?size=24" class="select2-img" />${state.text.substring(state.text.indexOf(']') + 1, state.text.length)}</span>`);
     return $state;
   }
 
@@ -98,7 +97,9 @@ class Admin extends Component {
 
   componentDidMount() {
     this.props.setLoading(false);
-    $('.js-main').removeClass().addClass('main js-main admin-page');
+    const el = document.querySelector('.js-main');
+    el.classList = '';
+    el.classList.add('main', 'js-main', 'admin-page');
   }
 
   componentWillReceiveProps(newProps) {
@@ -233,7 +234,7 @@ class Admin extends Component {
 
       if (item && (item.title || this.state.type === 'users')) {
         if (this.state.type !== 'files' && this.state.type !== 'users') {
-          item.slug = Helpers.slugify(item.title);
+          item.slug = slugify(item.title);
         } else if (this.tempFile) {
           item.file = this.tempFile.name;
           uploadFile = true;
@@ -283,12 +284,12 @@ class Admin extends Component {
 
   uploadFile(file) {
     this.uploadTask = this.storageRef.child(`files/${file.name}`).put(file);
-    $('.file-input').hide();
-    $('.file-upload-wrapper').show();
+    hideElem('.file-input');
+    showElem('.file-upload-wrapper');
 
     this.uploadTask.on(this.props.firebase.storage.TaskEvent.STATE_CHANGED, (snapshot) => {
       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      $('.file-progress').attr('value', progress);
+      document.querySelector('.file-progress').setAttribute('value', progress);
 
       switch (snapshot.state) {
         case this.props.firebase.storage.TaskState.PAUSED:
@@ -300,8 +301,8 @@ class Admin extends Component {
         default:
       }
     }, (error) => {
-      $('.file-input').show();
-      $('.file-upload-wrapper').hide();
+      showElem('.file-input');
+      hideElem('.file-upload-wrapper');
       this.toggleButtons(true);
       this.uploadStatus = '';
 
@@ -315,8 +316,8 @@ class Admin extends Component {
         default:
       }
     }, () => {
-      $('.file-input').show();
-      $('.file-upload-wrapper').hide();
+      showElem('.file-input');
+      hideElem('.file-upload-wrapper');
       this.tempFile = null;
       this.uploadStatus = '';
 
@@ -329,10 +330,10 @@ class Admin extends Component {
 
   changeUploadStatus(status) {
     if (status === 'paused' && this.uploadStatus === 'paused') {
-      $(this.refs['pause-upload']).html('pause');
+      document.querySelector(this.refs['pause-upload']).innerHTML = 'pause';
       this.uploadTask.resume();
     } else if (status === 'paused') {
-      $(this.refs['pause-upload']).html('resume');
+      document.querySelector(this.refs['pause-upload']).innerHTML = 'resume';
       this.uploadTask.pause();
     } else if (status === 'cancelled') {
       if (this.uploadStatus === 'paused') {
@@ -346,7 +347,7 @@ class Admin extends Component {
     this.setState({
       modalTitle: `${CONSTANTS.CONFIRM_DELETE} "${this.state.selectedItem.title}"?`
     }, () => {
-      $('.js-modal-box-wrapper').show().animateCss('fade-in');
+      animateCss(showElem('.js-modal-box-wrapper'), 'fade-in');
     });
   }
 
@@ -402,16 +403,16 @@ class Admin extends Component {
       ? select.options[select.selectedIndex].value
       : '';
     if (key) {
-      Helpers.copyTextToClipboard(this.props.files[key].url);
+      copyTextToClipboard(this.props.files[key].url);
       if (this.props.files[key].type.indexOf('image') !== -1) {
-        $(this.refs['btn-featured-image']).removeClass('disabled');
+        this.refs['btn-featured-image'].classList.remove('disabled');
         this.selectedImage = key;
       } else {
-        $(this.refs['btn-featured-image']).addClass('disabled');
+        this.refs['btn-featured-image'].classList.add('disabled');
         this.selectedImage = null;
       }
     } else {
-      $(this.refs['btn-featured-image']).addClass('disabled');
+      this.refs['btn-featured-image'].classList.add('disabled');
       this.selectedImage = null;
     }
   }
@@ -422,7 +423,7 @@ class Admin extends Component {
     if (value && !isEmpty(value)) {
       newItem = Object.assign({}, this.state.selectedItem, { [prop]: value });
     } else {
-      newItem = _.omit(this.state.selectedItem, [prop]);
+      newItem = omit(this.state.selectedItem, [prop]);
     }
 
     if (!isEmpty(newItem) && JSON.stringify(newItem) !== JSON.stringify(this.state.selectedItem)) {
@@ -437,13 +438,15 @@ class Admin extends Component {
   }
 
   toggleButtons(state) {
-    $(this.refs.remove).toggle(state);
-    $(this.refs.save).toggle(state);
-    $(this.refs.saveTop).toggle(state);
-    $(this.refs.cancel).toggle(state);
-    $(this.refs.cancelTop).toggle(state);
-    $(this.refs.loader).toggle(!state);
-    $(this.refs.loaderTop).toggle(!state);
+    const withState = (state) ? 'block' : 'none';
+    const negState = (state) ? 'none' : 'block';
+    this.refs.remove.style.display = withState;
+    this.refs.save.style.display = withState;
+    this.refs.saveTop.style.display = withState;
+    this.refs.cancel.style.display = withState;
+    this.refs.cancelTop.style.display = withState;
+    this.refs.loader.style.display = negState;
+    this.refs.loaderTop.style.display = negState;
   }
 
   modalBoxAnswer(answer) {
@@ -474,7 +477,7 @@ class Admin extends Component {
   }
 
   toggleElement(ref) {
-    $(this.refs[ref]).toggleClass('active');
+    this.refs[ref].classList.toggle('active');
   }
 
   createList(type) {
