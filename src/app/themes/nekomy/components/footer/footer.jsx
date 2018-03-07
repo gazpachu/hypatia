@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import Helpers from '../../../../core/common/helpers';
+import { getAppVersion } from '../../../../core/common/helpers';
 import Icon from '../../../../core/common/lib/icon/icon';
 import Logo from '../../../../../../static/svg/logo.svg';
 
 class Footer extends Component {
 
   componentDidMount() {
-    Helpers.getAppVersion('.app-version');
+    getAppVersion('.app-version');
   }
 
   render() {

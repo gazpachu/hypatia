@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { firebase, helpers } from 'redux-react-firebase';
 import classNames from 'classnames';
 import moment from 'moment';
-import $ from 'jquery';
 import * as CONSTANTS from '../../../../core/constants/constants';
 import { setLoading } from '../../../../core/actions/actions';
 import Edit from '../../../../core/common/lib/edit/edit';
@@ -28,8 +27,10 @@ const { isLoaded, isEmpty, dataToJS } = helpers;
 class Post extends Component {
 
   componentDidMount() {
+    const el = document.querySelector('.js-main');
     this.props.setLoading(false);
-    $('.js-main').removeClass().addClass('main js-main post-page');
+    el.classList = '';
+    el.classList.add('main', 'js-main', 'post-page');
   }
 
   render() {

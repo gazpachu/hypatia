@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
+import { animateCss, hideElem } from '../../common/helpers';
 
 class ModalBox extends Component {
 
@@ -11,15 +11,17 @@ class ModalBox extends Component {
   }
 
   closeModalBox() {
-    $('.js-modal-box-wrapper').animateCss('fade-out', () => {
-      $('.js-modal-box-wrapper').hide();
+    const el = document.querySelector('.js-modal-box-wrapper');
+    animateCss(el, 'fade-out', () => {
+      hideElem(el);
     });
     this.props.answer('cancel');
   }
 
   submitModalBox() {
-    $('.js-modal-box-wrapper').animateCss('fade-out', () => {
-      $('.js-modal-box-wrapper').hide();
+    const el = document.querySelector('.js-modal-box-wrapper');
+    animateCss(el, 'fade-out', () => {
+      hideElem(el);
     });
     this.props.answer('accept');
   }

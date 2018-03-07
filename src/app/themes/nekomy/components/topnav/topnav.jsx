@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import $ from 'jquery';
 import md5 from 'md5';
 import { firebase, helpers } from 'redux-react-firebase';
 import { setUser, setPanel, setNotification } from '../../../../core/actions/actions';
 import Navigation from '../navigation/navigation';
 import Signup from '../signup/signup';
 import Signin from '../signin/signin';
+import { animateCss, hideElem, showElem } from '../../../../core/common/helpers';
 import Icon from '../../../../core/common/lib/icon/icon';
 import Logo from '../../../../../../static/svg/logo.svg';
 import LogoWording from '../../../../../../static/svg/logo-wording.svg';
@@ -30,22 +30,30 @@ const { pathToJS } = helpers;
 class TopNav extends Component {
 
   static toggleView(e) {
-    if ($(e.currentTarget).is(':checked')) {
-      $('.js-page').addClass('list-view');
+    if (e.currentTarget.checked) {
+      document.querySelector('.js-page').classList.add('list-view');
     } else {
-      $('.js-page').removeClass('list-view');
+      document.querySelector('.js-page').classList.remove('list-view');
     }
   }
 
   static showForm(event) {
-    $('.user-form').removeClass('active');
-    $(event.target).next().addClass('active');
-    $('.js-overlay').show().animateCss('fade-in');
+    const elemForm = document.querySelector('.user-form');
+    const elemOverlay = document.querySelector('.js-overlay');
+    if (elemForm) {
+      elemForm.classList.remove('active');
+    }
+    event.target.nextElementSibling.classList.add('active');
+    animateCss(showElem(elemOverlay), 'fade-in');
   }
 
   static closeForm() {
-    $('.user-form').removeClass('active');
-    $('.js-overlay').animateCss('fade-out', () => $('.js-overlay').hide());
+    const elForm = document.querySelector('.user-form');
+    const elOverlay = document.querySelector('.js-overlay');
+    if (elForm) {
+      elForm.classList.remove('active');
+    }
+    animateCss(elOverlay, 'fade-out', () => { hideElem(elOverlay); });
   }
 
   constructor(props) {
@@ -67,16 +75,17 @@ class TopNav extends Component {
 
   componentDidUpdate() {
     if (this.props.isDesktop === true) {
-      $('#mode').prop('checked', false);
-      $('.js-page').removeClass('list-view');
+      document.querySelector('#mode').prop('checked', false);
+      document.querySelector('.js-page').classList.remove('list-view');
     } else if (this.props.isDesktop === false) {
-      $('#mode').prop('checked', true);
-      $('.js-page').addClass('list-view');
+      document.querySelector('#mode').prop('checked', true);
+      document.querySelector('.js-page').classList.add('list-view');
     }
   }
 
   toggleNav() {
-    if (!$('.js-sidenav').hasClass('opened')) {
+    const el = document.querySelector('.js-sidenav');
+    if (!el.classList.contains('opened')) {
       this.openNav();
     } else {
       this.closeNav();
@@ -84,27 +93,33 @@ class TopNav extends Component {
   }
 
   openNav() {
-    if (!$('.js-sidenav').hasClass('opened')) {
-      $('.flyout').removeClass('opened');
-      $('.js-overlay').show().animateCss('fade-in');
-      $('.js-sidenav').addClass('opened').removeClass('closed');
-      $('.js-nav-icon').addClass('opened');
-      $('.js-dropdown-panel').removeClass('open');
+    const el = document.querySelector('.js-sidenav');
+    if (!el.classList.contains('opened')) {
+      document.querySelector('.flyout').classList.remove('opened');
+      const elOverlay = document.querySelector('.js-overlay');
+      animateCss(showElem(elOverlay), 'fade-in');
+      el.classList.add('opened');
+      el.classList.remove('closed');
+      document.querySelector('.js-nav-icon').classList.add('opened');
+      document.querySelector('.js-dropdown-panel').classList.remove('open');
       this.setState({ searching: false, navigating: true });
     }
   }
 
   closeNav() {
-    if ($('.js-sidenav').hasClass('opened')) {
-      $('.js-sidenav').removeClass('opened').addClass('closed');
-      $('.js-overlay').click();
-      $('.js-nav-icon').removeClass('opened');
+    const el = document.querySelector('.js-sidenav');
+    if (el.classList.contains('opened')) {
+      el.classList.remove('opened');
+      el.classList.add('closed');
+      document.querySelector('.js-overlay').click();
+      document.querySelector('.js-nav-icon').classList.remove('opened');
       this.setState({ searching: false, navigating: false });
     }
   }
 
   toggleSearch() {
-    if (!$('.js-search-panel').hasClass('opened')) {
+    const el = document.querySelector('.js-search-panel');
+    if (!el.classList.contains('opened')) {
       this.openSearch();
     } else {
       this.closeSearch();
@@ -112,23 +127,25 @@ class TopNav extends Component {
   }
 
   openSearch() {
-    const $searchPanel = $('.js-search-panel');
-    if (!$searchPanel.hasClass('opened')) {
-      $('.flyout').removeClass('opened');
-      $searchPanel.addClass('opened').removeClass('closed');
-      $('.js-nav-icon').removeClass('opened');
-      $('.js-overlay').show().animateCss('fade-in');
-      $('.search-input').focus();
-      $('.js-dropdown-panel').removeClass('open');
+    const el = document.querySelector('.js-search-panel');
+    if (!el.classList.contains('opened')) {
+      document.querySelector('.flyout').classList.remove('opened');
+      el.classList.add('opened');
+      el.classList.remove('closed');
+      document.querySelector('.js-nav-icon').classList.remove('opened');
+      animateCss(showElem('.js-overlay'), 'fade-in');
+      document.querySelector('.search-input').focus();
+      document.querySelector('.js-dropdown-panel').classList.remove('open');
       this.setState({ searching: true, navigating: false });
     }
   }
 
   closeSearch() {
-    const $searchPanel = $('.js-search-panel');
-    if ($searchPanel.hasClass('opened')) {
-      $searchPanel.removeClass('opened').addClass('closed');
-      $('.js-overlay').click();
+    const el = document.querySelector('.js-search-panel');
+    if (el.classList.contains('opened')) {
+      el.classList.remove('opened');
+      el.classList.add('closed');
+      document.querySelector('.js-overlay').click();
       this.setState({ searching: false, navigating: false });
     }
   }

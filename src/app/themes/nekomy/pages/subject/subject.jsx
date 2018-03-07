@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { firebase, helpers } from 'redux-react-firebase';
 import classNames from 'classnames';
 import { Link } from 'react-router';
-import $ from 'jquery';
 import { setLoading } from '../../../../core/actions/actions';
 import * as CONSTANTS from '../../../../core/constants/constants';
 import Edit from '../../../../core/common/lib/edit/edit';
@@ -36,8 +35,10 @@ const { isLoaded, isEmpty, dataToJS } = helpers;
 class Subject extends Component {
 
   componentDidMount() {
+    const el = document.querySelector('.js-main');
     this.props.setLoading(false);
-    $('.js-main').removeClass().addClass('main js-main subject-page');
+    el.classList = '';
+    el.classList.add('main', 'js-main', 'subject-page');
   }
 
   render() {

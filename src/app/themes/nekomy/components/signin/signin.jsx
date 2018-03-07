@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import $ from 'jquery';
 import firebase from 'firebase';
+import { hideElem, showElem } from '../../../../core/common/helpers';
 import { setNotification } from '../../../../core/actions/actions';
 
 class Signup extends Component {
@@ -14,19 +14,19 @@ class Signup extends Component {
 
   handleSignin(e) {
     e.preventDefault();
-    $('.js-btn-signin').hide();
-    $('.js-signin-loader').show();
+    hideElem('.js-btn-signin');
+    showElem('.js-signin-loader');
 
     const email = String(this.refs.email.value);
     const { password } = this.refs;
 
     firebase.auth().signInWithEmailAndPassword(email, password.value).then(() => {
-      $('.js-btn-signin').show();
-      $('.js-signin-loader').hide();
-      $('.js-overlay').click();
+      showElem('.js-btn-signin');
+      hideElem('.js-signin-loader');
+      document.querySelector('.js-overlay').click();
     }).catch((error) => {
-      $('.js-btn-signin').show();
-      $('.js-signin-loader').hide();
+      showElem('.js-btn-signin');
+      hideElem('.js-signin-loader');
       this.props.setNotification({ message: String(error), type: 'error' });
     });
   }
