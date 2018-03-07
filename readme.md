@@ -4,7 +4,7 @@
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 [![Slack Group](http://slack.nekomy.com/badge.svg)](http://slack.nekomy.com)
 
-The project is currently under development, with continuous changes and some bits and bobs not working. Feel free to test it if you like but don't expect it to be production-ready. If you are interested in contributing, please [join the Slack group](http://slack.nekomy.com) and have a look at the [project backlog](https://github.com/nekomy/nekomy-platform/projects/1) to see if you can pick something up.
+The project is currently under development, with continuous changes and some bits and bobs not working. Feel free to test it if you like but don't expect it to be production-ready. If you are interested in contributing, please [join the #dev channel in the Slack group](http://slack.nekomy.com).
 
 New project's website (under construction): [https://nekomy.com](https://nekomy.com)
 
