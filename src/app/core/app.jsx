@@ -1,8 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import firebase from 'firebase';
-import $ from 'jquery';
-import _ from 'lodash';
+import debounce from 'lodash.debounce';
 import Helmet from 'react-helmet';
 import { setUser, setUserData, changeViewport, setPanel, setNotification } from './actions/actions';
 import { USER_CONFIRM_EMAIL } from './constants/constants';
@@ -27,7 +26,7 @@ class App extends Component {
 
   componentDidMount() {
     this.onResize();
-    window.onresize = _.debounce(() => this.onResize(), 500);
+    window.onresize = debounce(() => this.onResize(), 500);
 
     this.removeListener = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -50,27 +49,24 @@ class App extends Component {
   }
 
   onResize() {
-    const isDesktop = $(window).width() > 768;
+    const isDesktop = window.innerWidth > 768;
     this.props.changeViewport(isDesktop);
   }
 
   render() {
-    let title;
-
-    if (!this.props.breadcrumbs[0]) {
-      title = 'Nekomy';
-    } else {
-      title = `${this.props.breadcrumbs.reverse().join(' < ')} < Nekomy`;
-    }
+    const title = (!this.props.breadcrumbs[0])
+      ? 'Nekomy'
+      : `${this.props.breadcrumbs.reverse().join(' < ')} < Nekomy`;
 
     const panelClass = (this.props.panel === '')
       ? ''
       : 'open';
 
-    if (panelClass === 'open') {
-      $('.page').css('position', 'fixed');
-    } else {
-      $('.page').css('position', 'relative');
+    const pageClass = document.querySelector('.page');
+    if (pageClass) {
+      pageClass.style.position = (panelClass === 'open')
+        ? 'fixed'
+        : 'relative';
     }
 
     return (
