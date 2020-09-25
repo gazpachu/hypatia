@@ -1,8 +1,8 @@
-# Nekomy. An open source LMS (eLearning platform) for MOOCs and online courses
+# Hypatia. A JavaScript open source LMS (eLearning platform) for MOOCs and online courses
 
 [![Build Status](https://travis-ci.org/nekomy/nekomy-platform.svg?branch=master)](https://travis-ci.org/nekomy/nekomy-platform)
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
-[![Slack Group](http://slack.nekomy.com/badge.svg)](http://slack.nekomy.com)
+[![Slack Group](http://slack.hypatiajs.com/badge.svg)](http://slack.hypatiajs.com)
 
 The project is currently under development, with continuous changes and some bits and bobs not working. Feel free to test it if you like but don't expect it to be production-ready. If you are interested in contributing, please [join the Slack group](http://slack.nekomy.com) and have a look at the [project backlog](https://github.com/nekomy/nekomy-platform/projects/1) to see if you can pick something up.
 
