@@ -1,9 +1,11 @@
 # Hypatia. A JavaScript open source LMS (eLearning platform) for MOOCs and online courses
 
-[![Build Status](https://travis-ci.org/nekomy/nekomy-platform.svg?branch=master)](https://travis-ci.org/nekomy/nekomy-platform)
+[![Build Status](https://travis-ci.org/gazpachu/hypatia?branch=master)](https://travis-ci.org/gazpachu/hypatia)
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
 The project is currently in hibernation. Feel free to test it if you like but don't expect it to be production-ready.
+
+More info in https://joanmira.com/hypatia
 
 Demo website with content: [https://hypatia-8d923.firebaseapp.com](https://hypatia-8d923.firebaseapp.com) (Sign up with a valid email is required to access some pages)
 
@@ -53,7 +55,7 @@ allow read: if true;
 allow write: if request.auth != null;
 ````
 
-- To give a user admin rights, you have to add a field called `level` with the value `5` into a user (using the firebase UI). Once you do that, login into Nekomy with that user and you will see the `admin` link in the sidebar navigation
+- To give a user admin rights, you have to add a field called `level` with the value `5` into a user (using the firebase UI). Once you do that, login into Hypatia with that user and you will see the `admin` link in the sidebar navigation
 
 ### Start development server with hot reloading
 
@@ -112,7 +114,7 @@ firebase deploy
 
 ## Contributor License Agreement
 
-By contributing your code to Nekomy you grant to the repository owner a non-exclusive, irrevocable, worldwide, royalty-free, sublicenseable, transferable license under all of Your relevant intellectual property rights (including copyright, patent, and any other rights), to use, copy, prepare derivative works of, distribute and publicly perform and display the Contributions on any licensing terms, including without limitation: (a) open source licenses like the MIT license; and (b) binary, proprietary, or commercial licenses. Except for the licenses granted herein, You reserve all right, title, and interest in and to the Contribution.
+By contributing your code to Hypatia you grant to the repository owner a non-exclusive, irrevocable, worldwide, royalty-free, sublicenseable, transferable license under all of Your relevant intellectual property rights (including copyright, patent, and any other rights), to use, copy, prepare derivative works of, distribute and publicly perform and display the Contributions on any licensing terms, including without limitation: (a) open source licenses like the MIT license; and (b) binary, proprietary, or commercial licenses. Except for the licenses granted herein, You reserve all right, title, and interest in and to the Contribution.
 
 You confirm that you are able to grant us these rights. You represent that You are legally entitled to grant the above license. If Your employer has rights to intellectual property that You create, You represent that You have received permission to make the Contributions on behalf of that employer, or that Your employer has waived such rights for the Contributions.
 
@@ -126,4 +128,4 @@ Icons from Flaticon.com (Freepik and Madebyoliver), triangles background by rvik
 
 ## Copyright & License
 
-Copyright (c) 2016-2017 Nekomy - Released under the [GPLv2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html) license.
+Copyright (c) 2016-2017 Hypatia - Released under the [GPLv2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html) license.
